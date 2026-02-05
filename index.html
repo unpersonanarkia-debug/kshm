@@ -1,159 +1,154 @@
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="fi" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kadonneen Sukuhistorian Metsästäjä – H1-T16189C!</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kadonneen Sukuhistorian Metsästäjä – Löydä kadonneet sukujuuresi</title>
+  <meta name="description" content="DNA-pohjainen sukututkimus seikkailun hengessä – muinaiset tarinat, haploryhmät, viikinkien jäljet ja paljon muuta. Aloita matkasi nyt!">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    body { 
-      font-family: Georgia, serif; 
-      background: linear-gradient(to bottom, #f5f5f5, #e8d9c5);
-    }
-    .adventure-header {
-      background: linear-gradient(135deg, #92400e, #b45309);
-      color: white;
-    }
-    .timeline-dot { 
-      transition: all 0.3s; 
-      cursor: pointer;
-    }
-    .timeline-dot:hover { 
-      transform: scale(1.4); 
-      background-color: #d97706 !important; 
-      box-shadow: 0 0 15px rgba(217, 119, 6, 0.6);
+    body {
+      background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=2000');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
     }
     .parchment {
-      background: #fffaf0;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      background: rgba(255, 248, 220, 0.92);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       border: 1px solid #d4a373;
     }
-    .print-btn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      z-index: 50;
+    .adventure-btn {
+      background: linear-gradient(135deg, #b45309, #92400e);
+      transition: all 0.3s;
+    }
+    .adventure-btn:hover {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(180, 83, 9, 0.5);
     }
   </style>
 </head>
-<body class="text-stone-900">
+<body class="text-gray-900 font-serif leading-relaxed">
 
-  <!-- Header / Logo -->
-  <header class="adventure-header py-6 shadow-lg">
-    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <img src="https://files.catbox.moe/8k0z3j.png" alt="Kadonneen Sukuhistorian Metsästäjä Logo" class="h-16 md:h-20 drop-shadow-lg">
-        <div>
-          <h1 class="text-2xl md:text-3xl font-bold tracking-wide">Kadonneen Sukuhistorian Metsästäjä</h1>
-          <p class="text-sm opacity-90">Veresi on arkeologinen löytö</p>
-        </div>
+  <!-- Hero / Header -->
+  <header class="relative min-h-screen flex items-center justify-center text-center px-6">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/70"></div>
+    
+    <div class="relative z-10 max-w-5xl mx-auto">
+      <!-- Logo placeholder – korvaa omalla logokuvallasi -->
+      <div class="mb-8">
+        <img src="LOGO-TIEDOSTON-NIMI.png" alt="Kadonneen Sukuhistorian Metsästäjä" class="mx-auto h-48 md:h-64 drop-shadow-2xl">
       </div>
+
+      <h1 class="text-5xl md:text-7xl font-bold text-amber-300 drop-shadow-lg mb-6 tracking-wide">
+        Kadonneen Sukuhistorian Metsästäjä
+      </h1>
+      
+      <p class="text-2xl md:text-4xl text-white font-bold mb-10 drop-shadow-md">
+        Löydä kadonneet juuresi – ennen kuin ne katoavat ikuisesti
+      </p>
+
+      <p class="text-xl md:text-2xl text-amber-100 max-w-3xl mx-auto mb-12 leading-relaxed">
+        DNA-seikkailu, jossa esi-isiesi tarinat heräävät henkiin. Haploryhmien salat, muinaiset vaellukset, viikinkien jäljet ja henkilökohtainen sukutarina – kaikki yhdessä paikassa.
+      </p>
+
+      <a href="#aloita" 
+         class="adventure-btn inline-block text-white font-bold text-xl md:text-2xl py-6 px-12 rounded-full shadow-2xl uppercase tracking-wider">
+        Aloita seikkailu nyt →
+      </a>
     </div>
   </header>
 
-  <!-- Kansi -->
-  <div class="relative h-[70vh] md:h-screen bg-cover bg-center flex items-center justify-center text-white"
-       style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Poulnabrone_dolmen.jpg/1280px-Poulnabrone_dolmen.jpg')">
-    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80"></div>
-    <div class="relative text-center px-6 max-w-4xl">
-      <h1 class="text-5xl md:text-7xl font-bold tracking-wider drop-shadow-2xl mb-4">H1-T16189C!</h1>
-      <p class="text-2xl md:text-4xl mb-8 drop-shadow-lg">Verilinjan seikkailu ajassa</p>
-      <p class="text-xl md:text-2xl opacity-90">Tuhansien vuosien tarina – sinussa tänään</p>
-    </div>
-  </div>
+  <!-- Pääosio -->
+  <main class="parchment py-20 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto">
 
-  <main class="max-w-5xl mx-auto px-6 py-16 parchment rounded-xl my-12">
-    <p class="text-2xl leading-relaxed mb-12 text-center italic">Rakas ystävä,</p>
-    <p class="text-xl leading-relaxed mb-10">Tämä on sinun tarinasi. Se alkoi naisesta, joka noin 7000 vuotta sitten teki rohkean päätöksen Anatolian ylängöillä – ja päättyy sinuun tänään.</p>
+    <section id="mika-tama-on" class="mb-24">
+      <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-10 text-center border-b-4 border-amber-800 pb-4 inline-block">
+        Mikä ihmeen Metsästäjä?
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-xl leading-relaxed mb-6">
+            Kuvittele, että olet Indiana Jones – mutta aarteena ei ole kultainen patsas, vaan sinun oma sukusi tarina. 
+            Me kaivamme esiin kadonneita esi-isiä DNA:n, haploryhmien ja muinaisten löytöjen avulla.
+          </p>
+          <p class="text-xl leading-relaxed">
+            Saat henkilökohtaisen, seikkailullisen tarinan sukulinjastasi – karttoineen, muinaisine haudoineen ja viikinkiyhteyksineen.
+          </p>
+        </div>
+        <div class="text-center">
+          <i class="fas fa-map-signs text-8xl text-amber-700 mb-6 drop-shadow-lg"></i>
+          <p class="text-2xl font-bold text-amber-900">Seikkailu alkaa omasta DNA:stasi</p>
+        </div>
+      </div>
+    </section>
 
-    <h2 class="text-4xl font-bold text-amber-900 mb-8 border-b-4 border-amber-800 pb-4">1. PÄÄTÖS – Anatolian auringon alla</h2>
-    <p class="text-lg mb-6">Noin <strong>7000 vuotta sitten</strong> keskisen Anatolian ylängöillä (Barcın Höyük ja Aşıklı Höyük) eräs nainen teki elämänsä suurimman päätöksen: hän lähti levittämään maataloutta länteen.</p>
+    <!-- Mitä saat -kortit -->
+    <section class="mb-24">
+      <h2 class="text-4xl font-bold text-amber-900 mb-12 text-center">
+        Mitä löydät seikkailusta?
+      </h2>
 
-    <h2 class="text-4xl font-bold text-amber-900 mb-8 border-b-4 border-amber-800 pb-4">2. VAIKUTUS – Maanviljelyn aalto</h2>
-    <p class="text-lg mb-6">Mutaatio <strong>H1-T16189C!</strong> levisi Early European Farmers -ryhmien mukana Balkanille, Brittein saarille ja Atlantin rannoille.</p>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white/80 p-8 rounded-xl shadow-xl border border-amber-200 hover:shadow-2xl transition">
+          <i class="fas fa-dna text-6xl text-amber-700 mb-6 block text-center"></i>
+          <h3 class="text-2xl font-bold mb-4 text-amber-900">Haploryhmän eepos</h3>
+          <p>Esi-isäsi/äitisi linjan tuhansien vuosien tarina – päätöksistä, vaelluksista ja sopeutumisista aina sinuun asti.</p>
+        </div>
 
-    <h2 class="text-4xl font-bold text-amber-900 mb-8 border-b-4 border-amber-800 pb-4">3. SEURAUKSET – Megaliitit, gootit ja viikingit</h2>
-    <div class="grid md:grid-cols-3 gap-8 mb-12">
-      <div class="text-center">
-        <a href="https://www.google.com/maps/place/Poulnabrone+Portal+Tomb" target="_blank">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Poulnabrone_dolmen.jpg/800px-Poulnabrone_dolmen.jpg" class="rounded-xl shadow-lg mb-4 hover:scale-105 transition" alt="Poulnabrone">
+        <div class="bg-white/80 p-8 rounded-xl shadow-xl border border-amber-200 hover:shadow-2xl transition">
+          <i class="fas fa-map-marked-alt text-6xl text-amber-700 mb-6 block text-center"></i>
+          <h3 class="text-2xl font-bold mb-4 text-amber-900">Interaktiivinen kartta</h3>
+          <p>Migraatioreitti – pronssikaudelta viikinkeihin – näkyviin konkreettisilla muinaislöydöillä ja hautapaikoilla.</p>
+        </div>
+
+        <div class="bg-white/80 p-8 rounded-xl shadow-xl border border-amber-200 hover:shadow-2xl transition">
+          <i class="fas fa-scroll text-6xl text-amber-700 mb-6 block text-center"></i>
+          <h3 class="text-2xl font-bold mb-4 text-amber-900">PDF + äänitarina</h3>
+          <p>Kaunis, jaettava raportti + halutessasi ääniversio, jonka voit kuunnella vaikka nuotion ääressä.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hinnat & CTA -->
+    <section id="aloita" class="text-center py-16 bg-gradient-to-r from-amber-900/20 to-amber-700/20 rounded-3xl my-16">
+      <h2 class="text-5xl font-bold text-amber-900 mb-8">
+        Valmiina lähtöön?
+      </h2>
+      
+      <p class="text-2xl mb-10 max-w-3xl mx-auto">
+        Aloita seikkailu vain <span class="font-bold text-amber-800">49 €</span>:lla – saat täyden tarinan + kartan + PDF:n.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-8">
+        <a href="https://forms.gle/oma-google-form-linkki-tähän" 
+           class="adventure-btn text-white font-bold text-xl py-6 px-12 rounded-full shadow-2xl uppercase">
+          Tilaa tarinani nyt
         </a>
-        <p class="font-bold">~5900 vuotta sitten</p>
-        <p>Poulnabrone, Irlanti</p>
-        <a href="https://dna-explained.com/2020/11/03/ancient-irelands-y-and-mitochondrial-dna-do-you-match/" target="_blank" class="text-amber-700 underline text-sm">Cassidy et al. 2020</a>
-      </div>
-
-      <div class="text-center">
-        <a href="https://www.google.com/maps/place/Mas%C5%82om%C4%99cz,+Poland" target="_blank">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Wielbark_culture_map.svg/800px-Wielbark_culture_map.svg.png" class="rounded-xl shadow-lg mb-4 hover:scale-105 transition" alt="Masłomęcz">
+        
+        <a href="#yhteystiedot" 
+           class="bg-white text-amber-900 font-bold text-xl py-6 px-12 rounded-full shadow-xl border-2 border-amber-800 hover:bg-amber-50 transition">
+          Kysy ensin →
         </a>
-        <p class="font-bold">~1750 vuotta sitten</p>
-        <p>Masłomęcz, Puola (Wielbark-gootit)</p>
-        <p class="text-sm">Näyte PCA0099</p>
-        <a href="https://doi.org/10.1038/s41598-019-43183-w" target="_blank" class="text-amber-700 underline text-sm">Stolarek et al. 2019</a>
       </div>
+    </section>
 
-      <div class="text-center">
-        <a href="https://www.google.com/maps/place/Kopparsvik,+Visby,+Sweden" target="_blank">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Gotland_Kopparsvik.jpg/800px-Gotland_Kopparsvik.jpg" class="rounded-xl shadow-lg mb-4 hover:scale-105 transition" alt="Kopparsvik">
-        </a>
-        <p class="font-bold">~1000 vuotta sitten</p>
-        <p>Kopparsvik, Gotland</p>
-        <p class="text-sm">VK51 & VK50</p>
-        <a href="https://doi.org/10.1038/s41586-020-2688-8" target="_blank" class="text-amber-700 underline text-sm">Margaryan et al. 2020</a>
-      </div>
-    </div>
-
-    <h2 class="text-4xl font-bold text-amber-900 mb-8 border-b-4 border-amber-800 pb-4">Aikajana – napsauta kohtaa</h2>
-    <div class="relative border-l-4 border-amber-900 pl-10 space-y-16 mb-12">
-      <div class="flex gap-8 items-start">
-        <div class="timeline-dot w-10 h-10 bg-amber-800 text-white rounded-full flex items-center justify-center text-xl flex-shrink-0 mt-1" onclick="alert('Anatolia – ~7000 vuotta sitten')">7000</div>
-        <div class="text-lg"><strong>Anatolia</strong> – Barcın & Aşıklı Höyük – ensimmäinen mutaatio</div>
-      </div>
-      <div class="flex gap-8 items-start">
-        <div class="timeline-dot w-10 h-10 bg-amber-800 text-white rounded-full flex items-center justify-center text-xl flex-shrink-0 mt-1" onclick="alert('Poulnabrone – ~5900 vuotta sitten')">5900</div>
-        <div class="text-lg"><strong>Poulnabrone</strong>, Irlanti – megaliittidolmen (PN05)</div>
-      </div>
-      <div class="flex gap-8 items-start">
-        <div class="timeline-dot w-10 h-10 bg-amber-800 text-white rounded-full flex items-center justify-center text-xl flex-shrink-0 mt-1" onclick="alert('Masłomęcz – ~1750 vuotta sitten')">1750</div>
-        <div class="text-lg"><strong>Masłomęcz</strong>, Puola – goottien PCA0099</div>
-      </div>
-      <div class="flex gap-8 items-start">
-        <div class="timeline-dot w-10 h-10 bg-amber-800 text-white rounded-full flex items-center justify-center text-xl flex-shrink-0 mt-1" onclick="alert('Kopparsvik – ~1000 vuotta sitten')">1000</div>
-        <div class="text-lg"><strong>Kopparsvik</strong>, Gotland – VK51 & VK50</div>
-      </div>
-      <div class="flex gap-8 items-start">
-        <div class="timeline-dot w-10 h-10 bg-amber-800 text-white rounded-full flex items-center justify-center text-xl flex-shrink-0 mt-1" onclick="alert('Tänään – Sinä')">NYT</div>
-        <div class="text-lg"><strong>Sinä</strong> – veresi kantaa tätä tarinaa</div>
-      </div>
-    </div>
-
-    <h2 class="text-4xl font-bold text-amber-900 mb-8 border-b-4 border-amber-800 pb-4">SINUN VERESI – tänään</h2>
-    <p class="text-xl leading-relaxed mb-6">Sinä kannat H1-T16189C! – Anatolian aurinkoa, Irlannin megaliittien voimaa, goottien rohkeutta ja viikinkien merta.</p>
-    <p class="text-xl">Lahja: syvä yhteys historiaan, luontokaipuu, sisäinen kestävyys.<br>Hinta: joskus tunnet olevasi “vanhempi” kuin ikäsi.</p>
-
-    <div class="mt-16 border-t border-amber-800 pt-12">
-      <h3 class="text-2xl font-bold mb-6 text-amber-900">Lähteet – klikkaa suoraan</h3>
-      <ul class="space-y-4 text-lg">
-        <li><a href="https://doi.org/10.1038/s41598-019-43183-w" target="_blank" class="text-amber-700 underline hover:text-amber-900">Stolarek et al. 2019 – Goth migration (PCA0099)</a></li>
-        <li><a href="https://doi.org/10.1038/s41586-020-2688-8" target="_blank" class="text-amber-700 underline hover:text-amber-900">Margaryan et al. 2020 – Viking Genetics (VK51 & VK50)</a></li>
-        <li><a href="https://dna-explained.com/2020/11/03/ancient-irelands-y-and-mitochondrial-dna-do-you-match/" target="_blank" class="text-amber-700 underline hover:text-amber-900">Cassidy et al. 2020 – Poulnabrone H1-T16189C!</a></li>
-        <li><a href="https://haplotree.info/maps/ancient_dna/slideshow_samples.php?searchcolumn=mtDNA_haplogroup&searchfor=H1-T16189C" target="_blank" class="text-amber-700 underline hover:text-amber-900">Haplotree.info – kaikki ancient-näytteet</a></li>
-        <li><a href="https://www.familytreedna.com/public/mt-dna-haplotree/H;name=H1-T16189C!" target="_blank" class="text-amber-700 underline hover:text-amber-900">FamilyTreeDNA Discover – H1-T16189C!</a></li>
-      </ul>
-    </div>
-
-    <div class="mt-20 text-center text-stone-600 text-sm">
-      Generoitu helmikuussa 2026 • Kadonneen Sukuhistorian Metsästäjä
-    </div>
+    <!-- Footer -->
+    <footer class="text-center py-12 border-t border-amber-800/30 mt-20">
+      <p class="text-lg">&copy; 2026 Kadonneen Sukuhistorian Metsästäjä</p>
+      <p class="mt-4 text-sm text-gray-600">
+        DNA-seikkailuja vastuullisesti • Yhteydenotot: info (at) kshm.fi
+      </p>
+    </footer>
   </main>
 
-  <!-- Tulosta PDF -nappi -->
-  <button onclick="window.print()" 
-          class="print-btn bg-gradient-to-r from-amber-900 to-amber-700 hover:from-amber-800 hover:to-amber-600 text-white px-8 py-5 rounded-full shadow-2xl flex items-center gap-3 text-lg font-bold">
-    <i class="fas fa-print text-2xl"></i>
-    Tulosta tai tallenna PDF
+  <!-- Takaisin ylös -nappi (valinnainen) -->
+  <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+          class="fixed bottom-8 right-8 bg-amber-800 text-white p-4 rounded-full shadow-lg hover:bg-amber-700 transition z-50">
+    <i class="fas fa-arrow-up text-2xl"></i>
   </button>
 
 </body>
