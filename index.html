@@ -4,157 +4,165 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kadonneen Sukuhistorian Metsästäjä – Löydä kadonneet sukujuuresi</title>
-  <meta name="description" content="DNA-pohjainen sukututkimus seikkailun hengessä – muinaiset matkat, haploryhmät, esivanhempien jäljet ja paljon muuta. Aloita matkasi nyt!">
+  <meta name="description" content="DNA-pohjainen sukututkimus seikkailun hengessä – muinaiset tarinat, haploryhmät ja kadonneet äitilinjat.">
+  
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
   <style>
     body {
       font-family: Georgia, serif;
-      background: linear-gradient(to bottom, #fdfaf3, #f5e9d2);
+      background: linear-gradient(to bottom, #fdfbf6, #efe6d6);
       background-attachment: fixed;
     }
+
+    /* Pergamenttimainen sisältö */
     .parchment {
-      background: rgba(255, 250, 240, 0.95);
-      box-shadow: 0 10px 40px rgba(139, 69, 19, 0.15);
-      border: 1px solid #d4a373;
+      background: rgba(255, 252, 245, 0.96);
+      border: 1px solid #d6c2a1;
+      box-shadow: 0 20px 60px rgba(60, 40, 20, 0.18);
     }
-    .adventure-btn {
-      background: linear-gradient(135deg, #b45309, #92400e);
-      transition: all 0.4s ease;
-    }
-    .adventure-btn:hover {
-      background: linear-gradient(135deg, #d97706, #b45309);
-      transform: translateY(-4px) scale(1.03);
-      box-shadow: 0 15px 30px rgba(180, 83, 9, 0.4);
-    }
-    .logo-hover:hover {
-      transform: scale(1.08) rotate(3deg);
-      filter: drop-shadow(0 0 15px rgba(180, 83, 9, 0.5));
-    }
+
+    /* Hero */
     .hero-bg {
-      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat fixed;
+      background:
+        linear-gradient(
+          rgba(20, 15, 10, 0.75),
+          rgba(10, 8, 6, 0.9)
+        ),
+        url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=2000')
+        center / cover no-repeat fixed;
+    }
+
+    /* Painikkeet */
+    .adventure-btn {
+      background: linear-gradient(135deg, #8b5a2b, #5c3a1d);
+      letter-spacing: 0.12em;
+      transition: all 0.35s ease;
+    }
+
+    .adventure-btn:hover {
+      background: linear-gradient(135deg, #a36a2f, #6d4523);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(120, 70, 30, 0.45);
+    }
+
+    /* Logo */
+    .logo-hover {
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+
+    .logo-hover:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 25px rgba(180, 140, 80, 0.45));
+    }
+
+    /* Kortit */
+    .card {
+      background: rgba(255,255,255,0.85);
+      border: 1px solid #e2d3b5;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(80, 50, 20, 0.25);
     }
   </style>
 </head>
+
 <body class="text-gray-900 leading-relaxed">
 
-  <!-- Hero / Header with Logo -->
-  <header class="hero-bg relative min-h-screen flex flex-col items-center justify-center text-center px-6">
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/80"></div>
-    
-    <div class="relative z-10 max-w-5xl mx-auto">
-      <!-- Logo -->
-      <div class="mb-10">
-        <img src="logo-4.png" alt="Kadonneen Sukuhistorian Metsästäjä" class="mx-auto h-40 md:h-64 drop-shadow-2xl logo-hover transition-transform duration-500">
-      </div>
+<!-- HERO / HEADER -->
+<header class="hero-bg min-h-screen flex items-center justify-center text-center px-6 relative">
+  <div class="max-w-5xl relative z-10">
 
-      <h1 class="text-5xl md:text-7xl font-bold text-amber-300 drop-shadow-2xl mb-6 tracking-wider">
-        Kadonneen Sukuhistorian Metsästäjä
-      </h1>
-      
-      <p class="text-2xl md:text-4xl text-white font-bold mb-10 drop-shadow-lg">
-        Löydä kadonneet juuresi – ennen kuin ne katoavat ikuisesti
-      </p>
+    <img src="logo-4.png"
+         alt="Kadonneen Sukuhistorian Metsästäjä"
+         class="mx-auto h-36 md:h-56 mb-12 logo-hover">
 
-      <p class="text-xl md:text-2xl text-amber-100 max-w-4xl mx-auto mb-12 leading-relaxed">
-        DNA-seikkailu, jossa esi-isiesi tarinat heräävät henkiin. Haploryhmien salat, muinaiset vaellukset, valloittajien jäljet ja henkilökohtainen sukutarina – kaikki yhdessä paikassa.
-      </p>
+    <h1 class="text-4xl md:text-6xl font-bold text-amber-200 tracking-widest mb-8">
+      Kadonneen Sukuhistorian Metsästäjä
+    </h1>
 
-      <a href="#aloita" 
-         class="adventure-btn inline-block text-white font-bold text-xl md:text-2xl py-6 px-16 rounded-full shadow-2xl uppercase tracking-widest">
-        Aloita seikkailu perimääsi nyt →
-      </a>
-    </div>
-  </header>
+    <p class="text-xl md:text-2xl text-amber-100 mb-10 max-w-3xl mx-auto leading-relaxed">
+      Arkeogeneettinen matka äitilinjoihin, jotka syntyivät ennen historiaa –
+      ja jatkuvat sinussa.
+    </p>
 
-  <!-- Pääosio -->
-  <main class="parchment py-20 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto my-12 rounded-2xl">
-    <section id="mika-tama-on" class="mb-24">
-      <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-10 text-center border-b-4 border-amber-800 pb-4 inline-block">
-        Mikä ihmeen Metsästäjä?
-      </h2>
-      
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <p class="text-xl leading-relaxed mb-6">
-            Kuvittele, että olet Indiana Jones – mutta aarteena ei ole kultainen patsas, vaan sinun oma sukusi tarina.  
-            Me kaivamme esiin kadonneita esi-isiä DNA:n, haploryhmien ja muinaisten löytöjen avulla.
-          </p>
-          <p class="text-xl leading-relaxed">
-            Saat henkilökohtaisen, seikkailullisen tarinan sukulinjastasi – karttoineen, muinaisine hautoineen ja viikinkiyhteyksineen.
-          </p>
-        </div>
-        <div class="text-center">
-          <i class="fas fa-map-signs text-8xl text-amber-700 mb-6 drop-shadow-lg"></i>
-          <p class="text-2xl font-bold text-amber-900">Seikkailu alkaa omasta DNA:stasi</p>
-        </div>
-      </div>
-    </section>
+    <a href="#aloita"
+       class="adventure-btn inline-block text-white font-bold text-sm md:text-base py-5 px-14 rounded-full uppercase">
+      Astu tarinaan →
+    </a>
 
-    <!-- Mitä saat -kortit -->
-    <section class="mb-24">
-      <h2 class="text-4xl font-bold text-amber-900 mb-12 text-center">
-        Mitä löydät seikkailusta?
-      </h2>
+  </div>
+</header>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white/80 p-8 rounded-xl shadow-xl border border-amber-200 hover:shadow-2xl transition">
-          <i class="fas fa-dna text-6xl text-amber-700 mb-6 block text-center"></i>
-          <h3 class="text-2xl font-bold mb-4 text-amber-900">Haploryhmän eepos</h3>
-          <p>Esi-isäsi/äitisi linjan tuhansien vuosien tarina – päätöksistä, vaelluksista ja sopeutumisista aina sinuun asti.</p>
-        </div>
+<!-- SISÄLTÖ -->
+<main class="parchment max-w-6xl mx-auto my-16 px-8 md:px-16 py-20 rounded-3xl">
 
-        <div class="bg-white/80 p-8 rounded-xl shadow-xl border border-amber-200 hover:shadow-2xl transition">
-          <i class="fas fa-map-marked-alt text-6xl text-amber-700 mb-6 block text-center"></i>
-          <h3 class="text-2xl font-bold mb-4 text-amber-900">Interaktiivinen kartta</h3>
-          <p>Migraatioreitti – pronssikaudelta viikinkeihin – näkyviin konkreettisilla muinaislöydöillä ja hautapaikoilla.</p>
-        </div>
+<section class="mb-24 text-center">
+  <h2 class="text-4xl font-bold text-amber-900 mb-8">
+    Mitä tämä on?
+  </h2>
+  <p class="text-xl max-w-3xl mx-auto">
+    Tämä ei ole perinteinen sukututkimus.
+    Tämä on arkeogeneettinen kertomus, jossa DNA, muinaisjäännökset
+    ja tieteellinen tutkimus muodostavat yhden ehjän tarinan.
+  </p>
+</section>
 
-        <div class="bg-white/80 p-8 rounded-xl shadow-xl border border-amber-200 hover:shadow-2xl transition">
-          <i class="fas fa-scroll text-6xl text-amber-700 mb-6 block text-center"></i>
-          <h3 class="text-2xl font-bold mb-4 text-amber-900">PDF + äänitarina</h3>
-          <p>Kaunis, jaettava raportti + halutessasi ääniversio, jonka voit kuunnella vaikka nuotion ääressä.</p>
-        </div>
-      </div>
-    </section>
+<section class="grid md:grid-cols-3 gap-10 mb-24">
 
-    <!-- Hinnat & CTA -->
-    <section id="aloita" class="text-center py-16 bg-gradient-to-r from-amber-900/20 to-amber-700/20 rounded-3xl my-16">
-      <h2 class="text-5xl font-bold text-amber-900 mb-8">
-        Valmiina lähtöön?
-      </h2>
-      
-      <p class="text-2xl mb-10 max-w-3xl mx-auto">
-        Aloita seikkailu vain <span class="font-bold text-amber-800">49 €</span>:lla – saat täyden tarinan + kartan + PDF:n.
-      </p>
+  <div class="card p-8 rounded-2xl text-center">
+    <i class="fas fa-dna text-5xl text-amber-700 mb-6"></i>
+    <h3 class="text-2xl font-bold mb-4">Haploryhmän tarina</h3>
+    <p>Äitilinjan dokumentoitu matka Anatoliasta megaliitteihin, vaelluksiin ja mereen.</p>
+  </div>
 
-      <div class="flex flex-col sm:flex-row justify-center gap-8">
-        <a href="https://forms.gle/oma-google-form-linkki-tähän" 
-           class="adventure-btn text-white font-bold text-xl py-6 px-12 rounded-full shadow-2xl uppercase">
-          Tilaa tarinani nyt
-        </a>
-        
-        <a href="#yhteystiedot" 
-           class="bg-white text-amber-900 font-bold text-xl py-6 px-12 rounded-full shadow-xl border-2 border-amber-800 hover:bg-amber-50 transition">
-          Kysy ensin →
-        </a>
-      </div>
-    </section>
+  <div class="card p-8 rounded-2xl text-center">
+    <i class="fas fa-map-marked-alt text-5xl text-amber-700 mb-6"></i>
+    <h3 class="text-2xl font-bold mb-4">Reitti kartalla</h3>
+    <p>Muinaiset haudat, löydöt ja siirtymät sidottuna aikaan ja paikkaan.</p>
+  </div>
 
-    <!-- Footer -->
-    <footer class="text-center py-12 border-t border-amber-800/30 mt-20">
-      <p class="text-lg">© 2026 Kadonneen Sukuhistorian Metsästäjä</p>
-      <p class="mt-4 text-sm text-gray-600">
-        DNA-seikkailuja vastuullisesti • Yhteydenotot: info@kshm.fi
-      </p>
-    </footer>
-  </main>
+  <div class="card p-8 rounded-2xl text-center">
+    <i class="fas fa-scroll text-5xl text-amber-700 mb-6"></i>
+    <h3 class="text-2xl font-bold mb-4">PDF-kertomus</h3>
+    <p>Tulostettava, jaettava ja säilytettävä sukutarina.</p>
+  </div>
 
-  <!-- Takaisin ylös -nappi -->
-  <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-          class="fixed bottom-8 right-8 bg-amber-800 text-white p-4 rounded-full shadow-lg hover:bg-amber-700 transition z-50">
-    <i class="fas fa-arrow-up text-2xl"></i>
-  </button>
+</section>
+
+<section id="aloita" class="text-center py-16 bg-amber-900/10 rounded-3xl">
+  <h2 class="text-4xl font-bold text-amber-900 mb-6">
+    Aloita matkasi
+  </h2>
+
+  <p class="text-xl mb-10">
+    Täysi henkilökohtainen kertomus<br>
+    <strong class="text-amber-800">49 €</strong>
+  </p>
+
+  <a href="https://forms.gle/oma-google-form-linkki-tähän"
+     class="adventure-btn text-white font-bold py-5 px-14 rounded-full uppercase">
+    Tilaa kertomukseni
+  </a>
+</section>
+
+<footer class="text-center mt-20 pt-10 border-t border-amber-800/30">
+  <p>© 2026 Kadonneen Sukuhistorian Metsästäjä</p>
+  <p class="text-sm text-gray-600 mt-3">
+    info@kshm.fi
+  </p>
+</footer>
+
+</main>
+
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})"
+        class="fixed bottom-8 right-8 bg-amber-800 text-white p-4 rounded-full shadow-lg hover:bg-amber-700 transition">
+  <i class="fas fa-arrow-up"></i>
+</button>
 
 </body>
 </html>
