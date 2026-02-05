@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kadonneen Sukuhistorian Metsästäjä – Löydä kadonneet sukujuuresi</title>
-  <meta name="description" content="DNA-pohjainen sukututkimus seikkailun hengessä – muinaiset tarinat, haploryhmät, viikinkien jäljet ja paljon muuta. Aloita matkasi nyt!">
+
+  <title>Kadonneen Sukuhistorian Metsästäjä</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -16,19 +16,23 @@
       background-attachment: fixed;
     }
 
-    /* Header / brändivyöhyke */
+    /* HEADER */
     .brand-header {
-      background:
-        radial-gradient(circle at top, #f6efe2 0%, #e9dcc3 40%, #d8c4a2 100%);
-      border-bottom: 1px solid #cdb58c;
+      background: linear-gradient(
+        to bottom,
+        #f7f2e8 0%,
+        #efe3cd 60%,
+        #e4d2ae 100%
+      );
+      border-bottom: 1px solid #cdb489;
     }
 
-    .brand-frame {
-      border: 1px solid #c9b28a;
-      background: rgba(255, 252, 245, 0.9);
+    .logo-frame {
+      background: rgba(255, 252, 245, 0.96);
+      border: 1px solid #d2b88a;
       box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.6),
-        0 12px 30px rgba(90, 60, 30, 0.25);
+        0 18px 48px rgba(120, 80, 40, 0.25),
+        inset 0 0 0 1px rgba(255,255,255,0.6);
     }
 
     .logo-hover {
@@ -36,59 +40,37 @@
     }
 
     .logo-hover:hover {
-      transform: scale(1.04);
-      filter: drop-shadow(0 0 18px rgba(150, 110, 60, 0.45));
+      transform: scale(1.02);
+      filter: drop-shadow(0 0 18px rgba(140, 100, 60, 0.45));
     }
 
+    /* SISÄLTÖ */
     .parchment {
-      background: rgba(255, 250, 240, 0.95);
-      box-shadow: 0 10px 40px rgba(139, 69, 19, 0.15);
-      border: 1px solid #d4a373;
+      background: rgba(255, 250, 240, 0.96);
+      box-shadow: 0 14px 44px rgba(120, 70, 30, 0.18);
+      border: 1px solid #d1b07c;
     }
 
-    .adventure-btn {
-      background: linear-gradient(135deg, #8b5a2b, #5c3a1d);
-      transition: all 0.35s ease;
-    }
-
-    .adventure-btn:hover {
-      background: linear-gradient(135deg, #a36a2f, #6d4523);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(120, 70, 30, 0.45);
+    /* FOOTER */
+    .site-footer {
+      color: #5f4a2c;
+      border-top: 1px solid #cdb489;
+      background: linear-gradient(to bottom, #efe3cd, #e4d2ae);
     }
   </style>
 </head>
 
 <body class="text-gray-900 leading-relaxed">
 
-<!-- HEADER / LOGO-INTEGRAATIO -->
-<header class="brand-header py-20 px-6">
+<!-- HEADER -->
+<header class="brand-header py-28 px-6">
   <div class="max-w-6xl mx-auto text-center">
-
-    <div class="brand-frame rounded-3xl px-8 md:px-16 py-14 inline-block">
-
-      <img src="logo-4.png"
-           alt="Kadonneen Sukuhistorian Metsästäjä"
-           class="mx-auto h-32 md:h-48 mb-10 logo-hover">
-
-      <h1 class="text-4xl md:text-6xl font-bold text-amber-900 tracking-wider mb-6">
-        Kadonneen Sukuhistorian Metsästäjä
-      </h1>
-
-      <p class="text-xl md:text-2xl text-gray-800 font-semibold mb-8">
-        Löydä kadonneet juuresi – ennen kuin ne katoavat ikuisesti
-      </p>
-
-      <p class="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto mb-10 leading-relaxed">
-        DNA-seikkailu, jossa esi-isiesi tarinat heräävät henkiin.  
-        Haploryhmien salat, muinaiset vaellukset, viikinkien jäljet ja henkilökohtainen sukutarina – kaikki yhdessä paikassa.
-      </p>
-
-      <a href="#aloita"
-         class="adventure-btn inline-block text-white font-bold text-lg md:text-xl py-5 px-14 rounded-full shadow-xl uppercase tracking-widest">
-        Aloita seikkailu →
-      </a>
-
+    <div class="logo-frame inline-block rounded-3xl px-16 py-20">
+      <img
+        src="logo-4.png"
+        alt="Kadonneen Sukuhistorian Metsästäjä"
+        class="mx-auto h-48 md:h-64 lg:h-72 logo-hover"
+      />
     </div>
   </div>
 </header>
@@ -96,12 +78,23 @@
 <!-- PÄÄOSIO (ENTISELLÄÄN) -->
 <main class="parchment py-20 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto my-12 rounded-2xl">
 
-  <!-- (loput sisällöstäsi jatkuu TÄSMÄLLEEN sellaisenaan) -->
+  <!-- SINUN ALKUPERÄINEN SISÄLTÖSI JATKUU TÄSSÄ TÄSMÄLLEEN SELLASENAAN -->
 
 </main>
 
-<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-        class="fixed bottom-8 right-8 bg-amber-800 text-white p-4 rounded-full shadow-lg hover:bg-amber-700 transition z-50">
+<!-- FOOTER -->
+<footer class="site-footer text-center py-10 mt-20">
+  <p class="text-sm">
+    © 2026 Kadonneen Sukuhistorian Metsästäjä
+  </p>
+</footer>
+
+<!-- TAKAISIN YLÖS -->
+<button
+  onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+  class="fixed bottom-8 right-8 bg-amber-800 text-white p-4 rounded-full shadow-lg hover:bg-amber-700 transition z-50"
+  aria-label="Takaisin ylös"
+>
   <i class="fas fa-arrow-up text-2xl"></i>
 </button>
 
