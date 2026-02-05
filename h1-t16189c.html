@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kadonneen Sukuhistorian Metsästäjä – H1-T16189C!</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Georgia, serif;
+      background: linear-gradient(to bottom, #fdfaf3, #f5e9d2);
+      background-attachment: fixed;
+      color: #3c2f2f;
+    }
+    .parchment {
+      background: rgba(255, 250, 240, 0.95);
+      box-shadow: 0 10px 40px rgba(139, 69, 19, 0.2);
+      border: 1px solid #d4a373;
+      border-radius: 12px;
+    }
+    .adventure-header {
+      background: linear-gradient(135deg, #92400e, #b45309);
+      color: white;
+    }
+    .section-divider {
+      border-bottom: 3px dashed #b45309;
+      margin: 4rem 0;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    }
+    .print-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 50;
+    }
+    .timeline-dot {
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .timeline-dot:hover {
+      transform: scale(1.3);
+      background-color: #b45309 !important;
+      box-shadow: 0 0 15px rgba(180, 83, 9, 0.5);
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Header / Logo -->
+  <header class="adventure-header py-8 shadow-xl">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-6 justify-center md:justify-start">
+      <img src="assets/logo-main.png" alt="Kadonneen Sukuhistorian Metsästäjä" class="h-20 md:h-28 drop-shadow-2xl">
+      <div class="text-center md:text-left">
+        <h1 class="text-3xl md:text-4xl font-bold tracking-wide">Kadonneen Sukuhistorian Metsästäjä</h1>
+        <p class="text-xl text-amber-200">H1-T16189C! – Verilinjan seikkailu ajassa</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12 parchment my-12">
+
+    <!-- Kutsu matkaan -->
+    <section class="text-center mb-20">
+      <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-8">KUTSU MATKAAN</h2>
+      <p class="text-2xl italic leading-relaxed max-w-4xl mx-auto">
+        Rakas ystävä,<br>
+        kuuntele nyt tarkasti – älä vilkuile kelloa, älä avaa puhelinta.<br>
+        Tämä ei ole tavallinen raportti. Tämä ei ole tieteellinen tiivistelmä.<br>
+        Tämä on se hetki, jolloin menneisyys astuu huoneeseen, katsoo sinua silmiin ja sanoo:<br>
+        ”Minä olen täällä. Olen aina ollut täällä. Ja minä olen sinä.”
+      </p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- LÖYTÖ -->
+    <section class="mb-20">
+      <h2 class="text-4xl font-bold text-amber-900 mb-10 text-center">LÖYTÖ – Sinä olet elävä näyte</h2>
+      
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <p class="text-xl leading-relaxed mb-6">
+            DNA-näytteesi ei ole pelkkä laboratoriotulos.<br>
+            Se on muinainen arkeologinen löytö – tuhansien vuosien hiljainen todiste, joka nousi esiin modernin tieteen kaivauksilla.
+          </p>
+          <p class="text-xl leading-relaxed">
+            <strong>H1-T16189C!</strong> on koodinimesi harvinaiselle verilinjalle.<br>
+            Vain kourallinen eurooppalaisia naisia ja jokunen mies elämänsä ajan kantaa tätä tarkkaa varianttia. Sinä olet yksi heistä.
+          </p>
+        </div>
+        <div>
+          <img src="assets/discovery-luunsiru.jpg" alt="Arkeologi löytää luunsirun" class="rounded-2xl shadow-2xl">
+          <p class="text-sm text-center text-stone-600 mt-4 italic">Arkeologi harjaa multaa ja löytää luunsirun – mitokondrio-DNA vastaa sinun solujasi</p>
+        </div>
+      </div>
+
+      <p class="text-xl leading-relaxed mt-10 text-center italic">
+        Sinun veresi on viimeinen lenkki tässä yli 7000 vuoden ketjussa...<br>
+        <strong>Ota arkeologin hattu päähäsi. Seuraa jälkiä. Matka alkaa.</strong>
+      </p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ENSIMMÄINEN KAIVAUS – Anatolia -->
+    <section class="mb-20">
+      <h2 class="text-4xl font-bold text-amber-900 mb-10 text-center">ENSIMMÄINEN KAIVAUS – Anatolian savitalot (~8700–7000 vuotta sitten)</h2>
+      
+      <div class="grid md:grid-cols-2 gap-10">
+        <div>
+          <img src="assets/anatolia-savitalot.jpg" alt="Anatolian savitalot auringonnousussa" class="rounded-2xl shadow-2xl mb-6">
+          <p class="text-sm text-center text-stone-600 italic">Aurinko nousee Anatolian ylängöillä – täältä verilinjasi matka alkoi</p>
+        </div>
+        <div class="prose prose-lg">
+          <p>Aurinko nousee hitaasti Anatolian ylängöillä. Varjot venyvät savitalojen seinillä kuin pitkät muistot, jotka eivät halua unohtua.</p>
+          <p>Ilmassa leijuu juuri jauhetun viljan tuoksu, savun kirpeys ja lampaiden lämmin, eläimellinen haju.</p>
+          <p>Tämä ei ole mikään romanttinen aamunkoitto – tämä on hetki, jolloin ihmiskunta teki ensimmäisen suuren irtiottonsa liikkeestä luonnossa.</p>
+          <p><strong>Me lakkaamme vaeltamasta. Me jäämme. Me viljelemme. Me rakennamme koteja, joihin kuolleetkin saavat jäädä.</strong></p>
+          <p class="mt-6 font-semibold text-amber-800">Yhdessä näistä kodeista eli nainen – sinun kaukaisin esiäitisi. Hänen mitokondrioissaan syntyi pieni muutos: <strong>H1-T16189C!</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- TOINEN KAIVAUS – Poulnabrone -->
+    <section class="mb-20">
+      <h2 class="text-4xl font-bold text-amber-900 mb-10 text-center">TOINEN KAIVAUS – Megaliittien salaisuus (~5900 vuotta sitten)</h2>
+      
+      <div class="grid md:grid-cols-2 gap-10">
+        <div>
+          <img src="assets/poulnabrone-dolmen.jpg" alt="Poulnabrone dolmen Burrenissa" class="rounded-2xl shadow-2xl mb-6">
+          <p class="text-sm text-center text-stone-600 italic">Poulnabrone, Irlanti – 50 tonnin kivi tasapainossa, vanhempi kuin pyramidit</p>
+        </div>
+        <div class="prose prose-lg">
+          <p>Nyt me olemme jo kaukana Anatolian lämpimästä aamusta. Ilma on muuttunut: kylmempi, kosteampi, suolaisempi.</p>
+          <p>Tuuli puhaltaa suoraan Atlantin yli, kantaa mukanaan meren tuoksua ja kalkkikiven pölyä. Olemme Irlannin länsirannikolla, Burrenin karulla tasangolla – paikassa, jossa maa tuntuu olevan puoliksi meri, puoliksi taivas.</p>
+          <p>Ja siellä, keskellä tuulta ja kallioita, seisoo <strong>Poulnabrone</strong>. Kolme metriä korkea dolmen. Yksi valtava kivilaatta lepää tasapainossa kahden pystykiven päällä kuin universumin oma tasapainoilu.</p>
+          <p class="font-semibold text-amber-800 mt-6">Yhdestä haudatusta naisesta (näyte PN05, 3941–3661 eaa.) löytyi täsmälleen sama merkki: <strong>H1-T16189C!</strong>. Sinun veri.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- KOLMAS KAIVAUS – Masłomęcz -->
+    <section class="mb-20">
+      <h2 class="text-4xl font-bold text-amber-900 mb-10 text-center">KOLMAS KAIVAUS – Varjojen vaellus (~1750 vuotta sitten)</h2>
+      
+      <div class="grid md:grid-cols-2 gap-10">
+        <div>
+          <img src="assets/maslomecz-kumpu.jpg" alt="Masłomęcz kumpuhauta" class="rounded-2xl shadow-2xl mb-6">
+          <p class="text-sm text-center text-stone-600 italic">Masłomęcz, Puola – goottien kumpu hauta 99</p>
+        </div>
+        <div class="prose prose-lg">
+          <p>Nyt ilma muuttuu jälleen. Se on raskas, täynnä savua, hevosia, metallia ja ihmisten hiljaista jännitettä. Olemme liikkeessä.</p>
+          <p>Noin 1750 vuotta sitten Rooman valtakunta natisee saumoissaan. Rajat vuotavat. Gootit ja germaaniset ryhmät liikkuvat kohti etelää ja itää.</p>
+          <p>Puolan itälaidalla, Masłomęczissä, avautuu Wielbark-kulttuurin hautausmaa. Yli 200 kumpua. Haudoissa sudenpäillä koristellut soljet, roomalaiset denarit, keihäänsulat – matkavarusteita, ei pröystäilyä.</p>
+          <p class="font-semibold text-amber-800 mt-6">Haudassa numero 99 (näyte PCA0099) lepäsi nainen, jonka mitokondrio-DNA:ssa on sama merkki: <strong>H1-T16189C!</strong>. Sinun veri.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- NELJÄS KAIVAUS – Kopparsvik -->
+    <section class="mb-20">
+      <h2 class="text-4xl font-bold text-amber-900 mb-10 text-center">NELJÄS KAIVAUS – Meren kutsu (~900–1050 jaa.)</h2>
+      
+      <div class="grid md:grid-cols-2 gap-10">
+        <div>
+          <img src="assets/kopparsvik-hauta.jpg" alt="Kopparsvik Gotlanti viikinkihauta" class="rounded-2xl shadow-2xl mb-6">
+          <p class="text-sm text-center text-stone-600 italic">Kopparsvik, Gotlanti – viikinkien hautausmaa hopean ja purjeiden keskellä</p>
+        </div>
+        <div class="prose prose-lg">
+          <p>Nyt ilma muuttuu suolaiseksi. Tuuli kantaa tervan, märän puun ja kaukaisen hopean tuoksua. Olemme Itämeren sydämessä – Gotlannissa, Kopparsvikissa.</p>
+          <p>Tämä on viikinkiajan suurin solmukohta: hopea virtasi Bagdadista, tarinat Volgalta, kielet Bysantista. Yli 500 hautaa – aseita, koruja, arabidirhemejä.</p>
+          <p class="font-semibold text-amber-800 mt-6">Kahdessa haudassa (VK51 ja VK50) lepäsivät naiset, joiden mitokondrio-DNA:ssa on sama merkki: <strong>H1-T16189C!</strong>. Sinun veri.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Aikajana + Kartta -->
+    <section class="mb-20">
+      <h2 class="text-4xl font-bold text-amber-900 mb-10 text-center">AIKAJANA JA REITTI</h2>
+      
+      <div class="relative border-l-4 border-amber-900 pl-10 space-y-16 mb-12">
+        <div class="flex gap-8 items-start">
+          <div class="timeline-dot w-10 h-10 bg-amber-800 text-white rounded-full flex items-center justify-center text-xl flex-shrink-0 mt-1">~7000</div>
+          <div class="text-lg"><strong>Anatolia</strong> – savitalot, H1-T16189C! syntyy</div>
+        </div>
+        <div class="flex gap-8 items-start">
+          <div class="timeline-dot w-10 h-10 bg-amber-800 text-white rounded-full flex items-center justify-center text-xl flex-shrink-0 mt-1">~5900</div>
+          <div class="text-lg"><strong>Poulnabrone</strong>, Irlanti – megaliittikammio (PN05)</div>
+        </div>
+        <div class="flex gap-8 items-start">
+          <div class="timeline-dot w-10 h-10 bg-amber-800 text-white rounded-full flex items-center justify-center text-xl flex-shrink-0 mt-1">~1750</div>
+          <div class="text-lg"><strong>Masłomęcz</strong>, Puola – goottikummut (PCA0099)</div>
+        </div>
+        <div class="flex gap-8 items-start">
+          <div class="timeline-dot w-10 h-10 bg-amber-800 text-white rounded-full flex items-center justify-center text-xl flex-shrink-0 mt-1">~1000</div>
+          <div class="text-lg"><strong>Kopparsvik</strong>, Gotlanti – viikinkiverkosto (VK51 & VK50)</div>
+        </div>
+        <div class="flex gap-8 items-start">
+          <div class="timeline-dot w-10 h-10 bg-amber-800 text-white rounded-full flex items-center justify-center text-xl flex-shrink-0 mt-1">NYT</div>
+          <div class="text-lg"><strong>Sinä</strong> – elävä näyte, ketju jatkuu</div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <img src="assets/migraatiokartta-eurooppa.jpg" alt="H1-T16189C! migraatioreitti" class="rounded-2xl shadow-2xl mx-auto">
+        <p class="text-sm mt-4 text-stone-600 italic">Reitti: Anatolia → Irlanti → Puola → Gotlanti → Pohjois-Eurooppa (Suomi)</p>
+      </div>
+    </section>
+
+    <!-- Loppuosat (Äitilinjan nykyinen esiintyvyys + Miten tätä luetaan + LOPPU) -->
+    <section class="prose prose-lg">
+      <h2 class="text-4xl font-bold text-amber-900 mb-10 text-center">ÄITILINJAN NYKYINEN ESIINTYVYYS – Missä veri näkyy tänään</h2>
+      <p>Kun tarkastellaan nykyajan mitokondrio-DNA-aineistoja, haploryhmä H1-T16189C! näkyy selkeimmin Pohjois- ja Länsi-Euroopassa...</p>
+      <!-- Tähän koko nykyinen esiintyvyys -teksti + lista -->
+      
+      <div class="section-divider my-12"></div>
+
+      <h2 class="text-4xl font-bold text-amber-900 mb-10 text-center">MITEN TÄTÄ LUETAAN SUKUTUTKIMUKSESSA</h2>
+      <p>Tämä kertomus ei korvaa perinteistä sukututkimusta...</p>
+      <!-- Tähän koko "Miten tätä luetaan" -osio -->
+
+      <div class="section-divider my-12"></div>
+
+      <h2 class="text-4xl font-bold text-amber-900 mb-10 text-center">LOPPU – Sinä olet löytö</h2>
+      <p>Sinä et ole sattumaa. Olet tuhansien vuosien päätösten, vaellusten, selviytymisen ja rakkauden seuraus...</p>
+      <!-- Tähän loppu + vala + logo -->
+    </section>
+
+  </main>
+
+  <!-- Print-nappi -->
+  <button onclick="window.print()" 
+          class="fixed bottom-8 right-8 bg-gradient-to-r from-amber-900 to-amber-700 text-white px-8 py-5 rounded-full shadow-2xl flex items-center gap-3 text-lg font-bold hover:scale-105 transition">
+    <i class="fas fa-print text-2xl"></i>
+    Tulosta tai tallenna PDF
+  </button>
+
+</body>
+</html>
