@@ -1,10 +1,13 @@
+Tässä koko HTML koodisi päivitettynä: poistettu Indiana Jones, vuodet ja lisätty tarinalliset, kaikki haploryhmät kattavat tekstit + kevyt hienosäätö copyyn.
+
+```html
 <!DOCTYPE html>
 <html lang="fi" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kadonneen Sukuhistorian Metsästäjä – Löydä kadonneet sukujuuresi</title>
-  <meta name="description" content="DNA-pohjainen sukututkimus seikkailun hengessä – muinaiset tarinat, haploryhmät, valloittajien jäljet ja paljon muuta. Aloita matkasi nyt!">
+  <meta name="description" content="DNA-pohjainen sukututkimus seikkailun hengessä – muinaiset tarinat, haploryhmät, valloittajien ja vaeltajien jäljet. Aloita matkasi nyt!">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous"/>
@@ -33,12 +36,11 @@
       box-shadow: 0 15px 30px rgba(180, 83, 9, 0.4);
     }
 
-   /* UUSI HEADER – LÄHES VALKOINEN, PEHMEÄ */
-.brand-header {
-  background: #f5e9d2;
-  border-bottom: 1px solid #e6d8b8;
-}
-
+    /* Header */
+    .brand-header {
+      background: #f5e9d2;
+      border-bottom: 1px solid #e6d8b8;
+    }
 
     .logo-frame {
       background: rgba(255, 252, 245, 0.97);
@@ -60,41 +62,55 @@
 </head>
 
 <body class="text-gray-900 leading-relaxed">
-<header class="brand-header py-32 px-6 text-center">
-  <div class="max-w-7xl mx-auto">
-    <img
-      src="logo-4.png"
-      alt="Kadonneen Sukuhistorian Metsästäjä"
-      class="mx-auto h-80 md:h-[26rem] lg:h-[32rem] logo-hover transition-transform duration-500"
-    />
-  </div>
-</header>
 
+  <!-- Header / logo -->
+  <header class="brand-header py-32 px-6 text-center">
+    <div class="max-w-7xl mx-auto">
+      <img
+        src="logo-4.png"
+        alt="Kadonneen Sukuhistorian Metsästäjä"
+        class="mx-auto h-80 md:h-[26rem] lg:h-[32rem] logo-hover transition-transform duration-500"
+      />
+      <h1 class="mt-8 text-3xl md:text-4xl font-bold text-amber-900 tracking-wide">
+        Löydä kadonneet juuresi kaukaa menneisyydestä
+      </h1>
+      <p class="mt-4 text-lg md:text-xl text-amber-800 max-w-2xl mx-auto">
+        Kirjamainen DNA-seikkailu, jossa haploryhmäsi muutetaan tarinaksi – 
+        vaelluksista, risteävistä poluista ja selviytyjälinjoista, jotka päättyvät sinuun.
+      </p>
+    </div>
+  </header>
 
   <!-- Pääosio -->
-<main class="parchment py-20 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto my-12 rounded-2xl">
+  <main class="parchment py-20 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto my-12 rounded-2xl">
 
-<section id="mika-tama-on" class="mb-24">
-  <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-10 text-center border-b-4 border-amber-800 pb-4 inline-block">
-    Mikä ihmeen Metsästäjä?
-  </h2>
+    <section id="mika-tama-on" class="mb-24">
+      <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-10 text-center border-b-4 border-amber-800 pb-4 inline-block">
+        Mikä ihmeen Metsästäjä?
+      </h2>
 
-  <div class="grid md:grid-cols-2 gap-12 items-center">
-    <div>
-      <p class="text-xl leading-relaxed mb-6">
-        Kuvittele, että olet Indiana Jones – mutta aarteena ei ole kultainen patsas, vaan sinun oma sukusi tarina.
-        Me kaivamme esiin kadonneita esi-isiä DNA:n, haploryhmien ja muinaisten löytöjen avulla.
-      </p>
-      <p class="text-xl leading-relaxed">
-        Saat henkilökohtaisen, seikkailullisen tarinan sukulinjastasi – karttoineen, muinaisine haudoineen ja viikinkiyhteyksineen.
-      </p>
-    </div>
-    <div class="text-center">
-      <i class="fas fa-map-signs text-8xl text-amber-700 mb-6 drop-shadow-lg"></i>
-      <p class="text-2xl font-bold text-amber-900">Seikkailu alkaa omasta DNA:stasi</p>
-    </div>
-  </div>
-</section>
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="text-xl leading-relaxed mb-6">
+            Kadonneen Sukuhistorian Metsästäjä ei ole pelkkä DNA-raportti, vaan 
+            tarina, jossa sinä olet päähenkilö. Tutkimme haploryhmääsi – oli se 
+            sitten isälinja, äitilinja tai molemmat – ja seuraamme sitä läpi 
+            muinaisten väestöliikkeiden ja arkeologisten löytöjen.
+          </p>
+          <p class="text-xl leading-relaxed">
+            Rakennamme henkilökohtaisen, seikkailullisen kertomuksen sukulinjastasi: 
+            missä linjaasi on havaittu, millaisiin kulttuureihin se kytkeytyy ja 
+            millaisia tarinoita muinaiset DNA-näytteet siitä kertovat.
+          </p>
+        </div>
+        <div class="text-center">
+          <i class="fas fa-map-signs text-8xl text-amber-700 mb-6 drop-shadow-lg"></i>
+          <p class="text-2xl font-bold text-amber-900">
+            Seikkailu alkaa omasta DNA:stasi
+          </p>
+        </div>
+      </div>
+    </section>
 
     <!-- Mitä saat -kortit -->
     <section class="mb-24">
@@ -105,20 +121,32 @@
       <div class="grid md:grid-cols-3 gap-8">
         <div class="bg-white/80 p-8 rounded-xl shadow-xl border border-amber-200 hover:shadow-2xl transition">
           <i class="fas fa-dna text-6xl text-amber-700 mb-6 block text-center"></i>
-          <h3 class="text-2xl font-bold mb-4 text-amber-900">Haploryhmän eepos</h3>
-          <p>Esi-isäsi/äitisi linjan tuhansien vuosien tarina – päätöksistä, vaelluksista ja sopeutumisista aina sinuun asti.</p>
+          <h3 class="text-2xl font-bold mb-4 text-amber-900">Haploryhmän tarina</h3>
+          <p>
+            Henkilökohtainen kertomus äiti- ja/tai isälinjastasi: miten se on 
+            liikkunut, mihin se on sekoittunut ja miksi juuri sinun linjasi on 
+            säilynyt nykypäivään asti.
+          </p>
         </div>
 
         <div class="bg-white/80 p-8 rounded-xl shadow-xl border border-amber-200 hover:shadow-2xl transition">
           <i class="fas fa-map-marked-alt text-6xl text-amber-700 mb-6 block text-center"></i>
-          <h3 class="text-2xl font-bold mb-4 text-amber-900">Interaktiivinen kartta</h3>
-          <p>Migraatioreitti – pronssikaudelta viikinkeihin – näkyviin konkreettisilla muinaislöydöillä ja hautapaikoilla.</p>
+          <h3 class="text-2xl font-bold mb-4 text-amber-900">Seikkailukartta</h3>
+          <p>
+            Visuaalinen reitti haploryhmäsi tunnetuista löytöpaikoista ja 
+            nykyisestä levinneisyydestä. Maailman kattavin haploryhmädata 
+            käännettynä selkeäksi kartaksi.
+          </p>
         </div>
 
         <div class="bg-white/80 p-8 rounded-xl shadow-xl border border-amber-200 hover:shadow-2xl transition">
           <i class="fas fa-scroll text-6xl text-amber-700 mb-6 block text-center"></i>
           <h3 class="text-2xl font-bold mb-4 text-amber-900">PDF + äänitarina</h3>
-          <p>Kaunis, jaettava raportti + halutessasi ääniversio, jonka voit kuunnella vaikka nuotion ääressä.</p>
+          <p>
+            Viimeistelty, jaettava PDF-kirja sekä halutessasi äänitarina, joka 
+            kuljettaa sinut läpi oman verilinjan seikkailun – arkeologisten 
+            löytöjen ja haploryhmäsi taustojen äärelle.
+          </p>
         </div>
       </div>
     </section>
@@ -130,7 +158,8 @@
       </h2>
       
       <p class="text-2xl mb-10 max-w-3xl mx-auto">
-        Aloita seikkailu vain <span class="font-bold text-amber-800">49 €</span>:lla – saat täyden tarinan + kartan + PDF:n.
+        Aloita seikkailu vain <span class="font-bold text-amber-800">49 €</span>:lla – 
+        saat oman haploryhmäsi tarinan, seikkailukartan ja PDF-kirjan.
       </p>
 
       <div class="flex flex-col sm:flex-row justify-center gap-8">
@@ -146,20 +175,26 @@
       </div>
     </section>
 
+    <!-- Footer -->
     <footer class="text-center py-12 border-t border-amber-800/30 mt-20">
-  <p class="text-lg">© 2026 Kadonneen Sukuhistorian Metsästäjä</p>
-  <p class="mt-4 text-sm text-gray-600">
-    DNA-seikkailuja vastuullisesti • Yhteydenotot: info@kshm.fi
-  </p>
-</footer>
+      <p class="text-lg">© 2026 Kadonneen Sukuhistorian Metsästäjä</p>
+      <p class="mt-4 text-sm text-gray-600">
+        DNA-seikkailuja vastuullisesti • Yhteydenotot: 
+        <a href="mailto:info@kshm.fi" class="underline decoration-amber-700">
+          info@kshm.fi
+        </a>
+      </p>
+    </footer>
 
-</main>
+  </main>
 
-<button
-  onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-  class="fixed bottom-8 right-8 bg-amber-800 text-white p-4 rounded-full shadow-lg hover:bg-amber-700 transition z-50">
-  <i class="fas fa-arrow-up text-2xl"></i>
-</button>
+  <!-- Takaisin ylös -nappi -->
+  <button
+    onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+    class="fixed bottom-8 right-8 bg-amber-800 text-white p-4 rounded-full shadow-lg hover:bg-amber-700 transition z-50">
+    <i class="fas fa-arrow-up text-2xl"></i>
+  </button>
 
 </body>
 </html>
+```
