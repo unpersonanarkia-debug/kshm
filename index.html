@@ -9,61 +9,66 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     body {
-      background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&q=80&w=2000');
-      background-size: cover;
+      font-family: Georgia, serif;
+      background: linear-gradient(to bottom, #fdfaf3, #f5e9d2);
       background-attachment: fixed;
-      background-position: center;
     }
     .parchment {
-      background: rgba(255, 248, 220, 0.92);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      background: rgba(255, 250, 240, 0.95);
+      box-shadow: 0 10px 40px rgba(139, 69, 19, 0.15);
       border: 1px solid #d4a373;
     }
     .adventure-btn {
       background: linear-gradient(135deg, #b45309, #92400e);
-      transition: all 0.3s;
+      transition: all 0.4s ease;
     }
     .adventure-btn:hover {
       background: linear-gradient(135deg, #d97706, #b45309);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(180, 83, 9, 0.5);
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(180, 83, 9, 0.4);
+    }
+    .logo-hover:hover {
+      transform: scale(1.08) rotate(3deg);
+      filter: drop-shadow(0 0 15px rgba(180, 83, 9, 0.5));
+    }
+    .hero-bg {
+      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat fixed;
     }
   </style>
 </head>
-<body class="text-gray-900 font-serif leading-relaxed">
+<body class="text-gray-900 leading-relaxed">
 
-  <!-- Hero / Header -->
-  <header class="relative min-h-screen flex items-center justify-center text-center px-6">
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/70"></div>
+  <!-- Hero / Header with Logo -->
+  <header class="hero-bg relative min-h-screen flex flex-col items-center justify-center text-center px-6">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/80"></div>
     
     <div class="relative z-10 max-w-5xl mx-auto">
-      <!-- Logo placeholder – korvaa omalla logokuvallasi -->
-      <div class="mb-8">
-        <img src="LOGO-TIEDOSTON-NIMI.png" alt="Kadonneen Sukuhistorian Metsästäjä" class="mx-auto h-48 md:h-64 drop-shadow-2xl">
+      <!-- Logo -->
+      <div class="mb-10">
+        <img src="https://files.catbox.moe/8k0z3j.png" alt="Kadonneen Sukuhistorian Metsästäjä" class="mx-auto h-40 md:h-64 drop-shadow-2xl logo-hover transition-transform duration-500">
       </div>
 
-      <h1 class="text-5xl md:text-7xl font-bold text-amber-300 drop-shadow-lg mb-6 tracking-wide">
+      <h1 class="text-5xl md:text-7xl font-bold text-amber-300 drop-shadow-2xl mb-6 tracking-wider">
         Kadonneen Sukuhistorian Metsästäjä
       </h1>
       
-      <p class="text-2xl md:text-4xl text-white font-bold mb-10 drop-shadow-md">
+      <p class="text-2xl md:text-4xl text-white font-bold mb-10 drop-shadow-lg">
         Löydä kadonneet juuresi – ennen kuin ne katoavat ikuisesti
       </p>
 
-      <p class="text-xl md:text-2xl text-amber-100 max-w-3xl mx-auto mb-12 leading-relaxed">
+      <p class="text-xl md:text-2xl text-amber-100 max-w-4xl mx-auto mb-12 leading-relaxed">
         DNA-seikkailu, jossa esi-isiesi tarinat heräävät henkiin. Haploryhmien salat, muinaiset vaellukset, viikinkien jäljet ja henkilökohtainen sukutarina – kaikki yhdessä paikassa.
       </p>
 
       <a href="#aloita" 
-         class="adventure-btn inline-block text-white font-bold text-xl md:text-2xl py-6 px-12 rounded-full shadow-2xl uppercase tracking-wider">
+         class="adventure-btn inline-block text-white font-bold text-xl md:text-2xl py-6 px-16 rounded-full shadow-2xl uppercase tracking-widest">
         Aloita seikkailu nyt →
       </a>
     </div>
   </header>
 
   <!-- Pääosio -->
-  <main class="parchment py-20 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto">
-
+  <main class="parchment py-20 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto my-12 rounded-2xl">
     <section id="mika-tama-on" class="mb-24">
       <h2 class="text-4xl md:text-5xl font-bold text-amber-900 mb-10 text-center border-b-4 border-amber-800 pb-4 inline-block">
         Mikä ihmeen Metsästäjä?
@@ -72,7 +77,7 @@
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div>
           <p class="text-xl leading-relaxed mb-6">
-            Kuvittele, että olet Indiana Jones – mutta aarteena ei ole kultainen patsas, vaan sinun oma sukusi tarina. 
+            Kuvittele, että olet Indiana Jones – mutta aarteena ei ole kultainen patsas, vaan sinun oma sukusi tarina.  
             Me kaivamme esiin kadonneita esi-isiä DNA:n, haploryhmien ja muinaisten löytöjen avulla.
           </p>
           <p class="text-xl leading-relaxed">
@@ -138,15 +143,15 @@
 
     <!-- Footer -->
     <footer class="text-center py-12 border-t border-amber-800/30 mt-20">
-      <p class="text-lg">&copy; 2026 Kadonneen Sukuhistorian Metsästäjä</p>
+      <p class="text-lg">© 2026 Kadonneen Sukuhistorian Metsästäjä</p>
       <p class="mt-4 text-sm text-gray-600">
-        DNA-seikkailuja vastuullisesti • Yhteydenotot: info (at) kshm.fi
+        DNA-seikkailuja vastuullisesti • Yhteydenotot: info@kadonneensukuhistorianmetsastaja.fi
       </p>
     </footer>
   </main>
 
-  <!-- Takaisin ylös -nappi (valinnainen) -->
-  <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+  <!-- Takaisin ylös -nappi -->
+  <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
           class="fixed bottom-8 right-8 bg-amber-800 text-white p-4 rounded-full shadow-lg hover:bg-amber-700 transition z-50">
     <i class="fas fa-arrow-up text-2xl"></i>
   </button>
