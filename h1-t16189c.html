@@ -1,161 +1,166 @@
-<!DOCTYPE html>
-<html lang="fi" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+/* ==============================
+   PRINT / PDF – CASE EDITION
+   Kadonneen Sukuhistorian Metsästäjä
+   ============================== */
 
-  <title>Kadonneen Sukuhistorian Metsästäjä</title>
-  <meta name="description" content="Haploryhmien ja arkeogenetiikan pohjalta rakennettu henkilökohtainen sukutarina. Ei raportti – vaan löydös.">
+@media print {
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  /* ----------- SIVUASETUKSET ----------- */
+  @page {
+    size: A4;
+    margin: 25mm 22mm 30mm 22mm;
+  }
 
-  <style>
-    body {
-      font-family: Georgia, serif;
-      background: linear-gradient(to bottom, #fdfaf3, #f5e9d2);
-      background-attachment: fixed;
-    }
+  html, body {
+    background: #ffffff !important;
+    color: #1a1a1a;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 11.5pt;
+    line-height: 1.6;
+  }
 
-    .parchment {
-      background: rgba(255, 250, 240, 0.97);
-      box-shadow: 0 10px 40px rgba(139, 69, 19, 0.15);
-      border: 1px solid #d4a373;
-    }
+  /* Poistetaan web-elementit */
+  header,
+  nav,
+  footer,
+  button,
+  .adventure-btn,
+  .scroll-top,
+  .no-print {
+    display: none !important;
+  }
 
-    .brand-header {
-      background: #f7f2e8;
-      border-bottom: 1px solid #cdb489;
-    }
+  /* ----------- PÄÄKONTENTTI ----------- */
+  main,
+  .parchment {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+  }
 
-    .adventure-btn {
-      background: linear-gradient(135deg, #92400e, #b45309);
-      transition: all 0.35s ease;
-    }
+  /* ----------- OTSIKOT ----------- */
+  h1 {
+    font-size: 28pt;
+    text-align: center;
+    margin: 0 0 20mm 0;
+    letter-spacing: 0.03em;
+    page-break-after: always;
+  }
 
-    .adventure-btn:hover {
-      background: linear-gradient(135deg, #b45309, #d97706);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 25px rgba(180, 83, 9, 0.35);
-    }
-  </style>
-</head>
+  h2 {
+    font-size: 18pt;
+    margin-top: 24mm;
+    margin-bottom: 8mm;
+    border-bottom: 1px solid #999;
+    padding-bottom: 4mm;
+    page-break-after: avoid;
+  }
 
-<body class="text-gray-900 leading-relaxed">
+  h3 {
+    font-size: 14pt;
+    margin-top: 16mm;
+    margin-bottom: 6mm;
+    page-break-after: avoid;
+  }
 
-<!-- HEADER -->
-<header class="brand-header py-40 px-6 text-center">
-  <div class="max-w-7xl mx-auto">
-    <img
-      src="assets/logo-4.png"
-      alt="Kadonneen Sukuhistorian Metsästäjä"
-      class="mx-auto h-80 md:h-[26rem] lg:h-[32rem]"
-    />
-  </div>
-</header>
+  /* ----------- TEKSTI ----------- */
+  p {
+    margin: 0 0 6mm 0;
+    text-align: justify;
+    orphans: 3;
+    widows: 3;
+  }
 
-<!-- PÄÄSISÄLTÖ -->
-<main class="parchment max-w-6xl mx-auto my-16 px-8 md:px-16 py-20 rounded-2xl">
+  p.lead {
+    font-size: 13.5pt;
+    line-height: 1.7;
+    margin-bottom: 12mm;
+  }
 
-  <!-- JOHDANTO -->
-  <section class="text-center mb-28">
-    <h1 class="text-4xl md:text-5xl font-bold text-amber-900 mb-10">
-      Tämä ei ole raportti.  
-      Tämä on löytö.
-    </h1>
+  /* ----------- LUVUT / KAIVAUKSET ----------- */
+  section {
+    page-break-inside: avoid;
+  }
 
-    <p class="text-xl max-w-3xl mx-auto leading-relaxed">
-      Kadonneen Sukuhistorian Metsästäjä muuttaa DNA-haploryhmän
-      arkeologiseksi kertomukseksi.  
-      Ei nimiä paperissa – vaan veri ajassa.
-    </p>
-  </section>
+  .chapter {
+    page-break-before: always;
+  }
 
-  <!-- VISUAALINEN SILTA -->
-  <section class="mb-28">
-    <img
-      src="assets/images/hero-map.jpg"
-      alt="Muinaiset reitit kartalla"
-      class="rounded-xl shadow-xl mx-auto"
-    />
-  </section>
+  .chapter-title {
+    font-size: 20pt;
+    text-align: center;
+    margin-bottom: 14mm;
+    letter-spacing: 0.04em;
+  }
 
-  <!-- MITÄ SAAT -->
-  <section class="mb-28">
-    <h2 class="text-3xl md:text-4xl font-bold text-amber-900 mb-16 text-center">
-      Mitä sinulle rakennetaan
-    </h2>
+  /* ----------- KUVAT ----------- */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10mm auto;
+    page-break-inside: avoid;
+  }
 
-    <div class="grid md:grid-cols-2 gap-16 items-center">
-      <div>
-        <p class="text-xl mb-6">
-          Jokainen tarina perustuu yhteen haploryhmään – isä- tai äitilinjaan –
-          ja sen dokumentoituun kulkuun arkeologisessa aineistossa.
-        </p>
-        <p class="text-xl">
-          Saat henkilökohtaisen PDF-tarinan, jossa
-          muinaiset haudat, ajoitukset, maantiede ja nykyinen esiintyvyys
-          kytkeytyvät sinuun.
-        </p>
-      </div>
+  figure {
+    margin: 12mm 0;
+    page-break-inside: avoid;
+  }
 
-      <div class="space-y-6">
-        <img src="assets/images/anatolia.jpg" class="rounded-lg shadow-lg" alt="">
-        <img src="assets/images/megalith.jpg" class="rounded-lg shadow-lg" alt="">
-      </div>
-    </div>
-  </section>
+  figcaption {
+    font-size: 9pt;
+    text-align: center;
+    color: #555;
+    margin-top: 3mm;
+  }
 
-  <!-- CASE-ESIMERKKI -->
-  <section class="mb-28">
-    <h2 class="text-3xl md:text-4xl font-bold text-amber-900 mb-12 text-center">
-      Esimerkki: H1-T16189C!
-    </h2>
+  /* ----------- LISTAT ----------- */
+  ul {
+    margin: 6mm 0 6mm 10mm;
+  }
 
-    <p class="text-xl max-w-4xl mx-auto text-center mb-12">
-      Anatolia → Irlanti → Puola → Gotlanti → Suomi  
-      Yksi katkeamaton mitokondriaalinen ketju.
-    </p>
+  li {
+    margin-bottom: 3mm;
+  }
 
-    <div class="grid md:grid-cols-3 gap-10">
-      <img src="assets/images/migration.jpg" class="rounded-xl shadow-lg" alt="">
-      <img src="assets/images/vikings.jpg" class="rounded-xl shadow-lg" alt="">
-      <img src="assets/images/megalith.jpg" class="rounded-xl shadow-lg" alt="">
-    </div>
-  </section>
+  /* ----------- LAATIKOT / KOROSTUKSET ----------- */
+  blockquote {
+    margin: 10mm 0;
+    padding: 6mm 10mm;
+    border-left: 3px solid #999;
+    font-style: italic;
+    background: #f9f9f9;
+    page-break-inside: avoid;
+  }
 
-  <!-- CTA -->
-  <section class="text-center py-20 bg-amber-900/10 rounded-3xl">
-    <h2 class="text-4xl font-bold text-amber-900 mb-8">
-      Haluatko oman verilinjan tarinan?
-    </h2>
+  /* ----------- VIITTEET ----------- */
+  .sources {
+    font-size: 9.5pt;
+    line-height: 1.5;
+    margin-top: 20mm;
+    page-break-before: always;
+  }
 
-    <p class="text-xl mb-10 max-w-3xl mx-auto">
-      Toimitat vain DNA-testituloksesi.  
-      Me kaivamme loput.
-    </p>
+  .sources h2 {
+    border: none;
+    font-size: 16pt;
+    text-align: center;
+  }
 
-    <a
-      href="#"
-      class="adventure-btn inline-block text-white font-bold text-xl py-6 px-14 rounded-full shadow-2xl uppercase">
-      Tilaa oma tarinani
-    </a>
-  </section>
+  /* ----------- ALAVIITTEET (jos käytät) ----------- */
+  sup {
+    font-size: 8pt;
+  }
 
-  <!-- FOOTER -->
-  <footer class="text-center py-16 mt-24 border-t border-amber-800/30">
-    <p>© 2026 Kadonneen Sukuhistorian Metsästäjä</p>
-  </footer>
+  /* ----------- VIIMEINEN SIVU ----------- */
+  .epilogue {
+    page-break-before: always;
+    text-align: center;
+    margin-top: 40mm;
+  }
 
-</main>
+}
 
-<!-- SCROLL UP -->
-<button
-  onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-  class="fixed bottom-8 right-8 bg-amber-800 text-white p-4 rounded-full shadow-lg hover:bg-amber-700 transition z-50"
-  aria-label="Takaisin ylös">
-  <i class="fas fa-arrow-up text-2xl"></i>
-</button>
-
-</body>
-</html>
