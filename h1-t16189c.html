@@ -1,166 +1,103 @@
-/* ==============================
-   PRINT / PDF – CASE EDITION
-   Kadonneen Sukuhistorian Metsästäjä
-   ============================== */
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-@media print {
+  <title>H1-T16189C! – Verilinjan tarina ajassa</title>
+  <meta name="description" content="Arkeogeneettinen sukutarina haploryhmästä H1-T16189C! – luettava verkkosivuna ja ladattavana PDF-raporttina.">
 
-  /* ----------- SIVUASETUKSET ----------- */
-  @page {
-    size: A4;
-    margin: 25mm 22mm 30mm 22mm;
-  }
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  html, body {
-    background: #ffffff !important;
-    color: #1a1a1a;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 11.5pt;
-    line-height: 1.6;
-  }
+  <style>
+    body {
+      font-family: Georgia, serif;
+      background: linear-gradient(to bottom, #fdfaf3, #f5e9d2);
+      color: #2b1d0f;
+    }
 
-  /* Poistetaan web-elementit */
-  header,
-  nav,
-  footer,
-  button,
-  .adventure-btn,
-  .scroll-top,
-  .no-print {
-    display: none !important;
-  }
+    .paper {
+      background: rgba(255, 250, 240, 0.96);
+      border: 1px solid #d4a373;
+      box-shadow: 0 12px 40px rgba(120, 70, 20, 0.18);
+    }
 
-  /* ----------- PÄÄKONTENTTI ----------- */
-  main,
-  .parchment {
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-    background: transparent !important;
-  }
+    .pdf-frame {
+      border: none;
+      width: 100%;
+      height: 90vh;
+    }
 
-  /* ----------- OTSIKOT ----------- */
-  h1 {
-    font-size: 28pt;
-    text-align: center;
-    margin: 0 0 20mm 0;
-    letter-spacing: 0.03em;
-    page-break-after: always;
-  }
+    @media print {
+      header, footer, .no-print {
+        display: none;
+      }
+      body {
+        background: white;
+      }
+    }
+  </style>
+</head>
 
-  h2 {
-    font-size: 18pt;
-    margin-top: 24mm;
-    margin-bottom: 8mm;
-    border-bottom: 1px solid #999;
-    padding-bottom: 4mm;
-    page-break-after: avoid;
-  }
+<body>
 
-  h3 {
-    font-size: 14pt;
-    margin-top: 16mm;
-    margin-bottom: 6mm;
-    page-break-after: avoid;
-  }
+<!-- HEADER -->
+<header class="brand-header py-24 text-center border-b border-amber-700/40">
+  <img
+    src="logo-4.png"
+    alt="Kadonneen Sukuhistorian Metsästäjä"
+    class="mx-auto h-56 md:h-72 mb-6"
+  />
+</header>
 
-  /* ----------- TEKSTI ----------- */
-  p {
-    margin: 0 0 6mm 0;
-    text-align: justify;
-    orphans: 3;
-    widows: 3;
-  }
+<!-- SISÄLTÖ -->
+<main class="max-w-5xl mx-auto my-16 px-6">
 
-  p.lead {
-    font-size: 13.5pt;
-    line-height: 1.7;
-    margin-bottom: 12mm;
-  }
+  <!-- JOHDANTO -->
+  <section class="paper rounded-2xl p-10 mb-16">
+    <h1 class="text-4xl md:text-5xl font-bold mb-8 text-center">
+      H1-T16189C! – Verilinjan seikkailu ajassa
+    </h1>
 
-  /* ----------- LUVUT / KAIVAUKSET ----------- */
-  section {
-    page-break-inside: avoid;
-  }
+    <p class="text-xl leading-relaxed mb-6">
+      Tämä ei ole perinteinen sukututkimusraportti.  
+      Tämä on arkeogeneettinen kertomus – rakennettu muinais-DNA:n,
+      arkeologisten hautalöytöjen ja väestöhistorian pohjalta.
+    </p>
 
-  .chapter {
-    page-break-before: always;
-  }
+    <p class="text-xl leading-relaxed">
+      Alla voit lukea koko tarinan sellaisena kuin se on tarkoitettu:
+      yhtenäisenä, painotuotteen kaltaisena kokonaisuutena.
+    </p>
 
-  .chapter-title {
-    font-size: 20pt;
-    text-align: center;
-    margin-bottom: 14mm;
-    letter-spacing: 0.04em;
-  }
+    <div class="mt-10 text-center no-print">
+      <a
+        href="/assets/pdf/H1-T16189C-verilinjan-tarina.pdf"
+        class="inline-block bg-amber-800 text-white font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-amber-700 transition"
+        target="_blank"
+      >
+        Lataa PDF (painoversio)
+      </a>
+    </div>
+  </section>
 
-  /* ----------- KUVAT ----------- */
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 10mm auto;
-    page-break-inside: avoid;
-  }
+  <!-- PDF UPOTUS -->
+  <section class="paper rounded-2xl p-4 mb-20">
+    <iframe
+      src="/assets/pdf/H1-T16189C-verilinjan-tarina.pdf"
+      class="pdf-frame rounded-xl"
+      loading="lazy"
+    ></iframe>
+  </section>
 
-  figure {
-    margin: 12mm 0;
-    page-break-inside: avoid;
-  }
+</main>
 
-  figcaption {
-    font-size: 9pt;
-    text-align: center;
-    color: #555;
-    margin-top: 3mm;
-  }
+<!-- FOOTER -->
+<footer class="text-center text-sm text-gray-600 pb-16">
+  © 2026 Kadonneen Sukuhistorian Metsästäjä  
+  <br>
+  Arkeogeneettisiä tarinoita vastuullisesti
+</footer>
 
-  /* ----------- LISTAT ----------- */
-  ul {
-    margin: 6mm 0 6mm 10mm;
-  }
-
-  li {
-    margin-bottom: 3mm;
-  }
-
-  /* ----------- LAATIKOT / KOROSTUKSET ----------- */
-  blockquote {
-    margin: 10mm 0;
-    padding: 6mm 10mm;
-    border-left: 3px solid #999;
-    font-style: italic;
-    background: #f9f9f9;
-    page-break-inside: avoid;
-  }
-
-  /* ----------- VIITTEET ----------- */
-  .sources {
-    font-size: 9.5pt;
-    line-height: 1.5;
-    margin-top: 20mm;
-    page-break-before: always;
-  }
-
-  .sources h2 {
-    border: none;
-    font-size: 16pt;
-    text-align: center;
-  }
-
-  /* ----------- ALAVIITTEET (jos käytät) ----------- */
-  sup {
-    font-size: 8pt;
-  }
-
-  /* ----------- VIIMEINEN SIVU ----------- */
-  .epilogue {
-    page-break-before: always;
-    text-align: center;
-    margin-top: 40mm;
-  }
-
-}
-
+</body>
+</html>
