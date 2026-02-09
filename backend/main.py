@@ -1,65 +1,149 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel, EmailStr, Field
+from typing import Optional
+import uuid
+import os
+import logging
 
 from data_utils import fetch_full_haplogroup_data
-from story_utils import generate_story_html
+from story_utils import generate_story_html, generate_story_text
 from pdf_utils import generate_pdf
 from email_utils import send_email_with_pdf
 
-app = FastAPI(title="Kadonneen Sukuhistorian Metsästäjä API")
+# --------------------
+# App setup
+# --------------------
 
-# 🔐 CORS (salli frontendin yhteydet)
+app = FastAPI(
+    title="Kadonneen Sukuhistorian Metsästäjä API",
+    description="API haploryhmäpohjaisten arkeogeneettisten raporttien tilaamiseen ja toimittamiseen.",
+    version="1.0.0"
+)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # tuotannossa rajaa domainiin
+    allow_origins=["*"],  # rajaa tuotannossa tarvittaessa
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# --------------------
+# Logging
+# --------------------
 
-@app.get("/")
-def root():
-    return {"status": "KSHM backend running"}
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("kshm-backend")
+
+# --------------------
+# Models
+# --------------------
+
+class OrderRequest(BaseModel):
+    name: str = Field(..., min_length=1, max_length=120)
+    email: EmailStr
+    haplogroup: str = Field(..., min_length=1, max_length=64)
+    notes: Optional[str] = Field(None, max_length=2000)
+    language: Optional[str] = Field("fi", max_length=8)
 
 
-@app.post("/api/order_report")
-async def order_report(request: Request):
+class OrderResponse(BaseModel):
+    message: str
+    order_id: str
+
+
+# --------------------
+# Routes
+# --------------------
+
+@app.get("/api/health")
+async def health_check():
+    return {"status": "ok"}
+
+
+@app.post("/api/order_report", response_model=OrderResponse)
+async def order_report(order: OrderRequest):
     try:
-        data = await request.json()
-    except Exception:
-        raise HTTPException(status_code=400, detail="Virheellinen JSON-data")
+        logger.info(f"New report order: {order.haplogroup} for {order.email}")
 
-    name = data.get("name")
-    email = data.get("email")
-    haplo = data.get("haplogroup")
-    notes = data.get("notes", "")
+        # 1. Fetch haplogroup data
+        haplo_data = fetch_full_haplogroup_data(order.haplogroup)
 
-    if not name or not email or not haplo:
-        raise HTTPException(status_code=422, detail="Nimi, sähköposti ja haploryhmä vaaditaan")
+        if not haplo_data or "error" in haplo_data:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Haploryhmälle {order.haplogroup} ei löytynyt tietoja."
+            )
 
-    # 🧬 Hae arkeogeneettinen data
-    haplo_data = fetch_full_haplogroup_data(haplo)
+        # 2. Generate story
+        story_html = generate_story_html(
+            haplo_data,
+            user_name=order.name,
+            notes=order.notes,
+            language=order.language
+        )
 
-    if not haplo_data:
-        raise HTTPException(status_code=404, detail="Haploryhmää ei löydetty")
+        story_text = generate_story_text(
+            haplo_data,
+            user_name=order.name,
+            notes=order.notes,
+            language=order.language
+        )
 
-    # 📖 Luo tarina (haploryhmäkohtainen tyyli)
-    story_html = generate_story_html(haplo_data, user_name=name, notes=notes)
+        # 3. Generate PDF
+        order_id = str(uuid.uuid4())[:8]
+        safe_name = order.name.replace(" ", "").replace("/", "")
+        filename = f"{order.haplogroup}_{safe_name}_{order_id}.pdf"
+        output_dir = "generated_reports"
+        os.makedirs(output_dir, exist_ok=True)
+        pdf_path = os.path.join(output_dir, filename)
 
-    # 📄 Luo PDF
-    safe_name = name.replace(" ", "").replace("/", "")
-    pdf_filename = f"{haplo}_{safe_name}.pdf"
-    pdf_path = generate_pdf(story_html, filename=pdf_filename)
+        generate_pdf(story_html, output_path=pdf_path)
 
-    # ✉️ Lähetä sähköposti
-    send_email_with_pdf(
-        recipient=email,
-        haplogroup=haplo,
-        story_html=story_html,
-        pdf_path=pdf_path,
-        user_name=name
-    )
+        # 4. Send email with PDF
+        send_email_with_pdf(
+            to_email=order.email,
+            haplogroup=order.haplogroup,
+            story_text=story_text,
+            pdf_path=pdf_path,
+            user_name=order.name
+        )
 
-    return JSONResponse({"message": "Raportti tilattu onnistuneesti."})
+        logger.info(f"Report sent successfully: {pdf_path}")
+
+        return OrderResponse(
+            message="Raportti luotu ja lähetetty onnistuneesti.",
+            order_id=order_id
+        )
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        logger.exception("Unexpected error while processing order")
+        raise HTTPException(
+            status_code=500,
+            detail="Palvelimella tapahtui virhe raporttia luotaessa."
+        )
+
+
+# --------------------
+# Optional: debug endpoint
+# --------------------
+
+@app.get("/api/debug/haplogroup/{haplogroup}")
+async def debug_haplogroup(haplogroup: str):
+    """
+    Palauttaa raakadatan haploryhmästä ilman raportointia.
+    Hyödyllinen testaamiseen ja kehitykseen.
+    """
+    try:
+        data = fetch_full_haplogroup_data(haplogroup)
+        if not data:
+            raise HTTPException(status_code=404, detail="Haploryhmää ei löytynyt.")
+        return JSONResponse(data)
+    except Exception as e:
+        logger.exception("Error fetching haplogroup data")
+        raise HTTPException(status_code=500, detail="Virhe tietojen haussa.")
