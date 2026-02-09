@@ -1,68 +1,101 @@
-import os
+# email_utils.py
+
 import smtplib
+import os
 from email.message import EmailMessage
 from typing import Optional
+from dotenv import load_dotenv
 
-SMTP_SERVER = os.getenv("SMTP_SERVER", "mail.kshm.fi")
-SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
-SMTP_EMAIL = os.getenv("SMTP_EMAIL")
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
+load_dotenv()
 
 
 def send_email_with_pdf(
     to_email: str,
     haplogroup: str,
-    html_body: str,
+    story_text: str,
     pdf_path: str,
     user_name: Optional[str] = None
 ):
-    if not SMTP_EMAIL or not SMTP_PASSWORD:
-        raise RuntimeError("SMTP credentials not configured.")
+    """
+    Lähettää PDF-raportin liitteenä käyttäjälle.
+    """
+
+    smtp_host = os.getenv("SMTP_HOST")
+    smtp_port = int(os.getenv("SMTP_PORT", "587"))
+    smtp_user = os.getenv("SMTP_USER")
+    smtp_password = os.getenv("SMTP_PASSWORD")
+    from_email = os.getenv("FROM_EMAIL", smtp_user)
+
+    if not all([smtp_host, smtp_user, smtp_password]):
+        raise RuntimeError("SMTP-asetuksia puuttuu ympäristömuuttujista.")
 
     msg = EmailMessage()
-    msg["From"] = f"Kadonneen Sukuhistorian Metsästäjä <{SMTP_EMAIL}>"
+    msg["Subject"] = f"Raporttisi: Haploryhmä {haplogroup}"
+    msg["From"] = f"Kadonneen Sukuhistorian Metsästäjä <{from_email}>"
     msg["To"] = to_email
-    msg["Subject"] = f"Haploryhmäraporttisi: {haplogroup}"
 
-    text_body = f"""
-Hei {user_name or ''},
+    greeting_name = user_name or "sinä"
 
-Haploryhmäraporttisi ({haplogroup}) on valmis!
+    text_content = f"""
+Hei {greeting_name},
 
-PDF on liitteenä tässä sähköpostissa.
+Raporttisi haploryhmästä {haplogroup} on valmis!
 
-Ystävällisin terveisin,
+Liitteenä löydät PDF-kirjan, joka kertoo arkeogeneettisen tarinan
+verilinjastasi — muinaisista ihmisistä, kulttuureista ja vaelluksista
+aina nykypäivään saakka.
+
+Jos sinulla on kysyttävää tai haluat jatkoraportteja,
+ota rohkeasti yhteyttä: info@kshm.fi
+
+Seikkailuterveisin,
 Kadonneen Sukuhistorian Metsästäjä
-https://kshm.fi
 """
-    msg.set_content(text_body.strip())
 
-    msg.add_alternative(f"""
-<html>
-  <body style="font-family: Georgia, serif; background:#fdfaf3; padding:20px;">
-    <div style="max-width:600px;margin:auto;background:#fff8ec;padding:30px;border-radius:12px;border:1px solid #d4a373;">
-      <h2 style="color:#92400e;">Hei {user_name or ''},</h2>
-      <p>Haploryhmäraporttisi <strong>{haplogroup}</strong> on valmis!</p>
-      <p>PDF-raportti on liitteenä tässä sähköpostissa.</p>
-      <p style="margin-top:30px;">Seikkailullisin terveisin,<br>
-      <strong>Kadonneen Sukuhistorian Metsästäjä</strong><br>
-      <a href="https://kshm.fi">kshm.fi</a></p>
-    </div>
-  </body>
-</html>
-""", subtype="html")
+    html_content = f"""
+    <html>
+      <body style="font-family: Georgia, serif; background-color: #fdfaf3; color: #3b2f1a;">
+        <div style="max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e0cda9;">
+          <h2 style="color: #6b4e16;">Hei {greeting_name},</h2>
+          <p>
+            Raporttisi haploryhmästä <strong>{haplogroup}</strong> on valmis!
+          </p>
+          <p>
+            Liitteenä löydät PDF-kirjan, joka kertoo arkeogeneettisen tarinan
+            verilinjastasi — muinaisista ihmisistä, kulttuureista ja vaelluksista
+            aina nykypäivään saakka.
+          </p>
+          <p>
+            Jos sinulla on kysyttävää tai haluat jatkoraportteja,
+            ota rohkeasti yhteyttä:
+            <a href="mailto:info@kshm.fi">info@kshm.fi</a>
+          </p>
+          <p style="margin-top: 32px;">
+            Seikkailuterveisin,<br>
+            <strong>Kadonneen Sukuhistorian Metsästäjä</strong>
+          </p>
+        </div>
+      </body>
+    </html>
+    """
 
+    msg.set_content(text_content)
+    msg.add_alternative(html_content, subtype="html")
+
+    # Attach PDF
     with open(pdf_path, "rb") as f:
         pdf_data = f.read()
 
+    filename = os.path.basename(pdf_path)
     msg.add_attachment(
         pdf_data,
         maintype="application",
         subtype="pdf",
-        filename=os.path.basename(pdf_path)
+        filename=filename
     )
 
-    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+    # Send email
+    with smtplib.SMTP(smtp_host, smtp_port) as server:
         server.starttls()
-        server.login(SMTP_EMAIL, SMTP_PASSWORD)
+        server.login(smtp_user, smtp_password)
         server.send_message(msg)
