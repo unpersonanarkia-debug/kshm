@@ -1,101 +1,73 @@
-# email_utils.py
-
-import smtplib
 import os
+import smtplib
 from email.message import EmailMessage
 from typing import Optional
-from dotenv import load_dotenv
+from i18n_utils import get_translation
 
-load_dotenv()
 
+# -----------------------------
+# SMTP-asetukset
+# -----------------------------
+
+SMTP_SERVER = os.getenv("SMTP_SERVER", "mail.kshm.fi")
+SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
+SMTP_EMAIL = os.getenv("SMTP_EMAIL")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
+SENDER_NAME = os.getenv("SENDER_NAME", "Kadonneen Sukuhistorian Metsästäjä")
+
+
+# -----------------------------
+# Pääfunktio
+# -----------------------------
 
 def send_email_with_pdf(
     to_email: str,
-    haplogroup: str,
-    story_text: str,
     pdf_path: str,
-    user_name: Optional[str] = None
-):
+    haplogroup: str,
+    lang: str = "fi",
+    user_name: Optional[str] = None,
+) -> None:
     """
-    Lähettää PDF-raportin liitteenä käyttäjälle.
-    """
-
-    smtp_host = os.getenv("SMTP_HOST")
-    smtp_port = int(os.getenv("SMTP_PORT", "587"))
-    smtp_user = os.getenv("SMTP_USER")
-    smtp_password = os.getenv("SMTP_PASSWORD")
-    from_email = os.getenv("FROM_EMAIL", smtp_user)
-
-    if not all([smtp_host, smtp_user, smtp_password]):
-        raise RuntimeError("SMTP-asetuksia puuttuu ympäristömuuttujista.")
-
-    msg = EmailMessage()
-    msg["Subject"] = f"Raporttisi: Haploryhmä {haplogroup}"
-    msg["From"] = f"Kadonneen Sukuhistorian Metsästäjä <{from_email}>"
-    msg["To"] = to_email
-
-    greeting_name = user_name or "sinä"
-
-    text_content = f"""
-Hei {greeting_name},
-
-Raporttisi haploryhmästä {haplogroup} on valmis!
-
-Liitteenä löydät PDF-kirjan, joka kertoo arkeogeneettisen tarinan
-verilinjastasi — muinaisista ihmisistä, kulttuureista ja vaelluksista
-aina nykypäivään saakka.
-
-Jos sinulla on kysyttävää tai haluat jatkoraportteja,
-ota rohkeasti yhteyttä: info@kshm.fi
-
-Seikkailuterveisin,
-Kadonneen Sukuhistorian Metsästäjä
-"""
-
-    html_content = f"""
-    <html>
-      <body style="font-family: Georgia, serif; background-color: #fdfaf3; color: #3b2f1a;">
-        <div style="max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e0cda9;">
-          <h2 style="color: #6b4e16;">Hei {greeting_name},</h2>
-          <p>
-            Raporttisi haploryhmästä <strong>{haplogroup}</strong> on valmis!
-          </p>
-          <p>
-            Liitteenä löydät PDF-kirjan, joka kertoo arkeogeneettisen tarinan
-            verilinjastasi — muinaisista ihmisistä, kulttuureista ja vaelluksista
-            aina nykypäivään saakka.
-          </p>
-          <p>
-            Jos sinulla on kysyttävää tai haluat jatkoraportteja,
-            ota rohkeasti yhteyttä:
-            <a href="mailto:info@kshm.fi">info@kshm.fi</a>
-          </p>
-          <p style="margin-top: 32px;">
-            Seikkailuterveisin,<br>
-            <strong>Kadonneen Sukuhistorian Metsästäjä</strong>
-          </p>
-        </div>
-      </body>
-    </html>
+    Lähettää sähköpostin PDF-liitteellä käyttäjälle.
     """
 
-    msg.set_content(text_content)
-    msg.add_alternative(html_content, subtype="html")
+    if not SMTP_EMAIL or not SMTP_PASSWORD:
+        raise RuntimeError("SMTP_EMAIL tai SMTP_PASSWORD ei ole asetettu ympäristömuuttujissa.")
 
-    # Attach PDF
-    with open(pdf_path, "rb") as f:
-        pdf_data = f.read()
+    subject = get_translation(lang, "email_subject").format(haplogroup=haplogroup)
 
-    filename = os.path.basename(pdf_path)
-    msg.add_attachment(
-        pdf_data,
-        maintype="application",
-        subtype="pdf",
-        filename=filename
+    body_text = get_translation(lang, "email_body_text").format(
+        haplogroup=haplogroup,
+        user_name=user_name or "",
     )
 
-    # Send email
-    with smtplib.SMTP(smtp_host, smtp_port) as server:
+    body_html = get_translation(lang, "email_body_html").format(
+        haplogroup=haplogroup,
+        user_name=user_name or "",
+    )
+
+    msg = EmailMessage()
+    msg["From"] = f"{SENDER_NAME} <{SMTP_EMAIL}>"
+    msg["To"] = to_email
+    msg["Subject"] = subject
+
+    msg.set_content(body_text)
+    msg.add_alternative(body_html, subtype="html")
+
+    # Liite
+    with open(pdf_path, "rb") as f:
+        file_data = f.read()
+        file_name = os.path.basename(pdf_path)
+
+    msg.add_attachment(
+        file_data,
+        maintype="application",
+        subtype="pdf",
+        filename=file_name,
+    )
+
+    # Lähetys
+    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
         server.starttls()
-        server.login(smtp_user, smtp_password)
+        server.login(SMTP_EMAIL, SMTP_PASSWORD)
         server.send_message(msg)
