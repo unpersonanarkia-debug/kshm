@@ -1,23 +1,30 @@
 from typing import Dict, Optional
 
-# ----------------------------------
-# Konfiguraatio
-# ----------------------------------
+# ----------------------------------------
+# Language configuration
+# ----------------------------------------
 
-SUPPORTED_LANGUAGES = ["fi", "en", "sv", "de"]
+SUPPORTED_LANGUAGES = [
+    "fi", "en", "sv", "de", "fr", "es", "it", "pt", "ru", "uk",
+    "pl", "cs", "sk", "hu", "ro", "bg", "tr", "ar", "he", "fa",
+    "hi", "bn", "ur", "zh", "ja", "ko", "vi", "th", "id", "ms",
+    "tl", "sw", "yo", "ig", "ha", "am", "so", "zu", "xh",
+    "mi", "sm", "to", "fj",
+]
+
 DEFAULT_LANG = "en"
-SUPPORTED_TONES = ["academic", "narrative", "popular"]
 DEFAULT_TONE = "academic"
 
+SUPPORTED_TONES = ["academic", "narrative", "concise", "explorer"]
 
-# ----------------------------------
-# Käännökset ja tekstipohjat
-# ----------------------------------
+# ----------------------------------------
+# Core translation registry
+# ----------------------------------------
 
 TRANSLATIONS: Dict[str, Dict[str, Dict[str, str]]] = {
 
     # -------------------------------
-    # Yleiset otsikot
+    # Titles & section headers
     # -------------------------------
 
     "haplogroup_title": {
@@ -26,336 +33,712 @@ TRANSLATIONS: Dict[str, Dict[str, Dict[str, str]]] = {
             "en": "Haplogroup {haplogroup}",
             "sv": "Haplogrupp {haplogroup}",
             "de": "Haplogruppe {haplogroup}",
+            "fr": "Haplogroupe {haplogroup}",
+            "es": "Haplogrupo {haplogroup}",
+            "it": "Alogruppo {haplogroup}",
+            "pt": "Haplogrupo {haplogroup}",
+            "ru": "Гаплогруппа {haplogroup}",
+            "zh": "单倍群 {haplogroup}",
+            "ja": "ハプログループ {haplogroup}",
+            "ko": "하플로그룹 {haplogroup}",
+            "ar": "السلالة الوراثية {haplogroup}",
+            "he": "הפלוגרופ {haplogroup}",
+            "fa": "هاپلوگروه {haplogroup}",
+            "hi": "हैप्लोग्रुप {haplogroup}",
+            "sw": "Haplogroup {haplogroup}",
+            "mi": "Rōpū Ira {haplogroup}",
+            "sm": "Haplogroup {haplogroup}",
+            "to": "Haplogroup {haplogroup}",
+            "fj": "Haplogroup {haplogroup}",
         },
         "narrative": {
-            "fi": "Tarina haploryhmästä {haplogroup}",
-            "en": "The Story of Haplogroup {haplogroup}",
+            "fi": "Haploryhmän {haplogroup} tarina",
+            "en": "The story of haplogroup {haplogroup}",
             "sv": "Berättelsen om haplogrupp {haplogroup}",
             "de": "Die Geschichte der Haplogruppe {haplogroup}",
+            "fr": "L’histoire de l’haplogroupe {haplogroup}",
+            "es": "La historia del haplogrupo {haplogroup}",
+            "it": "La storia dell’aplogruppo {haplogroup}",
+            "pt": "A história do haplogrupo {haplogroup}",
+            "ru": "История гаплогруппы {haplogroup}",
+            "zh": "单倍群 {haplogroup} 的历史",
+            "ja": "ハプログループ{haplogroup}の物語",
+            "ko": "하플로그룹 {haplogroup}의 이야기",
+            "ar": "قصة السلالة {haplogroup}",
+            "he": "הסיפור של הפלוגרופ {haplogroup}",
+            "fa": "داستان هاپلوگروه {haplogroup}",
+            "hi": "हैप्लोग्रुप {haplogroup} की कहानी",
+            "sw": "Hadithi ya haplogroup {haplogroup}",
+            "mi": "Te kōrero o te rōpū ira {haplogroup}",
+            "sm": "O le tala o le haplogroup {haplogroup}",
+            "to": "Ko e talanoa ʻo e haplogroup {haplogroup}",
+            "fj": "Na italanoa ni haplogroup {haplogroup}",
         },
-        "popular": {
-            "fi": "Sinun haploryhmäsi: {haplogroup}",
-            "en": "Your Haplogroup: {haplogroup}",
-            "sv": "Din haplogrupp: {haplogroup}",
-            "de": "Ihre Haplogruppe: {haplogroup}",
+        "concise": {
+            "fi": "Haploryhmä {haplogroup}",
+            "en": "Haplogroup {haplogroup}",
+            "sv": "Haplogrupp {haplogroup}",
+            "de": "Haplogruppe {haplogroup}",
+            "fr": "Haplogroupe {haplogroup}",
+            "es": "Haplogrupo {haplogroup}",
+            "it": "Alogruppo {haplogroup}",
+            "pt": "Haplogrupo {haplogroup}",
+            "ru": "Гаплогруппа {haplogroup}",
+            "zh": "单倍群 {haplogroup}",
+            "ja": "ハプログループ {haplogroup}",
+            "ko": "하플로그룹 {haplogroup}",
+            "ar": "السلالة {haplogroup}",
+            "he": "הפלוגרופ {haplogroup}",
+            "fa": "هاپلوگروه {haplogroup}",
+            "hi": "हैप्लोग्रुप {haplogroup}",
+            "sw": "Haplogroup {haplogroup}",
+            "mi": "Rōpū Ira {haplogroup}",
+            "sm": "Haplogroup {haplogroup}",
+            "to": "Haplogroup {haplogroup}",
+            "fj": "Haplogroup {haplogroup}",
+        },
+        "explorer": {
+            "fi": "Haploryhmä {haplogroup}: matka ajassa",
+            "en": "Haplogroup {haplogroup}: a journey through time",
+            "sv": "Haplogrupp {haplogroup}: en resa genom tiden",
+            "de": "Haplogruppe {haplogroup}: eine Reise durch die Zeit",
+            "fr": "Haplogroupe {haplogroup} : un voyage à travers le temps",
+            "es": "Haplogrupo {haplogroup}: un viaje en el tiempo",
+            "it": "Alogruppo {haplogroup}: un viaggio nel tempo",
+            "pt": "Haplogrupo {haplogroup}: uma viagem no tempo",
+            "ru": "Гаплогруппа {haplogroup}: путешествие во времени",
+            "zh": "单倍群 {haplogroup}：穿越时间的旅程",
+            "ja": "ハプログループ{haplogroup}：時を巡る旅",
+            "ko": "하플로그룹 {haplogroup}: 시간 여행",
+            "ar": "السلالة {haplogroup}: رحلة عبر الزمن",
+            "he": "הפלוגרופ {haplogroup}: מסע בזמן",
+            "fa": "هاپلوگروه {haplogroup}: سفری در زمان",
+            "hi": "हैप्लोग्रुप {haplogroup}: समय की यात्रा",
+            "sw": "Haplogroup {haplogroup}: safari ya wakati",
+            "mi": "Rōpū Ira {haplogroup}: he haerenga i te wā",
+            "sm": "Haplogroup {haplogroup}: se malaga i le taimi",
+            "to": "Haplogroup {haplogroup}: ha fononga ʻi he taimi",
+            "fj": "Haplogroup {haplogroup}: na vakasokumuni ena gauna",
         },
     },
 
-    "description_intro": {
+    # -------------------------------
+    # Section labels
+    # -------------------------------
+
+    "section_overview": {
         "academic": {
-            "fi": "Tieteellinen yleiskuva haploryhmästä.",
-            "en": "Scientific overview of the haplogroup.",
-            "sv": "Vetenskaplig översikt av haplogruppen.",
-            "de": "Wissenschaftlicher Überblick über die Haplogruppe.",
+            "fi": "Yleiskuvaus",
+            "en": "Overview",
+            "sv": "Översikt",
+            "de": "Überblick",
+            "fr": "Aperçu",
+            "es": "Resumen",
+            "it": "Panoramica",
+            "pt": "Visão geral",
+            "ru": "Обзор",
+            "zh": "概览",
+            "ja": "概要",
+            "ko": "개요",
+            "ar": "نظرة عامة",
+            "he": "סקירה כללית",
+            "fa": "نمای کلی",
+            "hi": "सारांश",
+            "sw": "Muhtasari",
+            "mi": "Tirohanga whānui",
+            "sm": "Aotelega",
+            "to": "Vakai fakalukufua",
+            "fj": "Raici raraba",
         },
         "narrative": {
-            "fi": "Tämä on tarina ihmisistä, jotka kantoivat tätä haploryhmää vuosituhansien ajan.",
-            "en": "This is the story of people who carried this haplogroup across millennia.",
-            "sv": "Detta är berättelsen om människor som bar denna haplogrupp genom årtusenden.",
-            "de": "Dies ist die Geschichte der Menschen, die diese Haplogruppe über Jahrtausende trugen.",
+            "fi": "Matkan alku",
+            "en": "The beginning of the journey",
+            "sv": "Resans början",
+            "de": "Der Beginn der Reise",
+            "fr": "Le début du voyage",
+            "es": "El inicio del viaje",
+            "it": "L’inizio del viaggio",
+            "pt": "O início da jornada",
+            "ru": "Начало пути",
+            "zh": "旅程的开始",
+            "ja": "旅の始まり",
+            "ko": "여정의 시작",
+            "ar": "بداية الرحلة",
+            "he": "תחילת המסע",
+            "fa": "آغاز سفر",
+            "hi": "यात्रा की शुरुआत",
+            "sw": "Mwanzo wa safari",
+            "mi": "Te tīmatanga o te haerenga",
+            "sm": "O le amataga o le malaga",
+            "to": "Ko e kamataʻanga ʻo e fononga",
+            "fj": "Na itekitekivu ni ilakolako",
         },
-        "popular": {
-            "fi": "Lyhyt ja helposti ymmärrettävä yhteenveto haploryhmästäsi.",
-            "en": "A short and easy-to-understand summary of your haplogroup.",
-            "sv": "En kort och lättförståelig sammanfattning av din haplogrupp.",
-            "de": "Eine kurze und leicht verständliche Zusammenfassung Ihrer Haplogruppe.",
+        "concise": {
+            "fi": "Yleiskuva",
+            "en": "Overview",
+            "sv": "Översikt",
+            "de": "Überblick",
+            "fr": "Aperçu",
+            "es": "Resumen",
+            "it": "Panoramica",
+            "pt": "Visão geral",
+            "ru": "Обзор",
+            "zh": "概览",
+            "ja": "概要",
+            "ko": "개요",
+            "ar": "ملخص",
+            "he": "סקירה",
+            "fa": "خلاصه",
+            "hi": "सार",
+            "sw": "Muhtasari",
+            "mi": "Tirohanga",
+            "sm": "Aotelega",
+            "to": "Vakai",
+            "fj": "Raici",
+        },
+        "explorer": {
+            "fi": "Ensimmäiset jäljet",
+            "en": "First traces",
+            "sv": "Första spåren",
+            "de": "Erste Spuren",
+            "fr": "Premières traces",
+            "es": "Primeras huellas",
+            "it": "Prime tracce",
+            "pt": "Primeiros vestígios",
+            "ru": "Первые следы",
+            "zh": "最初的踪迹",
+            "ja": "最初の痕跡",
+            "ko": "첫 흔적",
+            "ar": "أولى الآثار",
+            "he": "העקבות הראשונים",
+            "fa": "نخستین نشانه‌ها",
+            "hi": "पहले निशान",
+            "sw": "Dalili za kwanza",
+            "mi": "Ngā tapuwae tuatahi",
+            "sm": "O uluaʻi faʻailoga",
+            "to": "Ko e ngaahi fakaʻilonga ʻuluaki",
+            "fj": "Na ivakatakilakila taumada",
         },
     },
 
-    "regions_label": {
+    "section_regions": {
         "academic": {
-            "fi": "Maantieteellinen levinneisyys",
+            "fi": "Levinneisyys",
             "en": "Geographic distribution",
             "sv": "Geografisk spridning",
             "de": "Geografische Verbreitung",
+            "fr": "Répartition géographique",
+            "es": "Distribución geográfica",
+            "it": "Distribuzione geografica",
+            "pt": "Distribuição geográfica",
+            "ru": "Географическое распространение",
+            "zh": "地理分布",
+            "ja": "地理的分布",
+            "ko": "지리적 분포",
+            "ar": "التوزيع الجغرافي",
+            "he": "תפוצה גאוגרפית",
+            "fa": "پراکندگی جغرافیایی",
+            "hi": "भौगोलिक वितरण",
+            "sw": "Usambazaji wa kijiografia",
+            "mi": "Tohatoha ā-rohe",
+            "sm": "Fa'asoaga fa'afanua",
+            "to": "Vahevahe fakaʻapiʻapi",
+            "fj": "Veisautaka vakavanua",
         },
         "narrative": {
-            "fi": "Matka halki maanosien",
-            "en": "A journey across continents",
-            "sv": "En resa över kontinenter",
-            "de": "Eine Reise über Kontinente",
+            "fi": "Missä he kulkivat",
+            "en": "Where they travelled",
+            "sv": "Var de vandrade",
+            "de": "Wohin sie wanderten",
+            "fr": "Où ils ont voyagé",
+            "es": "Por dónde viajaron",
+            "it": "Dove viaggiarono",
+            "pt": "Por onde viajaram",
+            "ru": "Где они странствовали",
+            "zh": "他们走过的地方",
+            "ja": "彼らが辿った地",
+            "ko": "그들이 이동한 곳",
+            "ar": "أين ساروا",
+            "he": "לאן הם נדדו",
+            "fa": "کجاها رفتند",
+            "hi": "वे कहाँ गए",
+            "sw": "Walipokuwa wakisafiri",
+            "mi": "Ngā wāhi i hīkoi ai rātou",
+            "sm": "O fea na latou malaga ai",
+            "to": "Ko e feituʻu na nau fononga ki ai",
+            "fj": "Na vanua era lako kina",
         },
-        "popular": {
-            "fi": "Missä tätä haploryhmää tavataan",
-            "en": "Where this haplogroup is found",
-            "sv": "Var denna haplogrupp finns",
-            "de": "Wo diese Haplogruppe vorkommt",
+        "concise": {
+            "fi": "Alueet",
+            "en": "Regions",
+            "sv": "Regioner",
+            "de": "Regionen",
+            "fr": "Régions",
+            "es": "Regiones",
+            "it": "Regioni",
+            "pt": "Regiões",
+            "ru": "Регионы",
+            "zh": "地区",
+            "ja": "地域",
+            "ko": "지역",
+            "ar": "المناطق",
+            "he": "אזורים",
+            "fa": "مناطق",
+            "hi": "क्षेत्र",
+            "sw": "Maeneo",
+            "mi": "Ngā rohe",
+            "sm": "Itūmālō",
+            "to": "Ngaahi vahefonua",
+            "fj": "Veiyasana",
+        },
+        "explorer": {
+            "fi": "Reitit ja vaellukset",
+            "en": "Routes and migrations",
+            "sv": "Rutter och vandringar",
+            "de": "Routen und Wanderungen",
+            "fr": "Routes et migrations",
+            "es": "Rutas y migraciones",
+            "it": "Rotte e migrazioni",
+            "pt": "Rotas e migrações",
+            "ru": "Маршруты и миграции",
+            "zh": "路线与迁徙",
+            "ja": "ルートと移動",
+            "ko": "경로와 이동",
+            "ar": "الطرق والهجرات",
+            "he": "נתיבים והגירות",
+            "fa": "مسیرها و مهاجرت‌ها",
+            "hi": "मार्ग और प्रवासन",
+            "sw": "Njia na uhamaji",
+            "mi": "Ngā ara me ngā hekenga",
+            "sm": "Ala ma femalagaaiga",
+            "to": "Ngaahi hala mo e ngaahi hiki",
+            "fj": "Sala kei na veisautaki",
         },
     },
 
-    "time_depth_label": {
+    "section_ancient_samples": {
         "academic": {
-            "fi": "Ajallinen syvyys",
+            "fi": "Muinaiset näytteet",
+            "en": "Ancient samples",
+            "sv": "Forntida prover",
+            "de": "Antike Proben",
+            "fr": "Échantillons anciens",
+            "es": "Muestras antiguas",
+            "it": "Campioni antichi",
+            "pt": "Amostras antigas",
+            "ru": "Древние образцы",
+            "zh": "古代样本",
+            "ja": "古代サンプル",
+            "ko": "고대 샘플",
+            "ar": "عينات قديمة",
+            "he": "דגימות עתיקות",
+            "fa": "نمونه‌های باستانی",
+            "hi": "प्राचीन नमूने",
+            "sw": "Sampuli za kale",
+            "mi": "Ngā tauira onamata",
+            "sm": "Fa'ata'ita'iga anamua",
+            "to": "Ngaahi fakataʻitaʻi motuʻa",
+            "fj": "Na ivakaraitaki makawa",
+        },
+        "narrative": {
+            "fi": "Löydöt menneisyydestä",
+            "en": "Finds from the past",
+            "sv": "Fynd från det förflutna",
+            "de": "Funde aus der Vergangenheit",
+            "fr": "Découvertes du passé",
+            "es": "Hallazgos del pasado",
+            "it": "Scoperte del passato",
+            "pt": "Descobertas do passado",
+            "ru": "Находки из прошлого",
+            "zh": "来自过去的发现",
+            "ja": "過去からの発見",
+            "ko": "과거의 발견",
+            "ar": "اكتشافات من الماضي",
+            "he": "ממצאים מהעבר",
+            "fa": "یافته‌هایی از گذشته",
+            "hi": "अतीत से खोजें",
+            "sw": "Ugunduzi wa zamani",
+            "mi": "Ngā kitenga nō mua",
+            "sm": "Mauaga mai aso anamua",
+            "to": "Ngaahi kumi mei he kuohili",
+            "fj": "Na kunei mai na gauna sa oti",
+        },
+        "concise": {
+            "fi": "Muinaiset näytteet",
+            "en": "Ancient samples",
+            "sv": "Forntida prover",
+            "de": "Antike Proben",
+            "fr": "Échantillons anciens",
+            "es": "Muestras antiguas",
+            "it": "Campioni antichi",
+            "pt": "Amostras antigas",
+            "ru": "Древние образцы",
+            "zh": "古代样本",
+            "ja": "古代サンプル",
+            "ko": "고대 샘플",
+            "ar": "عينات قديمة",
+            "he": "דגימות עתיקות",
+            "fa": "نمونه‌های باستانی",
+            "hi": "प्राचीन नमूने",
+            "sw": "Sampuli za kale",
+            "mi": "Ngā tauira onamata",
+            "sm": "Fa'ata'ita'iga anamua",
+            "to": "Ngaahi fakataʻitaʻi motuʻa",
+            "fj": "Na ivakaraitaki makawa",
+        },
+        "explorer": {
+            "fi": "Arkeologiset löydöt",
+            "en": "Archaeological finds",
+            "sv": "Arkeologiska fynd",
+            "de": "Archäologische Funde",
+            "fr": "Découvertes archéologiques",
+            "es": "Hallazgos arqueológicos",
+            "it": "Ritrovamenti archeologici",
+            "pt": "Achados arqueológicos",
+            "ru": "Археологические находки",
+            "zh": "考古发现",
+            "ja": "考古学的発見",
+            "ko": "고고학적 발견",
+            "ar": "الاكتشافات الأثرية",
+            "he": "ממצאים ארכיאולוגיים",
+            "fa": "یافته‌های باستان‌شناسی",
+            "hi": "पुरातात्विक खोजें",
+            "sw": "Ugunduzi wa akiolojia",
+            "mi": "Ngā kitenga whaipara",
+            "sm": "Sailiga fa'asolopito",
+            "to": "Ngaahi kumi faka-ʻāsī",
+            "fj": "Na kunei ni vakadidike ni veigauna makawa",
+        },
+    },
+
+    "section_time_depth": {
+        "academic": {
+            "fi": "Aikasyvyys",
             "en": "Time depth",
             "sv": "Tidsdjup",
             "de": "Zeitliche Tiefe",
+            "fr": "Profondeur temporelle",
+            "es": "Profundidad temporal",
+            "it": "Profondità temporale",
+            "pt": "Profundidade temporal",
+            "ru": "Глубина во времени",
+            "zh": "时间深度",
+            "ja": "時間的深さ",
+            "ko": "시간 깊이",
+            "ar": "العمق الزمني",
+            "he": "עומק זמן",
+            "fa": "عمق زمانی",
+            "hi": "समय की गहराई",
+            "sw": "Kina cha muda",
+            "mi": "Hōhonutanga wā",
+            "sm": "Loloto o le taimi",
+            "to": "Hōhonu ʻo e taimi",
+            "fj": "Titobu ni gauna",
         },
         "narrative": {
-            "fi": "Aikamatka menneisyyteen",
-            "en": "A journey back in time",
-            "sv": "En resa tillbaka i tiden",
-            "de": "Eine Reise in die Vergangenheit",
+            "fi": "Kuinka kauas menneisyyteen",
+            "en": "How far back in time",
+            "sv": "Hur långt tillbaka i tiden",
+            "de": "Wie weit zurück in der Zeit",
+            "fr": "Jusqu’où remonte-t-on",
+            "es": "Qué tan lejos en el tiempo",
+            "it": "Quanto indietro nel tempo",
+            "pt": "Quão longe no tempo",
+            "ru": "Насколько далеко в прошлое",
+            "zh": "追溯到多远的过去",
+            "ja": "どれほど過去まで遡るか",
+            "ko": "얼마나 과거로 거슬러 올라가는가",
+            "ar": "إلى أي مدى يعود إلى الماضي",
+            "he": "עד כמה רחוק בזמן",
+            "fa": "تا چه زمانی به گذشته برمی‌گردد",
+            "hi": "कितना पीछे तक जाता है",
+            "sw": "Inarudi nyuma kwa muda gani",
+            "mi": "Kia pēhea te tawhiti o te wā o mua",
+            "sm": "O le ā le mamao i tua i le taimi",
+            "to": "ʻOku foki mamaʻo fēfē ʻi he taimi",
+            "fj": "E vakacava na yawa ni gauna makawa",
         },
-        "popular": {
-            "fi": "Kuinka vanha tämä haploryhmä on",
-            "en": "How old this haplogroup is",
-            "sv": "Hur gammal denna haplogrupp är",
-            "de": "Wie alt diese Haplogruppe ist",
+        "concise": {
+            "fi": "Aikasyvyys",
+            "en": "Time depth",
+            "sv": "Tidsdjup",
+            "de": "Zeitliche Tiefe",
+            "fr": "Profondeur temporelle",
+            "es": "Profundidad temporal",
+            "it": "Profondità temporale",
+            "pt": "Profundidade temporal",
+            "ru": "Глубина во времени",
+            "zh": "时间深度",
+            "ja": "時間の深さ",
+            "ko": "시간 깊이",
+            "ar": "العمق الزمني",
+            "he": "עומק זמן",
+            "fa": "عمق زمانی",
+            "hi": "समय की गहराई",
+            "sw": "Kina cha muda",
+            "mi": "Hōhonutanga wā",
+            "sm": "Loloto o le taimi",
+            "to": "Hōhonu ʻo e taimi",
+            "fj": "Titobu ni gauna",
+        },
+        "explorer": {
+            "fi": "Ajan halki",
+            "en": "Through the ages",
+            "sv": "Genom tiderna",
+            "de": "Durch die Zeitalter",
+            "fr": "À travers les âges",
+            "es": "A través de las eras",
+            "it": "Attraverso le epoche",
+            "pt": "Através das eras",
+            "ru": "Сквозь века",
+            "zh": "穿越时代",
+            "ja": "時代を越えて",
+            "ko": "시대를 가로질러",
+            "ar": "عبر العصور",
+            "he": "דרך הדורות",
+            "fa": "در گذر زمان",
+            "hi": "युगों के पार",
+            "sw": "Kupitia zama",
+            "mi": "I roto i ngā tau",
+            "sm": "I vaitau eseese",
+            "to": "ʻI he ngaahi kuonga",
+            "fj": "Ena veigauna eso",
         },
     },
 
-    "ancient_samples_label": {
-        "academic": {
-            "fi": "Muinaisnäytteet",
-            "en": "Ancient samples",
-            "sv": "Fornprover",
-            "de": "Antike Proben",
-        },
-        "narrative": {
-            "fi": "Muinaiset jäljet ihmisistä",
-            "en": "Ancient traces of people",
-            "sv": "Fornspår av människor",
-            "de": "Antike Spuren von Menschen",
-        },
-        "popular": {
-            "fi": "Vanhimmat löydöt",
-            "en": "Oldest findings",
-            "sv": "Äldsta fynden",
-            "de": "Älteste Funde",
-        },
-    },
-
-    "sources_label": {
+    "section_sources": {
         "academic": {
             "fi": "Lähteet",
             "en": "Sources",
             "sv": "Källor",
             "de": "Quellen",
+            "fr": "Sources",
+            "es": "Fuentes",
+            "it": "Fonti",
+            "pt": "Fontes",
+            "ru": "Источники",
+            "zh": "来源",
+            "ja": "出典",
+            "ko": "출처",
+            "ar": "المصادر",
+            "he": "מקורות",
+            "fa": "منابع",
+            "hi": "स्रोत",
+            "sw": "Vyanzo",
+            "mi": "Ngā pūtake",
+            "sm": "Punaoa",
+            "to": "Ngaahi punaʻanga",
+            "fj": "Na ivurevure",
         },
         "narrative": {
-            "fi": "Tutkimukset ja kertomukset",
-            "en": "Studies and narratives",
-            "sv": "Studier och berättelser",
-            "de": "Studien und Erzählungen",
-        },
-        "popular": {
             "fi": "Mistä tieto on peräisin",
-            "en": "Where this information comes from",
-            "sv": "Var informationen kommer ifrån",
-            "de": "Woher diese Informationen stammen",
+            "en": "Where this knowledge comes from",
+            "sv": "Varifrån kunskapen kommer",
+            "de": "Woher dieses Wissen stammt",
+            "fr": "D’où viennent ces connaissances",
+            "es": "De dónde proviene este conocimiento",
+            "it": "Da dove provengono queste conoscenze",
+            "pt": "De onde vêm esses conhecimentos",
+            "ru": "Откуда получены эти сведения",
+            "zh": "这些知识来自哪里",
+            "ja": "これらの知識の出所",
+            "ko": "이 지식의 출처",
+            "ar": "مصادر هذه المعرفة",
+            "he": "מקור הידע הזה",
+            "fa": "منابع این دانش",
+            "hi": "यह ज्ञान कहाँ से आया",
+            "sw": "Maarifa haya yanatoka wapi",
+            "mi": "Nō hea ēnei mōhiotanga",
+            "sm": "O fea e maua mai ai nei poto",
+            "to": "ʻOku haʻu mei fē ʻa e ʻilo ni",
+            "fj": "Na curu mai vei cei na kila oqo",
+        },
+        "concise": {
+            "fi": "Lähteet",
+            "en": "Sources",
+            "sv": "Källor",
+            "de": "Quellen",
+            "fr": "Sources",
+            "es": "Fuentes",
+            "it": "Fonti",
+            "pt": "Fontes",
+            "ru": "Источники",
+            "zh": "来源",
+            "ja": "出典",
+            "ko": "출처",
+            "ar": "المصادر",
+            "he": "מקורות",
+            "fa": "منابع",
+            "hi": "स्रोत",
+            "sw": "Vyanzo",
+            "mi": "Ngā pūtake",
+            "sm": "Punaoa",
+            "to": "Ngaahi punaʻanga",
+            "fj": "Na ivurevure",
+        },
+        "explorer": {
+            "fi": "Tutkimuslähteet",
+            "en": "Research sources",
+            "sv": "Forskningskällor",
+            "de": "Forschungsquellen",
+            "fr": "Sources de recherche",
+            "es": "Fuentes de investigación",
+            "it": "Fonti di ricerca",
+            "pt": "Fontes de pesquisa",
+            "ru": "Научные источники",
+            "zh": "研究来源",
+            "ja": "研究ソース",
+            "ko": "연구 출처",
+            "ar": "مصادر البحث",
+            "he": "מקורות מחקר",
+            "fa": "منابع پژوهش",
+            "hi": "अनुसंधान स्रोत",
+            "sw": "Vyanzo vya utafiti",
+            "mi": "Ngā puna rangahau",
+            "sm": "Punaoa su'esu'ega",
+            "to": "Ngaahi punaʻanga fakasuesue",
+            "fj": "Na ivurevure ni vakadidike",
         },
     },
 
     # -------------------------------
-    # PDF-tekstit
+    # Generic content phrases
     # -------------------------------
 
-    "pdf_title": {
+    "no_data_available": {
         "academic": {
-            "fi": "Haploryhmäraportti: {haplogroup}",
-            "en": "Haplogroup Report: {haplogroup}",
-            "sv": "Haplogruppsrapport: {haplogroup}",
-            "de": "Haplogruppenbericht: {haplogroup}",
+            "fi": "Tietoa ei ole saatavilla tälle haploryhmälle.",
+            "en": "No data is available for this haplogroup.",
+            "sv": "Ingen data finns tillgänglig för denna haplogrupp.",
+            "de": "Für diese Haplogruppe sind keine Daten verfügbar.",
+            "fr": "Aucune donnée n’est disponible pour cet haplogroupe.",
+            "es": "No hay datos disponibles para este haplogrupo.",
+            "it": "Nessun dato disponibile per questo alogruppo.",
+            "pt": "Nenhum dado disponível para este haplogrupo.",
+            "ru": "Нет данных для этой гаплогруппы.",
+            "zh": "该单倍群暂无可用数据。",
+            "ja": "このハプログループに関するデータはありません。",
+            "ko": "이 하플로그룹에 대한 데이터가 없습니다.",
+            "ar": "لا توجد بيانات متاحة لهذه السلالة.",
+            "he": "אין נתונים זמינים עבור הפלוגרופ הזה.",
+            "fa": "هیچ داده‌ای برای این هاپلوگروه در دسترس نیست.",
+            "hi": "इस हैप्लोग्रुप के लिए कोई डेटा उपलब्ध नहीं है।",
+            "sw": "Hakuna data inayopatikana kwa haplogroup hii.",
+            "mi": "Kāore he raraunga mō tēnei rōpū ira.",
+            "sm": "E leai se fa'amatalaga mo lenei haplogroup.",
+            "to": "ʻOku ʻikai ha fakamatala ki he haplogroup ni.",
+            "fj": "E sega ni dua na ivakamacala me baleta na haplogroup oqo.",
         },
         "narrative": {
-            "fi": "Sukulinjan tarina: {haplogroup}",
-            "en": "The Story of Your Lineage: {haplogroup}",
-            "sv": "Berättelsen om din släktlinje: {haplogroup}",
-            "de": "Die Geschichte Ihrer Abstammung: {haplogroup}",
+            "fi": "Tämän haploryhmän tarinaa ei ole vielä täysin kirjoitettu.",
+            "en": "The story of this haplogroup has not yet been fully written.",
+            "sv": "Denna haplogrupps berättelse är ännu inte fullständigt skriven.",
+            "de": "Die Geschichte dieser Haplogruppe ist noch nicht vollständig geschrieben.",
+            "fr": "L’histoire de cet haplogroupe n’est pas encore entièrement écrite.",
+            "es": "La historia de este haplogrupo aún no se ha escrito por completo.",
+            "it": "La storia di questo alogruppo non è ancora stata completamente scritta.",
+            "pt": "A história deste haplogrupo ainda não foi totalmente escrita.",
+            "ru": "История этой гаплогруппы ещё не полностью написана.",
+            "zh": "这个单倍群的故事尚未完全写就。",
+            "ja": "このハプログループの物語はまだ完全には書かれていません。",
+            "ko": "이 하플로그룹의 이야기는 아직 완전히 기록되지 않았습니다.",
+            "ar": "قصة هذه السلالة لم تُكتب بالكامل بعد.",
+            "he": "הסיפור של הפלוגרופ הזה טרם נכתב במלואו.",
+            "fa": "داستان این هاپلوگروه هنوز به‌طور کامل نوشته نشده است.",
+            "hi": "इस हैप्लोग्रुप की कहानी अभी पूरी तरह लिखी नहीं गई है।",
+            "sw": "Hadithi ya haplogroup hii bado haijaandikwa kikamilifu.",
+            "mi": "Kāore anō kia oti te tuhi i te kōrero o tēnei rōpū ira.",
+            "sm": "E leʻi maeʻa ona tusia atoatoa le tala o lenei haplogroup.",
+            "to": "ʻOku teʻeki ai ke kakato ʻa e talanoa ʻo e haplogroup ni.",
+            "fj": "Sa sega ni vola taucoko na italanoa ni haplogroup oqo.",
         },
-        "popular": {
-            "fi": "Sinun haploryhmäraporttisi: {haplogroup}",
-            "en": "Your Haplogroup Report: {haplogroup}",
-            "sv": "Din haplogruppsrapport: {haplogroup}",
-            "de": "Ihr Haplogruppenbericht: {haplogroup}",
+        "concise": {
+            "fi": "Ei tietoa saatavilla.",
+            "en": "No data available.",
+            "sv": "Ingen data tillgänglig.",
+            "de": "Keine Daten verfügbar.",
+            "fr": "Aucune donnée disponible.",
+            "es": "No hay datos disponibles.",
+            "it": "Nessun dato disponibile.",
+            "pt": "Nenhum dado disponível.",
+            "ru": "Нет данных.",
+            "zh": "无可用数据。",
+            "ja": "利用可能なデータはありません。",
+            "ko": "사용 가능한 데이터가 없습니다.",
+            "ar": "لا توجد بيانات.",
+            "he": "אין נתונים.",
+            "fa": "هیچ داده‌ای در دسترس نیست.",
+            "hi": "कोई डेटा उपलब्ध नहीं है।",
+            "sw": "Hakuna data.",
+            "mi": "Kāore he raraunga.",
+            "sm": "E leai ni fa'amatalaga.",
+            "to": "ʻOku ʻikai ha fakamatala.",
+            "fj": "E sega ni dua na ivakamacala.",
         },
-    },
-
-    "pdf_footer": {
-        "academic": {
-            "fi": "Luotu automaattisesti arkeogeneettisestä tietokannasta.",
-            "en": "Automatically generated from archaeogenetic databases.",
-            "sv": "Automatiskt genererad från arkeogenetiska databaser.",
-            "de": "Automatisch generiert aus archäogenetischen Datenbanken.",
-        },
-        "narrative": {
-            "fi": "Luotu menneisyyden tarinoita varten.",
-            "en": "Created to tell stories of the past.",
-            "sv": "Skapad för att berätta det förflutnas historier.",
-            "de": "Erstellt, um Geschichten der Vergangenheit zu erzählen.",
-        },
-        "popular": {
-            "fi": "Raportti on luotu automaattisesti.",
-            "en": "This report was generated automatically.",
-            "sv": "Denna rapport skapades automatiskt.",
-            "de": "Dieser Bericht wurde automatisch erstellt.",
-        },
-    },
-
-    # -------------------------------
-    # Sähköposti
-    # -------------------------------
-
-    "email_subject": {
-        "academic": {
-            "fi": "Haploryhmäraportti – {haplogroup}",
-            "en": "Haplogroup Report – {haplogroup}",
-            "sv": "Haplogruppsrapport – {haplogroup}",
-            "de": "Haplogruppenbericht – {haplogroup}",
-        },
-        "narrative": {
-            "fi": "Tarina sukulinjastasi – {haplogroup}",
-            "en": "The Story of Your Lineage – {haplogroup}",
-            "sv": "Berättelsen om din släktlinje – {haplogroup}",
-            "de": "Die Geschichte Ihrer Abstammung – {haplogroup}",
-        },
-        "popular": {
-            "fi": "Sinun haploryhmäraporttisi – {haplogroup}",
-            "en": "Your Haplogroup Report – {haplogroup}",
-            "sv": "Din haplogruppsrapport – {haplogroup}",
-            "de": "Ihr Haplogruppenbericht – {haplogroup}",
-        },
-    },
-
-    "email_body_text": {
-        "academic": {
-            "fi": "Hei {user_name},\n\nLiitteenä on tieteellinen haploryhmäraporttisi ({haplogroup}).\n\nYstävällisin terveisin,\nKadonneen Sukuhistorian Metsästäjä",
-            "en": "Hello {user_name},\n\nAttached is your scientific haplogroup report ({haplogroup}).\n\nKind regards,\nKadonneen Sukuhistorian Metsästäjä",
-            "sv": "Hej {user_name},\n\nBifogat finns din vetenskapliga haplogruppsrapport ({haplogroup}).\n\nVänliga hälsningar,\nKadonneen Sukuhistorian Metsästäjä",
-            "de": "Hallo {user_name},\n\nIm Anhang finden Sie Ihren wissenschaftlichen Haplogruppenbericht ({haplogroup}).\n\nMit freundlichen Grüßen,\nKadonneen Sukuhistorian Metsästäjä",
-        },
-        "narrative": {
-            "fi": "Hei {user_name},\n\nLiitteenä on sukulinjasi tarina haploryhmästä {haplogroup}.\n\nLämpimin terveisin,\nKadonneen Sukuhistorian Metsästäjä",
-            "en": "Hello {user_name},\n\nAttached is the story of your lineage through haplogroup {haplogroup}.\n\nWarm regards,\nKadonneen Sukuhistorian Metsästäjä",
-            "sv": "Hej {user_name},\n\nBifogat finns berättelsen om din släktlinje genom haplogrupp {haplogroup}.\n\nVänliga hälsningar,\nKadonneen Sukuhistorian Metsästäjä",
-            "de": "Hallo {user_name},\n\nIm Anhang finden Sie die Geschichte Ihrer Abstammung über Haplogruppe {haplogroup}.\n\nMit freundlichen Grüßen,\nKadonneen Sukuhistorian Metsästäjä",
-        },
-        "popular": {
-            "fi": "Hei {user_name},\n\nTässä on henkilökohtainen haploryhmäraporttisi ({haplogroup}).\n\nTerveisin,\nKadonneen Sukuhistorian Metsästäjä",
-            "en": "Hello {user_name},\n\nHere is your personal haplogroup report ({haplogroup}).\n\nBest regards,\nKadonneen Sukuhistorian Metsästäjä",
-            "sv": "Hej {user_name},\n\nHär är din personliga haplogruppsrapport ({haplogroup}).\n\nVänliga hälsningar,\nKadonneen Sukuhistorian Metsästäjä",
-            "de": "Hallo {user_name},\n\nHier ist Ihr persönlicher Haplogruppenbericht ({haplogroup}).\n\nMit freundlichen Grüßen,\nKadonneen Sukuhistorian Metsästäjä",
-        },
-    },
-
-    "email_body_html": {
-        "academic": {
-            "fi": "<p>Hei {user_name},</p><p>Liitteenä on tieteellinen haploryhmäraporttisi (<strong>{haplogroup}</strong>).</p><p>Ystävällisin terveisin,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-            "en": "<p>Hello {user_name},</p><p>Attached is your scientific haplogroup report (<strong>{haplogroup}</strong>).</p><p>Kind regards,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-            "sv": "<p>Hej {user_name},</p><p>Bifogat finns din vetenskapliga haplogruppsrapport (<strong>{haplogroup}</strong>).</p><p>Vänliga hälsningar,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-            "de": "<p>Hallo {user_name},</p><p>Im Anhang finden Sie Ihren wissenschaftlichen Haplogruppenbericht (<strong>{haplogroup}</strong>).</p><p>Mit freundlichen Grüßen,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-        },
-        "narrative": {
-            "fi": "<p>Hei {user_name},</p><p>Liitteenä on sukulinjasi tarina haploryhmästä <strong>{haplogroup}</strong>.</p><p>Lämpimin terveisin,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-            "en": "<p>Hello {user_name},</p><p>Attached is the story of your lineage through haplogroup <strong>{haplogroup}</strong>.</p><p>Warm regards,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-            "sv": "<p>Hej {user_name},</p><p>Bifogat finns berättelsen om din släktlinje genom haplogrupp <strong>{haplogroup}</strong>.</p><p>Vänliga hälsningar,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-            "de": "<p>Hallo {user_name},</p><p>Im Anhang finden Sie die Geschichte Ihrer Abstammung über Haplogruppe <strong>{haplogroup}</strong>.</p><p>Mit freundlichen Grüßen,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-        },
-        "popular": {
-            "fi": "<p>Hei {user_name},</p><p>Tässä on henkilökohtainen haploryhmäraporttisi (<strong>{haplogroup}</strong>).</p><p>Terveisin,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-            "en": "<p>Hello {user_name},</p><p>Here is your personal haplogroup report (<strong>{haplogroup}</strong>).</p><p>Best regards,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-            "sv": "<p>Hej {user_name},</p><p>Här är din personliga haplogruppsrapport (<strong>{haplogroup}</strong>).</p><p>Vänliga hälsningar,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-            "de": "<p>Hallo {user_name},</p><p>Hier ist Ihr persönlicher Haplogruppenbericht (<strong>{haplogroup}</strong>).</p><p>Mit freundlichen Grüßen,<br><strong>Kadonneen Sukuhistorian Metsästäjä</strong></p>",
-        },
-    },
-
-    # -------------------------------
-    # Virheilmoitukset ja käyttö
-    # -------------------------------
-
-    "error_invalid_haplogroup": {
-        "academic": {
-            "fi": "Virheellinen haploryhmämuoto: {haplogroup}",
-            "en": "Invalid haplogroup format: {haplogroup}",
-            "sv": "Ogiltigt haplogruppsformat: {haplogroup}",
-            "de": "Ungültiges Haplogruppenformat: {haplogroup}",
-        },
-        "narrative": {
-            "fi": "Annettu haploryhmä ei vastaa tunnettuja muotoja: {haplogroup}",
-            "en": "The given haplogroup does not match known formats: {haplogroup}",
-            "sv": "Den angivna haplogruppen matchar inte kända format: {haplogroup}",
-            "de": "Die angegebene Haplogruppe entspricht keinen bekannten Formaten: {haplogroup}",
-        },
-        "popular": {
-            "fi": "Tämä ei näytä oikealta haploryhmältä: {haplogroup}",
-            "en": "This doesn’t look like a valid haplogroup: {haplogroup}",
-            "sv": "Detta ser inte ut som en giltig haplogrupp: {haplogroup}",
-            "de": "Dies sieht nicht wie eine gültige Haplogruppe aus: {haplogroup}",
-        },
-    },
-
-    "error_internal": {
-        "academic": {
-            "fi": "Sisäinen järjestelmävirhe.",
-            "en": "Internal system error.",
-            "sv": "Internt systemfel.",
-            "de": "Interner Systemfehler.",
-        },
-        "narrative": {
-            "fi": "Järjestelmässä tapahtui odottamaton virhe.",
-            "en": "An unexpected error occurred in the system.",
-            "sv": "Ett oväntat fel inträffade i systemet.",
-            "de": "Im System ist ein unerwarteter Fehler aufgetreten.",
-        },
-        "popular": {
-            "fi": "Jokin meni pieleen. Yritä uudelleen.",
-            "en": "Something went wrong. Please try again.",
-            "sv": "Något gick fel. Försök igen.",
-            "de": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+        "explorer": {
+            "fi": "Tässä kohdin kartta vielä odottaa seuraavaa löytöä.",
+            "en": "At this point, the map still awaits its next discovery.",
+            "sv": "Här väntar kartan ännu på nästa upptäckt.",
+            "de": "An dieser Stelle wartet die Karte noch auf die nächste Entdeckung.",
+            "fr": "À ce stade, la carte attend encore sa prochaine découverte.",
+            "es": "En este punto, el mapa aún espera su próximo descubrimiento.",
+            "it": "A questo punto, la mappa attende ancora la sua prossima scoperta.",
+            "pt": "Neste ponto, o mapa ainda aguarda sua próxima descoberta.",
+            "ru": "В этом месте карта всё ещё ждёт следующего открытия.",
+            "zh": "在这里，地图仍在等待下一次发现。",
+            "ja": "ここでは、地図はまだ次の発見を待っています。",
+            "ko": "이 지점에서 지도는 아직 다음 발견을 기다리고 있습니다.",
+            "ar": "في هذه النقطة، لا تزال الخريطة تنتظر الاكتشاف التالي.",
+            "he": "בנקודה זו המפה עדיין ממתינה לגילוי הבא.",
+            "fa": "در این نقطه، نقشه هنوز منتظر کشف بعدی است.",
+            "hi": "इस बिंदु पर, मानचित्र अभी भी अगली खोज की प्रतीक्षा कर रहा है।",
+            "sw": "Katika hatua hii, ramani bado inasubiri ugunduzi wake unaofuata.",
+            "mi": "I tēnei wāhi, kei te tatari tonu te mahere ki te kitenga e whai ake nei.",
+            "sm": "I lenei taimi, o lo'o fa'atali pea le fa'afanua mo le isi mauaga.",
+            "to": "ʻI he taimi ni, ʻoku kei tatali ʻa e māpe ki he kitenga hoko mai.",
+            "fj": "Ena tikina oqo, sa sewaraki tiko ga na mape na kunei tarava.",
         },
     },
 }
 
+# ----------------------------------------
+# Public API
+# ----------------------------------------
 
-# ----------------------------------
-# API-funktiot
-# ----------------------------------
-
-def get_translation(
-    lang: str,
-    key: str,
-    tone: str = DEFAULT_TONE,
-    fallback_lang: Optional[str] = DEFAULT_LANG,
-    **kwargs,
-) -> str:
+def get_text(key: str, lang: str = DEFAULT_LANG, tone: str = DEFAULT_TONE, **kwargs) -> str:
     """
-    Palauttaa lokalisoidun ja sävytetyn tekstin.
-    Automaattinen fallback ensisijaisesti englantiin.
+    Palauttaa lokalisoidun tekstin annetulle avaimelle, kielelle ja sävylle.
+    Automaattinen fallback englantiin ja academic-sävyyn.
     """
-    lang = lang if lang in SUPPORTED_LANGUAGES else DEFAULT_LANG
-    tone = tone if tone in SUPPORTED_TONES else DEFAULT_TONE
+    if lang not in SUPPORTED_LANGUAGES:
+        lang = DEFAULT_LANG
+    if tone not in SUPPORTED_TONES:
+        tone = DEFAULT_TONE
 
     entry = TRANSLATIONS.get(key, {})
-    tone_entry = entry.get(tone, {})
-
-    text = tone_entry.get(lang)
-
-    if not text and fallback_lang:
-        text = tone_entry.get(fallback_lang)
-
-    if not text:
-        text = key  # fallback viime kädessä avain
+    tone_map = entry.get(tone, {})
+    text = tone_map.get(lang) or tone_map.get(DEFAULT_LANG) or key
 
     if kwargs:
         try:
             return text.format(**kwargs)
-        except KeyError:
-            return text  # Palauta raakateksti jos muotoilu epäonnistuu
-
+        except Exception:
+            return text
     return text
 
 
-def is_language_supported(lang: str) -> bool:
+def is_supported_language(lang: str) -> bool:
     return lang in SUPPORTED_LANGUAGES
 
 
-def is_tone_supported(tone: str) -> bool:
+def is_supported_tone(tone: str) -> bool:
     return tone in SUPPORTED_TONES
 
 
 def list_supported_languages() -> list:
-    return SUPPORTED_LANGUAGES
+    return SUPPORTED_LANGUAGES.copy()
 
 
 def list_supported_tones() -> list:
-    return SUPPORTED_TONES
+    return SUPPORTED_TONES.copy()
+
