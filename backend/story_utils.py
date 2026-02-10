@@ -1,322 +1,190 @@
-from typing import Dict, List, Optional
-from i18n_utils import get_text, build_intro, build_label
-from datetime import datetime
+from typing import Dict, List
+from i18n_utils import get_text, get_style_profile
+from data_utils import fetch_full_haplogroup_data
 
-# -----------------------------
-# Päärajapinta
-# -----------------------------
 
-def generate_story(
-    haplogroup_data: Dict,
-    lang: str = "en",
-    tone: str = "chronological",
-    region: str = "global",
-    user_name: Optional[str] = None,
-    notes: Optional[str] = None,
-) -> Dict[str, str]:
+def generate_story(haplogroup_data: Dict, lang: str = "en", tone: str = "academic") -> Dict:
     """
-    Tuottaa koko haploryhmäraportin osiot rakenteellisessa muodossa.
-    Palauttaa sanakirjan, jossa osiot ovat nimettyjä tekstikokonaisuuksia.
+    Rakentaa kronologisen, arkeogeneettisen kertomuksen haploryhmästä.
+    Palauttaa rakenteellisen tarinapaketin, jota pdf_utils ja email_utils voivat käyttää.
     """
+    style = get_style_profile(lang=lang, tone=tone)
 
-    story = {}
+    story = {
+        "title": build_title(haplogroup_data, lang),
+        "subtitle": build_subtitle(haplogroup_data, lang),
+        "sections": [],
+        "metadata": {
+            "haplogroup": haplogroup_data.get("haplogroup"),
+            "lineage_type": haplogroup_data.get("lineage_type"),
+            "regions": haplogroup_data.get("regions", []),
+            "time_depth": haplogroup_data.get("time_depth"),
+            "reliability_score": haplogroup_data.get("reliability_score"),
+        },
+    }
 
-    # 1) Otsikko ja johdanto
-    story["intro"] = build_intro(lang, tone, region).format(haplogroup=haplogroup_data.get("haplogroup", ""))
-    if user_name:
-        story["intro"] = personalize_intro(story["intro"], user_name, lang)
+    # Johdanto
+    story["sections"].append(build_introduction(haplogroup_data, lang, style))
 
-    # 2) Yleiskuvaus
-    story["overview"] = build_overview(haplogroup_data, lang, tone, region)
+    # Kronologinen kulku muinaisista löydöistä
+    story["sections"].append(build_chronological_migration(haplogroup_data, lang, style))
 
-    # 3) Kronologinen aikajana
-    story["timeline"] = build_chronological_timeline(haplogroup_data, lang, tone, region)
+    # Kulttuurit ja yhteydet
+    story["sections"].append(build_cultural_context(haplogroup_data, lang, style))
 
-    # 4) Maantieteellinen levinneisyys
-    story["distribution"] = build_geographic_distribution(haplogroup_data, lang, tone, region)
+    # Aluekohtaiset profiilit
+    story["sections"].extend(build_regional_profiles(haplogroup_data, lang, style))
 
-    # 5) Muinaiset näytteet
-    story["ancient_samples"] = build_ancient_samples_section(haplogroup_data, lang, tone, region)
+    # Nykyinen levinneisyys
+    story["sections"].append(build_modern_distribution(haplogroup_data, lang, style))
 
-    # 6) Kulttuuriset kontekstit
-    story["cultural_contexts"] = build_cultural_contexts(haplogroup_data, lang, tone, region)
-
-    # 7) Tieteellinen tulkinta
-    story["scientific_interpretation"] = build_scientific_interpretation(haplogroup_data, lang, tone, region)
-
-    # 😎 Lähteet
-    story["sources"] = build_sources_section(haplogroup_data, lang)
-
-    # 9) Yksityisyys
-    story["privacy_notice"] = get_text("privacy_notice", lang)
-
-    # 10) Käyttäjän muistiinpanot
-    if notes:
-        story["user_notes"] = format_user_notes(notes, lang)
-
-    # 11) Metadata
-    story["metadata"] = build_metadata(haplogroup_data, lang, tone, region)
+    # Lähteet ja luotettavuus
+    story["sections"].append(build_sources_section(haplogroup_data, lang, style))
 
     return story
 
 
-# -----------------------------
-# Osioiden rakentajat
-# -----------------------------
+# ----------------------------
+# Section builders
+# ----------------------------
 
-def build_overview(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = build_label("haplogroup_title", lang).format(haplogroup=data.get("haplogroup", ""))
-    description = data.get("description") or get_text("description_intro", lang, tone, region)
+def build_title(data: Dict, lang: str) -> str:
+    return get_text("story_title", lang, haplogroup=data.get("haplogroup"))
 
-    lineage_type = data.get("lineage_type", "")
-    time_depth = data.get("time_depth", "")
-    regions = ", ".join(data.get("regions", []))
 
-    lines = [
-        title,
-        "",
-        description,
-    ]
+def build_subtitle(data: Dict, lang: str) -> str:
+    lineage_type = data.get("lineage_type", "unknown")
+    return get_text("story_subtitle", lang, lineage_type=lineage_type)
 
-    if lineage_type:
-        lines.append(f"{get_text('lineage_type_label', lang)}: {lineage_type}")
-    if time_depth:
-        lines.append(f"{build_label('time_depth_label', lang)}: {time_depth}")
-    if regions:
-        lines.append(f"{build_label('regions_label', lang)}: {regions}")
 
-    return "\n".join(lines).strip()
-
-
-def build_chronological_timeline(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = get_text("timeline_title", lang, tone, region) or "Chronological timeline"
-    intro = get_text("section_intro", lang, tone, region)
-
-    events = data.get("timeline", []) or infer_timeline_from_samples(data)
-
-    if not events:
-        return f"{title}\n\n{get_text('no_timeline_data', lang, tone, region)}"
-
-    lines = [title, "", intro, ""]
-
-    for event in sorted(events, key=lambda e: e.get("date", "")):
-        lines.append(format_timeline_event(event, lang))
-
-    return "\n".join(lines).strip()
-
-
-def build_geographic_distribution(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = build_label("regions_label", lang)
-    intro = get_text("distribution_intro", lang, tone, region)
-
-    regions = data.get("regions", [])
-    regional_profiles = data.get("regional_profiles", [])
-
-    lines = [title, "", intro, ""]
-
-    if regions:
-        lines.append(get_text("regions_list_intro", lang, tone, region) + ":")
-        for r in regions:
-            lines.append(f"• {r}")
-
-    if regional_profiles:
-        lines.append("")
-        lines.append(get_text("regional_profiles_intro", lang, tone, region))
-        for profile in regional_profiles:
-            lines.append(format_regional_profile(profile, lang))
-
-    return "\n".join(lines).strip()
-
-
-def build_ancient_samples_section(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = build_label("ancient_samples_label", lang)
-    intro = get_text("ancient_samples_intro", lang, tone, region)
-
-    samples = data.get("ancient_samples", [])
-
-    lines = [title, "", intro, ""]
-
-    if not samples:
-        lines.append(get_text("no_ancient_samples", lang, tone, region))
-        return "\n".join(lines).strip()
-
-    for sample in samples:
-        lines.append(format_ancient_sample(sample, lang))
-
-    return "\n".join(lines).strip()
-
-
-def build_cultural_contexts(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = get_text("cultural_contexts_title", lang, tone, region)
-    intro = get_text("cultural_contexts_intro", lang, tone, region)
-
-    cultures = data.get("cultures", []) or infer_cultures_from_regions(data)
-
-    lines = [title, "", intro, ""]
-
-    if not cultures:
-        lines.append(get_text("no_cultural_contexts", lang, tone, region))
-        return "\n".join(lines).strip()
-
-    for culture in cultures:
-        lines.append(format_culture(culture, lang))
-
-    return "\n".join(lines).strip()
-
-
-def build_scientific_interpretation(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = get_text("scientific_interpretation_title", lang, tone, region)
-    intro = get_text("scientific_interpretation_intro", lang, tone, region)
-
-    reliability = data.get("reliability_score")
-    lineage_type = data.get("lineage_type")
-    raw_providers = data.get("raw_data_providers", [])
-    tools = data.get("analysis_tools", [])
-
-    lines = [title, "", intro, ""]
-
-    if reliability is not None:
-        lines.append(get_text("reliability_score_label", lang, tone, region).format(score=reliability))
-
-    if lineage_type:
-        lines.append(get_text("lineage_type_statement", lang, tone, region).format(type=lineage_type))
-
-    if raw_providers:
-        lines.append("")
-        lines.append(get_text("raw_data_providers_label", lang, tone, region))
-        for p in raw_providers:
-            lines.append(f"• {p.get('name')} ({p.get('url', '')})")
-
-    if tools:
-        lines.append("")
-        lines.append(get_text("analysis_tools_label", lang, tone, region))
-        for tool in tools:
-            lines.append(f"• {tool.get('name')} ({tool.get('url', '')})")
-
-    return "\n".join(lines).strip()
-
-
-def build_sources_section(data: Dict, lang: str) -> str:
-    title = build_label("sources_label", lang)
-    sources = data.get("sources", [])
-
-    lines = [title, ""]
-
-    if not sources:
-        lines.append(get_text("no_sources", lang))
-        return "\n".join(lines).strip()
-
-    for source in sources:
-        lines.append(f"• {source}")
-
-    return "\n".join(lines).strip()
-
-
-# -----------------------------
-# Apurakentajat
-# -----------------------------
-
-def personalize_intro(intro_text: str, user_name: str, lang: str) -> str:
-    greeting = get_text("personal_greeting", lang).format(name=user_name)
-    return f"{greeting}\n\n{intro_text}"
-
-
-def format_timeline_event(event: Dict, lang: str) -> str:
-    date = event.get("date", get_text("unknown_date", lang))
-    location = event.get("location", get_text("unknown_location", lang))
-    description = event.get("description", "")
-
-    return f"• {date} — {location}: {description}"
-
-
-def format_ancient_sample(sample: Dict, lang: str) -> str:
-    name = sample.get("name", get_text("unknown_sample", lang))
-    date = sample.get("date", get_text("unknown_date", lang))
-    location = sample.get("location", get_text("unknown_location", lang))
-    culture = sample.get("culture", "")
-    publication = sample.get("publication", "")
-
-    line = f"• {name} — {date}, {location}"
-    if culture:
-        line += f" ({culture})"
-    if publication:
-        line += f". {get_text('publication_label', lang)}: {publication}"
-    return line
-
-
-def format_regional_profile(profile: Dict, lang: str) -> str:
-    region_name = profile.get("region", get_text("unknown_region", lang))
-    summary = profile.get("summary", "")
-    timeframe = profile.get("timeframe", "")
-
-    line = f"• {region_name}"
-    if timeframe:
-        line += f" ({timeframe})"
-    if summary:
-        line += f": {summary}"
-    return line
-
-
-def format_culture(culture: Dict, lang: str) -> str:
-    name = culture.get("name", get_text("unknown_culture", lang))
-    timeframe = culture.get("timeframe", "")
-    description = culture.get("description", "")
-
-    line = f"• {name}"
-    if timeframe:
-        line += f" ({timeframe})"
-    if description:
-        line += f": {description}"
-    return line
-
-
-def format_user_notes(notes: str, lang: str) -> str:
-    title = get_text("user_notes_label", lang)
-    return f"{title}\n\n{notes}".strip()
-
-
-def build_metadata(data: Dict, lang: str, tone: str, region: str) -> Dict:
+def build_introduction(data: Dict, lang: str, style: Dict) -> Dict:
     return {
-        "haplogroup": data.get("haplogroup"),
-        "generated_at": datetime.utcnow().isoformat() + "Z",
-        "language": lang,
-        "tone": tone,
-        "region": region,
-        "reliability_score": data.get("reliability_score"),
-        "sources_count": len(data.get("sources", [])),
+        "id": "introduction",
+        "title": get_text("section_introduction_title", lang),
+        "content": style["introduction"].format(
+            haplogroup=data.get("haplogroup"),
+            time_depth=data.get("time_depth", get_text("unknown_time_depth", lang)),
+            regions=", ".join(data.get("regions", [])),
+        ),
     }
 
 
-# -----------------------------
-# Inferenssifunktiot (fallback)
-# -----------------------------
+def build_chronological_migration(data: Dict, lang: str, style: Dict) -> Dict:
+    ancient_samples = data.get("ancient_samples", [])
+    if not ancient_samples:
+        content = get_text("no_ancient_samples_available", lang)
+    else:
+        lines = []
+        for sample in sorted(ancient_samples, key=lambda x: x.get("date", 0)):
+            lines.append(format_sample_entry(sample, lang, style))
+        content = "\n\n".join(lines)
 
-def infer_timeline_from_samples(data: Dict) -> List[Dict]:
-    """
-    Jos aikajanaa ei ole suoraan annettu, rakennetaan se muinaisnäytteistä.
-    """
-    samples = data.get("ancient_samples", [])
-    timeline = []
-    for s in samples:
-        timeline.append({
-            "date": s.get("date"),
-            "location": s.get("location"),
-            "description": s.get("description") or s.get("culture") or "",
+    return {
+        "id": "chronological_migration",
+        "title": get_text("section_chronological_title", lang),
+        "content": content,
+    }
+
+
+def build_cultural_context(data: Dict, lang: str, style: Dict) -> Dict:
+    cultures = data.get("cultures", [])
+    if not cultures:
+        content = get_text("no_cultural_data_available", lang)
+    else:
+        lines = []
+        for culture in cultures:
+            lines.append(style["culture_entry"].format(
+                culture=culture.get("name"),
+                period=culture.get("period"),
+                region=culture.get("region"),
+                description=culture.get("description", ""),
+            ))
+        content = "\n\n".join(lines)
+
+    return {
+        "id": "cultural_context",
+        "title": get_text("section_cultural_title", lang),
+        "content": content,
+    }
+
+
+def build_regional_profiles(data: Dict, lang: str, style: Dict) -> List[Dict]:
+    profiles = data.get("regional_profiles", [])
+    sections = []
+
+    for profile in profiles:
+        sections.append({
+            "id": f"region_{profile.get('region', '').lower().replace(' ', '_')}",
+            "title": get_text("section_region_title", lang, region=profile.get("region")),
+            "content": style["regional_profile"].format(
+                region=profile.get("region"),
+                time_span=profile.get("time_span", ""),
+                key_finds=", ".join(profile.get("key_finds", [])),
+                cultures=", ".join(profile.get("cultures", [])),
+                description=profile.get("description", ""),
+            ),
         })
-    return timeline
+
+    return sections
 
 
-def infer_cultures_from_regions(data: Dict) -> List[Dict]:
+def build_modern_distribution(data: Dict, lang: str, style: Dict) -> Dict:
+    regions = data.get("regions", [])
+    content = style["modern_distribution"].format(
+        regions=", ".join(regions) if regions else get_text("no_regions_available", lang)
+    )
+
+    return {
+        "id": "modern_distribution",
+        "title": get_text("section_modern_distribution_title", lang),
+        "content": content,
+    }
+
+
+def build_sources_section(data: Dict, lang: str, style: Dict) -> Dict:
+    sources = data.get("sources", [])
+    providers = data.get("raw_data_providers", [])
+    tools = data.get("analysis_tools", [])
+    reliability = data.get("reliability_score", 0)
+
+    content = style["sources_section"].format(
+        sources=", ".join(sources),
+        providers=", ".join([p.get("name") for p in providers]),
+        tools=", ".join([t.get("name") for t in tools]),
+        reliability=reliability,
+    )
+
+    return {
+        "id": "sources",
+        "title": get_text("section_sources_title", lang),
+        "content": content,
+    }
+
+
+# ----------------------------
+# Helpers
+# ----------------------------
+
+def format_sample_entry(sample: Dict, lang: str, style: Dict) -> str:
     """
-    Jos kulttuureja ei ole eksplisiittisesti, rakennetaan ne alueista ja näytteistä.
+    Muotoilee yksittäisen muinaisnäytteen tarinaelementiksi.
     """
-    cultures = []
-    for sample in data.get("ancient_samples", []):
-        culture = sample.get("culture")
-        if culture:
-            cultures.append({
-                "name": culture,
-                "timeframe": sample.get("date"),
-                "description": "",
-            })
-    return cultures
+    return style["sample_entry"].format(
+        sample_id=sample.get("id", get_text("unknown_sample", lang)),
+        date=sample.get("date", get_text("unknown_date", lang)),
+        location=sample.get("location", get_text("unknown_location", lang)),
+        culture=sample.get("culture", get_text("unknown_culture", lang)),
+        context=sample.get("context", ""),
+    )
+
+
+# ----------------------------
+# Public API
+# ----------------------------
+
+def generate_story_from_haplogroup(haplogroup: str, lang: str = "en", tone: str = "academic") -> Dict:
+    """
+    Yhdistää data_utils + story_utils ja palauttaa valmiin tarinapaketin.
+    """
+    data = fetch_full_haplogroup_data(haplogroup)
+    return generate_story(data, lang=lang, tone=tone)
