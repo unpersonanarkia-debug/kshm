@@ -8,9 +8,10 @@ import os
 import logging
 
 from data_utils import fetch_full_haplogroup_data
-from story_utils import generate_story_html, generate_story_text
-from pdf_utils import generate_pdf
+from story_utils import generate_story_from_haplogroup
+from pdf_utils import generate_pdf_from_story
 from email_utils import send_email_with_pdf
+
 
 # --------------------
 # App setup
@@ -19,7 +20,7 @@ from email_utils import send_email_with_pdf
 app = FastAPI(
     title="Kadonneen Sukuhistorian Metsästäjä API",
     description="API haploryhmäpohjaisten arkeogeneettisten raporttien tilaamiseen ja toimittamiseen.",
-    version="1.0.0"
+    version="1.1.0"
 )
 
 app.add_middleware(
@@ -45,8 +46,10 @@ class OrderRequest(BaseModel):
     name: str = Field(..., min_length=1, max_length=120)
     email: EmailStr
     haplogroup: str = Field(..., min_length=1, max_length=64)
+    haplogroup_y: Optional[str] = Field(None, min_length=1, max_length=64)
     notes: Optional[str] = Field(None, max_length=2000)
     language: Optional[str] = Field("fi", max_length=8)
+    tone: Optional[str] = Field("academic", max_length=32)
 
 
 class OrderResponse(BaseModel):
@@ -68,31 +71,40 @@ async def order_report(order: OrderRequest):
     try:
         logger.info(f"New report order: {order.haplogroup} for {order.email}")
 
-        # 1. Fetch haplogroup data
-        haplo_data = fetch_full_haplogroup_data(order.haplogroup)
-
-        if not haplo_data or "error" in haplo_data:
+        # 1. Fetch haplogroup data (mtDNA)
+        haplo_data_mt = fetch_full_haplogroup_data(order.haplogroup)
+        if not haplo_data_mt or "error" in haplo_data_mt:
             raise HTTPException(
                 status_code=404,
                 detail=f"Haploryhmälle {order.haplogroup} ei löytynyt tietoja."
             )
 
-        # 2. Generate story
-        story_html = generate_story_html(
-            haplo_data,
-            user_name=order.name,
-            notes=order.notes,
-            language=order.language
+        # 2. Fetch Y-DNA if provided
+        haplo_data_y = None
+        if order.haplogroup_y:
+            haplo_data_y = fetch_full_haplogroup_data(order.haplogroup_y)
+            if not haplo_data_y or "error" in haplo_data_y:
+                raise HTTPException(
+                    status_code=404,
+                    detail=f"Haploryhmälle {order.haplogroup_y} ei löytynyt tietoja."
+                )
+
+        # 3. Generate stories
+        story_mt = generate_story_from_haplogroup(
+            haplogroup=order.haplogroup,
+            lang=order.language,
+            tone=order.tone,
         )
 
-        story_text = generate_story_text(
-            haplo_data,
-            user_name=order.name,
-            notes=order.notes,
-            language=order.language
-        )
+        story_y = None
+        if haplo_data_y:
+            story_y = generate_story_from_haplogroup(
+                haplogroup=order.haplogroup_y,
+                lang=order.language,
+                tone=order.tone,
+            )
 
-        # 3. Generate PDF
+        # 4. Generate PDF
         order_id = str(uuid.uuid4())[:8]
         safe_name = order.name.replace(" ", "").replace("/", "")
         filename = f"{order.haplogroup}_{safe_name}_{order_id}.pdf"
@@ -100,15 +112,22 @@ async def order_report(order: OrderRequest):
         os.makedirs(output_dir, exist_ok=True)
         pdf_path = os.path.join(output_dir, filename)
 
-        generate_pdf(story_html, output_path=pdf_path)
+        generate_pdf_from_story(
+            story_mt=story_mt,
+            story_y=story_y,
+            output_path=pdf_path,
+            user_name=order.name,
+            notes=order.notes,
+            lang=order.language,
+        )
 
-        # 4. Send email with PDF
+        # 5. Send email with PDF
         send_email_with_pdf(
             to_email=order.email,
-            haplogroup=order.haplogroup,
-            story_text=story_text,
             pdf_path=pdf_path,
-            user_name=order.name
+            haplogroup=order.haplogroup,
+            lang=order.language,
+            user_name=order.name,
         )
 
         logger.info(f"Report sent successfully: {pdf_path}")
