@@ -1,5 +1,5 @@
 from typing import Dict, List, Optional
-from i18n_utils import get_text, get_style_profile
+from i18n_utils import get_text
 from data_utils import fetch_full_haplogroup_data
 
 

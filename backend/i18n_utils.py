@@ -559,6 +559,38 @@ def get_text(key: str, lang: Optional[str] = None, **kwargs) -> str:
         raise KeyError(f"Missing format argument {e} for key '{key}' in language '{lang}'")
 
 
+def get_translation(lang: Optional[str] = None, key: str = None, **kwargs) -> str:
+    """
+    Legacy function for backward compatibility with email_utils.
+    Maps to get_text with different argument order.
+    """
+    return get_text(key, lang, **kwargs)
+
+
+def get_style_profile(lang: str = "en", tone: str = "academic") -> Dict:
+    """
+    Returns a style profile dictionary with template strings for narrative building.
+    Used by story_utils to format different sections of the story.
+    """
+    return {
+        "introduction": "Tämä on haploryhmän {haplogroup} tarina, joka ulottuu {time_depth} taakse. Levinneisyys: {regions}.",
+        "sample_entry": "{sample_id}: {location} ({date}), kulttuuri {culture}",
+        "famous_person_entry": "{name} ({era}) - {significance}",
+        "hotspot_entry": "{location} ({period}): {significance}",
+        "culture_entry": "{culture} - {period} ({region})",
+        "regional_profile": "Alue {region}: {key_finds}, kulttuurit {cultures}",
+        "modern_distribution": "Nykyään levinneisyys: {regions}",
+        "sources_section": "Lähteet: {sources}. Tarjoajat: {providers}. Analyysityökalut: {tools}. Luotettavuus: {reliability}%",
+        "legal_section": "Vastuuvapaus: Tämä raportti perustuu tieteellisiin lähteisiin, mutta se ei ole oikeudellinen neuvonta.",
+        "genealogy_comparison_section": "Arkeogenetiikka tutkii DNA:ta muinaisnäytteistä. Sukututkimus tutkii kirjallisia ja DNA-todistusaineistoja.",
+        "dual_encounters_section": "Alueilla {regions} Y-DNA {y} ja mtDNA {mt} ovat jäljittäneet samoja väestöliikkeitä.",
+        "dual_love_story_section": "Kahden linjan ({y} ja {mt}) kohtaaminen historian kuluessa",
+        "dual_heritage_section": "Kahden linjan perintö: {y} isämuistina, {mt} äitimuistina.",
+        "heritage_section": "Haploryhmä {haplogroup} on osa ihmiskunnan jatkuvaa historiaa.",
+    }
+
+
+
 def format_sources_list(sources: List[str], lang: Optional[str] = None) -> str:
     """
     Muotoilee lähdeluettelon kieli- ja kulttuurisensitiivisesti.

@@ -256,3 +256,62 @@ class BloodlinePDF:
 
     def build(self):
         self.doc.build(self.story)
+
+
+# =========================================================
+# PUBLIC API FUNCTION
+# =========================================================
+
+def generate_pdf_from_story(story_mt, story_y=None, output_path="report.pdf", user_name="", notes="", lang="en"):
+    """
+    Generate a PDF report from story data.
+    Wrapper function for BloodlinePDF class.
+    """
+    pdf = BloodlinePDF(output_path)
+    
+    # Add cover
+    title = story_mt.get("title", "Archaeogenetic Report")
+    subtitle = story_mt.get("subtitle", "Your DNA Story")
+    slogan = "Discover your ancestral journey through ancient DNA"
+    pdf.add_cover(title, subtitle, slogan)
+    
+    # Add table of contents
+    pdf.add_table_of_contents()
+    
+    # Add mtDNA story
+    if story_mt:
+        pdf.add_chapter(f"mtDNA: {story_mt.get('title', 'Maternal Lineage')}")
+        for section in story_mt.get("sections", []):
+            if isinstance(section, dict):
+                pdf.add_section(section.get("title", "Section"))
+                content = section.get("content", "")
+                if isinstance(content, str):
+                    pdf.add_paragraph(content)
+                elif isinstance(content, list):
+                    for item in content:
+                        if isinstance(item, dict):
+                            pdf.add_paragraph(item.get("content", ""))
+    
+    # Add Y-DNA story if present
+    if story_y:
+        pdf.page_break()
+        pdf.add_chapter(f"Y-DNA: {story_y.get('title', 'Paternal Lineage')}")
+        for section in story_y.get("sections", []):
+            if isinstance(section, dict):
+                pdf.add_section(section.get("title", "Section"))
+                content = section.get("content", "")
+                if isinstance(content, str):
+                    pdf.add_paragraph(content)
+                elif isinstance(content, list):
+                    for item in content:
+                        if isinstance(item, dict):
+                            pdf.add_paragraph(item.get("content", ""))
+    
+    # Add user notes if any
+    if notes:
+        pdf.page_break()
+        pdf.add_chapter("Your Notes")
+        pdf.add_paragraph(notes)
+    
+    # Build the PDF
+    pdf.build()
