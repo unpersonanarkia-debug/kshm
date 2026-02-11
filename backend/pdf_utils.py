@@ -1,322 +1,258 @@
-from typing import Dict, List, Optional
-from i18n_utils import get_text, build_intro, build_label
-from datetime import datetime
+# pdf_utils.py
+# KSHM – Archaeogenetic Bloodline Book PDF Engine
 
-# -----------------------------
-# Päärajapinta
-# -----------------------------
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer,
+    Image,
+    PageBreak,
+    Table,
+    TableStyle,
+    ListFlowable,
+    ListItem,
+    KeepTogether
+)
+from reportlab.platypus.tableofcontents import TableOfContents
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib import colors
+from reportlab.lib.units import cm
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
+from reportlab.lib.enums import TA_CENTER, TA_LEFT
+from reportlab.platypus import BaseDocTemplate, Frame, PageTemplate
+from reportlab.platypus.doctemplate import Indenter
+import os
 
-def generate_story(
-    haplogroup_data: Dict,
-    lang: str = "en",
-    tone: str = "chronological",
-    region: str = "global",
-    user_name: Optional[str] = None,
-    notes: Optional[str] = None,
-) -> Dict[str, str]:
+
+# =========================================================
+# TYPOGRAPHY REGISTRATION
+# =========================================================
+
+def register_fonts(font_path="fonts"):
     """
-    Tuottaa koko haploryhmäraportin osiot rakenteellisessa muodossa.
-    Palauttaa sanakirjan, jossa osiot ovat nimettyjä tekstikokonaisuuksia.
+    Register custom fonts if available.
+    Falls back safely if not found.
     """
 
-    story = {}
-
-    # 1) Otsikko ja johdanto
-    story["intro"] = build_intro(lang, tone, region).format(haplogroup=haplogroup_data.get("haplogroup", ""))
-    if user_name:
-        story["intro"] = personalize_intro(story["intro"], user_name, lang)
-
-    # 2) Yleiskuvaus
-    story["overview"] = build_overview(haplogroup_data, lang, tone, region)
-
-    # 3) Kronologinen aikajana
-    story["timeline"] = build_chronological_timeline(haplogroup_data, lang, tone, region)
-
-    # 4) Maantieteellinen levinneisyys
-    story["distribution"] = build_geographic_distribution(haplogroup_data, lang, tone, region)
-
-    # 5) Muinaiset näytteet
-    story["ancient_samples"] = build_ancient_samples_section(haplogroup_data, lang, tone, region)
-
-    # 6) Kulttuuriset kontekstit
-    story["cultural_contexts"] = build_cultural_contexts(haplogroup_data, lang, tone, region)
-
-    # 7) Tieteellinen tulkinta
-    story["scientific_interpretation"] = build_scientific_interpretation(haplogroup_data, lang, tone, region)
-
-    # 😎 Lähteet
-    story["sources"] = build_sources_section(haplogroup_data, lang)
-
-    # 9) Yksityisyys
-    story["privacy_notice"] = get_text("privacy_notice", lang)
-
-    # 10) Käyttäjän muistiinpanot
-    if notes:
-        story["user_notes"] = format_user_notes(notes, lang)
-
-    # 11) Metadata
-    story["metadata"] = build_metadata(haplogroup_data, lang, tone, region)
-
-    return story
-
-
-# -----------------------------
-# Osioiden rakentajat
-# -----------------------------
-
-def build_overview(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = build_label("haplogroup_title", lang).format(haplogroup=data.get("haplogroup", ""))
-    description = data.get("description") or get_text("description_intro", lang, tone, region)
-
-    lineage_type = data.get("lineage_type", "")
-    time_depth = data.get("time_depth", "")
-    regions = ", ".join(data.get("regions", []))
-
-    lines = [
-        title,
-        "",
-        description,
-    ]
-
-    if lineage_type:
-        lines.append(f"{get_text('lineage_type_label', lang)}: {lineage_type}")
-    if time_depth:
-        lines.append(f"{build_label('time_depth_label', lang)}: {time_depth}")
-    if regions:
-        lines.append(f"{build_label('regions_label', lang)}: {regions}")
-
-    return "\n".join(lines).strip()
-
-
-def build_chronological_timeline(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = get_text("timeline_title", lang, tone, region) or "Chronological timeline"
-    intro = get_text("section_intro", lang, tone, region)
-
-    events = data.get("timeline", []) or infer_timeline_from_samples(data)
-
-    if not events:
-        return f"{title}\n\n{get_text('no_timeline_data', lang, tone, region)}"
-
-    lines = [title, "", intro, ""]
-
-    for event in sorted(events, key=lambda e: e.get("date", "")):
-        lines.append(format_timeline_event(event, lang))
-
-    return "\n".join(lines).strip()
-
-
-def build_geographic_distribution(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = build_label("regions_label", lang)
-    intro = get_text("distribution_intro", lang, tone, region)
-
-    regions = data.get("regions", [])
-    regional_profiles = data.get("regional_profiles", [])
-
-    lines = [title, "", intro, ""]
-
-    if regions:
-        lines.append(get_text("regions_list_intro", lang, tone, region) + ":")
-        for r in regions:
-            lines.append(f"• {r}")
-
-    if regional_profiles:
-        lines.append("")
-        lines.append(get_text("regional_profiles_intro", lang, tone, region))
-        for profile in regional_profiles:
-            lines.append(format_regional_profile(profile, lang))
-
-    return "\n".join(lines).strip()
-
-
-def build_ancient_samples_section(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = build_label("ancient_samples_label", lang)
-    intro = get_text("ancient_samples_intro", lang, tone, region)
-
-    samples = data.get("ancient_samples", [])
-
-    lines = [title, "", intro, ""]
-
-    if not samples:
-        lines.append(get_text("no_ancient_samples", lang, tone, region))
-        return "\n".join(lines).strip()
-
-    for sample in samples:
-        lines.append(format_ancient_sample(sample, lang))
-
-    return "\n".join(lines).strip()
-
-
-def build_cultural_contexts(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = get_text("cultural_contexts_title", lang, tone, region)
-    intro = get_text("cultural_contexts_intro", lang, tone, region)
-
-    cultures = data.get("cultures", []) or infer_cultures_from_regions(data)
-
-    lines = [title, "", intro, ""]
-
-    if not cultures:
-        lines.append(get_text("no_cultural_contexts", lang, tone, region))
-        return "\n".join(lines).strip()
-
-    for culture in cultures:
-        lines.append(format_culture(culture, lang))
-
-    return "\n".join(lines).strip()
-
-
-def build_scientific_interpretation(data: Dict, lang: str, tone: str, region: str) -> str:
-    title = get_text("scientific_interpretation_title", lang, tone, region)
-    intro = get_text("scientific_interpretation_intro", lang, tone, region)
-
-    reliability = data.get("reliability_score")
-    lineage_type = data.get("lineage_type")
-    raw_providers = data.get("raw_data_providers", [])
-    tools = data.get("analysis_tools", [])
-
-    lines = [title, "", intro, ""]
-
-    if reliability is not None:
-        lines.append(get_text("reliability_score_label", lang, tone, region).format(score=reliability))
-
-    if lineage_type:
-        lines.append(get_text("lineage_type_statement", lang, tone, region).format(type=lineage_type))
-
-    if raw_providers:
-        lines.append("")
-        lines.append(get_text("raw_data_providers_label", lang, tone, region))
-        for p in raw_providers:
-            lines.append(f"• {p.get('name')} ({p.get('url', '')})")
-
-    if tools:
-        lines.append("")
-        lines.append(get_text("analysis_tools_label", lang, tone, region))
-        for tool in tools:
-            lines.append(f"• {tool.get('name')} ({tool.get('url', '')})")
-
-    return "\n".join(lines).strip()
-
-
-def build_sources_section(data: Dict, lang: str) -> str:
-    title = build_label("sources_label", lang)
-    sources = data.get("sources", [])
-
-    lines = [title, ""]
-
-    if not sources:
-        lines.append(get_text("no_sources", lang))
-        return "\n".join(lines).strip()
-
-    for source in sources:
-        lines.append(f"• {source}")
-
-    return "\n".join(lines).strip()
-
-
-# -----------------------------
-# Apurakentajat
-# -----------------------------
-
-def personalize_intro(intro_text: str, user_name: str, lang: str) -> str:
-    greeting = get_text("personal_greeting", lang).format(name=user_name)
-    return f"{greeting}\n\n{intro_text}"
-
-
-def format_timeline_event(event: Dict, lang: str) -> str:
-    date = event.get("date", get_text("unknown_date", lang))
-    location = event.get("location", get_text("unknown_location", lang))
-    description = event.get("description", "")
-
-    return f"• {date} — {location}: {description}"
-
-
-def format_ancient_sample(sample: Dict, lang: str) -> str:
-    name = sample.get("name", get_text("unknown_sample", lang))
-    date = sample.get("date", get_text("unknown_date", lang))
-    location = sample.get("location", get_text("unknown_location", lang))
-    culture = sample.get("culture", "")
-    publication = sample.get("publication", "")
-
-    line = f"• {name} — {date}, {location}"
-    if culture:
-        line += f" ({culture})"
-    if publication:
-        line += f". {get_text('publication_label', lang)}: {publication}"
-    return line
-
-
-def format_regional_profile(profile: Dict, lang: str) -> str:
-    region_name = profile.get("region", get_text("unknown_region", lang))
-    summary = profile.get("summary", "")
-    timeframe = profile.get("timeframe", "")
-
-    line = f"• {region_name}"
-    if timeframe:
-        line += f" ({timeframe})"
-    if summary:
-        line += f": {summary}"
-    return line
-
-
-def format_culture(culture: Dict, lang: str) -> str:
-    name = culture.get("name", get_text("unknown_culture", lang))
-    timeframe = culture.get("timeframe", "")
-    description = culture.get("description", "")
-
-    line = f"• {name}"
-    if timeframe:
-        line += f" ({timeframe})"
-    if description:
-        line += f": {description}"
-    return line
-
-
-def format_user_notes(notes: str, lang: str) -> str:
-    title = get_text("user_notes_label", lang)
-    return f"{title}\n\n{notes}".strip()
-
-
-def build_metadata(data: Dict, lang: str, tone: str, region: str) -> Dict:
-    return {
-        "haplogroup": data.get("haplogroup"),
-        "generated_at": datetime.utcnow().isoformat() + "Z",
-        "language": lang,
-        "tone": tone,
-        "region": region,
-        "reliability_score": data.get("reliability_score"),
-        "sources_count": len(data.get("sources", [])),
-    }
-
-
-# -----------------------------
-# Inferenssifunktiot (fallback)
-# -----------------------------
-
-def infer_timeline_from_samples(data: Dict) -> List[Dict]:
-    """
-    Jos aikajanaa ei ole suoraan annettu, rakennetaan se muinaisnäytteistä.
-    """
-    samples = data.get("ancient_samples", [])
-    timeline = []
-    for s in samples:
-        timeline.append({
-            "date": s.get("date"),
-            "location": s.get("location"),
-            "description": s.get("description") or s.get("culture") or "",
-        })
-    return timeline
-
-
-def infer_cultures_from_regions(data: Dict) -> List[Dict]:
-    """
-    Jos kulttuureja ei ole eksplisiittisesti, rakennetaan ne alueista ja näytteistä.
-    """
-    cultures = []
-    for sample in data.get("ancient_samples", []):
-        culture = sample.get("culture")
-        if culture:
-            cultures.append({
-                "name": culture,
-                "timeframe": sample.get("date"),
-                "description": "",
-            })
-    return cultures
+    try:
+        pdfmetrics.registerFont(
+            TTFont("Playfair", os.path.join(font_path, "PlayfairDisplay-Regular.ttf"))
+        )
+        pdfmetrics.registerFont(
+            TTFont("Playfair-Italic", os.path.join(font_path, "PlayfairDisplay-Italic.ttf"))
+        )
+        pdfmetrics.registerFont(
+            TTFont("Lora", os.path.join(font_path, "Lora-Regular.ttf"))
+        )
+    except Exception:
+        # Fallback to built-in fonts
+        pass
+
+
+# =========================================================
+# COLOR SYSTEM (Sepia theme)
+# =========================================================
+
+SEPIA_BG = colors.HexColor("#f4ecdf")
+SEPIA_TEXT = colors.HexColor("#2e2a24")
+SEPIA_ACCENT = colors.HexColor("#6e4f2c")
+
+
+# =========================================================
+# STYLE SYSTEM
+# =========================================================
+
+def get_styles():
+    styles = getSampleStyleSheet()
+
+    styles.add(
+        ParagraphStyle(
+            name="TitlePlayfair",
+            fontName="Playfair",
+            fontSize=26,
+            leading=32,
+            textColor=SEPIA_TEXT,
+            alignment=TA_CENTER,
+            spaceAfter=20,
+        )
+    )
+
+    styles.add(
+        ParagraphStyle(
+            name="Subtitle",
+            fontName="Playfair-Italic",
+            fontSize=16,
+            leading=22,
+            textColor=SEPIA_ACCENT,
+            alignment=TA_CENTER,
+            spaceAfter=40,
+        )
+    )
+
+    styles.add(
+        ParagraphStyle(
+            name="HeadingChapter",
+            fontName="Playfair",
+            fontSize=20,
+            leading=26,
+            textColor=SEPIA_TEXT,
+            spaceBefore=30,
+            spaceAfter=15,
+        )
+    )
+
+    styles.add(
+        ParagraphStyle(
+            name="HeadingSection",
+            fontName="Playfair-Italic",
+            fontSize=15,
+            leading=20,
+            textColor=SEPIA_ACCENT,
+            spaceBefore=20,
+            spaceAfter=10,
+        )
+    )
+
+    styles.add(
+        ParagraphStyle(
+            name="BodyLora",
+            fontName="Lora",
+            fontSize=12,
+            leading=18,
+            textColor=SEPIA_TEXT,
+            spaceAfter=12,
+        )
+    )
+
+    styles.add(
+        ParagraphStyle(
+            name="Caption",
+            fontName="Lora",
+            fontSize=9,
+            leading=12,
+            textColor=colors.HexColor("#6b5e4a"),
+            alignment=TA_CENTER,
+            spaceAfter=20,
+        )
+    )
+
+    return styles
+
+
+# =========================================================
+# PAGE TEMPLATE (Margins & Footer)
+# =========================================================
+
+def add_page_number(canvas, doc):
+    page_num_text = f"{doc.page}"
+    canvas.setFont("Lora", 9)
+    canvas.setFillColor(SEPIA_ACCENT)
+    canvas.drawRightString(19.5 * cm, 1.5 * cm, page_num_text)
+
+
+# =========================================================
+# MAIN PDF GENERATOR CLASS
+# =========================================================
+
+class BloodlinePDF:
+
+    def __init__(self, output_path):
+        register_fonts()
+        self.styles = get_styles()
+        self.doc = BaseDocTemplate(
+            output_path,
+            pagesize=A4,
+            rightMargin=2.5 * cm,
+            leftMargin=2.5 * cm,
+            topMargin=2.5 * cm,
+            bottomMargin=2.5 * cm,
+        )
+
+        frame = Frame(
+            self.doc.leftMargin,
+            self.doc.bottomMargin,
+            self.doc.width,
+            self.doc.height - 1 * cm,
+            id="normal"
+        )
+
+        template = PageTemplate(id="test", frames=frame, onPage=add_page_number)
+        self.doc.addPageTemplates([template])
+
+        self.story = []
+
+    # -----------------------------------------------------
+    # COVER PAGE
+    # -----------------------------------------------------
+
+    def add_cover(self, title, subtitle, slogan):
+        self.story.append(Spacer(1, 6 * cm))
+        self.story.append(Paragraph(title, self.styles["TitlePlayfair"]))
+        self.story.append(Paragraph(subtitle, self.styles["Subtitle"]))
+        self.story.append(Spacer(1, 2 * cm))
+        self.story.append(Paragraph(f"<i>{slogan}</i>", self.styles["Caption"]))
+        self.story.append(PageBreak())
+
+    # -----------------------------------------------------
+    # TABLE OF CONTENTS
+    # -----------------------------------------------------
+
+    def add_table_of_contents(self):
+        self.story.append(Paragraph("Sisällysluettelo", self.styles["HeadingChapter"]))
+        toc = TableOfContents()
+        toc.levelStyles = [
+            self.styles["BodyLora"],
+        ]
+        self.story.append(toc)
+        self.story.append(PageBreak())
+
+    # -----------------------------------------------------
+    # CHAPTER
+    # -----------------------------------------------------
+
+    def add_chapter(self, title):
+        self.story.append(Paragraph(title, self.styles["HeadingChapter"]))
+        self.story.append(Spacer(1, 12))
+
+    # -----------------------------------------------------
+    # SECTION
+    # -----------------------------------------------------
+
+    def add_section(self, title):
+        self.story.append(Paragraph(title, self.styles["HeadingSection"]))
+
+    # -----------------------------------------------------
+    # PARAGRAPH
+    # -----------------------------------------------------
+
+    def add_paragraph(self, text):
+        self.story.append(Paragraph(text, self.styles["BodyLora"]))
+
+    # -----------------------------------------------------
+    # IMAGE WITH CAPTION
+    # -----------------------------------------------------
+
+    def add_image(self, image_path, caption=None, width=14 * cm):
+        if os.path.exists(image_path):
+            img = Image(image_path, width=width, preserveAspectRatio=True)
+            self.story.append(Spacer(1, 20))
+            self.story.append(img)
+            if caption:
+                self.story.append(Paragraph(caption, self.styles["Caption"]))
+            self.story.append(Spacer(1, 10))
+
+    # -----------------------------------------------------
+    # PAGE BREAK
+    # -----------------------------------------------------
+
+    def page_break(self):
+        self.story.append(PageBreak())
+
+    # -----------------------------------------------------
+    # BUILD PDF
+    # -----------------------------------------------------
+
+    def build(self):
+        self.doc.build(self.story)
