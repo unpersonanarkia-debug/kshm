@@ -34,6 +34,15 @@
     .page:last-child {
       page-break-after: auto;
     }
+    .page {
+  page-break-after: always;
+  position: relative;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto 10mm auto; /* keskitys ja väli sivujen väliin */
+  box-sizing: border-box;
+}
+
     h1 {
       font-family: "Playfair Display SC", serif;
       font-size: 28pt;
