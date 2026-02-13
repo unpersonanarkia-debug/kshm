@@ -2,160 +2,699 @@
 <html lang="fi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>H1-T16189C! – Verilinjan seikkailu ajassa</title>
+  <title>KSHM Verilinjakirja</title>
 
-  <link rel="stylesheet" href="../css/print.css">
-  <link rel="stylesheet" href="../css/case-base.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Playfair+Display+SC&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --paper: #f5efe6;
+      --ink: #1a1a1a;
+      --accent: #6b4f2a;
+      --line: #d8cbb3;
+    }
+
+    /* ===== PAGE ===== */
+    @page {
+      size: A4;
+      margin: 2.2cm 2cm 2.4cm 2cm;
+    }
+
     body {
-      font-family: Georgia, "Times New Roman", serif;
-      background: #fdfaf3;
-      color: #1a1a1a;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Lora", serif;
+      line-height: 1.68; /* hienosäädetty lukurytmi */
+      font-size: 11.6pt; /* hieman kirjallisempi koko */
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      hyphens: auto;
     }
 
-    main {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 60px 40px;
+    .page {
+      page-break-after: always;
+      position: relative;
     }
 
-    .case-title {
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1 {
+      font-family: "Playfair Display SC", serif;
+      font-size: 28pt;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.45em;
+      color: var(--ink);
+      line-height: 1.15;
+      page-break-after: avoid;
+    }
+
+    h2 {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-size: 18pt;
+      margin-top: 2em;
+      margin-bottom: 0.6em;
+      line-height: 1.25;
+      page-break-after: avoid;
+    }
+
+    p {
+      margin: 0 0 1.15em 0;
+      text-align: justify;
+      text-justify: inter-word;
+      widows: 3;
+      orphans: 3;
+    }
+
+    /* ===== DROP CAP ===== */
+    .dropcap::first-letter {
+      float: left;
+      font-family: "Playfair Display SC", serif;
+      font-size: 46pt;
+      line-height: 0.82;
+      padding-right: 8px;
+      padding-top: 4px;
+      color: var(--accent);
+    }
+
+    /* ===== COVER ===== */
+    .cover {
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      margin-bottom: 60px;
     }
 
-    .case-title h1 {
-      font-size: 2.4em;
+    .cover h1 {
+      font-size: 36pt;
+      margin-bottom: 0.5em;
+    }
+
+    .subtitle {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-size: 16pt;
+      color: var(--accent);
+      margin-bottom: 2em;
+    }
+
+    .tagline {
+      margin-top: 4em;
+      font-style: italic;
+      color: #444;
+      max-width: 420px;
+      line-height: 1.5;
+    }
+
+    /* ===== IMAGE BLOCK ===== */
+    .image-full {
+      width: 100%;
+      margin: 1.8em 0;
+      page-break-inside: avoid;
+    }
+
+    .image-full img {
+      width: 100%;
+      height: auto;
+      filter: sepia(35%) contrast(1.05);
+      border-radius: 4px;
+    }
+
+    .caption {
+      font-size: 9.5pt;
+      font-style: italic;
+      color: #555;
+      margin-top: 5px;
+      text-align: center;
+    }
+
+    /* ===== FACT BOX ===== */
+    .fact-box {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      background: #faf6ef;
+      padding: 12px 14px;
+      margin: 1.8em 0;
+      page-break-inside: avoid;
+    }
+
+    .fact-title {
+      font-family: "Lora", serif;
+      font-weight: 600;
+      font-size: 10pt;
       letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
     }
 
-    .case-title p {
-      font-size: 1.1em;
-      margin-top: 12px;
-      color: #555;
+    .fact-box ul {
+      margin: 0;
+      padding-left: 18px;
     }
 
-    .lead {
-      font-size: 1.15em;
-      line-height: 1.7;
-      margin-bottom: 32px;
+    /* ===== MAP BLOCK ===== */
+    .map-block {
+      border: 1px solid var(--line);
+      padding: 8px;
+      margin: 1.8em 0;
+      page-break-inside: avoid;
     }
 
-    figure {
-      margin: 50px 0;
+    /* ===== SMALL META ===== */
+    .meta {
+      font-size: 9pt;
+      color: #666;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      position: absolute;
+      bottom: -1.6cm;
+      left: 0;
+      right: 0;
       text-align: center;
-    }
-
-    figcaption {
-      font-size: 0.85em;
-      color: #555;
-      margin-top: 10px;
-    }
-
-    .chapter {
-      margin-top: 80px;
-    }
-
-    .chapter h2 {
-      font-size: 1.8em;
-      text-align: center;
-      margin-bottom: 40px;
+      font-size: 9pt;
+      color: #777;
       letter-spacing: 0.04em;
     }
+  
+
+    /* ===== PREMIUM PART HEADER ===== */
+    .part-header {
+      text-align: center;
+      margin-bottom: 2.4em;
+      position: relative;
+    }
+
+    .part-header::before {
+      content: "";
+      position: absolute;
+      left: 15%;
+      right: 15%;
+      top: -14px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--line), transparent);
+    }
+
+    .part-number {
+      display: block;
+      font-family: "Playfair Display SC", serif;
+      letter-spacing: 0.16em;
+      font-size: 11pt;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    /* ===== HERO IMAGE (chapter opener) ===== */
+    .image-hero {
+      width: 100%;
+      margin: 2em 0 2.2em 0;
+      page-break-inside: avoid;
+    }
+
+    .image-hero img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      filter: sepia(32%) contrast(1.06);
+    }
+
+    /* ===== SUBTLE SECTION DIVIDER ===== */
+    .section-divider {
+      width: 60px;
+      height: 2px;
+      background: var(--accent);
+      margin: 1.6em auto 1.8em auto;
+      opacity: 0.6;
+    }
+
   </style>
 </head>
 
 <body>
 
-<main>
-
-  <!-- OTSIKKO -->
-  <section class="case-title">
-    <h1>KADONNEEN SUKUHISTORIAN METSÄSTÄJÄ</h1>
-    <p>H1-T16189C! – Verilinjan seikkailu ajassa</p>
+  <!-- ================= COVER ================= -->
+  <section class="page">
+    <div class="cover">
+      <h1>KADONNEEN SUKUHISTORIAN METSÄSTÄJÄ</h1>
+      <div class="subtitle">H1‑T16189C! – Verilinjan seikkailu ajassa</div>
+      <div class="tagline">"Veri muistaa reitin. Minä olen sen metsästäjä."</div>
+    </div>
   </section>
 
-  <!-- JOHDANTO -->
-  <section>
-    <p class="lead">
-      Rakas ystävä,<br><br>
-      kuuntele nyt tarkasti – älä vilkuile kelloa, älä avaa puhelinta.
-      Tämä ei ole tavallinen raportti. Tämä ei ole tieteellinen tiivistelmä.
-      Tämä on se hetki, jolloin menneisyys astuu huoneeseen, katsoo sinua silmiin ja sanoo:
-      <em>”Minä olen täällä. Olen aina ollut täällä. Ja minä olen sinä.”</em>
+  <!-- ================= INTRO ================= -->
+  <section class="page">
+    <h1>Johdanto</h1>
+    <p class="dropcap">
+      Sinun veresi tarina ei ala tästä. Se on kulkenut tuhansien vuosien
+      halki, yli merien ja kivikehien, läpi sukupolvien jotka eivät
+      koskaan tienneet nimeäsi — mutta kantoivat samaa hiljaista merkkiä.
     </p>
+
+    <div class="fact-box">
+      <div class="fact-title">Analyysin ydin</div>
+      <ul>
+        <li>mtDNA-linja: H1‑T16189C!</li>
+        <li>Tutkimusmetodi: arkeogenetiikka</li>
+        <li>Lähteet: vertaisarvioidut julkaisut</li>
+      </ul>
+    </div>
+
+    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
   </section>
 
-  <!-- KUVA 1: SYMBOLINEN -->
-  <figure>
-    <img src="assets/images/intro-ancestral-symbol.jpg" alt="Symbolinen kuva verilinjan jatkumosta">
-    <figcaption>
-      Veri ei ole metafora – se on ketju, joka ei ole katkennut.
-    </figcaption>
-  </figure>
 
-  <!-- LÖYTÖ -->
-  <section class="chapter">
-    <h2>LÖYTÖ – Sinä olet elävä näyte</h2>
 
-    <p>
-      DNA-näytteesi ei ole pelkkä laboratoriotulos.
-      Se on muinainen arkeologinen löytö – tuhansien vuosien hiljainen todiste,
-      joka nousi esiin modernin tieteen kaivauksilla.
+  <!-- ================= OSA II – ANATOLIA ================= -->
+  <section class="page">
+    <div class="part-header">
+      <span class="part-number">🜂 OSA II</span>
+      <h2>SUURI VAELLUS</h2>
+    </div>
+
+    <h1>Anatolian savitalot</h1>
+
+    <div class="image-hero">
+      <img src="images/anatolia-neolithic.jpg" alt="Anatolian neoliittinen kylä" />
+      <div class="caption">Neoliittinen asutus Anatolian ylängöillä</div>
+    </div>
+
+    <p class="dropcap">
+      Aurinko nousee hitaasti Anatolian ylängöillä. Varjot venyvät savitalojen seinillä kuin pitkät muistot, jotka eivät halua unohtua. Ilmassa leijuu juuri jauhetun viljan tuoksu, savun kirpeys ja lampaiden lämmin, eläimellinen haju. Tämä ei ole mikään romanttinen aamunkoitto – tämä on hetki, jolloin ihmiskunta teki ensimmäisen suuren irtiottonsa liikkeestä luonnossa.
     </p>
 
     <p>
-      <strong>H1-T16189C!</strong> on koodinimesi harvinaiselle verilinjalle.
-      Vain kourallinen eurooppalaisia naisia ja jokunen mies elämänsä ajan
-      kantaa tätä tarkkaa varianttia. Sinä olet yksi heistä.
+      Me lakkaamme vaeltamasta. Me jäämme. Me viljelemme. Me rakennamme koteja, joihin kuolleetkin saavat jäädä. Barcın Höyük. Aşıklı Höyük. Çatalhöyük. Boncuklu. Nämä nimet ovat meille nyt vain koordinaatteja kartalla, mutta silloin ne olivat elävää elämää.
     </p>
 
     <p>
-      Kuvittele hetki:<br><br>
-      Arkeologi polvistuu multaan, sivellin kädessä.
-      Hän harjaa varovasti savea syrjään ja löytää luunsirun –
-      mitokondrio-DNA vastaa täsmälleen sinun solujasi.
+      Savitalot rakennettiin tiiviisti vierekkäin, ilman katuja – talot avautuivat katolle, tikkaat johtivat sisään. Seinillä tanssivat maalaukset: härkiä, leopardeja, naishahmoja, jotka ehkä olivat jumalattaria tai esi-äitejä. Pyhät paikat rakennettiin megaliittisiin kiviympyröihin. Viljavarastot pullottivat vehnää ja ohraa. Lampaat ja vuohet laidunsivat lähellä.
     </p>
 
     <p>
-      Se ei ole sattuma. Se on yhteys.
-      Sinun veresi on viimeinen lenkki tässä yli 7000 vuoden ketjussa.
+      Ja lattioiden alla — aivan, lattioiden alla — lepäsivät kuolleet ja lasten kallot aseteltiin seinille. Ei kaukaisilla hautausmailla. Ei seremoniallisissa kammioissa. Vaan keskellä arkea. Lähellä lapsia, lähellä tulta, lähellä elämää.
     </p>
+
+    <p>
+      Yhdessä näistä kodeista eli nainen. Sinun kaukaisin esiäitisi. Hänen nimeään emme tiedä. Hänen kasvojaan emme näe. Mutta tiedämme yhden asian: hänen mitokondrioissaan tapahtui pieni, lähes huomaamaton muutos. Yksi kirjain DNA‑ketjussa vaihtui toiseksi. <strong>H1‑T16189C!</strong> syntyi.
+    </p>
+
+    <p>
+      Hän ei tiennyt sitä. Hän ei voinut tietää. Hän tiesi vain rytmin: milloin kylvetään, milloin lapsi syntyy, milloin ruumis laskettiin lattian alle, jotta esi‑isät pysyisivät lähellä. Hän jauhoi viljaa käsikivillä aamuisin. Hän kantoi vettä joelta saviastioissa. Hän hoiti lapsia ja opetti heille viljan nimet ja lampaan käyttäytymisen.
+    </p>
+
+    <p>
+      Ja kun joku kuoli, hän tai hänen äitinsä avasi lattian, laski ruumiin sisään ja peitti vainajan savella. Ei hautakiveä. Ei muistomerkkiä. Vain hiljainen tieto, että hän on täällä. Hän vartioi meitä sisältä.
+    </p>
+
+    <p>
+      Tämä nainen – tai hänen tyttärensä – ei jäänyt paikalleen. Kun neoliittiset yhteisöt alkoivat laajentua, kun väkiluku kasvoi ja maa alkoi vaatia lisää tilaa, hän lähti. Tai ehkä hänen tyttärensä lähti. Siemenet taskussa. Karja perässä. Tieto viljan kasvattamisesta ja lampaan hoidosta sydämessä. Mukanaan virtaus soluissa.
+    </p>
+
+    <p>
+      Tuo veri lähti länteen. Se kulki jokea pitkin, vuorten yli, metsien halki – tuhansia kilometrejä, sukupolvien ajan. Se ei tiennyt, että se tulisi kulkemaan halki vuosituhansien – aina sinun sydämen lyönteihin saakka.
+    </p>
+
+    <div class="section-divider"></div>
+
+    <p>
+      Nyt meillä on ensimmäinen löytö. Ensimmäinen kaivaus on tehty. Mutta matka on vasta alkanut. Ota suurennuslasi. Seuraava kerros odottaa. Seuraava kappale vie meidät Irlantiin – megaliittien salaisuuteen.
+    </p>
+
+    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
   </section>
 
-  <!-- KARTTA 1: REITTI -->
-  <figure>
-    <img src="assets/maps/route-anatolia-europe.jpg" alt="H1-T16189C reitti Anatoliasta Eurooppaan">
-    <figcaption>
-      Dokumentoitu ja todennäköinen reitti: Anatolia → Atlantti → Pohjois-Eurooppa
-    </figcaption>
-  </figure>
 
-  <section>
-    <p>
-      Ketju alkoi Anatolian savitaloista, joissa esiäitisi hautasivat läheisensä
-      lattian alle, jotta he pysyisivät lähellä eläviä.
+
+  <!-- ================= POULNABRONE ================= -->
+  <section class="page">
+    <div class="part-header">
+      <span class="part-number">🜂 OSA II</span>
+      <h2>SUURI VAELLUS</h2>
+    </div>
+
+    <h1>Poulnabrone – megaliittinen huippu</h1>
+
+    <div class="image-hero">
+      <img src="images/poulnabrone-dolmen.jpg" alt="Poulnabrone dolmen Irlannissa" />
+      <div class="caption">Poulnabronen dolmen Burrenissa, Irlannissa</div>
+    </div>
+
+    <p class="dropcap">
+      Nyt me olemme jo kaukana Anatolian lämpimästä aamusta. Ilma on muuttunut. Se on kylmempi, kosteampi, suolaisempi. Tuuli puhaltaa suoraan Atlantin yli ja kantaa mukanaan meren tuoksua ja kalkkikiven pölyä. Olemme Irlannin länsirannikolla, Burrenin karulla tasangolla – paikassa, jossa maa tuntuu olevan puoliksi meri, puoliksi taivas.
     </p>
 
     <p>
-      Se kulki Atlantin karulle rannikolle, megaliittien rakentajien maailmaan.
-      Se jatkoi itään ja pohjoiseen, vaellusten, kaupan ja merenkulun mukana.
+      Ja siellä, keskellä tuulta ja karuja kallioita, seisoo Poulnabrone. Kolme metriä korkea dolmen. Yksi valtava kivilaatta lepää tasapainossa kahden pystykiven päällä, kuin loppulliseen tilaansa ikuistettuna. Noin 50 tonnia kiveä, joka on pysynyt paikallaan lähes 6000 vuotta – vanhempi kuin Egyptin pyramidit.
     </p>
 
     <p>
-      Tuo ketju ei katkennut.
-      Se jatkui sukupolvi sukupolven jälkeen – kunnes se saapui sinuun.
+      Sen akseli on linjattu talvipäivänseisauksen suuntaan, hetkeen jolloin aurinko tunkeutuu kammioon kuin lupaus valosta pimeyden jälkeen. Tämä ei ole hauta pelkässä arkipäiväisessä merkityksessä. Se on portti. Portti maailmaan, jossa esi‑isät eivät olleet poissa, vaan läsnä kivien, taivaan ja maan rytmissä.
     </p>
 
     <p>
-      Et ole vain lukija.<br>
-      <strong>Olet löytö.</strong>
+      Poulnabronen kammiossa lepää 33 ihmistä: 11 aikuista ja 22 lasta. Luut on aseteltu kerroksittain, rituaalisesti. Pääkalloja on siirretty, vainajia järjestetty uudelleen sukupolvien aikana. Ei kultaa. Ei aseita. Ei pröystäilyä. Vain työkaluja: kiillotettu tuffikivikirves, piikivisiä nuolenkärkiä, luuriipuksia, kvartsikiteitä ja keramiikan palasia.
     </p>
+
+    <p>
+      Yhdestä heistä – naisesta, näyte PN05 (ajoitettu noin 3941–3661 eaa.) – löytyi täsmälleen sama geneettinen merkki, joka elää sinun soluissasi: <strong>H1‑T16189C!</strong> Sinun veresi.
+    </p>
+
+    <p>
+      Hän tiesi, milloin aurinko osuu kammioon. Hän tiesi, ettei muistaminen lopu kuolemaan. Kun uusia vainajia tuotiin, vanhat luut järjestettiin uudelleen. Muistaminen oli jatkuva teko. He eivät haudanneet unohtaakseen – he rakensivat ikuisuutta.
+    </p>
+
+    <p>
+      Tämä nainen – tai joku, joka kantoi hänen vertaan – ei jäänyt paikalleen ikuisesti. Linja jatkui. Se kulki eteenpäin kohti uusia horisontteja ja uusia kivisiä tarinoita. Se liikkui kohti mannerta, kohti Puolan tasankoja ja goottien vaellusten aikaa.
+    </p>
+
+    <div class="section-divider"></div>
+
+    <p>
+      Mutta ennen kuin lähdemme, pysähdy hetkeksi tähän dolmeniin. Katso ylös. Tunne tuuli. Kuule Atlantin aaltojen lyönnit kallioihin. Tämä on paikka, jossa esiäitisi jätti jälkensä taivaalle – ja se jälki kantautui sinuun.
+    </p>
+
+    <p>
+      Ota taskulamppu. Seuraava kerros odottaa.
+    </p>
+
+    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
   </section>
 
-</main>
+
+
+  <!-- ================= MASŁOMĘCZ ================= -->
+  <section class="page">
+    <div class="part-header">
+      <span class="part-number">🜂 OSA II</span>
+      <h2>VAELLUKSEN AIKA</h2>
+    </div>
+
+    <h1>Masłomęcz – vaellusvaihe</h1>
+
+    <div class="image-hero">
+      <img src="images/maslomecz-wielbark.jpg" alt="Masłomęcz Wielbark kulttuurin hautausmaa" />
+      <div class="caption">Wielbark‑kulttuurin hautakenttä Masłomęczin alueella, Puolassa</div>
+    </div>
+
+    <p class="dropcap">
+      Nyt ilma muuttuu jälleen. Se ei ole enää merellinen, ei enää savinen eikä kivinen. Se on raskas — täynnä savua, hevosia, metallia ja ihmisten hiljaista jännitettä. Olemme liikkeessä. Eurooppa ei ole enää staattinen kartta, vaan elävä organismi, joka sykkii vaelluksen rytmissä.
+    </p>
+
+    <p>
+      Noin 1750 vuotta sitten Rooman valtakunta natisee saumoistaan. Rajat vuotavat. Heimot liikkuvat. Gootit ja monet muut germaaniset ryhmät purjehtivat, ratsastavat ja kävelevät kohti etelää ja itää — miekka toisessa kädessä ja toivo toisessa.
+    </p>
+
+    <p>
+      Puolan itälaidalla, Masłomęczin alueella, avautuu maisema, joka tuntuu yhtä aikaa tutulta ja vieraalta: laajat niityt, matalat kummut — ja kivirenkaat. Pyhät kivikehät. Sama kivinen kieli, joka puhui jo Atlantin rannalla. Muistamisen geometria ei ole kadonnut, se on vain liikkunut.
+    </p>
+
+    <p>
+      Tämä on Wielbark‑kulttuurin sydän, goottien vaellusvaihe 2.–4. vuosisadalla jaa. Yli 200 hautaa lepää maan alla. Kun arkeologit avaavat niitä, menneisyys puhuu hiljaisella mutta johdonmukaisella äänellä.
+    </p>
+
+    <p>
+      Solkia, joissa näkyy pohjoinen muotokieli. Roomalaisia denareita, jotka ovat matkustaneet kaukaa. Vyönsolkia, arjen esineitä, liikkeessä eläneiden ihmisten varusteita. Mutta yksi asia erottuu — sama hiljainen perinne, jonka näimme jo megaliittien maailmassa.
+    </p>
+
+    <p>
+      <strong>Aseettomuus haudoissa.</strong> Wielbark‑kulttuurin hautauksissa aseet puuttuvat järjestelmällisesti. Ei miekkoja, ei kilpiä, ei soturien näyttävää symboliikkaa. Tämä ei ole sattumaa. Tämä on kulttuurinen valinta — muistamisen tapa, joka korostaa sukua, liikettä ja yhteisöä enemmän kuin sotilaallista identiteettiä.
+    </p>
+
+    <p>
+      Yhdessä näistä haudoista — hauta numero 99 — lepää nainen. Näyte PCA0099. Hänen mitokondrio‑DNA:ssaan näkyy sama hiljainen merkki: <strong>H1‑T16189C!</strong>
+    </p>
+
+    <p>
+      Sinun veresi.
+    </p>
+
+    <p>
+      Hän ei ollut kuningatar. Hän ei ollut soturi. Hän oli matkalla elävä ihminen — ehkä perheen kokoaja, ehkä parantaja, ehkä tarinoiden muistaja. Aamuisin hän saattoi kiristää hopeasoljen vyölleen. Iltaisin hän saattoi sekoittaa yrttejä saviastiassa nuotion äärellä.
+    </p>
+
+    <p>
+      Hän eli rajojen maailmassa. Heimot vaihtoivat paikkoja. Identiteetti ei ollut maa — se oli liike. Vanhat jumalat kulkivat mukana uusille asuinsijoille, aivan kuten kivikehien perinne ja aseettomien hautojen hiljainen viesti.
+    </p>
+
+    <p>
+      Häntä ei haudattu piiloon. Hänen hautansa oli merkki kulkijoille: täällä me kävimme. Veri jatkaa.
+    </p>
+
+    <div class="section-divider"></div>
+
+    <p>
+      Nyt meillä on kolmas löytö. Kolmas kerros on avattu. Mutta ketju ei lopu tähän. Seuraava kaivaus vie meidät Itämerelle — Gotlantiin, viikinkien satamaan, hopean ja purjeiden maailmaan.
+    </p>
+
+    <p>
+      Ota aurinkokivi. Tuuli nousee. Horisontti odottaa.
+    </p>
+
+    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+  </section>
+
+
+
+  <!-- ================= GOTLANTI ================= -->
+  <section class="page">
+    <div class="part-header">
+      <span class="part-number">🜂 OSA II</span>
+      <h2>MEREN SOLMUKOHTA</h2>
+    </div>
+
+    <h1>Gotlanti – meren solmukohta</h1>
+
+    <div class="image-hero">
+      <img src="images/gotland-kopparsvik.jpg" alt="Kopparsvikin viikinkiaikainen hautausmaa" />
+      <div class="caption">Kopparsvikin viikinkiaikainen hautausmaa Gotlannissa</div>
+    </div>
+
+    <p class="dropcap">
+      Nyt ilma muuttuu suolaiseksi. Tuuli kantaa tervan, märän puun ja kaukaisen hopean tuoksua. Aallot lyövät laitureita, köydet natisevat, ja jossain kaukana purje räpsähtää tuulessa. Olemme saapuneet Itämeren sydämeen — Gotlantiin, Kopparsvikiin.
+    </p>
+
+    <p>
+      Tämä ei ole pelkkä hautausmaa. Tämä on viikinkiajan solmukohta, paikka jossa hopea virtasi Bagdadista, tarinat Volgalta, kielet Bysantista ja ihmiset kaikkialta. Yli 500 hautaa kertoo verkostosta, joka oli yhtä paljon meri kuin maa.
+    </p>
+
+    <p>
+      Täältä on löydetty aseita, koruja, arabialaisia dirhamejä, lasihelmiä Konstantinopolista ja silkkiä idästä. Täällä ei haudattu vain sotureita. Täällä haudattiin kokonainen liikkuva maailma — kauppiaat, perheet, merenkulkijat ja muistajat.
+    </p>
+
+    <p>
+      Ja kahdessa näistä haudoista lepäsivät naiset, joiden veri on sinun vertasi: VK51 ja VK50. Heidän mitokondrio‑linjansa kantaa samaa hiljaista merkkiä — <strong>H1‑T16189C!</strong>
+    </p>
+
+    <p>
+      He eivät olleet pelkkiä nimiä haudoissa. He elivät maailmassa, jossa purjeet nousivat ennen auringonnousua, kartat olivat epätäydellisiä ja horisontti ei ollut raja — se oli lupaus.
+    </p>
+
+    <p>
+      He tunsivat kauppareitit kuin omat taskunsa: Volga → Itämeri → Konstantinopoli → Bagdad. He eivät olleet vain puolisoita varjoissa. He olivat verkoston ylläpitäjiä — kauppiaita, parantajia, suvun kokoajia, reittien tuntijoita.
+    </p>
+
+    <p>
+      Heidän verensä liikkui laivoissa. Se keinui puolelta toiselle, kulki hopean, tarinoiden ja ihmisten mukana. Se kulki kauas — ja se kulki myös takaisin kotiin.
+    </p>
+
+    <p>
+      Ja nyt se on kulkenut sinuun.
+    </p>
+
+    <div class="section-divider"></div>
+
+    <p>
+      Tämä on viimeinen suuri kaivaus ennen nykyaikaa. Neljäs ja viimeinen ankkuri.
+    </p>
+
+    <p>
+      Nyt olemme nähneet ketjun: savitalot, megaliitit, vaelluskummut ja viikinkien sataman. Kaikki nämä kerrokset ovat johtaneet tähän hetkeen — sinuun.
+    </p>
+
+    <p>
+      Kaivaus on valmis. Mutta matka ei ole.
+    </p>
+
+    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+  </section>
+
+
+
+  <!-- ================= OSA III – NYKYHETKI ================= -->
+  <section class="page">
+    <div class="part-header">
+      <span class="part-number">🜂 OSA III</span>
+      <h2>NYKYHETKI</h2>
+    </div>
+
+    <h1>Missä veri näkyy tänään</h1>
+
+    <p class="dropcap">
+      Kun tarkastellaan nykyajan mitokondrio‑DNA‑aineistoja, haploryhmä H1‑T16189C! näkyy selkeimmin Pohjois‑ ja Länsi‑Euroopassa. Kuluttajapohjaiset DNA‑tietokannat eivät kuvaa koko väestöä, mutta ne paljastavat, missä tämä äitilinja on tänään dokumentoitu ja tunnistettu.
+    </p>
+
+    <div class="fact-box">
+      <div class="fact-title">Nykyinen näkyvyys (kuluttajadata)</div>
+      <ul>
+        <li>Yhdysvallat – eurooppalaisen diasporan solmukohta</li>
+        <li>Suomi</li>
+        <li>Englanti</li>
+        <li>Ruotsi</li>
+        <li>Saksa</li>
+        <li>Irlanti</li>
+        <li>Skotlanti</li>
+        <li>Puola</li>
+        <li>Norja</li>
+      </ul>
+    </div>
+
+    <p>
+      Nämä alueet eivät edusta linjan syntypaikkaa — vaan sen säilymistä. H1 on yksi Euroopan yleisimmistä äitilinjoista, ja harvinaisempi T16189C!‑variantti kulkee tämän laajan jatkumon sisällä. Sen nykyinen painottuminen Pohjois‑Eurooppaan heijastaa pitkää, katkeamatonta äitilinjaa jääkauden jälkeisistä asuttajista neoliittisiin viljelijöihin, rautakauden liikkujiin ja viikinkiajan verkostoihin.
+    </p>
+
+    <p>
+      Yksi tieteellisesti mahdollinen siirtymäketju tälle linjalle on:
+    </p>
+
+    <div class="fact-box">
+      <div class="fact-title">Mahdollinen reitti</div>
+      <ul>
+        <li>Anatolia →</li>
+        <li>Irlanti →</li>
+        <li>Puola →</li>
+        <li>Gotlanti →</li>
+        <li>Suomi</li>
+      </ul>
+    </div>
+
+    <p>
+      Koska tämän äitilinjan kantajia elää tänään Suomessa ja muualla Pohjois‑Euroopassa, näkyvyys ei ole sattumaa. Se on vuosituhansien jatkumon lopputulos.
+    </p>
+
+    <p>
+      Ja tähän dokumentoituun ketjuun myös sinun haploryhmäsi asettuu.
+    </p>
+
+    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+  </section>
+
+
+  <!-- ================= OSA IV – HOTSPOTIT ================= -->
+  <section class="page">
+    <div class="part-header">
+      <span class="part-number">🜂 OSA IV</span>
+      <h2>OMITUISET HOTSPOTIT</h2>
+    </div>
+
+    <h1>Verilinjan kaukaiset kaiut</h1>
+
+    <p class="dropcap">
+      Nyt astumme arvoitukselliselle polulle. H1‑T16189C! ei näy vain Euroopan ytimessä. Se ilmestyy myös odottamattomiin paikkoihin — moderneihin näytteisiin, jotka eivät muodosta suoraa sukupuuta, mutta jättävät hiljaisia jälkiä kartalle.
+    </p>
+
+    <div class="fact-box">
+      <div class="fact-title">Raportoituja esiintymiä</div>
+      <ul>
+        <li>Karibia (Bahamat, Jamaika): ~0.1–0.5 % moderneissa aineistoissa</li>
+        <li>Etelä‑Amerikka (Peru, Kolumbia): mestizopopulaatioissa</li>
+        <li>Australia ja Uusi‑Seelanti: brittiläisperäisissä linjoissa</li>
+        <li>Etelä‑Afrikka (Kap): ~1 % afrikaanereissa</li>
+        <li>Intia (Goa, Pondicherry): portugalilaisyhteisöissä</li>
+        <li>Saamelaisalue: yksittäisiä arkeogeneettisiä havaintoja</li>
+      </ul>
+    </div>
+
+    <h2>Marokon Anti‑Atlas</h2>
+
+    <p>
+      Souss‑laakson Anti‑Atlasvuoristossa, siellä missä Sahara kohtaa Atlantin, H1‑T16189C! on raportoitu moderneissa amazigh‑yhteisöissä (mm. Akka‑ ja Ida‑klaanit). Alueella linja voi paikoin muodostaa huomattavan osuuden havaituista mtDNA‑tyypeistä.
+    </p>
+
+    <p>
+      Historialliset selitykset vaihtelevat. Joissakin tulkinnoissa yhteys liitetään alueen varhaisiin getuliväestöihin, toisissa Pohjois‑Afrikan kautta kulkeneisiin germaanisiin ryhmiin kuten vandaaleihin tai visigootteihin. Suoraa, katkeamatonta todistusketjua ei kuitenkaan ole.
+    </p>
+
+    <p>
+      Jäljelle jää hiljainen mysteeri — geneettinen kaiku, joka saattaa ulottua syvälle jääkauden jälkeiseen aikaan.
+    </p>
+
+    <div class="section-divider"></div>
+
+    <p>
+      Nämä ovat kaikuja, eivät varmoja sukupolkuja. Mutta ne muistuttavat yhdestä asiasta: verilinjojen historia on harvoin suoraviivainen.
+    </p>
+
+    <p>
+      Ota mysteeri mukaasi. Sen ei tarvitse ratketa — riittää, että se herättää kysymyksen.
+    </p>
+
+    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+  </section>
+
+
+
+  <!-- ================= OSA VI – TUTKIMUSLIITE ================= -->
+  <section class="page">
+    <div class="part-header">
+      <span class="part-number">🜂 OSA VI</span>
+      <h2>TUTKIMUSLIITE</h2>
+    </div>
+
+    <h1>Aikajanan ja reitin yhteenveto</h1>
+
+    <p class="dropcap">
+      Seuraava aikajana kokoaa yhteen keskeiset arkeogeneettiset ankkurit, joissa H1‑T16189C!‑linja on dokumentoitu. Tämä ei ole täydellinen kartta menneisyydestä — vaan tutkimukseen perustuva reittiluonnos, jossa yksittäiset löydöt muodostavat katkeamattoman biologisen jatkumon.
+    </p>
+
+    <div class="fact-box">
+      <div class="fact-title">Kronologinen ketju</div>
+      <ul>
+        <li><strong>~8700–7000 vuotta sitten</strong> → Anatolian neoliittiset kylät (Barcın, Aşıklı, Çatalhöyük, Boncuklu): varhaiset viljelijät ja H1‑linjan varhainen muoto.</li>
+        <li><strong>~5900 vuotta sitten</strong> → Poulnabrone, Irlanti (PN05, H1‑T16189C!).</li>
+        <li><strong>~1750 vuotta sitten</strong> → Masłomęcz, Puola (PCA0099, H1‑T16189C!).</li>
+        <li><strong>~1000 vuotta sitten</strong> → Kopparsvik, Gotlanti (VK51 H1‑T16189C! &amp; VK50 H1+16189).</li>
+        <li><strong>Tänään</strong> → Nykyajan kantajat, mukaan lukien sinä.</li>
+      </ul>
+    </div>
+
+    <p>
+      Veri ei muista sanoja — mutta se muistaa reitin. Jokainen näistä pisteistä on arkeologinen välähdys samasta äitilinjasta eri aikakausina.
+    </p>
+
+    <h2>Löydöt ja keskeiset lähteet</h2>
+
+    <div class="fact-box">
+      <div class="fact-title">Vertaisarvioitu tutkimuspohja</div>
+      <ul>
+        <li>Cassidy et al. 2020 — Neoliittinen Irlanti ja Poulnabronen yksilö PN05 (mtDNA H1‑T16189C!).</li>
+        <li>Stolarek et al. 2019 — Wielbark‑kulttuurin Masłomęcz ja näyte PCA0099 (H1‑T16189C!).</li>
+        <li>Margaryan et al. 2020 — Viikinkiajan genomiikka ja Gotlannin yksilöt (mm. VK51, VK50).</li>
+        <li>Haplotree.info / All Ancient DNA — H1‑T16189C‑näytteiden kartoitus ja ajoitukset.</li>
+        <li>Laajemmat mtDNA‑tutkimukset H‑haploryhmän yleisyydestä Euroopassa.</li>
+      </ul>
+    </div>
+
+    <p>
+      Anti‑Atlas‑alueen modernit havainnot perustuvat väestögenetiikan nykydataan amazigh‑yhteisöistä (mm. Akka‑ ja Ida‑klaanit). Näiden ja muinaisnäytteiden välinen yhteys on tutkimuksellinen mahdollisuus — ei suora todistettu sukupuu.
+    </p>
+
+    <div class="section-divider"></div>
+
+    <p>
+      Tämä liite ei sulje tarinaa. Se ankkuroi sen. Arkeologia, genetiikka ja historia kohtaavat tässä pisteessä — ja siitä eteenpäin jatkuu henkilökohtainen sukututkimus.
+    </p>
+
+    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+  </section>
 
 </body>
 </html>
+
