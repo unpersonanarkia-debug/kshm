@@ -49,6 +49,26 @@
     .page:last-child {
       page-break-after: auto;
     }
+    @media print {
+  html, body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+  }
+
+  body {
+    background: white;
+  }
+
+  .page {
+    margin: 0;
+    box-shadow: none;
+    page-break-after: always;
+    width: 100%;      /* selain antaa @page hoitaa A4-koon */
+    min-height: auto;
+  }
+}
+
 
     /* ===== TYPOGRAPHY ===== */
     h1 {
@@ -777,20 +797,6 @@
       julkaisun laatimishetkellä ja voivat tarkentua tulevan
       tutkimuksen myötä.
     </p>
-
-    <div class="section-divider"></div>
-
-    <h2>Allekirjoitus</h2>
-
-    <div style="margin-top:3em;">
-      <div style="border-bottom:1px solid var(--line); width:60%; height:28px;"></div>
-      <div class="meta" style="margin-top:6px;">Kadonneen sukuhistorian metsästäjä</div>
-    </div>
-
-    <div style="margin-top:2.2em;">
-      <div style="border-bottom:1px solid var(--line); width:40%; height:28px;"></div>
-      <div class="meta" style="margin-top:6px;">Päiväys</div>
-    </div>
 
     <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
   </section>
