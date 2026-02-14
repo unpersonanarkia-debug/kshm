@@ -83,15 +83,15 @@
 
     /* ===== DROP CAP (tightened) ===== */
     .dropcap::first-letter {
-      float: left;
-      font-family: "Playfair Display SC", serif;
-      font-size: 44pt;
-      line-height: 0.9;
-      padding-right: 6px;
-      padding-top: 2px;
-      margin-right: 2px;
-      color: var(--accent);
-    }
+  float: left;
+  font-family: "Playfair Display SC", serif;
+  font-size: 3.1em;
+  line-height: 0.85;
+  padding-right: 0.08em;
+  margin-right: 0.08em;
+  margin-top: 0.05em;
+  color: var(--accent);
+}
 
     /* ===== COVER ===== */
     .cover {
@@ -104,10 +104,17 @@
     }
 
     .cover h1 {
-      font-size: 36pt;
-      margin-bottom: 0.4em;
-      letter-spacing: 0.08em;
-    }
+  font-size: 36pt;
+  margin-bottom: 0.4em;
+  letter-spacing: 0.06em;
+  line-height: 1.05;
+  word-break: keep-all;
+}
+
+.title-line {
+  display: block;
+  white-space: nowrap;
+}
 
     .subtitle {
       font-family: "Playfair Display", serif;
