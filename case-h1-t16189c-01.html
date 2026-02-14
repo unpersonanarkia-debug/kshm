@@ -20,70 +20,46 @@
       size: A4;
       margin: 2.2cm 2cm 2.4cm 2cm;
     }
-.page {
-  page-break-after: always;
-  position: relative;
-  width
-  
-    .page {
-  page-break-after: always;
-  position: relative;
-  width: 210mm;
-  min-height: 297mm;
-  margin: 0 auto 10mm auto; /* keskitys ja väli sivujen väliin */
-  box-sizing: border-box;
-}
-
-
 
     body {
-      background: var(--paper);
+      background: #e9e3d9; /* web-tausta paperin ympärille */
       color: var(--ink);
       font-family: "Lora", serif;
-      line-height: 1.68; /* hienosäädetty lukurytmi */
-      font-size: 11.6pt; /* hieman kirjallisempi koko */
+      line-height: 1.66;
+      font-size: 11.6pt;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       hyphens: auto;
+      margin: 0;
+      padding: 40px 0; /* web-ilma sivujen väliin */
     }
 
+    /* ===== A4 WEB PREVIEW ===== */
     .page {
       page-break-after: always;
       position: relative;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 32px auto;
+      background: var(--paper);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+      padding: 2.2cm 2cm 2.4cm 2cm;
+      box-sizing: border-box;
     }
 
     .page:last-child {
       page-break-after: auto;
+      margin-bottom: 0;
     }
-    @media print {
-  html, body {
-    width: 210mm;
-    height: 297mm;
-    margin: 0;
-  }
-
-  body {
-    background: white;
-  }
-
-  .page {
-    margin: 0;
-    box-shadow: none;
-    page-break-after: always;
-    width: 100%;      /* selain antaa @page hoitaa A4-koon */
-    min-height: auto;
-  }
-}
-
 
     /* ===== TYPOGRAPHY ===== */
     h1 {
       font-family: "Playfair Display SC", serif;
       font-size: 28pt;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.06em;
       margin-bottom: 0.45em;
       color: var(--ink);
-      line-height: 1.15;
+      line-height: 1.14;
       page-break-after: avoid;
     }
 
@@ -105,20 +81,21 @@
       orphans: 3;
     }
 
-    /* ===== DROP CAP ===== */
+    /* ===== DROP CAP (tightened) ===== */
     .dropcap::first-letter {
       float: left;
       font-family: "Playfair Display SC", serif;
-      font-size: 46pt;
-      line-height: 0.82;
-      padding-right: 8px;
-      padding-top: 4px;
+      font-size: 44pt;
+      line-height: 0.9;
+      padding-right: 6px;
+      padding-top: 2px;
+      margin-right: 2px;
       color: var(--accent);
     }
 
     /* ===== COVER ===== */
     .cover {
-      height: 90vh;
+      height: calc(297mm - 4.6cm);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -128,7 +105,8 @@
 
     .cover h1 {
       font-size: 36pt;
-      margin-bottom: 0.5em;
+      margin-bottom: 0.4em;
+      letter-spacing: 0.08em;
     }
 
     .subtitle {
@@ -208,10 +186,10 @@
       color: #666;
     }
 
-    /* ===== FOOTER ===== */
+    /* ===== FOOTER WITH PAGE NUMBER ===== */
     .footer {
       position: absolute;
-      bottom: -1.6cm;
+      bottom: 0.8cm;
       left: 0;
       right: 0;
       text-align: center;
@@ -219,7 +197,10 @@
       color: #777;
       letter-spacing: 0.04em;
     }
-  
+
+    .footer::after {
+      content: " — " counter(page);
+    }
 
     /* ===== PREMIUM PART HEADER ===== */
     .part-header {
@@ -247,7 +228,7 @@
       margin-bottom: 6px;
     }
 
-    /* ===== HERO IMAGE (chapter opener) ===== */
+    /* ===== HERO IMAGE ===== */
     .image-hero {
       width: 100%;
       margin: 2em 0 2.2em 0;
@@ -261,7 +242,7 @@
       filter: sepia(32%) contrast(1.06);
     }
 
-    /* ===== SUBTLE SECTION DIVIDER ===== */
+    /* ===== SECTION DIVIDER ===== */
     .section-divider {
       width: 60px;
       height: 2px;
@@ -270,6 +251,18 @@
       opacity: 0.6;
     }
 
+    /* ===== PRINT TWEAKS ===== */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .page {
+        margin: 0;
+        box-shadow: none;
+      }
+    }
   </style>
 </head>
 
@@ -278,7 +271,10 @@
   <!-- ================= COVER ================= -->
   <section class="page">
     <div class="cover">
-      <h1>KADONNEEN SUKUHISTORIAN METSÄSTÄJÄ</h1>
+      <h1>
+        KADONNEEN SUKUHISTORIAN<br/>
+        METSÄSTÄJÄ
+      </h1>
       <div class="subtitle">H1‑T16189C! – Verilinjan seikkailu ajassa</div>
       <div class="tagline">"Veri muistaa reitin. Minä olen sen metsästäjä."</div>
     </div>
