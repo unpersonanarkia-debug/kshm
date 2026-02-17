@@ -23,8 +23,6 @@
       --accent-pale:  #ede3d3;
       --line:         #d4c5aa;
       --line-faint:   #e8dece;
-      --cover-bg:     #1a150d;
-      --cover-text:   #f0e6d3;
       --red-ink:      #8b2020;
       --shadow:       rgba(60, 40, 10, 0.15);
     }
@@ -42,10 +40,7 @@
     body {
       margin: 0;
       padding: 0;
-      background: #2a2318;
-      background-image:
-        radial-gradient(ellipse at 30% 20%, rgba(90,60,20,0.25) 0%, transparent 55%),
-        radial-gradient(ellipse at 75% 80%, rgba(60,35,10,0.3) 0%, transparent 60%);
+      background: #e9e3d9;
       color: var(--ink);
       font-family: "Lora", Georgia, serif;
       font-size: 11.5pt;
@@ -63,8 +58,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 48px 16px;
-      gap: 36px;
+      padding: 40px 0;
+      gap: 32px;
     }
 
     .page {
@@ -135,69 +130,61 @@
     }
 
     /* ============================================================
-       COVER PAGE
+       COVER PAGE — original light paper style
     ============================================================ */
     .page.cover {
-      background: var(--cover-bg);
-      background-image:
-        radial-gradient(ellipse at 50% 35%, rgba(122, 85, 48, 0.22) 0%, transparent 60%),
-        radial-gradient(ellipse at 20% 80%, rgba(80,50,15,0.3) 0%, transparent 50%);
-      color: var(--cover-text);
+      background: var(--paper);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
       padding: 2.5cm 2.2cm;
-    }
-
-    .cover::before {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      height: calc(297mm - 4.6cm);
     }
 
     .cover-ornament {
-      font-size: 22pt;
-      letter-spacing: 0.5em;
-      color: var(--accent-light);
-      margin-bottom: 2.2em;
-      opacity: 0.7;
+      font-size: 18pt;
+      letter-spacing: 0.4em;
+      color: var(--accent);
+      margin-bottom: 2em;
+      opacity: 0.5;
     }
 
     .cover h1 {
       font-family: "Playfair Display SC", serif;
-      font-size: 33pt;
+      font-size: 36pt;
       letter-spacing: 0.06em;
-      line-height: 1.1;
-      color: var(--cover-text);
-      margin: 0 0 0.5em 0;
-      text-shadow: 0 2px 18px rgba(0,0,0,0.5);
+      line-height: 1.05;
+      color: var(--ink);
+      margin: 0 0 0.4em 0;
     }
 
     .cover-rule {
       width: 60px;
       height: 1px;
-      background: var(--accent-light);
-      margin: 1em auto;
-      opacity: 0.6;
+      background: var(--accent);
+      margin: 0.8em auto;
+      opacity: 0.4;
     }
 
     .cover .subtitle {
       font-family: "Playfair Display", serif;
       font-style: italic;
-      font-size: 14pt;
-      color: var(--accent-light);
-      margin: 0.3em 0 2.5em 0;
+      font-size: 16pt;
+      color: var(--accent);
+      margin: 0.3em 0 2em 0;
       letter-spacing: 0.02em;
     }
 
     .cover .tagline {
+      margin-top: 2em;
       font-family: "Lora", serif;
       font-style: italic;
       font-size: 11pt;
-      color: rgba(240, 230, 211, 0.65);
-      max-width: 340px;
+      color: #444;
+      max-width: 380px;
       line-height: 1.6;
-      margin: 0;
     }
 
     .cover-footer-rule {
@@ -209,7 +196,8 @@
       font-family: "Playfair Display SC", serif;
       font-size: 8pt;
       letter-spacing: 0.18em;
-      color: rgba(196, 154, 108, 0.45);
+      color: var(--accent);
+      opacity: 0.35;
     }
 
     /* ============================================================
@@ -743,8 +731,8 @@
     <h1>Franco‑Cantabrian<br>refugio</h1>
 
     <div class="image-hero">
-      <div class="image-placeholder">[ <img src="images/altamira-bison.jpg" alt="Altamiran biisoni Franco-Cantabrian refugiosta" /> ]</div>
-      <div class="caption">Altamiran luolamaalaus: Biisoni (~15 000 vuotta vanha)</div>
+      <img src="images/altamira-bison.jpg" alt="Altamiran bisoni Franco-Cantabrian refugiosta" />
+      <div class="caption">Altamiran luolamaalaus: Bisoni (~15 000 vuotta vanha)</div>
     </div>
 
     <p class="dropcap">Noin 26 500–19 000 vuotta sitten maailma oli erilainen peto. Jäätikkö, tuo hidas, armoton jättiläinen, oli niellyt Skandinavian, Britannian ja Keski-Euroopan. Tuuli ulvoi tundran yli kuin susilauma, maa oli paljas ja kivinen, ilman viljapeltoja tai puiden suojaa. Selviytyminen ei ollut valinta; se oli taistelu jokaisen henkäyksen edestä. Mutta ihmiset eivät kadonneet. He vetäytyivät, etelään – sinne, missä maa vielä hengitti.</p>
@@ -787,7 +775,7 @@
     <p>Toinen sisar lähtee pohjoiseen. Riista kutsuu: hevoslaumat laukkaavat, villipeurat ja porot juoksevat, biisonit jyrisevät. Hän seuraa niitä rannikkoa pitkin, jokivartta, missä jäätikkö hitaasti perääntyy. Sen reunoille syntyy laidunmaita, missä oli jäätä, on nyt ruohoa. Tämä ei ole sankarillinen marssi; se on vaisto, selviytymisen virta. Hänen jälkeläisensä asuttavat Keski- ja Pohjois-Euroopan uudelleen, levittäen mukanaan H1-linjaa, joka on kietoutuneena U5 ja V haploryhmään.</p>
 
     <div class="image-full">
-      <div class="image-placeholder">[ Lascaux'n hevonen — kuva ladataan paikallisesta kansiosta ]</div>
+      <img src="images/lascaux-horse.jpg" alt="Lascaux'n hevonen Franco-Cantabrian refugiosta" />
       <div class="caption">Lascaux'n luolamaalaus: Hevonen (~17 000 vuotta vanha)</div>
     </div>
 
@@ -855,7 +843,7 @@
     <h1>Savitalojen ihmiset –<br>Anatolian hiljainen<br>vallankumous</h1>
 
     <div class="image-hero">
-      <div class="image-placeholder">[ Göbekli Tepe — kuva ladataan paikallisesta kansiosta ]</div>
+      <img src="images/anatolia-neolithic.jpg" alt="Neoliittinen Anatolia" />
       <div class="caption">Göbekli Tepe – neoliittinen pyhäkkö Anatoliassa</div>
     </div>
 
@@ -930,7 +918,7 @@
     <h1>Poulnabrone –<br>megaliittinen huippu</h1>
 
     <div class="image-hero">
-      <div class="image-placeholder">[ Poulnabronen dolmen — kuva ladataan paikallisesta kansiosta ]</div>
+      <img src="images/poulnabrone-dolmen.jpg" alt="Poulnabrone dolmen Irlannissa" />
       <div class="caption">Poulnabronen dolmen Burrenissa, Irlannissa (~3941–3661 eaa.)</div>
     </div>
 
@@ -972,7 +960,7 @@
     <h1>Masłomęcz –<br>vaellusvaihe</h1>
 
     <div class="image-hero">
-      <div class="image-placeholder">[ Wielbark-kulttuurin hautakenttä — kuva ladataan paikallisesta kansiosta ]</div>
+      <img src="images/maslomecz-wielbark-2.jpg" alt="Masłomęcz Wielbark kulttuuria" />
       <div class="caption">Wielbark‑kulttuurin hautakenttä Masłomęczin alueella, Puolassa</div>
     </div>
 
@@ -1014,7 +1002,7 @@
     <h1>Gotlanti –<br>meren solmukohta</h1>
 
     <div class="image-hero">
-      <div class="image-placeholder">[ Kopparsvikin hautausmaa — kuva ladataan paikallisesta kansiosta ]</div>
+      <img src="images/gotland-kopparsvik.jpg" alt="Kopparsvikin viikinkiaikainen hautausmaa" />
       <div class="caption">Kopparsvikin viikinkiaikainen hautausmaa Gotlannissa</div>
     </div>
 
@@ -1163,7 +1151,7 @@
     <h1>Mitä se<br>tarkoittaa sinulle</h1>
 
     <div class="image-hero">
-      <div class="image-placeholder">[ Kummakivi Suomessa — kuva ladataan paikallisesta kansiosta ]</div>
+      <img src="images/personal-legacy.jpg" alt="Megaliitti Suomen maisemassa" />
       <div class="caption">Kummakivi Suomessa – muinainen perintö elää</div>
     </div>
 
