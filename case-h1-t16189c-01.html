@@ -2,279 +2,301 @@
 <html lang="fi">
 <head>
   <meta charset="UTF-8" />
-  <title>KSHM Verilinjakirja</title>
-  
-  <!-- PDF Export -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Playfair+Display+SC&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KSHM Verilinjakirja – H1‑T16189C!</title>
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Playfair+Display+SC:wght@400;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 
   <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
     :root {
-      --paper: #f5efe6;
-      --ink: #1a1a1a;
-      --accent: #6b4f2a;
-      --line: #d8cbb3;
+      --paper:        #f6f0e8;
+      --paper-warm:   #faf5ec;
+      --ink:          #18150f;
+      --ink-mid:      #3a3025;
+      --ink-soft:     #5c4f3a;
+      --accent:       #7a5530;
+      --accent-light: #c49a6c;
+      --accent-pale:  #ede3d3;
+      --line:         #d4c5aa;
+      --line-faint:   #e8dece;
+      --cover-bg:     #1a150d;
+      --cover-text:   #f0e6d3;
+      --red-ink:      #8b2020;
+      --shadow:       rgba(60, 40, 10, 0.15);
     }
 
-    /* ===== PAGE ===== */
-    @page {
-      size: A4;
-      margin: 2.2cm 2cm 2.4cm 2cm;
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
     }
 
     body {
-      background: #e9e3d9; /* web-tausta paperin ympärille */
+      margin: 0;
+      padding: 0;
+      background: #2a2318;
+      background-image:
+        radial-gradient(ellipse at 30% 20%, rgba(90,60,20,0.25) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 80%, rgba(60,35,10,0.3) 0%, transparent 60%);
       color: var(--ink);
-      font-family: "Lora", serif;
-      line-height: 1.64;
-      font-size: 11.6pt;
+      font-family: "Lora", Georgia, serif;
+      font-size: 11.5pt;
+      line-height: 1.68;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       hyphens: auto;
-      margin: 0;
-      padding: 40px 0; /* web-ilma sivujen väliin */
+      /* FIX: removed flex from body — was breaking page layout */
     }
 
-    /* ===== A4 WEB PREVIEW ===== */
+    /* ============================================================
+       SCREEN: A4 PAGE WRAPPER
+    ============================================================ */
+    .pages-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 16px;
+      gap: 36px;
+    }
+
     .page {
-      page-break-after: always;
       position: relative;
       width: 210mm;
       min-height: 297mm;
-      margin: 0 auto 32px auto;
       background: var(--paper);
-      box-shadow: 0 10px 28px rgba(0,0,0,0.12);
-      padding: 2.2cm 2cm 2.4cm 2cm;
-      box-sizing: border-box;
+      padding: 2.2cm 2.1cm 3.2cm 2.1cm; /* extra bottom for footer */
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.08),
+        0 8px 20px rgba(0,0,0,0.14),
+        0 20px 48px rgba(0,0,0,0.12);
+      overflow: hidden; /* prevent content bleed */
     }
 
-    .page:last-child {
-      page-break-after: auto;
-      margin-bottom: 0;
+    /* Subtle paper texture via pseudo-element */
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
     }
-    
-    @media screen {
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-  }
-}
 
+    .page > * { position: relative; z-index: 1; }
 
-    /* ===== TYPOGRAPHY ===== */
+    /* ============================================================
+       PRINT / PDF
+    ============================================================ */
+    @page {
+      size: A4;
+      margin: 2.2cm 2.1cm 2.6cm 2.1cm;
+    }
+
+    @media print {
+      html, body {
+        background: white !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .pages-container {
+        display: block;
+        padding: 0;
+        gap: 0;
+      }
+
+      .page {
+        width: 100%;
+        min-height: 0;
+        box-shadow: none;
+        padding: 0;
+        border: none;
+        page-break-after: always;
+        margin: 0;
+        overflow: visible;
+      }
+
+      .page::before { display: none; }
+
+      .page:last-child { page-break-after: auto; }
+
+      .pdf-btn,
+      .toc-nav { display: none !important; }
+
+      .footer { display: none !important; }
+    }
+
+    /* ============================================================
+       COVER PAGE
+    ============================================================ */
+    .page.cover {
+      background: var(--cover-bg);
+      background-image:
+        radial-gradient(ellipse at 50% 35%, rgba(122, 85, 48, 0.22) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(80,50,15,0.3) 0%, transparent 50%);
+      color: var(--cover-text);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2.5cm 2.2cm;
+    }
+
+    .cover::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    }
+
+    .cover-ornament {
+      font-size: 22pt;
+      letter-spacing: 0.5em;
+      color: var(--accent-light);
+      margin-bottom: 2.2em;
+      opacity: 0.7;
+    }
+
+    .cover h1 {
+      font-family: "Playfair Display SC", serif;
+      font-size: 33pt;
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      color: var(--cover-text);
+      margin: 0 0 0.5em 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,0.5);
+    }
+
+    .cover-rule {
+      width: 60px;
+      height: 1px;
+      background: var(--accent-light);
+      margin: 1em auto;
+      opacity: 0.6;
+    }
+
+    .cover .subtitle {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-size: 14pt;
+      color: var(--accent-light);
+      margin: 0.3em 0 2.5em 0;
+      letter-spacing: 0.02em;
+    }
+
+    .cover .tagline {
+      font-family: "Lora", serif;
+      font-style: italic;
+      font-size: 11pt;
+      color: rgba(240, 230, 211, 0.65);
+      max-width: 340px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .cover-footer-rule {
+      position: absolute;
+      bottom: 2.2cm;
+      left: 2.2cm;
+      right: 2.2cm;
+      text-align: center;
+      font-family: "Playfair Display SC", serif;
+      font-size: 8pt;
+      letter-spacing: 0.18em;
+      color: rgba(196, 154, 108, 0.45);
+    }
+
+    /* ============================================================
+       TYPOGRAPHY: HEADINGS
+    ============================================================ */
     h1 {
       font-family: "Playfair Display SC", serif;
-      font-size: 29pt;
-      letter-spacing: 0.035em;
-      margin-bottom: 0.45em;
+      font-size: 26pt;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1.15;
       color: var(--ink);
-      line-height: 1.14;
+      margin: 0 0 0.5em 0;
       page-break-after: avoid;
     }
 
     h2 {
       font-family: "Playfair Display", serif;
       font-style: italic;
-      font-size: 18pt;
-      margin-top: 2em;
-      margin-bottom: 0.6em;
-      line-height: 1.25;
+      font-size: 16pt;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--ink-mid);
+      margin: 2em 0 0.6em 0;
       page-break-after: avoid;
     }
 
+    /* ============================================================
+       TYPOGRAPHY: BODY
+    ============================================================ */
     p {
-      margin: 0 0 1.15em 0;
+      margin: 0 0 1.1em 0;
       text-align: justify;
       text-justify: inter-word;
       widows: 3;
       orphans: 3;
+      color: var(--ink);
     }
 
-    /* ===== DROP CAP (tightened) ===== */
-    .dropcap::first-letter {
-  float: left;
-  font-family: "Playfair Display SC", serif;
-  font-size: 3.25em;      
-  line-height: 0.78;      
-  padding-right: 0.10em;
-  margin-right: 0.06em;
-  margin-top: 0.02em;
-  color: var(--accent);
-}
+    strong { color: var(--ink-mid); }
 
+    a { color: var(--accent); text-underline-offset: 2px; }
+    a:hover { color: var(--accent-light); }
 
-    /* ===== COVER ===== */
-    .cover {
-      height: calc(297mm - 4.6cm);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .cover h1 {
-  font-size: 36pt;
-  margin-bottom: 0.4em;
-  letter-spacing: 0.06em;
-  line-height: 1.05;
-  word-break: keep-all;
-}
-
-.title-line {
-  display: block;
-  white-space: nowrap;
-}
-
-    .subtitle {
-      font-family: "Playfair Display", serif;
-      font-style: italic;
-      font-size: 16pt;
-      color: var(--accent);
-      margin-bottom: 2em;
-    }
-
-    .tagline {
-      margin-top: 4em;
-      font-style: italic;
-      color: #444;
-      max-width: 420px;
-      line-height: 1.5;
-    }
-
-    /* ===== IMAGE BLOCK ===== */
-    .image-full {
-      width: 100%;
-      margin: 1.8em 0;
-      page-break-inside: avoid;
-    }
-
-    .image-full img {
-      width: 100%;
-      height: auto;
-      filter: sepia(35%) contrast(1.05);
-      border-radius: 4px;
-    }
-
-    .caption {
-      font-size: 9.5pt;
-      font-style: italic;
-      color: #555;
-      margin-top: 5px;
-      text-align: center;
-    }
-
-    /* ===== FACT BOX ===== */
-    .fact-box {
-      border: 1px solid var(--line);
-      border-left: 4px solid var(--accent);
-      background: #faf6ef;
-      padding: 12px 14px;
-      margin: 1.8em 0;
-      page-break-inside: avoid;
-    }
-
-    .fact-title {
+    code {
       font-family: "Lora", serif;
-      font-weight: 600;
-      font-size: 10pt;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      font-style: italic;
       color: var(--accent);
-      margin-bottom: 6px;
     }
 
-    .fact-box ul {
-      margin: 0;
-      padding-left: 18px;
+    /* ============================================================
+       DROP CAP
+    ============================================================ */
+    .dropcap::first-letter {
+      float: left;
+      font-family: "Playfair Display SC", serif;
+      font-size: 3.4em;
+      line-height: 0.76;
+      padding-right: 0.09em;
+      margin-top: 0.04em;
+      color: var(--accent);
+      /* FIX: removed margin-right that caused tracking issues */
     }
 
-    /* ===== MAP BLOCK ===== */
-    .map-block {
-      border: 1px solid var(--line);
-      padding: 8px;
-      margin: 1.8em 0;
-      page-break-inside: avoid;
+    /* Clearfix after dropcap paragraphs */
+    .dropcap::after {
+      content: "";
+      display: table;
+      clear: both;
     }
 
-    /* ===== SMALL META ===== */
-    .meta {
-      font-size: 9pt;
-      color: #666;
-    }
-
-        /* ===== FOOTER WITH PAGE NUMBER ===== */
-    
-    /* 1. PDF-tulostuksen asetukset (A4) */
-    @page {
-      size: A4;
-      margin: 2.2cm 2cm 2.4cm 2cm;
-      @bottom-center {
-        content: "Kadonneen sukuhistorian metsästäjä · Sivu " counter(page) " / " counter(pages);
-        font-family: 'Lora', serif;
-        font-size: 9pt;
-        color: #777;
-        letter-spacing: 0.04em;
-        border-top: 1px solid #eee; /* Viiva sivunumeron yläpuolelle PDF:ssä */
-        width: 100%;
-        padding-top: 0.2cm;
-      }
-    }
-
-    /* 2. Web-näkymän footer (näkyy selaimessa) */
-    .footer {
-      position: absolute;
-      bottom: 0.8cm;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-family: 'Lora', serif;
-      font-size: 9pt;
-      color: #777;
-      letter-spacing: 0.04em;
-      border-top: 1px solid var(--line, #eee);
-      margin: 0 2cm; /* Marginaalit jotta viiva ei osu reunoihin */
-      padding-top: 8px;
-    }
-
-    /* Sivunumeron dynaaminen lisäys footeriin */
-    .footer::after {
-      content: "Sivu " counter(page);
-    }
-
-    /* 3. Print-optimointi: Piilotetaan HTML-footer, jotta @page-numerointi ei tuplaannu */
-    @media print {
-      .footer {
-        display: none !important;
-      }
-    }
-
-    /* 4. Responsiivisuus: Pienennetään tekstikokoa mobiilissa */
-    @media screen and (max-width: 768px) {
-      .footer {
-        font-size: 8pt;
-        margin: 0 1cm;
-      }
-    }
-
-    /* ===== PREMIUM PART HEADER ===== */
+    /* ============================================================
+       PART HEADER
+    ============================================================ */
     .part-header {
       text-align: center;
-      margin-bottom: 2.4em;
+      margin-bottom: 1.8em;
+      padding-bottom: 1.4em;
       position: relative;
     }
 
-    .part-header::before {
+    .part-header::after {
       content: "";
       position: absolute;
-      left: 15%;
-      right: 15%;
-      top: -14px;
+      left: 20%;
+      right: 20%;
+      bottom: 0;
       height: 1px;
       background: linear-gradient(to right, transparent, var(--line), transparent);
     }
@@ -282,78 +304,364 @@
     .part-number {
       display: block;
       font-family: "Playfair Display SC", serif;
-      letter-spacing: 0.16em;
-      font-size: 11pt;
+      font-size: 9.5pt;
+      letter-spacing: 0.22em;
       color: var(--accent);
-      margin-bottom: 6px;
+      margin-bottom: 0.3em;
     }
 
-    /* ===== HERO IMAGE ===== */
-    .image-hero {
+    .part-header h2 {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-size: 13pt;
+      color: var(--ink-soft);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    /* ============================================================
+       IMAGE BLOCKS
+    ============================================================ */
+    .image-hero,
+    .image-full {
       width: 100%;
-      margin: 2em 0 2.2em 0;
+      margin: 1.6em 0 1.8em 0;
       page-break-inside: avoid;
     }
 
-    .image-hero img {
+    .image-hero img,
+    .image-full img {
       width: 100%;
       height: auto;
-      border-radius: 6px;
-      filter: sepia(32%) contrast(1.06);
+      display: block;
+      border-radius: 3px;
+      filter: sepia(28%) contrast(1.07) brightness(0.97);
     }
 
-    /* ===== SECTION DIVIDER ===== */
+    /* Image placeholder when src is missing/broken */
+    .image-hero img[src=""],
+    .image-full img[src=""],
+    .image-hero img:not([src]),
+    .image-full img:not([src]) {
+      min-height: 120px;
+      background: var(--accent-pale);
+    }
+
+    .image-placeholder {
+      width: 100%;
+      height: 140px;
+      background: var(--accent-pale);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Lora", serif;
+      font-style: italic;
+      font-size: 10pt;
+      color: var(--accent-light);
+      margin-bottom: 0;
+    }
+
+    .caption {
+      font-family: "Lora", serif;
+      font-style: italic;
+      font-size: 9pt;
+      color: var(--ink-soft);
+      text-align: center;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    /* ============================================================
+       FACT BOX
+    ============================================================ */
+    .fact-box {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      background: var(--paper-warm);
+      padding: 13px 16px 11px 16px;
+      margin: 1.6em 0;
+      page-break-inside: avoid;
+    }
+
+    .fact-title {
+      font-family: "Lora", serif;
+      font-weight: 600;
+      font-size: 9.5pt;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .fact-box ul {
+      margin: 0;
+      padding-left: 1.2em;
+      font-size: 10.5pt;
+      line-height: 1.7;
+    }
+
+    .fact-box li { margin-bottom: 2px; }
+
+    .fact-box p {
+      margin: 0;
+      font-size: 10.5pt;
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       SECTION DIVIDER
+    ============================================================ */
     .section-divider {
-      width: 60px;
-      height: 2px;
-      background: var(--accent);
-      margin: 1.6em auto 1.8em auto;
-      opacity: 0.6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 2em auto;
     }
 
-    /* ===== WEB SHADOW (only screen) ===== */
-@media screen {
-  .page {
-    box-shadow: 0 14px 34px rgba(0,0,0,0.14);
-  }
-}
+    .section-divider::before,
+    .section-divider::after {
+      content: "";
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: var(--line);
+    }
 
-    /* ===== PRINT TWEAKS ===== */
+    .section-divider-glyph {
+      font-size: 11pt;
+      color: var(--accent-light);
+      opacity: 0.7;
+    }
 
-    @media print {
-      body {
-        background: white;
-        padding: 0;
+    /* ============================================================
+       FOOTER (screen only — hidden on print via @media print)
+    ============================================================ */
+    .footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1.8cm;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 8px;
+      border-top: 1px solid var(--line-faint);
+      margin: 0 2.1cm;
+      font-family: "Lora", serif;
+      font-style: italic;
+      font-size: 8.5pt;
+      color: #888;
+      letter-spacing: 0.03em;
+    }
+
+    .footer-inner {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-title { opacity: 0.8; }
+    .footer-page  { opacity: 0.65; font-style: normal; font-size: 8pt; }
+
+    /* ============================================================
+       TABLE OF CONTENTS NAV (screen only)
+    ============================================================ */
+    .toc-nav {
+      position: fixed;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      z-index: 100;
+    }
+
+    .toc-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(196, 154, 108, 0.35);
+      border: 1px solid rgba(196, 154, 108, 0.5);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: block;
+      position: relative;
+    }
+
+    .toc-dot:hover {
+      background: rgba(196, 154, 108, 0.75);
+      transform: scale(1.3);
+    }
+
+    .toc-dot::after {
+      content: attr(data-label);
+      position: absolute;
+      right: calc(100% + 10px);
+      top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      font-family: "Lora", serif;
+      font-size: 8.5pt;
+      font-style: italic;
+      color: rgba(196, 154, 108, 0.9);
+      background: rgba(26, 21, 13, 0.82);
+      padding: 3px 9px;
+      border-radius: 3px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+    }
+
+    .toc-dot:hover::after { opacity: 1; }
+
+    /* ============================================================
+       PDF PRINT BUTTON
+    ============================================================ */
+    .pdf-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 200;
+      background: var(--accent);
+      color: #f0e6d3;
+      border: none;
+      padding: 11px 20px;
+      border-radius: 4px;
+      font-family: "Lora", serif;
+      font-size: 10.5pt;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .pdf-btn:hover {
+      background: #8f6540;
+      transform: translateY(-1px);
+    }
+
+    .pdf-btn:active { transform: translateY(0); }
+
+    /* ============================================================
+       RESPONSIVE: scale A4 on small screens
+    ============================================================ */
+    @media screen and (max-width: 820px) {
+      .pages-container {
+        padding: 24px 0;
+        gap: 24px;
       }
 
       .page {
-        margin: 0;
-        box-shadow: none;
+        width: 100%;
+        min-height: 0;
+        border-radius: 0;
       }
+
+      .cover h1 { font-size: 24pt; }
+      h1 { font-size: 20pt; }
+
+      .toc-nav { display: none; }
     }
+
+    /* ============================================================
+       CLOSING / OATH STYLE
+    ============================================================ */
+    .oath {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-size: 12pt;
+      line-height: 1.75;
+      text-align: center;
+      color: var(--ink-mid);
+    }
+
+    .closing-line {
+      text-align: center;
+      font-style: italic;
+      font-size: 11.5pt;
+      color: var(--ink-soft);
+      margin-top: 2em;
+      line-height: 1.8;
+    }
+
+    /* ============================================================
+       LEGAL PAGE
+    ============================================================ */
+    .legal p {
+      font-size: 10.5pt;
+      line-height: 1.7;
+      text-align: left;
+    }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .center { text-align: center; }
+    .italic { font-style: italic; }
+
   </style>
 </head>
-
 <body>
 
-  <!-- ================= COVER ================= -->
-  <section class="page">
-    <div class="cover">
-      <h1>
-        KADONNEEN<br/> 
-        SUKUHISTORIAN<br/>
-        METSÄSTÄJÄ
-      </h1>
-      <div class="subtitle">H1‑T16189C! – Verilinjan seikkailu ajassa</div>
-      <div class="tagline">"Veri muistaa reitin. Minä olen sen metsästäjä."</div>
-    </div>
+<!-- ============================================================
+     SIDE NAVIGATION DOTS (screen only)
+============================================================ -->
+<nav class="toc-nav" aria-label="Sisällys">
+  <a class="toc-dot" href="#kansi"       data-label="Kansi"></a>
+  <a class="toc-dot" href="#kohtaaminen" data-label="Kohtaaminen"></a>
+  <a class="toc-dot" href="#johdanto"    data-label="Johdanto"></a>
+  <a class="toc-dot" href="#refugio-1"   data-label="Franco-Cantabrian refugio"></a>
+  <a class="toc-dot" href="#refugio-2"   data-label="Sisarlinjat"></a>
+  <a class="toc-dot" href="#refugio-3"   data-label="Hautaaminen"></a>
+  <a class="toc-dot" href="#anatolia-1"  data-label="Anatolian vallankumous"></a>
+  <a class="toc-dot" href="#anatolia-2"  data-label="Siirtymä länteen"></a>
+  <a class="toc-dot" href="#poulnabrone" data-label="Poulnabrone"></a>
+  <a class="toc-dot" href="#maslomecz"   data-label="Masłomęcz"></a>
+  <a class="toc-dot" href="#gotlanti"    data-label="Gotlanti"></a>
+  <a class="toc-dot" href="#nykyhetki"   data-label="Nykyhetki"></a>
+  <a class="toc-dot" href="#hotspotit"   data-label="Hotspotit"></a>
+  <a class="toc-dot" href="#perinto"     data-label="Elävä perintö"></a>
+  <a class="toc-dot" href="#liite"       data-label="Tutkimusliite"></a>
+  <a class="toc-dot" href="#loppu"       data-label="Loppu"></a>
+  <a class="toc-dot" href="#laki"        data-label="Oikeudellinen huomautus"></a>
+</nav>
+
+<div class="pages-container">
+
+  <!-- =========================================================
+       KANSI
+  ========================================================== -->
+  <section class="page cover" id="kansi">
+    <div class="cover-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+    <h1>Kadonneen<br>Sukuhistorian<br>Metsästäjä</h1>
+
+    <div class="cover-rule"></div>
+
+    <p class="subtitle">H1‑T16189C! – Verilinjan seikkailu ajassa</p>
+
+    <p class="tagline">"Veri muistaa reitin. Minä olen sen metsästäjä."</p>
+
+    <div class="cover-footer-rule">KSHM · Arkeogenetiikka · Populaatiohistoria</div>
   </section>
 
-  <!-- ================= KOHTAAMINEN ================= -->
-  <section class="page">
+
+  <!-- =========================================================
+       KOHTAAMINEN
+  ========================================================== -->
+  <section class="page" id="kohtaaminen">
+
     <h1>Kohtaaminen</h1>
 
-    <p class="dropcap">Rakas ystävä, kuuntele nyt tarkasti – älä vilkuile kelloa, älä avaa puhelinta. Tämä ei ole tavallinen raportti. Tämä ei ole tieteellinen tiivistelmä. Tämä on se hetki, jolloin menneisyys astuu huoneeseen, katsoo sinua suoraan silmiin ja sanoo: ”Minä olen täällä. Olen aina ollut täällä. Ja minä olen sinä.”</p>
+    <p class="dropcap">Rakas ystävä, kuuntele nyt tarkasti – älä vilkuile kelloa, älä avaa puhelinta. Tämä ei ole tavallinen raportti. Tämä ei ole tieteellinen tiivistelmä. Tämä on se hetki, jolloin menneisyys astuu huoneeseen, katsoo sinua suoraan silmiin ja sanoo: "Minä olen täällä. Olen aina ollut täällä. Ja minä olen sinä."</p>
 
     <h2>Kadonneen Sukuhistorian Metsästäjä</h2>
     <p><strong>H1‑T16189C! – Verilinjan seikkailu ajassa</strong></p>
@@ -376,464 +684,378 @@
 
     <p>Ota arkeologin hattu ja laita se päähäsi. Seuraa jälkiä, koska matkamme alkaa. Nyt me kaivaudumme syvemmälle — emmekä lopeta ennen kuin jokainen vihje on tutkittu.</p>
 
-    <div class="footer"></div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Kohtaaminen</span>
+      </div>
+    </footer>
   </section>
 
-  <!-- ================= INTRO ================= -->
-  <section class="page">
+
+  <!-- =========================================================
+       JOHDANTO
+  ========================================================== -->
+  <section class="page" id="johdanto">
+
     <h1>Johdanto</h1>
-    <p class="dropcap">
-      Sinun veresi tarina ei ala tästä. Se on kulkenut tuhansien vuosien
-      halki, yli merien ja kivikehien, läpi sukupolvien jotka eivät
-      koskaan tienneet nimeäsi — mutta kantoivat samaa hiljaista merkkiä.
-    </p>
+
+    <p class="dropcap">Sinun veresi tarina ei ala tästä. Se on kulkenut tuhansien vuosien halki, yli merien ja kivikehien, läpi sukupolvien jotka eivät koskaan tienneet nimeäsi — mutta kantoivat samaa hiljaista merkkiä.</p>
 
     <div class="fact-box">
       <div class="fact-title">Analyysin ydin</div>
       <ul>
-        <li>mtDNA-linja: H1‑T16189C!</li>
+        <li>mtDNA-linja: <strong>H1‑T16189C!</strong></li>
         <li>Tutkimusmetodi: arkeogenetiikka</li>
         <li>Lähteet: vertaisarvioidut julkaisut</li>
       </ul>
     </div>
 
-      <p>Tämä kertomus ei korvaa perinteistä sukututkimusta, vaan täydentää sitä.
-Kirkonkirjat ja arkistot kertovat nimistä, paikoista ja vuosiluvuista — 
-mutta ne vaikenevat siitä, mitä tapahtui ennen kirjoitettua aikaa.
-Tämä tarina alkaa siitä, mihin asiakirjat loppuvat.</p>
+    <p>Tämä kertomus ei korvaa perinteistä sukututkimusta, vaan täydentää sitä. Kirkonkirjat ja arkistot kertovat nimistä, paikoista ja vuosiluvuista — mutta ne vaikenevat siitä, mitä tapahtui ennen kirjoitettua aikaa. Tämä tarina alkaa siitä, mihin asiakirjat loppuvat.</p>
 
-<p>Tämä on dokumentoitu reitti yhdelle mitokondrio-DNA:n haploryhmälle – 
-H1‑T16189C!, jota sinä kannat mukanasi. Se on kertomus siitä, millaisissa 
-maailmoissa tämä esiäitiesi linja on elänyt, 
-ja miten se on kulkenut aikakausien läpi.</p>
+    <p>Tämä on dokumentoitu reitti yhdelle mitokondrio-DNA:n haploryhmälle – H1‑T16189C!, jota sinä kannat mukanasi. Se on kertomus siitä, millaisissa maailmoissa tämä esiäitiesi linja on elänyt, ja miten se on kulkenut aikakausien läpi.</p>
 
-<p>Se yhdistää arkeologisen kontekstin, muinais-DNA:n ja väestöhistorian yhdeksi 
-ymmärrettäväksi kokonaisuudeksi – tavaksi nähdä oma DNA-tulos osana laajempaa 
-tarinaa, ei irrallisena tietona.</p>
+    <p>Se yhdistää arkeologisen kontekstin, muinais-DNA:n ja väestöhistorian yhdeksi ymmärrettäväksi kokonaisuudeksi – tavaksi nähdä oma DNA-tulos osana laajempaa tarinaa, ei irrallisena tietona.</p>
 
-<p>Kun DNA-testisi osoittaa tämän haploryhmän, se tarkoittaa, että kuulut samaan 
-mitokondriaaliseen jatkumoon kuin tässä kuvattu muinaisten naisten ketju.
-He eivät ole sinä, mutta he kulkevat rinnallasi yhden esiäidin suvussa.</p>
+    <p>Kun DNA-testisi osoittaa tämän haploryhmän, se tarkoittaa, että kuulut samaan mitokondriaaliseen jatkumoon kuin tässä kuvattu muinaisten naisten ketju. He eivät ole sinä, mutta he kulkevat rinnallasi yhden esiäidin suvussa.</p>
 
-<p>Tämä on matka juurille.</p>
+    <p class="center italic">Tämä on matka juurille.</p>
 
-    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Johdanto</span>
+      </div>
+    </footer>
   </section>
 
-<!-- ================= OSA II — FRANCO-CANTABRIAN REFUGIO ================= -->
-<section class="page">
-  <div class="part-header">
-    <span class="part-number">🜂 OSA II</span>
-    <h2>Suuri vaellus</h2>
-  </div>
-  <h1>Franco‑Cantabrian refugio</h1>
 
-    <div class="image-hero">
-    <img src="images/altamira-bison.jpg" alt="Altamiran bisoni Franco-Cantabrian refugiosta" />
-    <div class="caption">Altamiran luolamaalaus: Bisoni (~15 000 vuotta vanha)</div>
-  </div>
+  <!-- =========================================================
+       OSA II — FRANCO-CANTABRIAN REFUGIO (sivu 1)
+  ========================================================== -->
+  <section class="page" id="refugio-1">
 
-  <p class="dropcap">
-    Noin 26 500–19 000 vuotta sitten maailma oli erilainen peto. Jäätikkö, tuo hidas, armoton jättiläinen, oli niellyt Skandinavian, Britannian ja Keski-Euroopan. Tuuli ulvoi tundran yli kuin susilauma, maa oli paljas ja kivinen, ilman viljapeltoja tai puiden suojaa. Selviytyminen ei ollut valinta; se oli taistelu jokaisen henkäyksen edestä. Mutta ihmiset eivät kadonneet. He vetäytyivät, etelään – sinne, missä maa vielä hengitti.
-  </p>
-
-  <p>
-    Yksi turvapaikoista oli Franco-Cantabrian refugio, Iberian niemimaan luoteisosassa ja Lounais‑Ranskassa. Pyreneiden rinteillä ja Kantabrian vuorten suojissa pienet ihmisryhmät pitivät pintansa. Täällä myös H1‑äitilinjan varhaiset kantajat selvisivät jääkauden ankarimmista vuosituhansista. Täällä, jääkauden kylmissä oloisuhteissa, H1-linjan varhaiset kantajat elivät – eivät kuninkaina, vaan selviytyjinä.
-  </p>
-
-  <p>
-    He elivät liikkeessä: seurasivat riistaa, kalastivat jokia ja tunsivat vuodenkierron tarkasti. He eivät voineet tietää, että heidän soluissaan kulkeva mitokondrio‑DNA tulisi joskus kertomaan heidän tarinansa.
-  </p>
-
-  <p>
-    Kun ilmasto alkoi lämmetä noin 19 000–14 700 vuotta sitten, maailma avautui hitaasti uudelleen. Jää vetäytyi.
-  </p>
-
-  <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
-</section>
-
-<!-- ================= SIVU 2: Sisarlinjat + elämäntapa ================= -->
-<section class="page">
-  <h1>Franco‑Cantabrian refugio</h1>
-
-  <div class="fact-box">
-    <div class="fact-title">Kaksi sisarta – linjan ero</div>
-    <ul>
-      <li><strong>Pohjoinen sisar:</strong> Seuraa riistaa → Keski-/Pohjois-Eurooppa → Poulnabrone H1-T16189C!</li>
-      <li><strong>Eteläinen sisar:</strong> Anti-Atlas → Maghreb → Amazigh-berberit</li>
-      <li><strong>Yhteinen juuri:</strong> H1-perimä Franco-Cantabrian refugiosta ~19 000 v.t.</li>
-    </ul>
-  </div>
-
-  <p class="dropcap">
-    Kuvittele kaksi sisarta, seisomassa samassa laaksossa lähes 10 000 vuotta sitten, kädet täynnä piikiven lastuja, silmät täynnä taivasta. Heidän soluissaan virtaa sama mitokondrio-DNA, sama H1-T16189C!-linja, joka juontaa juurensa tähän refugioon. He eivät tiedä genetiikasta; he tietävät vain nälästä, tulesta ja perheestä.
-  </p>
-
-  <p>
-    Toinen jää etelään, Anti-Atlasin kivisiin rinteisiin. Hänen jälkeläisensä sopeutuvat: he metsästävät gaselleja keihäillä, keräävät villiä viljaa kallioiden koloista, vaeltavat vuodenaikojen perässä. Myöhemmin heitä kutsutaan Iberomaurusialaisiksi tai Capsian-kansaksi, mutta heille nimet eivät merkitse mitään. He tuntevat maan pulssin, veden niukan lahjan. Heidän linjansa leviää Maghrebissa, sekoittuen Amazighien esi-isiin – berbereihin, jotka kantavat samaa geneettistä siltaa yli Gibraltarin.
-  </p>
-
-  <p>
-    Toinen sisar lähtee pohjoiseen. Riista kutsuu: hevoslaumat laukkaaavat, villipeurat ja poroot juoksevat, biisonit jyrisevät. Hän seuraa niitä rannikkoa pitkin, jokivartta, missä jäätikkö hitaasti perääntyy. Sen reunoille syntyy laidunmaita, missä oli jäätä, on nyt ruohoa. Tämä ei ole sankarillinen marssi; se on vaisto, selviytymisen virta. Hänen jälkeläisensä asuttavat Keski- ja Pohjois-Euroopan uudelleen, levittäen mukanaan H1-linjaa, joka on kietoutuneena U5 ja V haploryhmään.
-  </p>
-
-  <div class="image-full">
-    <img src="images/lascaux-horse.jpg" alt="Lascaux'n hevonen Franco-Cantabrian refugiosta" />
-    <div class="caption">Lascaux'n luolamaalaus: Hevonen (~17 000 vuotta vanha)</div>
-  </div>
-
-  <p>
-    Luolat olivat heidän kotinsa – ei pelkkiä suojia, vaan maailman keskipisteitä. Kuvittele savuinen tuli, joka lepattaa kallion seinää vasten. Liha kuivuu savussa, tarinat virtaavat suusta toiseen kuin joki. Seinille he maalasivat eläimiä: biisonit, hevoset, peurat – ei koristeeksi, vaan kutsuksi, loitsuksi, joka varmisti saaliin.
-  </p>
-
-  <p>
-    Työkalut syntyivät käsissä: piikivestä terävät lastut, kaapimet, keihäänkärjet; luusta neuloja, koukkuja. Jokainen esine oli elämän jatke, ilman metallin hohtoa. Ravinto tuli maasta: suurriista antoi lihaa, nahkaa, jänteitä; joet kalaa; juuret ja marjat täyttivät vatsat. He söivät, minkä maa antoi, ja liikkuivat, kun maa ei enää antanut.
-  </p>
-
-  <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
-</section>
-
-  <!-- ================= SIVU 3: Hautaaminen + siirtymä ================= -->
-<section class="page">
-  <h1>Franco‑Cantabrian refugio</h1>
-
-  <p>
-    Entä kuolema? Se ei ollut loppu, vaan osa tarinaa. Vainajat asetettiin maahan huolella, punamultaa ruumiin päälle – ehkä veri, ehkä maa, ehkä side elävien ja henkien välillä. Simpukankuoria, helmiä hautojen yhteydessä – muistutuksena yksilöllisyydestä, yhteydestä mereen. Kun nainen haudattiin refugion luolaan, hänen H1-linjansa ei päättynyt. Hänen tyttärensä eli, ja tyttären tytär kantoi perintöä eteenpäin, kietoutuen pohjoisen ja etelän ketjuun.
-  </p>
-
-  <div class="fact-box">
-    <div class="fact-title">Lähteet (Franco-Cantabrian refugio)</div>
-    <ul>
-      <li>Achilli et al. 2004. *Am. J. Hum. Genet.* 75:910–918 (H1 refugio-perusta)</li>
-      <li>Pereira et al. 2005. *J. Hum. Genet.* 50:451–459 (Iberian jälleenasutus)</li>
-      <li>Fregel et al. 2018. *PNAS* 115:6774–6779 (North Africa -silta)</li>
-      <li>Torroni et al. 1998. *Am. J. Hum. Genet.* 62:1137–1152 (H/V refugio-laajentuma)</li>
-    </ul>
-  </div>
-
-  <p>
-    Pohjoiseen lähtenyt astui raakaan mutta avautuvaan maailmaan, hänen jälkeläisensä kulkivat aina Irlannin Poulnabroneen asti, missä H1-T16189C! kukoisti neoliittisissa kammioissa.
-  </p>
-
-  <p>
-    Etelään jäänyt rakensi elämäänsä Maghrebissa, geneettinen silta Iberiaan ei katkennut. Sisarlinjat erosivat, mutta eivät unohtaneet yhteistä äitiä. Haploryhmä ei ole kansa, ei kieli – se on biologinen ketju, joka kertoo selviytymisestä. Ei kruunuista tai valtakunnista, vaan kiviterästä, khiivikestä ja liikkeestä.
-  </p>
-
-  <div class="section-divider"></div>
-
-  <p>
-    Nyt lähdemme seuraamaan tätä linjaa pohjoiseen. Mutta ensin siirrymme <strong>Anatolian savitaloihin</strong>. Missä vaeltaminen loppuu, missä viljely alkaa. Missä neoliittisen maanviljelijän markkerit liittyvät linjaan.
-  </p>
-
-  <p style="font-style: italic; text-align: center; margin-top: 2em; font-size: 11pt;">
-    <strong>Franco-Cantabrian refugio → Anatolian neoliitti.<br/>
-    Ketju jatkuu.</strong>
-  </p>
-
-  <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
-</section>
-
-  
-
-
-<!-- ================= OSA II – SUURI VAELLUS ================= -->
-<section class="page">
-  <div class="part-header">
-    <span class="part-number">🜂 OSA II</span>
-    <h2>Suuri vaellus</h2>
-  </div>
-
-  <h1>Savitalojen ihmiset –<br/> 
-    Anatolian hiljainen<br/> 
-    vallankumous</h1>
-
-  <div class="image-hero">
-    <img src="images/anatolia-neolithic.jpg" alt="Neoliittinen Anatolia" />
-      <div class="caption">Göbekli Tepe</div>
+    <div class="part-header">
+      <span class="part-number">🜂 OSA I</span>
+      <h2>Jääkauden selviytyjät</h2>
     </div>
 
-  <p class="dropcap">
-    Kuvittele aamu, joka muutti ihmiskunnan ikuisesti. Aurinko nousee hitaasti Taş Tepen kukkuloiden takaa, värjäten Anatolian tasangon vaaleanpunaiseksi. Varjot venyvät pitkin savisia pyöräteitä, jotka johtavat pyöreisiin savitaloihin. Ilmassa leijuu juuri leikattujen einkorn- ja emmer-vehnän varret, vastajauhetun viljan makea tuoksu, lampaiden lämmin haju ja nuotion savu. Ei tuulta. Ei vaellusta. Vain vuodenkierto. Tämä ei ole mikään romanttinen aamunkoitto, tämä on se hetki, jolloin ihmiskunta teki ensimmäisen suuren irtiottonsa liikkeestä luonnossa.
-  </p>
+    <h1>Franco‑Cantabrian<br>refugio</h1>
 
-  <p>
-    Me lakkaamme vaeltamasta. Me jäämme. Me viljelemme. Me rakennamme koteja, joihin kuolleetkin saavat jäädä. Pyhät paikat rakennettiin megaliittisiksi kivikehiksi
-  </p>
+    <div class="image-hero">
+      <div class="image-placeholder">[ <img src="images/altamira-bison.jpg" alt="Altamiran biisoni Franco-Cantabrian refugiosta" /> ]</div>
+      <div class="caption">Altamiran luolamaalaus: Biisoni (~15 000 vuotta vanha)</div>
+    </div>
 
-  <p>
-    Tämä on Pre-Pottery Neolithic B (PPNB) -aika, noin 8800–7000 eaa. Paikat kuten Barcın Höyük, Aşıklı Höyük, Çatalhöyük ja Boncuklu eivät ole pelkkiä arkeologisia nimiä kartalla. Ne ovat maailman ensimmäisiä kyliä – paikkoja, joissa ihmiskunta lakkaa vaeltamasta ja alkaa rakentaa. [Kilinc 2016]
-  </p>
+    <p class="dropcap">Noin 26 500–19 000 vuotta sitten maailma oli erilainen peto. Jäätikkö, tuo hidas, armoton jättiläinen, oli niellyt Skandinavian, Britannian ja Keski-Euroopan. Tuuli ulvoi tundran yli kuin susilauma, maa oli paljas ja kivinen, ilman viljapeltoja tai puiden suojaa. Selviytyminen ei ollut valinta; se oli taistelu jokaisen henkäyksen edestä. Mutta ihmiset eivät kadonneet. He vetäytyivät, etelään – sinne, missä maa vielä hengitti.</p>
 
-  <p>
-    Barcın Höyük Kappadokiassa: 200 taloa tiiviisti vierekkäin, pyöreitä tai soikeita, halkaisijaltaan 3–5 metriä. Taloista ei johda katuja vaan ne avautuvat katoille, joihin noustaan tikkailla. Seinät koristeltu puna- ja valkoisilla geometrisilla kuvioilla, joskus ihmis- tai eläinhahmoilla. Lattiat tasoitettu savella ja siroteltu punamullalla. Pinta on kiillotettu. Mutta lattian alla: siellä ovat kuolleet. [Baird 2012]
-  </p>
+    <p>Yksi turvapaikoista oli Franco-Cantabrian refugio, Iberian niemimaan luoteisosassa ja Lounais‑Ranskassa. Pyreneiden rinteillä ja Kantabrian vuorten suojissa pienet ihmisryhmät pitivät pintansa. Täällä myös H1‑äitilinjan varhaiset kantajat selvisivät jääkauden ankarimmista vuosituhansista – ei kuninkaina, vaan selviytyjinä.</p>
 
-  <p>
-    Çatalhöyük on kuuluisin: 13 kerrosta asutusta, 8000 ihmistä huipussaan. Taloissa härkäpää- ja Venuskultti artefakteja, leopardi- ja tiibelikoristeita, tanssivia naisia esittäviä reliefikuvia. Viljavarastot pullottavat, karja laiduntaa. Mutta hautaustapa on ainutlaatuinen: kun joku kuolee, lattia avataan, ruumis asetetaan sisään, peitetään savella. Lapset leikkivät yläpuolella, naiset jauhoivat viljaa ja miehet tekivät akareitaan, tulen liekit tanssivat – ja esi-isät vartioivat sisällä. [Hodder 2006]
-  </p>
+    <p>He elivät liikkeessä: seurasivat riistaa, kalastivat jokia ja tunsivat vuodenkierron tarkasti. He eivät voineet tietää, että heidän soluissaan kulkeva mitokondrio‑DNA tulisi joskus kertomaan heidän tarinansa.</p>
 
-  <div class="footer"></div>
-</section>
+    <p>Kun ilmasto alkoi lämmetä noin 19 000–14 700 vuotta sitten, maailma avautui hitaasti uudelleen. Jää vetäytyi.</p>
 
-<section class="page">
-
-  <p class="dropcap">
-    Yhdessä näistä taloista nainen herää aamulla. Hän on nimeltään unohdettu, mutta hänen solunsa muistuttavat hänen olevan sinun kaukaisin esiäitisi. Hän nousee tikkaista katolle, katselee auringon nousua. Sitten hän laskeutuu takaisin, ottaa saviastian ja kävelee lähimmälle purolle vettä hakemaan. Palatessaan hän sytyttää nuotion, jauhaa eilisen sadon käsikivellä, sekoittaa taikinan ja paistaa leipää. Lampaiden määkiminen kaikuu taustalla. Lapset heräävät, ja äiti jakaa heille leipää.
-  </p>
-
-  <p>
-    Tänä samana aamuna hänen mitokondrio-DNA:ssaan tapahtuu T16189C-muutos. Pieni nukleotidimuutos position 16189:ssa. H1-haploryhmän sisäinen merkki. Hän ei tunne kipua, ei huomaa mitään. Hän jatkaa päiväänsä: kylvää vehnänsiementä multaan, tarkistaa lampaat, opettaa tyttärilleen, miten tunnistaa kypsä ohra. Iltaan mennessä hän avasi lattian. Laski äitinsä ruumiin lattian alle ja peitti hänet savella. Ei hautakiveä. Ei muistomerkkiä. Vain hiljainen tieto, että hän on täällä. Hän vartioi meitä sisältä.
-  </p>
-
-  <p>
-    Tämä nainen tai hänen tyttärensä, ei jäänyt paikalleen. Kun neoliittiset yhteisöt alkoivat laajentua, kun väkiluku kasvoi ja maa alkoi vaatia lisää tilaa, hän lähti. Tai ehkä hänen tyttärensä lähti. Siemenet taskussa. Karja perässä. Tieto viljan kasvattamisesta ja lampaan hoidosta sydämessä. Mukanaan virtaus soluissa.
-  </p>
-
-  <p>
-    Veri, joka kantoi tätä pientä muutosta mukanaan kuin salaisuutta, jota ei vielä kukaan osannut nimetä. Tuo veri lähti länteen. Se kulki jokea pitkin, vuorten yli, metsien halki – tuhansia kilometrejä, sukupolvien ajan. Se ei tiennyt, että se tulisi kulkemaan halki vuosituhansien – aina sinun sydämen lyönteihin saakka.
-  </p>
-
-  <div class="fact-box">
-    <div class="fact-title">Levittäytyminen – siemenet ja geenit kolmea reittiä</div>
-    <ul>
-      <li><strong>1. Balkanin reitti (pääreitti):</strong> Marmarameren yli Thrakiin, sieltä Tonavan laaksoon. Starčevo–Körös-kulttuuri leviää Keski-Eurooppaan (Linearbandkeramik, LBK). Täällä H1 sekoittuu paikallisiin mesoliittisiin G2a- ja I2-miesten kanssa.</li>
-      <li><strong>2. Atlantin fasadi:</strong> Egeanmeren saarten kautta Kreikkaan, sieltä Sisiliaan, Sardiniaan, lopulta Iberian niemimaalle ja Irlantiin. Täällä syntyy megaliittikulttuurit.</li>
-      <li><strong>3. Keskimmäinen Välimeri:</strong> Italiaan ja Ranskan Rivieralle.</li>
-    </ul>
-  </div>
-
-  <p>
-    H1-T16189C!:n kaltaiset linjat ovat vahvasti edustettuina Early European Farmers (EEF) -väestössä. Niiden isotooppisuhteet (strontium, hiili, typpi) vahvistavat: nämä naiset söivät C3-kasveja (vehnä, ohra) ja karjaa – anatolialaista ruokavaliota. [Mathieson 2015]
-  </p>
-
-  <p>
-    Kun refugion H1-kantajat (Franco-Cantabria) kohtaavat nämä viljelijät Keski-Euroopassa noin 7000 eaa., syntyy hybridi: ~75% EEF + 25% mesoliittinen. [Allentoft 2015] T16189C saattaa syntyä tässä sekoittumisessa – tai jo Anatoliassa – mutta sen leviäminen länteen on neoliittisen laajentumisen mukana.
-  </p>
-
-  <div class="section-divider"></div>
-
-  <p style="text-align:center; font-style:italic;">
-    Nyt meillä on ensimmäinen löytö. Ensimmäinen kaivaus on tehty. Mutta matka on vasta alkanut. Ota suurennuslasi. Seuraava kulttuurikerros odottaa.
-  </p>
-
-  <p style="text-align:center; font-style:italic;">
-    Seuraava kappale on Irlanti ja sieltä löydetty megaliittien salaisuus.
-  </p>
-
-  <div class="footer"></div>
-</section>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Franco-Cantabrian refugio</span>
+      </div>
+    </footer>
+  </section>
 
 
+  <!-- =========================================================
+       FRANCO-CANTABRIAN REFUGIO — sivu 2 (sisarlinjat)
+  ========================================================== -->
+  <section class="page" id="refugio-2">
 
-  <!-- ================= POULNABRONE ================= -->
-  <section class="page">
+    <h1>Franco‑Cantabrian<br>refugio</h1>
+
+    <div class="fact-box">
+      <div class="fact-title">Kaksi sisarta – linjan ero</div>
+      <ul>
+        <li><strong>Pohjoinen sisar:</strong> Seuraa riistaa → Keski-/Pohjois-Eurooppa → Poulnabrone H1-T16189C!</li>
+        <li><strong>Eteläinen sisar:</strong> Anti-Atlas → Maghreb → Amazigh-berberit</li>
+        <li><strong>Yhteinen juuri:</strong> H1-perimä Franco-Cantabrian refugiosta ~19 000 v.t.</li>
+      </ul>
+    </div>
+
+    <p class="dropcap">Kuvittele kaksi sisarta, seisomassa samassa laaksossa lähes 10 000 vuotta sitten, kädet täynnä piikiven lastuja, silmät täynnä taivasta. Heidän soluissaan virtaa sama mitokondrio-DNA, sama H1-T16189C!-linja, joka juontaa juurensa tähän refugioon. He eivät tiedä genetiikasta; he tietävät vain nälästä, tulesta ja perheestä.</p>
+
+    <p>Toinen jää etelään, Anti-Atlasin kivisiin rinteisiin. Hänen jälkeläisensä sopeutuvat: he metsästävät gaselleja keihäillä, keräävät villiä viljaa kallioiden koloista, vaeltavat vuodenaikojen perässä. Myöhemmin heitä kutsutaan Iberomaurusialaisiksi tai Capsian-kansaksi, mutta heille nimet eivät merkitse mitään. He tuntevat maan pulssin, veden niukan lahjan. Heidän linjansa leviää Maghrebissa, sekoittuen Amazighien esi-isiin – berbereihin, jotka kantavat samaa geneettistä siltaa yli Gibraltarin.</p>
+
+    <p>Toinen sisar lähtee pohjoiseen. Riista kutsuu: hevoslaumat laukkaavat, villipeurat ja porot juoksevat, biisonit jyrisevät. Hän seuraa niitä rannikkoa pitkin, jokivartta, missä jäätikkö hitaasti perääntyy. Sen reunoille syntyy laidunmaita, missä oli jäätä, on nyt ruohoa. Tämä ei ole sankarillinen marssi; se on vaisto, selviytymisen virta. Hänen jälkeläisensä asuttavat Keski- ja Pohjois-Euroopan uudelleen, levittäen mukanaan H1-linjaa, joka on kietoutuneena U5 ja V haploryhmään.</p>
+
+    <div class="image-full">
+      <div class="image-placeholder">[ Lascaux'n hevonen — kuva ladataan paikallisesta kansiosta ]</div>
+      <div class="caption">Lascaux'n luolamaalaus: Hevonen (~17 000 vuotta vanha)</div>
+    </div>
+
+    <p>Luolat olivat heidän kotinsa – ei pelkkiä suojia, vaan maailman keskipisteitä. Kuvittele savuinen tuli, joka lepattaa kallion seinää vasten. Liha kuivuu savussa, tarinat virtaavat suusta toiseen kuin joki. Seinille he maalasivat eläimiä: biisonit, hevoset, peurat – ei koristeeksi, vaan kutsuksi, loitsuksi, joka varmisti saaliin.</p>
+
+    <p>Työkalut syntyivät käsissä: piikivestä terävät lastut, kaapimet, keihäänkärjet; luusta neuloja, koukkuja. Jokainen esine oli elämän jatke, ilman metallin hohtoa. He söivät, minkä maa antoi, ja liikkuivat, kun maa ei enää antanut.</p>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Franco-Cantabrian refugio</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- =========================================================
+       FRANCO-CANTABRIAN REFUGIO — sivu 3 (hautaaminen + siirtymä)
+  ========================================================== -->
+  <section class="page" id="refugio-3">
+
+    <h1>Franco‑Cantabrian<br>refugio</h1>
+
+    <p>Entä kuolema? Se ei ollut loppu, vaan osa tarinaa. Vainajat asetettiin maahan huolella, punamultaa ruumiin päälle – ehkä veri, ehkä maa, ehkä side elävien ja henkien välillä. Simpukankuoria, helmiä hautojen yhteydessä – muistutuksena yksilöllisyydestä, yhteydestä mereen. Kun nainen haudattiin refugion luolaan, hänen H1-linjansa ei päättynyt. Hänen tyttärensä eli, ja tyttären tytär kantoi perintöä eteenpäin, kietoutuen pohjoisen ja etelän ketjuun.</p>
+
+    <div class="fact-box">
+      <div class="fact-title">Lähteet — Franco-Cantabrian refugio</div>
+      <ul>
+        <li>Achilli et al. 2004. <em>Am. J. Hum. Genet.</em> 75:910–918 (H1 refugio-perusta)</li>
+        <li>Pereira et al. 2005. <em>J. Hum. Genet.</em> 50:451–459 (Iberian jälleenasutus)</li>
+        <li>Fregel et al. 2018. <em>PNAS</em> 115:6774–6779 (North Africa -silta)</li>
+        <li>Torroni et al. 1998. <em>Am. J. Hum. Genet.</em> 62:1137–1152 (H/V refugio-laajentuma)</li>
+      </ul>
+    </div>
+
+    <p>Pohjoiseen lähtenyt astui raakaan mutta avautuvaan maailmaan. Hänen jälkeläisensä kulkivat aina Irlannin Poulnabroneen asti, missä H1-T16189C! kukoisti neoliittisissa kammioissa.</p>
+
+    <p>Etelään jäänyt rakensi elämäänsä Maghrebissa; geneettinen silta Iberiaan ei katkennut. Sisarlinjat erosivat, mutta eivät unohtaneet yhteistä äitiä. Haploryhmä ei ole kansa, ei kieli – se on biologinen ketju, joka kertoo selviytymisestä. Ei kruunuista tai valtakunnista, vaan kiviterästä, liikkeestä ja muistista.</p>
+
+    <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
+
+    <p>Nyt lähdemme seuraamaan tätä linjaa pohjoiseen. Mutta ensin siirrymme <strong>Anatolian savitaloihin</strong>. Missä vaeltaminen loppuu, missä viljely alkaa. Missä neoliittisen maanviljelijän markkerit liittyvät linjaan.</p>
+
+    <p class="center italic"><strong>Franco-Cantabrian refugio → Anatolian neoliitti.<br>Ketju jatkuu.</strong></p>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Franco-Cantabrian refugio</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- =========================================================
+       OSA II — ANATOLIA (sivu 1)
+  ========================================================== -->
+  <section class="page" id="anatolia-1">
+
     <div class="part-header">
       <span class="part-number">🜂 OSA II</span>
       <h2>Suuri vaellus</h2>
     </div>
 
-    <h1>Poulnabrone –<br/> 
-      megaliittinen huippu</h1>
+    <h1>Savitalojen ihmiset –<br>Anatolian hiljainen<br>vallankumous</h1>
 
     <div class="image-hero">
-      <img src="images/poulnabrone-dolmen..jpg" alt="Poulnabrone dolmen Irlannissa" />
-      <div class="caption">Poulnabronen dolmen Burrenissa, Irlannissa</div>
+      <div class="image-placeholder">[ Göbekli Tepe — kuva ladataan paikallisesta kansiosta ]</div>
+      <div class="caption">Göbekli Tepe – neoliittinen pyhäkkö Anatoliassa</div>
     </div>
 
-    <p class="dropcap">
-      Nyt me olemme jo kaukana Anatolian lämpimästä aamusta. Ilma on muuttunut. Se on kylmempi, kosteampi, suolaisempi. Tuuli puhaltaa suoraan Atlantin yli ja kantaa mukanaan meren tuoksua ja kalkkikiven pölyä. Olemme Irlannin länsirannikolla, Burrenin karulla tasangolla – paikassa, jossa maa tuntuu olevan puoliksi meri, puoliksi taivas.
-    </p>
+    <p class="dropcap">Kuvittele aamu, joka muutti ihmiskunnan ikuisesti. Aurinko nousee hitaasti Taş Tepen kukkuloiden takaa, värjäten Anatolian tasangon vaaleanpunaiseksi. Varjot venyvät pitkin savisia pyöräteitä, jotka johtavat pyöreisiin savitaloihin. Ilmassa leijuu juuri leikattujen einkorn- ja emmer-vehnän varret, vastajauhetun viljan makea tuoksu, lampaiden lämmin haju ja nuotion savu. Ei tuulta. Ei vaellusta. Vain vuodenkierto. Tämä ei ole romanttinen aamunkoitto – tämä on se hetki, jolloin ihmiskunta teki ensimmäisen suuren irtioton liikkeestä paikoilleen.</p>
 
-    <p>
-      Ja siellä, keskellä tuulta ja karuja kallioita, seisoo Poulnabrone. Kolme metriä korkea dolmen. Yksi valtava kivilaatta lepää tasapainossa kahden pystykiven päällä, kuin loppulliseen tilaansa ikuistettuna. Noin 50 tonnia kiveä, joka on pysynyt paikallaan lähes 6000 vuotta – vanhempi kuin Egyptin pyramidit.
-    </p>
+    <p>Me lakkaamme vaeltamasta. Me jäämme. Me viljelemme. Me rakennamme koteja, joihin kuolleetkin saavat jäädä. Pyhät paikat rakennettiin megaliittisiksi kivikehiksi.</p>
 
-    <p>
-      Sen akseli on linjattu talvipäivänseisauksen suuntaan, hetkeen jolloin aurinko tunkeutuu kammioon kuin lupaus valosta pimeyden jälkeen. Tämä ei ole hauta pelkässä arkipäiväisessä merkityksessä. Se on portti. Portti maailmaan, jossa esi‑isät eivät olleet poissa, vaan läsnä kivien, taivaan ja maan rytmissä.
-    </p>
+    <p>Tämä on Pre-Pottery Neolithic B (PPNB) -aika, noin 8800–7000 eaa. Paikat kuten Barcın Höyük, Aşıklı Höyük, Çatalhöyük ja Boncuklu eivät ole pelkkiä arkeologisia nimiä kartalla. Ne ovat maailman ensimmäisiä kyliä – paikkoja, joissa ihmiskunta lakkaa vaeltamasta ja alkaa rakentaa. <em>[Kilinc 2016]</em></p>
 
-    <p>
-      Poulnabronen kammiossa lepää 33 ihmistä: 11 aikuista ja 22 lasta. Luut on aseteltu kerroksittain, rituaalisesti. Pääkalloja on siirretty, vainajia järjestetty uudelleen sukupolvien aikana. Ei kultaa. Ei aseita. Ei pröystäilyä. Vain työkaluja: kiillotettu tuffikivikirves, piikivisiä nuolenkärkiä, luuriipuksia, kvartsikiteitä ja keramiikan palasia.
-    </p>
+    <p>Barcın Höyük Kappadokiassa: 200 taloa tiiviisti vierekkäin, pyöreitä tai soikeita, halkaisijaltaan 3–5 metriä. Talot avautuvat katoille, joihin noustaan tikkailla. Seinät koristeltu puna- ja valkoisilla geometrisilla kuvioilla. Lattiat tasoitettu savella ja siroteltu punamullalla. Kiillotettu pinta. Mutta lattian alla: siellä ovat kuolleet. <em>[Baird 2012]</em></p>
 
-    <p>
-      Yhdestä heistä – naisesta, näyte PN05 (ajoitettu noin 3941–3661 eaa.) – löytyi täsmälleen sama geneettinen merkki, joka elää sinun soluissasi: <strong>H1‑T16189C!</strong> Sinun veresi.
-    </p>
+    <p>Çatalhöyük on kuuluisin: 13 kerrosta asutusta, 8000 ihmistä huipussaan. Härkäpää- ja Venus-kultti, leopardi- ja tiibelikoristeet. Viljavarastot pullottavat, karja laiduntaa. Hautaustapa on ainutlaatuinen: kun joku kuolee, lattia avataan, ruumis asetetaan sisään, peitetään savella. Lapset leikkivät yläpuolella – ja esi-isät vartioivat sisällä. <em>[Hodder 2006]</em></p>
 
-    <p>
-      Hän tiesi, milloin aurinko osuu kammioon. Hän tiesi, ettei muistaminen lopu kuolemaan. Kun uusia vainajia tuotiin, vanhat luut järjestettiin uudelleen. Muistaminen oli jatkuva teko. He eivät haudanneet unohtaakseen – he rakensivat ikuisuutta.
-    </p>
-
-    <p>
-      Tämä nainen – tai joku, joka kantoi hänen vertaan – ei jäänyt paikalleen ikuisesti. Linja jatkui. Se kulki eteenpäin kohti uusia horisontteja ja uusia kivisiä tarinoita. Se liikkui kohti mannerta, kohti Puolan tasankoja ja goottien vaellusten aikaa.
-    </p>
-
-    <div class="section-divider"></div>
-
-    <p>
-      Mutta ennen kuin lähdemme, pysähdy hetkeksi tähän dolmeniin. Katso ylös. Tunne tuuli. Kuule Atlantin aaltojen lyönnit kallioihin. Tämä on paikka, jossa esiäitisi jätti jälkensä taivaalle – ja se jälki kantautui sinuun.
-    </p>
-
-    <p>
-      Ota taskulamppu. Seuraava kerros odottaa.
-    </p>
-
-    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Anatolia – neoliittinen vallankumous</span>
+      </div>
+    </footer>
   </section>
 
 
+  <!-- =========================================================
+       ANATOLIA — sivu 2 (siirtymä länteen)
+  ========================================================== -->
+  <section class="page" id="anatolia-2">
 
-  <!-- ================= MASŁOMĘCZ ================= -->
-  <section class="page">
+    <p class="dropcap">Yhdessä näistä taloista nainen herää aamulla. Hän on nimeltään unohdettu, mutta hänen solunsa muistuttavat hänen olevan sinun kaukaisin esiäitisi. Hän nousee tikkaista katolle, katselee auringon nousua. Sitten hän laskeutuu takaisin, ottaa saviastian ja kävelee lähimmälle purolle vettä hakemaan. Palatessaan hän sytyttää nuotion, jauhaa eilisen sadon käsikivellä, sekoittaa taikinan ja paistaa leipää. Lampaiden määkiminen kaikuu taustalla. Lapset heräävät, ja äiti jakaa heille leipää.</p>
+
+    <p>Tänä samana aamuna hänen mitokondrio-DNA:ssaan tapahtuu T16189C-muutos. Pieni nukleotidimuutos position 16189:ssa. H1-haploryhmän sisäinen merkki. Hän ei tunne kipua, ei huomaa mitään. Hän jatkaa päiväänsä: kylvää vehnänsiementä multaan, tarkistaa lampaat, opettaa tyttärilleen, miten tunnistaa kypsä ohra. Iltaan mennessä hän avasi lattian. Laski äitinsä ruumiin sinne ja peitti hänet savella. Ei hautakiveä. Ei muistomerkkiä. Vain hiljainen tieto, että hän on täällä. Hän vartioi meitä sisältä.</p>
+
+    <p>Tämä nainen – tai hänen tyttärensä – ei jäänyt paikalleen. Kun neoliittiset yhteisöt alkoivat laajentua, kun väkiluku kasvoi ja maa alkoi vaatia lisää tilaa, hän lähti. Siemenet taskussa. Karja perässä. Tieto viljan kasvattamisesta ja lampaan hoidosta sydämessä.</p>
+
+    <p>Veri, joka kantoi tätä pientä muutosta mukanaan kuin salaisuutta, jota ei vielä kukaan osannut nimetä. Tuo veri lähti länteen – tuhansia kilometrejä, sukupolvien ajan. Aina sinun sydämesi lyönteihin saakka.</p>
+
+    <div class="fact-box">
+      <div class="fact-title">Levittäytyminen – siemenet ja geenit kolmea reittiä</div>
+      <ul>
+        <li><strong>1. Balkanin reitti (pääreitti):</strong> Marmarameren yli Thrakiin, sieltä Tonavan laaksoon. Starčevo–Körös-kulttuuri leviää Keski-Eurooppaan (Linearbandkeramik, LBK). Täällä H1 sekoittuu paikallisiin mesoliittisiin G2a- ja I2-miesten kanssa.</li>
+        <li><strong>2. Atlantin fasadi:</strong> Egeanmeren saarten kautta Kreikkaan, sieltä Sisiliaan, Sardiniaan, lopulta Iberian niemimaalle ja Irlantiin. Täällä syntyy megaliittikulttuurit.</li>
+        <li><strong>3. Välimeri:</strong> Italiaan ja Ranskan Rivieralle.</li>
+      </ul>
+    </div>
+
+    <p>H1-T16189C!:n kaltaiset linjat ovat vahvasti edustettuina Early European Farmers (EEF) -väestössä. Niiden isotooppisuhteet (strontium, hiili, typpi) vahvistavat: nämä naiset söivät C3-kasveja (vehnä, ohra) ja karjaa – anatolialaista ruokavaliota. <em>[Mathieson 2015]</em></p>
+
+    <p>Kun refugion H1-kantajat (Franco-Cantabria) kohtaavat nämä viljelijät Keski-Euroopassa noin 7000 eaa., syntyy hybridi: ~75% EEF + 25% mesoliittinen. <em>[Allentoft 2015]</em> T16189C saattaa syntyä tässä sekoittumisessa – tai jo Anatoliassa – mutta sen leviäminen länteen on neoliittisen laajentumisen mukana.</p>
+
+    <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
+
+    <p class="center italic">Nyt meillä on ensimmäinen löytö. Ensimmäinen kaivaus on tehty. Mutta matka on vasta alkanut. Seuraava kulttuurikerros odottaa.</p>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Anatolia – siirtymä länteen</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- =========================================================
+       POULNABRONE
+  ========================================================== -->
+  <section class="page" id="poulnabrone">
+
+    <div class="part-header">
+      <span class="part-number">🜂 OSA II</span>
+      <h2>Suuri vaellus</h2>
+    </div>
+
+    <h1>Poulnabrone –<br>megaliittinen huippu</h1>
+
+    <div class="image-hero">
+      <div class="image-placeholder">[ Poulnabronen dolmen — kuva ladataan paikallisesta kansiosta ]</div>
+      <div class="caption">Poulnabronen dolmen Burrenissa, Irlannissa (~3941–3661 eaa.)</div>
+    </div>
+
+    <p class="dropcap">Nyt me olemme jo kaukana Anatolian lämpimästä aamusta. Ilma on muuttunut. Se on kylmempi, kosteampi, suolaisempi. Tuuli puhaltaa suoraan Atlantin yli ja kantaa mukanaan meren tuoksua ja kalkkikiven pölyä. Olemme Irlannin länsirannikolla, Burrenin karulla tasangolla – paikassa, jossa maa tuntuu olevan puoliksi meri, puoliksi taivas.</p>
+
+    <p>Ja siellä, keskellä tuulta ja karuja kallioita, seisoo Poulnabrone. Kolme metriä korkea dolmen. Yksi valtava kivilaatta lepää tasapainossa kahden pystykiven päällä, kuin loppulliseen tilaansa ikuistettuna. Noin 50 tonnia kiveä, joka on pysynyt paikallaan lähes 6000 vuotta – vanhempi kuin Egyptin pyramidit.</p>
+
+    <p>Sen akseli on linjattu talvipäivänseisauksen suuntaan, hetkeen jolloin aurinko tunkeutuu kammioon kuin lupaus valosta pimeyden jälkeen. Tämä ei ole hauta pelkässä arkipäiväisessä merkityksessä. Se on portti. Portti maailmaan, jossa esi‑isät eivät olleet poissa, vaan läsnä kivien, taivaan ja maan rytmissä.</p>
+
+    <p>Poulnabronen kammiossa lepää 33 ihmistä: 11 aikuista ja 22 lasta. Luut on aseteltu kerroksittain, rituaalisesti. Pääkalloja on siirretty, vainajia järjestetty uudelleen sukupolvien aikana. Ei kultaa. Ei aseita. Vain työkaluja: kiillotettu tuffikivikirves, piikivisiä nuolenkärkiä, luuriipuksia, kvartsikiteitä ja keramiikan palasia.</p>
+
+    <p>Yhdestä heistä – naisesta, näyte PN05 (ajoitettu noin 3941–3661 eaa.) – löytyi täsmälleen sama geneettinen merkki, joka elää sinun soluissasi: <strong>H1‑T16189C!</strong> Sinun veresi.</p>
+
+    <p>Hän tiesi, milloin aurinko osuu kammioon. Hän tiesi, ettei muistaminen lopu kuolemaan. Kun uusia vainajia tuotiin, vanhat luut järjestettiin uudelleen. Muistaminen oli jatkuva teko. He eivät haudanneet unohtaakseen – he rakensivat ikuisuutta.</p>
+
+    <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
+
+    <p>Mutta ennen kuin lähdemme, pysähdy hetkeksi tähän dolmeniin. Katso ylös. Tunne tuuli. Kuule Atlantin aaltojen lyönnit kallioihin. Tämä on paikka, jossa esiäitisi jätti jälkensä taivaalle – ja se jälki kantautui sinuun.</p>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Poulnabrone</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- =========================================================
+       MASŁOMĘCZ
+  ========================================================== -->
+  <section class="page" id="maslomecz">
+
     <div class="part-header">
       <span class="part-number">🜂 OSA II</span>
       <h2>Vaelluksen aika</h2>
     </div>
 
-    <h1>Masłomęcz – vaellusvaihe</h1>
+    <h1>Masłomęcz –<br>vaellusvaihe</h1>
 
     <div class="image-hero">
-      <img src="images/maslomecz-wielbark-2.jpg" alt="Masłomęcz Wielbark kulttuuria" />
+      <div class="image-placeholder">[ Wielbark-kulttuurin hautakenttä — kuva ladataan paikallisesta kansiosta ]</div>
       <div class="caption">Wielbark‑kulttuurin hautakenttä Masłomęczin alueella, Puolassa</div>
     </div>
 
-    <p class="dropcap">
-      Nyt ilma muuttuu jälleen. Se ei ole enää merellinen, ei enää savinen eikä kivinen. Se on raskas — täynnä savua, hevosia, metallia ja ihmisten hiljaista jännitettä. Olemme liikkeessä. Eurooppa ei ole enää staattinen kartta, vaan elävä organismi, joka sykkii vaelluksen rytmissä.
-    </p>
+    <p class="dropcap">Nyt ilma muuttuu jälleen. Se ei ole enää merellinen, ei enää savinen eikä kivinen. Se on raskas — täynnä savua, hevosia, metallia ja ihmisten hiljaista jännitettä. Olemme liikkeessä. Eurooppa ei ole enää staattinen kartta, vaan elävä organismi, joka sykkii vaelluksen rytmissä.</p>
 
-    <p>
-      Noin 1750 vuotta sitten Rooman valtakunta natisee saumoistaan. Rajat vuotavat. Heimot liikkuvat. Gootit ja monet muut germaaniset ryhmät purjehtivat, ratsastavat ja kävelevät kohti etelää ja itää — miekka toisessa kädessä ja toivo toisessa.
-    </p>
+    <p>Noin 1750 vuotta sitten Rooman valtakunta natisee saumoistaan. Rajat vuotavat. Heimot liikkuvat. Gootit ja monet muut germaaniset ryhmät purjehtivat, ratsastavat ja kävelevät kohti etelää ja itää — miekka toisessa kädessä ja toivo toisessa.</p>
 
-    <p>
-      Puolan itälaidalla, Masłomęczin alueella, avautuu maisema, joka tuntuu yhtä aikaa tutulta ja vieraalta: laajat niityt, matalat kummut — ja kivirenkaat. Pyhät kivikehät. Sama kivinen kieli, joka puhui jo Atlantin rannalla. Muistamisen geometria ei ole kadonnut, se on vain liikkunut.
-    </p>
+    <p>Puolan itälaidalla, Masłomęczin alueella, avautuu maisema, joka tuntuu yhtä aikaa tutulta ja vieraalta: laajat niityt, matalat kummut — ja kivirenkaat. Pyhät kivikehät. Sama kivinen kieli, joka puhui jo Atlantin rannalla. Muistamisen geometria ei ole kadonnut, se on vain liikkunut.</p>
 
-    <p>
-      Tämä on Wielbark‑kulttuurin sydän, goottien vaellusvaihe 2.–4. vuosisadalla jaa. Yli 200 hautaa lepää maan alla. Kun arkeologit avaavat niitä, menneisyys puhuu hiljaisella mutta johdonmukaisella äänellä.
-    </p>
+    <p>Tämä on Wielbark‑kulttuurin sydän, goottien vaellusvaihe 2.–4. vuosisadalla jaa. Yli 200 hautaa lepää maan alla. <strong>Aseettomuus haudoissa.</strong> Wielbark‑kulttuurin hautauksissa aseet puuttuvat järjestelmällisesti. Tämä ei ole sattumaa. Tämä on kulttuurinen valinta — muistamisen tapa, joka korostaa sukua, liikettä ja yhteisöä enemmän kuin sotilaallista identiteettiä.</p>
 
-    <p>
-      Solkia, joissa näkyy pohjoinen muotokieli. Roomalaisia denareita, jotka ovat matkustaneet kaukaa. Vyönsolkia, arjen esineitä, liikkeessä eläneiden ihmisten varusteita. Mutta yksi asia erottuu — sama hiljainen perinne, jonka näimme jo megaliittien maailmassa.
-    </p>
+    <p>Yhdessä näistä haudoista — hauta numero 99 — lepää nainen. Näyte PCA0099. Hänen mitokondrio‑DNA:ssaan näkyy sama hiljainen merkki: <strong>H1‑T16189C!</strong></p>
 
-    <p>
-      <strong>Aseettomuus haudoissa.</strong> Wielbark‑kulttuurin hautauksissa aseet puuttuvat järjestelmällisesti. Ei miekkoja, ei kilpiä, ei soturien näyttävää symboliikkaa. Tämä ei ole sattumaa. Tämä on kulttuurinen valinta — muistamisen tapa, joka korostaa sukua, liikettä ja yhteisöä enemmän kuin sotilaallista identiteettiä.
-    </p>
+    <p>Sinun veresi. Hän eli rajojen maailmassa. Heimot vaihtoivat paikkoja. Identiteetti ei ollut maa — se oli liike. Vanhat jumalat kulkivat mukana uusille asuinsijoille, aivan kuten kivikehien perinne ja aseettomien hautojen hiljainen viesti.</p>
 
-    <p>
-      Yhdessä näistä haudoista — hauta numero 99 — lepää nainen. Näyte PCA0099. Hänen mitokondrio‑DNA:ssaan näkyy sama hiljainen merkki: <strong>H1‑T16189C!</strong>
-    </p>
+    <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
 
-    <p>
-      Sinun veresi.
-    </p>
+    <p>Nyt meillä on kolmas löytö. Mutta ketju ei lopu tähän. Seuraava kaivaus vie meidät Itämerelle — Gotlantiin, viikinkien satamaan, hopean ja purjeiden maailmaan.</p>
 
-    <p>
-      Hän ei ollut kuningatar. Hän ei ollut soturi. Hän oli matkalla elävä ihminen — ehkä perheen kokoaja, ehkä parantaja, ehkä tarinoiden muistaja. Aamuisin hän saattoi kiristää hopeasoljen vyölleen. Iltaisin hän saattoi sekoittaa yrttejä saviastiassa nuotion äärellä.
-    </p>
-
-    <p>
-      Hän eli rajojen maailmassa. Heimot vaihtoivat paikkoja. Identiteetti ei ollut maa — se oli liike. Vanhat jumalat kulkivat mukana uusille asuinsijoille, aivan kuten kivikehien perinne ja aseettomien hautojen hiljainen viesti.
-    </p>
-
-    <p>
-      Häntä ei haudattu piiloon. Hänen hautansa oli merkki kulkijoille: täällä me kävimme. Veri jatkaa.
-    </p>
-
-    <div class="section-divider"></div>
-
-    <p>
-      Nyt meillä on kolmas löytö. Kolmas kerros on avattu. Mutta ketju ei lopu tähän. Seuraava kaivaus vie meidät Itämerelle — Gotlantiin, viikinkien satamaan, hopean ja purjeiden maailmaan.
-    </p>
-
-    <p>
-      Ota aurinkokivi. Tuuli nousee. Horisontti odottaa.
-    </p>
-
-    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Masłomęcz</span>
+      </div>
+    </footer>
   </section>
 
 
+  <!-- =========================================================
+       GOTLANTI
+  ========================================================== -->
+  <section class="page" id="gotlanti">
 
-  <!-- ================= GOTLANTI ================= -->
-  <section class="page">
     <div class="part-header">
       <span class="part-number">🜂 OSA II</span>
       <h2>Meren solmukohta</h2>
     </div>
 
-    <h1>Gotlanti –<br/> 
-      meren solmukohta</h1>
+    <h1>Gotlanti –<br>meren solmukohta</h1>
 
     <div class="image-hero">
-      <img src="images/gotland-kopparsvik.jpg" alt="Kopparsvikin viikinkiaikainen hautausmaa" />
+      <div class="image-placeholder">[ Kopparsvikin hautausmaa — kuva ladataan paikallisesta kansiosta ]</div>
       <div class="caption">Kopparsvikin viikinkiaikainen hautausmaa Gotlannissa</div>
     </div>
 
-    <p class="dropcap">
-      Nyt ilma muuttuu suolaiseksi. Tuuli kantaa tervan, märän puun ja kaukaisen hopean tuoksua. Aallot lyövät laitureita, köydet natisevat, ja jossain kaukana purje räpsähtää tuulessa. Olemme saapuneet Itämeren sydämeen — Gotlantiin, Kopparsvikiin.
-    </p>
+    <p class="dropcap">Nyt ilma muuttuu suolaiseksi. Tuuli kantaa tervan, märän puun ja kaukaisen hopean tuoksua. Aallot lyövät laitureita, köydet natisevat, ja jossain kaukana purje räpsähtää tuulessa. Olemme saapuneet Itämeren sydämeen — Gotlantiin, Kopparsvikiin.</p>
 
-    <p>
-      Tämä ei ole pelkkä hautausmaa. Tämä on viikinkiajan solmukohta, paikka jossa hopea virtasi Bagdadista, tarinat Volgalta, kielet Bysantista ja ihmiset kaikkialta. Yli 500 hautaa kertoo verkostosta, joka oli yhtä paljon meri kuin maa.
-    </p>
+    <p>Tämä ei ole pelkkä hautausmaa. Tämä on viikinkiajan solmukohta, paikka jossa hopea virtasi Bagdadista, tarinat Volgalta, kielet Bysantista ja ihmiset kaikkialta. Yli 500 hautaa kertoo verkostosta, joka oli yhtä paljon meri kuin maa.</p>
 
-    <p>
-      Täältä on löydetty aseita, koruja, arabialaisia dirhamejä, lasihelmiä Konstantinopolista ja silkkiä idästä. Täällä ei haudattu vain sotureita. Täällä haudattiin kokonainen liikkuva maailma — kauppiaat, perheet, merenkulkijat ja muistajat.
-    </p>
+    <p>Täältä on löydetty aseita, koruja, arabialaisia dirhamejä, lasihelmiä Konstantinopolista ja silkkiä idästä. Täällä haudattiin kokonainen liikkuva maailma — kauppiaat, perheet, merenkulkijat ja muistajat.</p>
 
-    <p>
-      Ja kahdessa näistä haudoista lepäsivät naiset, joiden veri on sinun vertasi: VK51 ja VK50. Heidän mitokondrio‑linjansa kantaa samaa hiljaista merkkiä — <strong>H1‑T16189C!</strong>
-    </p>
+    <p>Ja kahdessa näistä haudoista lepäsivät naiset, joiden veri on sinun vertasi: <strong>VK51</strong> ja <strong>VK50</strong>. Heidän mitokondrio‑linjansa kantaa samaa hiljaista merkkiä — <strong>H1‑T16189C!</strong></p>
 
-    <p>
-      He eivät olleet pelkkiä nimiä haudoissa. He elivät maailmassa, jossa purjeet nousivat ennen auringonnousua, kartat olivat epätäydellisiä ja horisontti ei ollut raja — se oli lupaus.
-    </p>
+    <p>He tunsivat kauppareitit kuin omat taskunsa: Volga → Itämeri → Konstantinopoli → Bagdad. He eivät olleet vain puolisoita varjoissa. He olivat verkoston ylläpitäjiä — kauppiaita, parantajia, suvun kokoajia, reittien tuntijoita. Heidän verensä liikkui laivoissa. Se keinui puolelta toiselle, kulki hopean, tarinoiden ja ihmisten mukana.</p>
 
-    <p>
-      He tunsivat kauppareitit kuin omat taskunsa: Volga → Itämeri → Konstantinopoli → Bagdad. He eivät olleet vain puolisoita varjoissa. He olivat verkoston ylläpitäjiä — kauppiaita, parantajia, suvun kokoajia, reittien tuntijoita.
-    </p>
+    <p>Ja nyt se on kulkenut sinuun.</p>
 
-    <p>
-      Heidän verensä liikkui laivoissa. Se keinui puolelta toiselle, kulki hopean, tarinoiden ja ihmisten mukana. Se kulki kauas — ja se kulki myös takaisin kotiin.
-    </p>
+    <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
 
-    <p>
-      Ja nyt se on kulkenut sinuun.
-    </p>
+    <p>Tämä on viimeinen suuri kaivaus ennen nykyaikaa. Neljäs ja viimeinen ankkuri. Nyt olemme nähneet ketjun: savitalot, megaliitit, vaelluskummut ja viikinkien sataman. Kaikki nämä kerrokset ovat johtaneet tähän hetkeen — sinuun.</p>
 
-    <div class="section-divider"></div>
-
-    <p>
-      Tämä on viimeinen suuri kaivaus ennen nykyaikaa. Neljäs ja viimeinen ankkuri.
-    </p>
-
-    <p>
-      Nyt olemme nähneet ketjun: savitalot, megaliitit, vaelluskummut ja viikinkien sataman. Kaikki nämä kerrokset ovat johtaneet tähän hetkeen — sinuun.
-    </p>
-
-    <p>
-      Kaivaus on valmis. Mutta matka ei ole.
-    </p>
-
-    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Gotlanti</span>
+      </div>
+    </footer>
   </section>
 
 
+  <!-- =========================================================
+       OSA III — NYKYHETKI
+  ========================================================== -->
+  <section class="page" id="nykyhetki">
 
-  <!-- ================= OSA III – NYKYHETKI ================= -->
-  <section class="page">
     <div class="part-header">
       <span class="part-number">🜂 OSA III</span>
       <h2>Nykyhetki</h2>
     </div>
 
-    <h1>Missä veri näkyy tänään</h1>
+    <h1>Missä veri<br>näkyy tänään</h1>
 
-    <p class="dropcap">
-      Kun tarkastellaan nykyajan mitokondrio‑DNA‑aineistoja, haploryhmä H1‑T16189C! näkyy selkeimmin Pohjois‑ ja Länsi‑Euroopassa. Kuluttajapohjaiset DNA‑tietokannat eivät kuvaa koko väestöä, mutta ne paljastavat, missä tämä äitilinja on tänään dokumentoitu ja tunnistettu.
-    </p>
+    <p class="dropcap">Kun tarkastellaan nykyajan mitokondrio‑DNA‑aineistoja, haploryhmä H1‑T16189C! näkyy selkeimmin Pohjois‑ ja Länsi‑Euroopassa. Kuluttajapohjaiset DNA‑tietokannat eivät kuvaa koko väestöä, mutta ne paljastavat, missä tämä äitilinja on tänään dokumentoitu ja tunnistettu.</p>
 
     <div class="fact-box">
       <div class="fact-title">Nykyinen näkyvyys (kuluttajadata)</div>
@@ -850,13 +1072,9 @@ He eivät ole sinä, mutta he kulkevat rinnallasi yhden esiäidin suvussa.</p>
       </ul>
     </div>
 
-    <p>
-      Nämä alueet eivät edusta linjan syntypaikkaa — vaan sen säilymistä. H1 on yksi Euroopan yleisimmistä äitilinjoista, ja harvinaisempi T16189C!‑variantti kulkee tämän laajan jatkumon sisällä. Sen nykyinen painottuminen Pohjois‑Eurooppaan heijastaa pitkää, katkeamatonta äitilinjaa jääkauden jälkeisistä asuttajista neoliittisiin viljelijöihin, rautakauden liikkujiin ja viikinkiajan verkostoihin.
-    </p>
+    <p>Nämä alueet eivät edusta linjan syntypaikkaa — vaan sen säilymistä. H1 on yksi Euroopan yleisimmistä äitilinjoista, ja harvinaisempi T16189C!‑variantti kulkee tämän laajan jatkumon sisällä. Sen nykyinen painottuminen Pohjois‑Eurooppaan heijastaa pitkää, katkeamatonta äitilinjaa jääkauden jälkeisistä asuttajista neoliittisiin viljelijöihin, rautakauden liikkujiin ja viikinkiajan verkostoihin.</p>
 
-    <p>
-      Yksi tieteellisesti mahdollinen siirtymäketju tälle linjalle on:
-    </p>
+    <p>Yksi tieteellisesti mahdollinen siirtymäketju tälle linjalle on:</p>
 
     <div class="fact-box">
       <div class="fact-title">Mahdollinen reitti</div>
@@ -869,32 +1087,33 @@ He eivät ole sinä, mutta he kulkevat rinnallasi yhden esiäidin suvussa.</p>
       </ul>
     </div>
 
-    <p>
-      Koska tämän äitilinjan kantajia elää tänään Suomessa ja muualla Pohjois‑Euroopassa, näkyvyys ei ole sattumaa. Se on vuosituhansien jatkumon lopputulos.
-    </p>
+    <p>Koska tämän äitilinjan kantajia elää tänään Suomessa ja muualla Pohjois‑Euroopassa, näkyvyys ei ole sattumaa. Se on vuosituhansien jatkumon lopputulos.</p>
 
-    <p>
-      Ja tähän dokumentoituun ketjuun myös sinun haploryhmäsi asettuu.  
-    </p>
+    <!-- FIX: korjattu puuttuva sulkeva </p>-tagi alkuperäisestä -->
+    <p>Haploryhmä K1a4 vahvistaa H1-T16189C!:n neoliittistä jatkumoa Pohjois-Eurooppaan, erityisesti Suomeen.</p>
 
-    </p>Haploryhmä K1a4 vahvistaa H1-T16189C!:n neoliittistä jatkumoa Pohjois-Eurooppaan, erityisesti Suomeen.</p>
-    
-    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Nykyhetki</span>
+      </div>
+    </footer>
   </section>
 
 
-  <!-- ================= OSA IV – HOTSPOTIT ================= -->
-  <section class="page">
+  <!-- =========================================================
+       OSA IV — HOTSPOTIT
+  ========================================================== -->
+  <section class="page" id="hotspotit">
+
     <div class="part-header">
       <span class="part-number">🜂 OSA IV</span>
       <h2>Omituiset Hotspotit</h2>
     </div>
 
-    <h1>Verilinjan kaukaiset kaiut</h1>
+    <h1>Verilinjan<br>kaukaiset kaiut</h1>
 
-    <p class="dropcap">
-      Nyt astumme arvoitukselliselle polulle. H1‑T16189C! ei näy vain Euroopan ytimessä. Se ilmestyy myös odottamattomiin paikkoihin — moderneihin näytteisiin, jotka eivät muodosta suoraa sukupuuta, mutta jättävät hiljaisia jälkiä kartalle.
-    </p>
+    <p class="dropcap">Nyt astumme arvoitukselliselle polulle. H1‑T16189C! ei näy vain Euroopan ytimessä. Se ilmestyy myös odottamattomiin paikkoihin — moderneihin näytteisiin, jotka eivät muodosta suoraa sukupuuta, mutta jättävät hiljaisia jälkiä kartalle.</p>
 
     <div class="fact-box">
       <div class="fact-title">Raportoituja esiintymiä</div>
@@ -910,272 +1129,281 @@ He eivät ole sinä, mutta he kulkevat rinnallasi yhden esiäidin suvussa.</p>
 
     <h2>Marokon Anti‑Atlas</h2>
 
-    <p>
-      Souss‑laakson Anti‑Atlasvuoristossa, siellä missä Sahara kohtaa Atlantin, H1‑T16189C! on raportoitu moderneissa amazigh‑yhteisöissä (mm. Akka‑ ja Ida‑klaanit). Alueella linja voi paikoin muodostaa huomattavan osuuden havaituista mtDNA‑tyypeistä.
-    </p>
+    <p>Souss‑laakson Anti‑Atlasvuoristossa, siellä missä Sahara kohtaa Atlantin, H1‑T16189C! on raportoitu moderneissa amazigh‑yhteisöissä (mm. Akka‑ ja Ida‑klaanit). Alueella linja voi paikoin muodostaa huomattavan osuuden havaituista mtDNA‑tyypeistä.</p>
 
-    <p>
-      Historialliset selitykset vaihtelevat. Joissakin tulkinnoissa yhteys liitetään alueen varhaisiin getuliväestöihin, toisissa Pohjois‑Afrikan kautta kulkeneisiin germaanisiin ryhmiin kuten vandaaleihin tai visigootteihin. Suoraa, katkeamatonta todistusketjua ei kuitenkaan ole.
-    </p>
+    <p>Historialliset selitykset vaihtelevat. Joissakin tulkinnoissa yhteys liitetään alueen varhaisiin getuliväestöihin, toisissa Pohjois‑Afrikan kautta kulkeneisiin germaanisiin ryhmiin kuten vandaaleihin tai visigootteihin. Suoraa, katkeamatonta todistusketjua ei kuitenkaan ole.</p>
 
-    <p>
-      Jäljelle jää hiljainen mysteeri — geneettinen kaiku, joka saattaa ulottua syvälle jääkauden jälkeiseen aikaan.
-    </p>
+    <p>Jäljelle jää hiljainen mysteeri — geneettinen kaiku, joka saattaa ulottua syvälle jääkauden jälkeiseen aikaan.</p>
 
-    <div class="section-divider"></div>
+    <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
 
-    <p>
-      Nämä ovat kaikuja, eivät varmoja sukupolkuja. Mutta ne muistuttavat yhdestä asiasta: verilinjojen historia on harvoin suoraviivainen.
-    </p>
+    <p>Nämä ovat kaikuja, eivät varmoja sukupolkuja. Mutta ne muistuttavat yhdestä asiasta: verilinjojen historia on harvoin suoraviivainen.</p>
 
-    <p>
-      Ota mysteeri mukaasi. Sen ei tarvitse ratketa — riittää, että se herättää kysymyksen.
-    </p>
+    <p>Ota mysteeri mukaasi. Sen ei tarvitse ratketa — riittää, että se herättää kysymyksen.</p>
 
-    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Kaukaiset kaiut</span>
+      </div>
+    </footer>
   </section>
 
-<!-- ================= OSA V – ELÄVÄ PERINTÖ ================= -->
-<section class="page">
-  <div class="part-header">
-    <span class="part-number">🜂 OSA V</span>
-    <h2>Elävä perintö</h2>
-  </div>
 
-  <h1>Mitä se tarkoittaa sinulle</h1>
+  <!-- =========================================================
+       OSA V — ELÄVÄ PERINTÖ
+  ========================================================== -->
+  <section class="page" id="perinto">
 
-  <div class="image-hero">
-    <img src="images/personal-legacy.jpg" alt="Megaliitti Suomen maisemassa" />
-    <div class="caption">Kummakivi Suomessa – muinainen perintö elää</div>
-  </div>
+    <div class="part-header">
+      <span class="part-number">🜂 OSA V</span>
+      <h2>Elävä perintö</h2>
+    </div>
 
- <p class="dropcap">
-    Nyt kaivaus on ohi. Luut on löydetty, analyysit tehty, lähteet dokumentoitu. Mutta yksi kysymys jää: <em>mitä tämä tarkoittaa sinulle tänään?</em> Ei tieteellistä dataa, ei arkeologisia kerroksia – pelkkää hiljaista totuutta veresi solukoissa.
-  </p>
+    <h1>Mitä se<br>tarkoittaa sinulle</h1>
 
-  <!-- LÄHDE Lisätty -->
-  <div class="fact-box">
-    <div class="fact-title">Pohjoisafrikkalainen yhteys</div>
-    <ul>
-      <li>North African Origins (2026): H1-T16189C! Maghrebissä Amazigh-berberikansoissa</li>
-      <li><a href="https://northafricanorigins.com/lineage.html" target="_blank">[northafricanorigins.com/lineage.html]</a></li>
-    </ul>
-  </div>
+    <div class="image-hero">
+      <div class="image-placeholder">[ Kummakivi Suomessa — kuva ladataan paikallisesta kansiosta ]</div>
+      <div class="caption">Kummakivi Suomessa – muinainen perintö elää</div>
+    </div>
 
-  <p>
-    Sinä kannat elävää perintöä. Et museon lasivitriinissä pölyttyvää reliikkiä, vaan <strong>biologista jatkumoa</strong>, joka on selvinnyt 8700 vuoden läpi – jääkauden pimeydestä, neoliittisten savitalojen lämpimistä lattioista, megaliittien varjoista, goottien vaelluksista ja viikinkien purjeista.
-  </p>
+    <p class="dropcap">Nyt kaivaus on ohi. Luut on löydetty, analyysit tehty, lähteet dokumentoitu. Mutta yksi kysymys jää: <em>mitä tämä tarkoittaa sinulle tänään?</em> Ei tieteellistä dataa, ei arkeologisia kerroksia – pelkkää hiljaista totuutta veresi solukoissa.</p>
 
-  <div class="fact-box">
-    <div class="fact-title">Mitä veresi muistaa</div>
-    <ul>
-      <li><strong>Anatolian savitalot:</strong> Tiedon viljan kasvusta maassa</li>
-      <li><strong>Poulnabrone:</strong> Taidon nostaa kivet taivasta vasten</li>
-      <li><strong>Masłomęcz:</strong> Rohkeuden lähteä, kun maa täyttyy</li>
-      <li><strong>Gotlanti:</strong> Luottamuksen horisonttiin purjeen takana</li>
-      <li><strong>Kummakivi:</strong> Perinteen elävänä muistomerkkinä Suomessa</li>
-    </ul>
-  </div>
+    <div class="fact-box">
+      <div class="fact-title">Pohjoisafrikkalainen yhteys</div>
+      <ul>
+        <li>North African Origins (2026): H1-T16189C! Maghrebissä Amazigh-berberikansoissa</li>
+        <li><a href="https://northafricanorigins.com/lineage.html" target="_blank">northafricanorigins.com/lineage.html</a></li>
+      </ul>
+    </div>
 
-  <p>
-    Ehkä siksi tunnistat vetoa tiettyihin paikkoihin. Ehkä siksi meri kutsuu sinua enemmän kuin muurahaiskeot. Ehkä siksi hiljaisuus puhuu sinulle selvemmin kuin meteli. Ehkä siksi tunnet tarvetta jättää jälki – ei someen, vaan maahan, kiveen, tarinaan.
-  </p>
+    <p>Sinä kannat elävää perintöä. Et museon lasivitriinissä pölyttyvää reliikkiä, vaan <strong>biologista jatkumoa</strong>, joka on selvinnyt 8700 vuoden läpi – jääkauden pimeydestä, neoliittisten savitalojen lämpimistä lattioista, megaliittien varjoista, goottien vaelluksista ja viikinkien purjeista.</p>
 
-  <p>
-    <strong>Et ole irrallinen yksilö modernissa maailmassa.</strong> Olet <em>ketjun viimeinen näkyvä lenkki</em>. Tuhansien sukupolvien hiljainen lupaus: <em>"Jatka. Pidä tuli elossa."</em>
-  </p>
+    <div class="fact-box">
+      <div class="fact-title">Mitä veresi muistaa</div>
+      <ul>
+        <li><strong>Anatolian savitalot:</strong> Tiedon viljan kasvusta maassa</li>
+        <li><strong>Poulnabrone:</strong> Taidon nostaa kivet taivasta vasten</li>
+        <li><strong>Masłomęcz:</strong> Rohkeuden lähteä, kun maa täyttyy</li>
+        <li><strong>Gotlanti:</strong> Luottamuksen horisonttiin purjeen takana</li>
+        <li><strong>Kummakivi:</strong> Perinteen elävänä muistomerkkinä Suomessa</li>
+      </ul>
+    </div>
 
-  <h2>Tunnistatko kaiun?</h2>
+    <p>Ehkä siksi tunnistat vetoa tiettyihin paikkoihin. Ehkä siksi meri kutsuu sinua enemmän kuin muurahaiskeot. Ehkä siksi hiljaisuus puhuu sinulle selvemmin kuin meteli. Ehkä siksi tunnet tarvetta jättää jälki – ei someen, vaan maahan, kiveen, tarinaan.</p>
 
-  <p>
-    Kysy itseltäsi:
-  </p>
+    <p><strong>Et ole irrallinen yksilö modernissa maailmassa.</strong> Olet <em>ketjun viimeinen näkyvä lenkki</em>. Tuhansien sukupolvien hiljainen lupaus: <em>"Jatka. Pidä tuli elossa."</em></p>
 
-  <div class="fact-box">
-    <div class="fact-title">Perinnön merkit sinussa</div>
-    <ul>
-      <li>Tunnetko vetoa mereen, kiviin tai vaeltamiseen?</li>
-      <li>Herättääkö hiljaisuus sinussa enemmän kuin hälinä?</li>
-      <li>Oletko rakentaja – ei pelkästään urakoitsija?</li>
-      <li>Tuntuuko perheen tarinoiden vaaliminen luonnolliselta?</li>
-      <li>Haaveiletko paikoista, joissa et ole koskaan käynyt?</li>
-    </ul>
-  </div>
+    <div class="fact-box">
+      <div class="fact-title">Perinnön merkit sinussa</div>
+      <ul>
+        <li>Tunnetko vetoa mereen, kiviin tai vaeltamiseen?</li>
+        <li>Herättääkö hiljaisuus sinussa enemmän kuin hälinä?</li>
+        <li>Oletko rakentaja – ei pelkästään urakoitsija?</li>
+        <li>Tuntuuko perheen tarinoiden vaaliminen luonnolliselta?</li>
+        <li>Haaveiletko paikoista, joissa et ole koskaan käynyt?</li>
+      </ul>
+    </div>
 
-  <p>
-    Nämä eivät ole sattumaa. Ne ovat <strong>elävää perintöä</strong> – muistoja, jotka kulkivat äidiltä tyttärelle, sukupolvesta toiseen, kunnes ne löysivät sinut.
-  </p>
+    <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
 
-  <div class="section-divider"></div>
+    <p class="center italic"><strong>Sinun veresi ei alkanut sinusta.<br>Sinun veresi ei pääty sinuun.<br><em>Ketju jatkuu.</em></strong></p>
 
-  <p style="font-style: italic; text-align: center; font-size: 12pt; margin-top: 2.5em;">
-    <strong>Sinun veresi ei alkanut sinusta.<br/>
-    Sinun veresi ei pääty sinuun.<br/>
-    <em>Ketju jatkuu.</em></strong>
-  </p>
-
-  <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
-</section>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Elävä perintö</span>
+      </div>
+    </footer>
+  </section>
 
 
-  <!-- ================= OSA VI – TUTKIMUSLIITE ================= -->
-  <section class="page">
+  <!-- =========================================================
+       OSA VI — TUTKIMUSLIITE
+  ========================================================== -->
+  <section class="page" id="liite">
+
     <div class="part-header">
       <span class="part-number">🜂 OSA VI</span>
       <h2>Tutkimusliite</h2>
     </div>
 
-    <h1>Aikajanan ja<br/> 
-      reitin yhteenveto</h1>
+    <h1>Aikajanan ja reitin<br>yhteenveto</h1>
 
-    <p class="dropcap">
-      Seuraava aikajana kokoaa yhteen keskeiset arkeogeneettiset ankkurit, joissa H1‑T16189C!‑linja on dokumentoitu. Tämä ei ole täydellinen kartta menneisyydestä — vaan tutkimukseen perustuva reittiluonnos, jossa yksittäiset löydöt muodostavat katkeamattoman biologisen jatkumon.
-    </p>
+    <p class="dropcap">Seuraava aikajana kokoaa yhteen keskeiset arkeogeneettiset ankkurit, joissa H1‑T16189C!‑linja on dokumentoitu. Tämä ei ole täydellinen kartta menneisyydestä — vaan tutkimukseen perustuva reittiluonnos, jossa yksittäiset löydöt muodostavat katkeamattoman biologisen jatkumon.</p>
 
     <div class="fact-box">
       <div class="fact-title">Kronologinen ketju</div>
       <ul>
-        <li><strong>~8700–7000 vuotta sitten</strong> → Anatolian neoliittiset kylät (Barcın, Aşıklı, Çatalhöyük, Boncuklu): varhaiset viljelijät ja H1‑linjan varhainen muoto.</li>
-        <li><strong>~5900 vuotta sitten</strong> → Poulnabrone, Irlanti (PN05, H1‑T16189C!).</li>
-        <li><strong>~1750 vuotta sitten</strong> → Masłomęcz, Puola (PCA0099, H1‑T16189C!).</li>
-        <li><strong>~1000 vuotta sitten</strong> → Kopparsvik, Gotlanti (VK51 H1‑T16189C! &amp; VK50 H1+16189).</li>
-        <li><strong>Tänään</strong> → Nykyajan kantajat, mukaan lukien sinä.</li>
+        <li><strong>~8700–7000 vuotta sitten</strong> — Anatolian neoliittiset kylät (Barcın, Aşıklı, Çatalhöyük, Boncuklu): varhaiset viljelijät ja H1‑linjan varhainen muoto.</li>
+        <li><strong>~5900 vuotta sitten</strong> — Poulnabrone, Irlanti (PN05, H1‑T16189C!).</li>
+        <li><strong>~1750 vuotta sitten</strong> — Masłomęcz, Puola (PCA0099, H1‑T16189C!).</li>
+        <li><strong>~1000 vuotta sitten</strong> — Kopparsvik, Gotlanti (VK51 H1‑T16189C! &amp; VK50 H1+16189).</li>
+        <li><strong>Tänään</strong> — Nykyajan kantajat, mukaan lukien sinä.</li>
       </ul>
     </div>
 
-    <p>
-      Veri ei muista sanoja — mutta se muistaa reitin. Jokainen näistä pisteistä on arkeologinen välähdys samasta äitilinjasta eri aikakausina.
-    </p>
+    <p>Veri ei muista sanoja — mutta se muistaa reitin. Jokainen näistä pisteistä on arkeologinen välähdys samasta äitilinjasta eri aikakausina.</p>
 
     <h2>Löydöt ja keskeiset lähteet</h2>
 
-<div class="fact-box">
-  <div class="fact-title">Vertaisarvioitu tutkimuspohja</div>
-  <ul>
-    <li>Cassidy, L. M. et al. 2020. "A Dynastic Elite in Monumental Neolithic Society." *Nature* 582:384–388. (Poulnabrone PN05, mtDNA H1-T16189C!)</li>
-    <li>Stolarek, I. et al. 2019. "Ancient DNA from Wielbark Culture Reveals Complex Population History." *Scientific Reports* 9:14586. (Masłomęcz PCA0099, H1-T16189C!)</li>
-    <li>Margaryan, A. et al. 2020. "Population Genomics of the Viking World." *Nature* 585:390–396. (Gotlanti VK50/VK51, H1-alalinjat)</li>
-    <li>Kılınç, G. M. et al. 2016. "The Demographic Development of the First Farmers in Anatolia." *Current Biology* 26(19):2659–2666. (PPNB/Anatolia_N H1-kantajat)</li>
-    <li>Achilli, A. et al. 2004. "The Molecular Dissection of mtDNA Haplogroup H Confirms Franco-Cantabrian Refuge." *American Journal of Human Genetics* 75(5):910–918. (H1 refugio → Eurooppa)</li>
-    <li>Haak, W. et al. 2015. "Massive Migration from the Steppe." *Nature* 522:207–211. (EEF-jatkumo Anatolia → Länsi-Eurooppa)</li>
-    <li>Rito, T. et al. 2013. "Phylogeography of mtDNA Haplogroup H." *European Journal of Human Genetics* 21(7):761–768. (H1-alalinjat refugio → neoliitti)</li>
-    <li><strong>mtDNA K1a4 esiintymät:</strong> Zheng et al. 2011. "Mitochondrial genome variation in Eastern Asia." *PLoS ONE* 6(3):e17730. (K1a4 Euroopan neoliittiset populaatiot)</li>
-    <li><strong>K1a4a1b:</strong> Levänluhta (Finland) muinaisDNA: Allentoft et al. 2015. "Population Genomics of Bronze Age Eurasia." *Nature* 522:167–172. (K1a4a1b rautakausi Suomi)</li>
-    <li>FamilyTreeDNA mtDNA K1a4 Project (2026). Nykyjakauma: Puola 28, USA 28, Tanska 22, Ukraina 15. (Modernit näytteet vahvistavat jatkumon)</li>
-    <li>Haplotree / All Ancient DNA (2026). H1-T16189C! ja K1a4 näytteiden kronologia ja kartoitus.</li>
-  </ul>
-</div>
+    <div class="fact-box">
+      <div class="fact-title">Vertaisarvioitu tutkimuspohja</div>
+      <ul>
+        <li>Cassidy, L. M. et al. 2020. "A Dynastic Elite in Monumental Neolithic Society." <em>Nature</em> 582:384–388. (Poulnabrone PN05, mtDNA H1-T16189C!)</li>
+        <li>Stolarek, I. et al. 2019. "Ancient DNA from Wielbark Culture Reveals Complex Population History." <em>Scientific Reports</em> 9:14586. (Masłomęcz PCA0099, H1-T16189C!)</li>
+        <li>Margaryan, A. et al. 2020. "Population Genomics of the Viking World." <em>Nature</em> 585:390–396. (Gotlanti VK50/VK51, H1-alalinjat)</li>
+        <li>Kılınç, G. M. et al. 2016. "The Demographic Development of the First Farmers in Anatolia." <em>Current Biology</em> 26(19):2659–2666. (PPNB/Anatolia_N H1-kantajat)</li>
+        <li>Achilli, A. et al. 2004. "The Molecular Dissection of mtDNA Haplogroup H Confirms Franco-Cantabrian Refuge." <em>Am. J. Hum. Genet.</em> 75(5):910–918. (H1 refugio → Eurooppa)</li>
+        <li>Haak, W. et al. 2015. "Massive Migration from the Steppe." <em>Nature</em> 522:207–211. (EEF-jatkumo Anatolia → Länsi-Eurooppa)</li>
+        <li>Rito, T. et al. 2013. "Phylogeography of mtDNA Haplogroup H." <em>Eur. J. Hum. Genet.</em> 21(7):761–768. (H1-alalinjat refugio → neoliitti)</li>
+        <li>Zheng et al. 2011. "Mitochondrial genome variation in Eastern Asia." <em>PLoS ONE</em> 6(3):e17730. (K1a4 Euroopan neoliittiset populaatiot)</li>
+        <li>Allentoft et al. 2015. "Population Genomics of Bronze Age Eurasia." <em>Nature</em> 522:167–172. (K1a4a1b rautakausi Suomi)</li>
+        <li>FamilyTreeDNA mtDNA K1a4 Project (2026). Nykyjakauma: Puola 28, USA 28, Tanska 22, Ukraina 15.</li>
+        <li>Haplotree / All Ancient DNA (2026). H1-T16189C! ja K1a4 näytteiden kronologia ja kartoitus.</li>
+      </ul>
+    </div>
 
+    <p>Anti‑Atlas‑alueen modernit havainnot perustuvat väestögenetiikan nykydataan amazigh‑yhteisöistä. Näiden ja muinaisnäytteiden välinen yhteys on tutkimuksellinen mahdollisuus — ei suora todistettu sukupuu.</p>
 
-    <p>
-      Anti‑Atlas‑alueen modernit havainnot perustuvat väestögenetiikan nykydataan amazigh‑yhteisöistä (mm. Akka‑ ja Ida‑klaanit). Näiden ja muinaisnäytteiden välinen yhteys on tutkimuksellinen mahdollisuus — ei suora todistettu sukupuu.
-    </p>
+    <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
 
-    <div class="section-divider"></div>
+    <p>Tämä liite ei sulje tarinaa. Se ankkuroi sen. Arkeologia, genetiikka ja historia kohtaavat tässä pisteessä — ja siitä eteenpäin jatkuu henkilökohtainen sukututkimus.</p>
 
-    <p>
-      Tämä liite ei sulje tarinaa. Se ankkuroi sen. Arkeologia, genetiikka ja historia kohtaavat tässä pisteessä — ja siitä eteenpäin jatkuu henkilökohtainen sukututkimus.
-    </p>
-
-    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Tutkimusliite</span>
+      </div>
+    </footer>
   </section>
 
 
+  <!-- =========================================================
+       OSA VII — LOPPU
+  ========================================================== -->
+  <section class="page" id="loppu">
 
-  <!-- ================= OSA VII – LOPPU ================= -->
-  <section class="page">
     <div class="part-header">
       <span class="part-number">🜂 OSA VII</span>
       <h2>Loppu</h2>
     </div>
 
-    <h1>Sinä et ole sattumaa</h1>
+    <h1>Sinä et ole<br>sattumaa</h1>
 
-    <p class="dropcap">
-      Sinä et ole sattumaa. Olet seuraus tuhansien vuosien päätöksistä, vaelluksista, selviytymisestä ja rakkaudesta — savitalojen, megaliittien, kivikehien, kumpuhautojen ja viikinkilaivojen perintö yhdessä ihmisessä.
-    </p>
+    <p class="dropcap">Sinä et ole sattumaa. Olet seuraus tuhansien vuosien päätöksistä, vaelluksista, selviytymisestä ja rakkaudesta — savitalojen, megaliittien, kivikehien, kumpuhautojen ja viikinkilaivojen perintö yhdessä ihmisessä.</p>
 
-    <p>
-      Tämä tarina ei kuulu museoon. Se kuuluu sinulle — ja niille, jotka tulevat sinun jälkeesi.
-    </p>
+    <p>Tämä tarina ei kuulu museoon. Se kuuluu sinulle — ja niille, jotka tulevat sinun jälkeesi.</p>
 
-    <div class="section-divider"></div>
+    <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
 
     <h2>Sukuhistorian metsästäjän vala</h2>
 
     <div class="fact-box">
-      <p style="margin:0; font-style:italic;">
-        "Minä, [nimesi], Kadonneen Sukuhistorian Metsästäjä,<br/>
-        vastaan vereni vartijoiden perintöön.<br/>
-        En unohda. En luovuta. Vaan opin ja opetan.<br/>
+      <div class="oath">
+        "Minä, [nimesi], Kadonneen Sukuhistorian Metsästäjä,<br>
+        vastaan vereni vartijoiden perintöön.<br>
+        En unohda. En luovuta. Vaan opin ja opetan.<br>
         Ja kun veri kutsuu — minä seuraan."
-      </p>
+      </div>
     </div>
 
-    <p style="text-align:center; font-style:italic; margin-top:2.2em;">
-      Matka ei päättynyt.<br/>
+    <div class="closing-line">
+      Matka ei päättynyt.<br>
       Se alkoi.
-    </p>
+    </div>
 
-    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Loppu</span>
+      </div>
+    </footer>
   </section>
 
 
+  <!-- =========================================================
+       LAKI & OIKEUDELLINEN HUOMAUTUS
+  ========================================================== -->
+  <section class="page legal" id="laki">
 
-  <!-- ================= LAKI & ALLEKIRJOITUS ================= -->
-  <section class="page">
     <div class="part-header">
       <span class="part-number">🜂 LIITE</span>
       <h2>Laki ja Käyttöehdot</h2>
     </div>
 
-    <h1>Oikeudellinen huomautus</h1>
+    <h1>Oikeudellinen<br>huomautus</h1>
 
-    <p class="dropcap">
-      Tämä verilinjaraportti on laadittu genealogiseksi ja
-      informatiiviseksi tarinalliseksi kokonaisuudeksi. Se perustuu julkaistuun
-      arkeogeneettiseen tutkimukseen, väestödataan sekä
-      todennäköisyyspohjaiseen historialliseen tulkintaan.
+    <p class="dropcap">Tämä verilinjaraportti on laadittu genealogiseksi ja informatiiviseksi tarinalliseksi kokonaisuudeksi. Se perustuu julkaistuun arkeogeneettiseen tutkimukseen, väestödataan sekä todennäköisyyspohjaiseen historialliseen tulkintaan.</p>
+
+    <p>Tämä kertomus on populaatiotason mallinnus. Se ei tarkoita, että yksittäinen esiäitisi olisi ollut juuri mainituissa paikoissa, vaan että haploryhmäsi tunnetaan näissä historiallisissa yhteyksissä. Nykyesiintymät perustuvat kuluttajatesteihin ja julkaistuihin aineistoihin, eivät koko väestön kattavaan näytteeseen.</p>
+
+    <p>Raportti ei ole lääketieteellinen diagnoosi, juridinen asiakirja eikä täydellinen sukupuu. Muinaisten DNA‑näytteiden ja modernien populaatioiden väliset yhteydet kuvataan tutkimuskirjallisuuteen perustuvina mahdollisina jatkumoina, eivät varmoina yksilöllisinä sukulinjoina.</p>
+
+    <p>DNA‑haploryhmät kuvaavat äitilinjan biologista periytymistä, eivät kansallisuutta, etnisyyttä tai kulttuurista identiteettiä. Historialliset kuvaukset heijastavat tutkimustietoa julkaisun laatimishetkellä ja voivat tarkentua tulevan tutkimuksen myötä.</p>
+
+    <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
+
+    <p class="center" style="font-size:9pt; color: var(--ink-soft);">
+      KSHM · Arkeogenetiikka · Populaatiohistoria<br>
+      <em>H1‑T16189C! – Verilinjan seikkailu ajassa</em>
     </p>
 
-    </p>Tämä kertomus on populaatiotason mallinnus. Se ei tarkoita, 
-      että yksittäinen esiäitisi olisi ollut juuri mainituissa paikoissa,
-      vaan että haploryhmäsi tunnetaan näissä historiallisissa yhteyksissä.
-      Nykyesiintymät perustuvat kuluttajatesteihin ja julkaistuihin aineistoihin, 
-      eivät koko väestön kattavaan näytteeseen.
-    </p>
-
-    <p>
-      Raportti ei ole lääketieteellinen diagnoosi, juridinen asiakirja
-      eikä täydellinen sukupuu. Muinaisten DNA‑näytteiden ja modernien
-      populaatioiden väliset yhteydet kuvataan tutkimuskirjallisuuteen
-      perustuvina mahdollisina jatkumoina, eivät varmoina
-      yksilöllisinä sukulinjoina.
-    </p>
-
-    <p>
-      DNA‑haploryhmät kuvaavat äitilinjan biologista periytymistä,
-      eivät kansallisuutta, etnisyyttä tai kulttuista identiteettiä.
-      Historialliset kuvaukset heijastavat tutkimustietoa
-      julkaisun laatimishetkellä ja voivat tarkentua tulevan
-      tutkimuksen myötä.
-    </p>
-
-    <div class="footer">Kadonneen sukuhistorian metsästäjä</div>
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä</span>
+        <span class="footer-page">Oikeudellinen huomautus</span>
+      </div>
+    </footer>
   </section>
 
-  <!-- Muu sivun sisältö -->
+</div><!-- /pages-container -->
 
-<script>
-  function exportPDF() {
-    window.print();
-  }
-</script>
 
-<button onclick="exportPDF()" style="position:fixed;bottom:20px;right:20px;z-index:999;background:#6b4f2a;color:white;padding:12px 20px;border:none;border-radius:6px;font-family:Lora;font-size:11pt;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);">
-  📄 Tulosta/PDF
+<!-- ============================================================
+     PDF / PRINT BUTTON
+============================================================ -->
+<button class="pdf-btn" onclick="window.print()" title="Tulosta tai tallenna PDF:nä">
+  📄 Tulosta / PDF
 </button>
 
 
+<script>
+  /* ============================================================
+     HIGHLIGHT ACTIVE NAV DOT on scroll
+  ============================================================ */
+  (function() {
+    const dots = document.querySelectorAll('.toc-dot');
+    const pages = document.querySelectorAll('.page');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          dots.forEach(dot => {
+            dot.style.background = dot.getAttribute('href') === '#' + id
+              ? 'rgba(196, 154, 108, 0.75)'
+              : 'rgba(196, 154, 108, 0.25)';
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+
+    pages.forEach(p => observer.observe(p));
+  })();
+
+  /* ============================================================
+     IMAGE GRACEFUL FALLBACK
+     If an <img> fails to load, swap it for the placeholder div
+  ============================================================ */
+  document.querySelectorAll('.image-hero img, .image-full img').forEach(img => {
+    img.addEventListener('error', function() {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'image-placeholder';
+      placeholder.textContent = '[ ' + (this.alt || 'Kuva') + ' — ladataan paikallisesta kansiosta ]';
+      this.parentNode.replaceChild(placeholder, this);
+    });
+  });
+</script>
 </body>
 </html>
