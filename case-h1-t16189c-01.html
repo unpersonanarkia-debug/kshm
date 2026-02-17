@@ -208,21 +208,59 @@
       color: #666;
     }
 
-    /* ===== FOOTER WITH PAGE NUMBER ===== */
+        /* ===== FOOTER WITH PAGE NUMBER ===== */
+    
+    /* 1. PDF-tulostuksen asetukset (A4) */
+    @page {
+      size: A4;
+      margin: 2.2cm 2cm 2.4cm 2cm;
+      @bottom-center {
+        content: "Kadonneen sukuhistorian metsästäjä · Sivu " counter(page) " / " counter(pages);
+        font-family: 'Lora', serif;
+        font-size: 9pt;
+        color: #777;
+        letter-spacing: 0.04em;
+        border-top: 1px solid #eee; /* Viiva sivunumeron yläpuolelle PDF:ssä */
+        width: 100%;
+        padding-top: 0.2cm;
+      }
+    }
+
+    /* 2. Web-näkymän footer (näkyy selaimessa) */
     .footer {
       position: absolute;
       bottom: 0.8cm;
       left: 0;
       right: 0;
       text-align: center;
+      font-family: 'Lora', serif;
       font-size: 9pt;
       color: #777;
       letter-spacing: 0.04em;
+      border-top: 1px solid var(--line, #eee);
+      margin: 0 2cm; /* Marginaalit jotta viiva ei osu reunoihin */
+      padding-top: 8px;
     }
 
+    /* Sivunumeron dynaaminen lisäys footeriin */
     .footer::after {
-  content: counter(page);
-}
+      content: "Sivu " counter(page);
+    }
+
+    /* 3. Print-optimointi: Piilotetaan HTML-footer, jotta @page-numerointi ei tuplaannu */
+    @media print {
+      .footer {
+        display: none !important;
+      }
+    }
+
+    /* 4. Responsiivisuus: Pienennetään tekstikokoa mobiilissa */
+    @media screen and (max-width: 768px) {
+      .footer {
+        font-size: 8pt;
+        margin: 0 1cm;
+      }
+    }
 
     /* ===== PREMIUM PART HEADER ===== */
     .part-header {
