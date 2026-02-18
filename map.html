@@ -32,9 +32,9 @@
   .hdr-title em { color:var(--gold); font-style:italic; font-family:'Cormorant Garamond',serif; font-size:1.15em; font-weight:300; }
   .hdr-quote  { margin-left:auto; font-size:.8rem; color:var(--text-muted); font-style:italic; border-left:1px solid var(--gold-dim); padding-left:1rem; }
 
-  .layout { display:grid; grid-template-columns:1fr 295px; height:calc(100vh - 68px); }
+  .layout { display:grid; grid-template-columns:1fr 295px; height:calc(100vh - 68px); min-height:500px; }
 
-  #map { width:100%; height:100%; min-height:400px; }
+  #map { width:100%; height:100%; min-height:500px; display:block; }
   .leaflet-container { background:#09080a; font-family:'Cormorant Garamond',serif; }
   .leaflet-tile-pane { filter:grayscale(1) sepia(.5) brightness(.38) contrast(1.15); }
   .leaflet-control-zoom a { background:var(--bg-card) !important; color:var(--gold) !important; border-color:var(--line) !important; }
@@ -195,6 +195,9 @@ var STOPS = [
 // ── KARTTA ──
 var map = L.map('map', { center:[50, 14], zoom:4 });
 
+// Pakottaa Leafletin laskemaan koon uudelleen kun DOM on valmis
+setTimeout(function() { map.invalidateSize(); }, 100);
+
 // CARTO Dark Matter – ilmainen, ei API-avainta
 // Tuotannossa: aseta window.STADIA_API_KEY ennen tätä scriptiä
 var stadiaKey = (typeof window.STADIA_API_KEY !== 'undefined') ? window.STADIA_API_KEY : null;
@@ -205,11 +208,16 @@ if (stadiaKey) {
     maxZoom: 20
   }).addTo(map);
 } else {
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
-    subdomains:'abcd',
+  // OSM – toimii aina ilman avainta, tummennetaan CSS-filttereillä
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    subdomains:'abc',
     maxZoom: 19
   }).addTo(map);
+  setTimeout(function() {
+    var pane = document.querySelector('.leaflet-tile-pane');
+    if (pane) pane.style.filter = 'grayscale(1) sepia(.55) brightness(.3) contrast(1.2)';
+  }, 50);
 }
 
 // ── REITTILINJA ──
