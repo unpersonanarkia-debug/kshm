@@ -11,6 +11,8 @@ from data_utils import fetch_full_haplogroup_data
 from story_utils import generate_story_from_haplogroup
 from pdf_utils import generate_pdf_from_story
 from email_utils import send_email_with_pdf
+from backend.research_api import router as research_router
+app.include_router(research_router)
 
 
 # --------------------
