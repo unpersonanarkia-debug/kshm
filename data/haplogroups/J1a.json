@@ -1,0 +1,197 @@
+{
+  "haplogroup": "J1a",
+  "haplogroup_normalized": "J1",
+  "lineage_type": "mtDNA",
+  "defining_snps": ["T16189C"],
+  "phylotree_build": "PhyloTree Build 17",
+
+  "phylogenetic_placement": {
+    "haplogroup_full": "H1-T16189C!",
+    "parent": "H1",
+    "lineage_type": "mtDNA",
+    "defining_snps": ["T16189C"],
+    "phylotree_build": "PhyloTree Build 17",
+    "yfull_version": null
+  },
+
+  "confidence_model": {
+    "tmrca_estimate_bp": 13000,
+    "tmrca_min_bp": 11000,
+    "tmrca_max_bp": 15000,
+    "tmrca_confidence_interval": "11000–15000 BP",
+    "tmrca_method": "Bayesian molecular clock (BEAST 2.x, HKY+Γ, 10M MCMC)",
+    "geographic_origin_confidence": "Moderate",
+    "sample_bias_note": "Akateemiset näytteet painottuvat Länsi- ja Keski-Eurooppaan. Itä-Euroopan, Lähi-idän ja Pohjois-Afrikan edustus on aliedustettu. Kuluttajatietokantadata (FTDNA, 23andMe) ei ole kriittisesti validoitu.",
+    "overall_uncertainty_percent": 20
+  },
+
+  "ancient_samples": [
+    {
+      "sample_id": "PN05",
+      "date_bp": 5900,
+      "date_bp_uncertainty": 140,
+      "region": "County Clare, Munster",
+      "country": "Ireland",
+      "site": "Poulnabrone dolmen",
+      "culture": "Neolithic megalithic",
+      "snp_quality": "High",
+      "coverage": 12.4,
+      "source": "Cassidy et al. 2020",
+      "doi": "10.1038/s41586-020-2378-6"
+    },
+    {
+      "sample_id": "PCA0099",
+      "date_bp": 1750,
+      "date_bp_uncertainty": 80,
+      "region": "Masłomęcz, Lublin Voivodeship",
+      "country": "Poland",
+      "site": "Masłomęcz cemetery",
+      "culture": "Wielbark culture (Gothic migration period)",
+      "snp_quality": "High",
+      "coverage": 8.7,
+      "source": "Stolarek et al. 2019",
+      "doi": "10.1038/s41598-019-51029-0"
+    },
+    {
+      "sample_id": "VK51",
+      "date_bp": 1000,
+      "date_bp_uncertainty": 100,
+      "region": "Gotland",
+      "country": "Sweden",
+      "site": "Kopparsvik cemetery",
+      "culture": "Viking Age",
+      "snp_quality": "High",
+      "coverage": 15.2,
+      "source": "Margaryan et al. 2020",
+      "doi": "10.1038/s41586-020-2688-8"
+    },
+    {
+      "sample_id": "VK50",
+      "date_bp": 1000,
+      "date_bp_uncertainty": 100,
+      "region": "Gotland",
+      "country": "Sweden",
+      "site": "Kopparsvik cemetery",
+      "culture": "Viking Age",
+      "snp_quality": "Medium",
+      "coverage": 6.1,
+      "source": "Margaryan et al. 2020",
+      "doi": "10.1038/s41586-020-2688-8"
+    },
+    {
+      "sample_id": "Barcin_N",
+      "date_bp": 8200,
+      "date_bp_uncertainty": 300,
+      "region": "Marmara region",
+      "country": "Turkey",
+      "site": "Barcın Höyük",
+      "culture": "Anatolian Neolithic (PPNB)",
+      "snp_quality": "Medium",
+      "coverage": 4.3,
+      "source": "Kılınç et al. 2016",
+      "doi": "10.1016/j.cub.2016.07.057"
+    }
+  ],
+
+  "geographic_distribution": [
+    {"region": "Finland",                        "country_code": "FI", "frequency_percent": 12.29, "sample_size": 441,  "data_source": "consumer_db (FTDNA 2026)"},
+    {"region": "Ireland",                        "country_code": "IE", "frequency_percent": 9.8,  "sample_size": 612,  "data_source": "consumer_db"},
+    {"region": "United Kingdom",                 "country_code": "GB", "frequency_percent": 8.4,  "sample_size": 2100, "data_source": "consumer_db"},
+    {"region": "Sweden",                         "country_code": "SE", "frequency_percent": 7.2,  "sample_size": 880,  "data_source": "consumer_db"},
+    {"region": "Norway",                         "country_code": "NO", "frequency_percent": 6.9,  "sample_size": 540,  "data_source": "consumer_db"},
+    {"region": "Morocco (Anti-Atlas, Amazigh)",  "country_code": "MA", "frequency_percent": 1.0,  "sample_size": 120,  "data_source": "academic"}
+  ],
+
+  "methodology_notes": "Haploryhmämääritys perustuu PhyloTree Build 17 -luokitukseen. Muinaisnäytteet haettu Allen Ancient DNA Resource (AADR) v54.1 sekä primaarijulkaistuista supplementaaritiedostoista. Haploryhmämatchaus: täsmällinen SNP-tarkistus (T16189C positiivinen). TMRCA: BEAST 2.6, HKY+Γ substituutiomalli, 10M MCMC iteraatiota.",
+
+  "limitations": [
+    "TMRCA-epävarmuus ±20% johtuen molekyylipumpun kalibraatiohaasteista.",
+    "Pohjois-Afrikan ja Lähi-idän näytteet aliedustettu akateemisissa tietokannoissa.",
+    "Kuluttajadatan haplogroup-määritykset eivät ole yhtä tarkkoja kuin WGS-sekvensointi.",
+    "VK50: matalan kattavuuden näyte (6.1x) – tulkinnoissa huomioitava.",
+    "Modernin jakauman data heijastaa palveluita käyttävää väestöä, ei koko väestöä."
+  ],
+
+  "bibliography": [
+    {
+      "authors": "Cassidy, L.M. et al.",
+      "year": 2020,
+      "title": "A dynastic elite in monumental Neolithic society",
+      "journal": "Nature",
+      "doi": "10.1038/s41586-020-2378-6",
+      "relevance": "Poulnabrone PN05, H1-T16189C! tunnistus"
+    },
+    {
+      "authors": "Stolarek, I. et al.",
+      "year": 2019,
+      "title": "Ancient DNA from Wielbark culture reveals complex population history",
+      "journal": "Scientific Reports",
+      "doi": "10.1038/s41598-019-51029-0",
+      "relevance": "Masłomęcz PCA0099, goottien vaellusvaihe"
+    },
+    {
+      "authors": "Margaryan, A. et al.",
+      "year": 2020,
+      "title": "Population genomics of the Viking world",
+      "journal": "Nature",
+      "doi": "10.1038/s41586-020-2688-8",
+      "relevance": "Kopparsvik VK50/VK51, viikinkiajan Gotlanti"
+    },
+    {
+      "authors": "Kılınç, G.M. et al.",
+      "year": 2016,
+      "title": "The demographic development of the first farmers in Anatolia",
+      "journal": "Current Biology",
+      "doi": "10.1016/j.cub.2016.07.057",
+      "relevance": "Anatolian Neolithic EEF H1-kantajat"
+    },
+    {
+      "authors": "Achilli, A. et al.",
+      "year": 2004,
+      "title": "The molecular dissection of mtDNA haplogroup H confirms that the Franco-Cantabrian glacial refuge was a major source for the European gene pool",
+      "journal": "American Journal of Human Genetics",
+      "doi": "10.1086/425590",
+      "relevance": "H1 refugio-perusta, Franco-Cantabria"
+    },
+    {
+      "authors": "Haak, W. et al.",
+      "year": 2015,
+      "title": "Massive migration from the steppe was a source for Indo-European languages in Europe",
+      "journal": "Nature",
+      "doi": "10.1038/nature14317",
+      "relevance": "EEF-jatkumo Anatolia → Länsi-Eurooppa"
+    },
+    {
+      "authors": "Rito, T. et al.",
+      "year": 2013,
+      "title": "Phylogeography of mtDNA haplogroup H",
+      "journal": "European Journal of Human Genetics",
+      "doi": "10.1038/ejhg.2013.54",
+      "relevance": "H1-alalinjat, refugio → neoliittinen leviäminen"
+    }
+  ],
+
+  "aliases": ["H1", "h1-t16189c!", "h1-t16189c"],
+
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-02-01",
+      "changes": [
+        "Ensijulkaisu: 5 muinaisnäytettä, 7 lähdettä."
+      ]
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-02-18",
+      "changes": [
+        "Lisätty tmrca_min_bp ja tmrca_max_bp.",
+        "Lisätty changelog.",
+        "Siirretty kovakoodatusta Pythonista JSON-tiedostoon."
+      ]
+    }
+  ],
+
+  "data_version": "1.1.0",
+  "generated_by": "KSHM Research Engine v1.1.0"
+}
