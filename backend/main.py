@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr, Field
@@ -11,38 +11,45 @@ from data_utils import fetch_full_haplogroup_data
 from story_utils import generate_story_from_haplogroup
 from pdf_utils import generate_pdf_from_story
 from email_utils import send_email_with_pdf
-from backend.research_api import router as research_router
-app.include_router(research_router)
 
-
-# --------------------
-# App setup
-# --------------------
+# ─────────────────────────────────────────────
+# App setup  (app ENSIN, router JÄLKEEN)
+# ─────────────────────────────────────────────
 
 app = FastAPI(
     title="Kadonneen Sukuhistorian Metsästäjä API",
-    description="API haploryhmäpohjaisten arkeogeneettisten raporttien tilaamiseen ja toimittamiseen.",
-    version="1.1.0"
+    description="API haploryhmäpohjaisten arkeogeneettisten raporttien tilaamiseen.",
+    version="1.1.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # rajaa tuotannossa tarvittaessa
+    allow_origins=["*"],  # Tuotannossa: ["https://kshm.fi"]
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# --------------------
+# Research API router – lisätään app:n luomisen jälkeen
+from backend.research_api import app as research_app
+from fastapi import APIRouter
+
+# Kopioidaan research_api:n routet tähän app:iin prefix-free
+for route in research_app.routes:
+    app.routes.append(route)
+
+# ─────────────────────────────────────────────
 # Logging
-# --------------------
+# ─────────────────────────────────────────────
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("kshm-backend")
 
-# --------------------
+# ─────────────────────────────────────────────
 # Models
-# --------------------
+# ─────────────────────────────────────────────
 
 class OrderRequest(BaseModel):
     name: str = Field(..., min_length=1, max_length=120)
@@ -59,13 +66,13 @@ class OrderResponse(BaseModel):
     order_id: str
 
 
-# --------------------
+# ─────────────────────────────────────────────
 # Routes
-# --------------------
+# ─────────────────────────────────────────────
 
 @app.get("/api/health")
 async def health_check():
-    return {"status": "ok"}
+    return {"status": "ok", "version": app.version}
 
 
 @app.post("/api/order_report", response_model=OrderResponse)
@@ -81,7 +88,7 @@ async def order_report(order: OrderRequest):
                 detail=f"Haploryhmälle {order.haplogroup} ei löytynyt tietoja."
             )
 
-        # 2. Fetch Y-DNA if provided
+        # 2. Fetch Y-DNA jos annettu
         haplo_data_y = None
         if order.haplogroup_y:
             haplo_data_y = fetch_full_haplogroup_data(order.haplogroup_y)
@@ -91,7 +98,7 @@ async def order_report(order: OrderRequest):
                     detail=f"Haploryhmälle {order.haplogroup_y} ei löytynyt tietoja."
                 )
 
-        # 3. Generate stories
+        # 3. Generoi tarinat
         story_mt = generate_story_from_haplogroup(
             haplogroup=order.haplogroup,
             lang=order.language,
@@ -106,7 +113,7 @@ async def order_report(order: OrderRequest):
                 tone=order.tone,
             )
 
-        # 4. Generate PDF
+        # 4. Generoi PDF
         order_id = str(uuid.uuid4())[:8]
         safe_name = order.name.replace(" ", "").replace("/", "")
         filename = f"{order.haplogroup}_{safe_name}_{order_id}.pdf"
@@ -123,7 +130,7 @@ async def order_report(order: OrderRequest):
             lang=order.language,
         )
 
-        # 5. Send email with PDF
+        # 5. Lähetä sähköposti
         send_email_with_pdf(
             to_email=order.email,
             pdf_path=pdf_path,
@@ -150,16 +157,9 @@ async def order_report(order: OrderRequest):
         )
 
 
-# --------------------
-# Optional: debug endpoint
-# --------------------
-
 @app.get("/api/debug/haplogroup/{haplogroup}")
 async def debug_haplogroup(haplogroup: str):
-    """
-    Palauttaa raakadatan haploryhmästä ilman raportointia.
-    Hyödyllinen testaamiseen ja kehitykseen.
-    """
+    """Raakadata haploryhmästä – vain kehityskäyttöön."""
     try:
         data = fetch_full_haplogroup_data(haplogroup)
         if not data:
@@ -168,3 +168,12 @@ async def debug_haplogroup(haplogroup: str):
     except Exception as e:
         logger.exception("Error fetching haplogroup data")
         raise HTTPException(status_code=500, detail="Virhe tietojen haussa.")
+
+
+# ─────────────────────────────────────────────
+# Käynnistys
+# ─────────────────────────────────────────────
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
