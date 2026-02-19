@@ -7,6 +7,211 @@ import logging
 logger = logging.getLogger(__name__)
 
 # ------------------------------
+# Lineage type detection
+# ------------------------------
+
+# Y-DNA haplogroup root letters (ISOGG-standardin mukaan)
+_Y_DNA_ROOTS = frozenset("ABCDEFGHIJKLMNOPQRST")
+
+# mtDNA haplogroup root letters
+_MT_DNA_ROOTS = frozenset([
+    "L", "M", "N",          # makrohaplogrupit
+    "A", "B", "C", "D",     # Aasia / Amerikat
+    "E", "F", "G",           # Aasia
+    "H", "HV",               # Eurooppa
+    "I", "J", "K",           # Eurooppa / Lähi-itä
+    "P", "Q", "R",           # Oseania / Etelä-Aasia
+    "T", "U", "V", "W", "X", "Y", "Z",  # Eurooppa / Aasia
+])
+
+# Eksplisiittinen Y-DNA-etuliitteiden lista — nämä ovat yksiselitteisesti Y-DNA:ta
+# vaikka niiden juurikirjain löytyy myös mtDNA:sta
+_Y_DNA_EXPLICIT_PREFIXES = (
+    "A0", "A00", "A1", "A2", "A3",
+    "B2", "B4",
+    "C1", "C2", "C3",
+    "DE", "D1", "D2",
+    "E1", "E2",
+    "F1", "F2",
+    "G1", "G2",
+    # H1/H2 poistettu — konfliktoi mtDNA:n kanssa
+    "I1", "I2",
+    # J1/J2 poistettu — J1/J2 on sekä Y-DNA (J1a, J2a) että mtDNA (J1c, J2b)
+    # ilman kolmatta kirjainta/numeroa ei voida erottaa → ambiguous
+    # K1/K2 poistettu — konfliktoi mtDNA:n kanssa
+    "L1",
+    # M1 poistettu — konfliktoi mtDNA:n kanssa
+    "N1", "N2",
+    "O1", "O2",
+    "P1",
+    "Q1",
+    "R1", "R2",
+    "S1",
+    # T1 poistettu — konfliktoi mtDNA:n kanssa
+)
+
+# mtDNA-etuliitteet — tarkistetaan VASTA Y-DNA-tarkistuksen jälkeen
+_MT_DNA_EXPLICIT_PREFIXES = (
+    "MT-", "MTDNA",
+    "L0", "L1", "L2", "L3", "L4", "L5", "L6",
+    "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9",
+    "HV0", "HV1", "HV2",
+    "H1", "H2", "H3", "H4", "H5", "H6", "H7",
+    "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8",
+    "K1", "K2",
+    "T1", "T2",
+    "X2",
+)
+
+
+def detect_lineage_type(haplogroup: str) -> str:
+    """
+    Tunnistaa haploryhmän linjatypin (Y-DNA / mtDNA / ambiguous).
+
+    Logiikka (järjestys on tärkeä — Y-DNA tarkistetaan ennen mtDNA):
+    1. Alkaa MT- tai MTDNA- → yksiselitteisesti mtDNA
+    2. Alkaa Y-kirjaimella → Y-DNA
+    3. Eksplisiittiset Y-DNA-etuliitteet → Y-DNA  (tarkistetaan ENNEN mtDNA)
+    4. Eksplisiittiset mtDNA-etuliitteet → mtDNA
+    5. Yksittäiskirjaimet joita käytetään vain mtDNA:ssa → mtDNA
+    6. Muut → "ambiguous" (ei arvata väärin)
+
+    Huom: J1/J2 ovat Y-DNA:ta (ISOGG), H1-H7 ovat mtDNA:ta.
+    Kontekstiriippuvaiset tapaukset (esim. pelkkä "A", "N") → ambiguous.
+    """
+    hg = haplogroup.upper().strip()
+    if not hg:
+        return "ambiguous"
+
+    # 1. Selkeät MT-etuliitteet
+    if hg.startswith("MT-") or hg.startswith("MTDNA"):
+        return "mtDNA"
+
+    # 2. Y-kirjaimella alkavat
+    if hg.startswith("Y"):
+        return "Y-DNA"
+
+    # 3. Eksplisiittiset Y-DNA-etuliitteet (ENNEN mtDNA-tarkistusta)
+    for prefix in _Y_DNA_EXPLICIT_PREFIXES:
+        if hg.startswith(prefix):
+            return "Y-DNA"
+
+    # 4. Eksplisiittiset mtDNA-etuliitteet
+    for prefix in _MT_DNA_EXPLICIT_PREFIXES:
+        if hg.startswith(prefix):
+            return "mtDNA"
+
+    # 5. Yksittäiskirjaimet jotka ovat yksiselitteisesti mtDNA-käytössä
+    #    (ei esiinny Y-DNA-puussa juuritasolla)
+    mtdna_only_singles = {"V", "W", "X"}
+    if hg[0] in mtdna_only_singles:
+        return "mtDNA"
+
+    # 6. Epäselvä — ei arvata
+    return "ambiguous"
+
+
+# ------------------------------
+# Structured description fragments
+# ------------------------------
+
+# description_fragments tallennetaan rakenteisena datana tekstin sijaan.
+# Näin story_utils.py voi hakea oikean käännöksen i18n-järjestelmästä.
+#
+# Rakenne:
+# {
+#   "key": str,          # i18n-avain
+#   "source": str,       # lähteen tunniste (loggausta varten)
+#   "params": Dict,      # format()-parametrit käännösmalliin
+# }
+
+DescriptionFragment = Dict  # {"key": str, "source": str, "params": Dict}
+
+
+def make_fragment(key: str, source: str, **params) -> DescriptionFragment:
+    """Luo rakenteisen description_fragment-objektin."""
+    return {"key": key, "source": source, "params": params}
+
+
+# ------------------------------
+# Reliability scoring
+# ------------------------------
+
+# Staattinen pisteytys per lähdefunktio — ei merkkijonoheuristiikkaa
+SOURCE_RELIABILITY_SCORES: Dict[str, int] = {
+    # Akateemiset (korkein luottamus)
+    "pubmed.ncbi.nlm.nih.gov": 10,
+    "ebi.ac.uk/ena": 10,
+    "Russian Academy of Sciences": 10,
+    "Nature Eurasia": 10,
+
+    # Erikoistuneet genomitietokannat
+    "yfull.com": 8,
+    "isogg.org": 8,
+    "haplogrep.i-med.ac.at": 8,
+    "RIKEN": 8,
+    "cngb.org": 7,
+    "bgi.com": 7,
+    "Korean Genome Project": 7,
+    "Japanese Genome Database": 7,
+
+    # Kaupalliset mutta luotettavat
+    "familytreedna.com": 6,
+    "ancientdna.info": 6,
+    "AncestryDNA": 5,
+    "FamilyTreeDNA": 5,
+    "MyHeritage": 5,
+    "Nebula Genomics": 5,
+    "Living DNA": 5,
+    "Sequencing.com": 4,
+    "Genomelink": 4,
+
+    # Hakemistot ja yhteisöt
+    "eupedia.com": 4,
+    "geni.com": 3,
+    "eLIBRARY.RU": 4,
+
+    # Analyysityökalut
+    "MyTrueAncestry": 4,
+    "GEDmatch": 4,
+    "Genoplot": 4,
+    "Illustrative DNA": 4,
+
+    # Alueelliset journaalit (matala prioriteetti — ei peer-review-varmistusta)
+    "Middle Eastern Archaeogenetics Journals": 3,
+    "South Asian Archaeogenetics Journals": 3,
+    "SE Asian Archaeogenetics Journals": 3,
+    "African Archaeogenetics Journals": 3,
+    "North African Archaeogenetics Journals": 3,
+    "Sub-Saharan Archaeogenetics Journals": 3,
+    "Native American Archaeogenetics Journals": 3,
+    "South American Archaeogenetics Journals": 3,
+    "Caribbean Archaeogenetics Journals": 3,
+    "Arctic Archaeogenetics Journals": 3,
+    "Australian Archaeogenetics Journals": 3,
+    "Polynesian Archaeogenetics Journals": 3,
+    "Melanesian Archaeogenetics Journals": 3,
+    "Micronesian Archaeogenetics Journals": 3,
+    "New Zealand Archaeogenetics Journals": 3,
+    "Indian Ocean Archaeogenetics Journals": 3,
+    "North Atlantic Archaeogenetics Journals": 3,
+}
+
+_DEFAULT_SOURCE_SCORE = 2  # tuntematon lähde
+
+
+def calculate_reliability(new_data: Dict) -> int:
+    """
+    Laskee luotettavuuspisteet staattisen pisteytyslistan perusteella.
+    Jokainen lähde lasketaan vain kerran (deduplikoitu kutsukohtaisesti).
+    """
+    score = 0
+    for source in new_data.get("sources", []):
+        score += SOURCE_RELIABILITY_SCORES.get(source, _DEFAULT_SOURCE_SCORE)
+    return score
+
+
+# ------------------------------
 # Core interface
 # ------------------------------
 
@@ -23,7 +228,7 @@ def fetch_full_haplogroup_data(haplogroup: str) -> Dict:
     data: Dict = {
         "haplogroup": haplogroup,
         "lineage_type": detect_lineage_type(haplogroup),
-        "description_fragments": [],
+        "description_fragments": [],   # List[DescriptionFragment]
         "regions": [],
         "ancient_samples": [],
         "time_depth": "",
@@ -32,10 +237,10 @@ def fetch_full_haplogroup_data(haplogroup: str) -> Dict:
         "analysis_tools": [],
         "regional_profiles": [],
         "reliability_score": 0,
-        "privacy_notice": "Älä koskaan jaa raakaa DNA-dataasi ilman tietoista suostumusta.",
+        "privacy_notice": "Never share your raw DNA data without informed consent.",
     }
 
-    sources = [
+    source_funcs = [
         # Länsi / globaali
         fetch_from_yfull,
         fetch_from_familytreedna,
@@ -86,7 +291,7 @@ def fetch_full_haplogroup_data(haplogroup: str) -> Dict:
         fetch_analysis_tools,
     ]
 
-    for source_func in sources:
+    for source_func in source_funcs:
         try:
             new_data = source_func(haplogroup)
             data = merge_data(data, new_data)
@@ -100,7 +305,17 @@ def fetch_full_haplogroup_data(haplogroup: str) -> Dict:
     data["raw_data_providers"] = unique_by_key(data.get("raw_data_providers", []), "name")
     data["analysis_tools"] = unique_by_key(data.get("analysis_tools", []), "name")
     data["regional_profiles"] = unique_by_key(data.get("regional_profiles", []), "region")
-    data["description_fragments"] = list(dict.fromkeys(data["description_fragments"]))
+
+    # Deduploi fragmentit avaimen + parametrien perusteella
+    seen_fragments: set = set()
+    deduped: List[DescriptionFragment] = []
+    for frag in data["description_fragments"]:
+        frag_id = (frag.get("key"), json.dumps(frag.get("params", {}), sort_keys=True))
+        if frag_id not in seen_fragments:
+            seen_fragments.add(frag_id)
+            deduped.append(frag)
+    data["description_fragments"] = deduped
+
     data["reliability_score"] = min(100, data["reliability_score"])
 
     return data
@@ -123,18 +338,9 @@ def merge_data(base: Dict, new: Dict) -> Dict:
     base.setdefault("regional_profiles", []).extend(new.get("regional_profiles", []))
 
     if not base.get("time_depth") and new.get("time_depth"):
-        base["time_depth"] = new.get("time_depth")
+        base["time_depth"] = new["time_depth"]
 
     return base
-
-
-def detect_lineage_type(haplogroup: str) -> str:
-    if haplogroup.startswith("Y"):
-        return "Y-DNA"
-    elif haplogroup.startswith(("MT", "H", "U", "J", "K", "T", "V", "W", "X", "L", "M", "N", "R")):
-        return "mtDNA"
-    else:
-        return "mtDNA/Y-DNA (tarkentamaton)"
 
 
 def unique_by_key(items: List[Dict], key: str) -> List[Dict]:
@@ -148,34 +354,44 @@ def unique_by_key(items: List[Dict], key: str) -> List[Dict]:
     return out
 
 
-def calculate_reliability(new_data: Dict) -> int:
-    score = 0
-    academic_sources = ["Nature", "PNAS", "Science", "Reich Lab", "Max Planck", "Harvard", "Cambridge"]
-    commercial_sources = ["AncestryDNA", "23andMe", "MyHeritage", "FamilyTreeDNA"]
-
-    for s in new_data.get("sources", []):
-        if any(a.lower() in s.lower() for a in academic_sources):
-            score += 10
-        elif any(c.lower() in s.lower() for c in commercial_sources):
-            score += 5
-        else:
-            score += 3
-    return score
-
-
 def export_to_json(data: Dict, filename: str = "haplogroup_data.json"):
-    with open(filename, 'w', encoding='utf-8') as f:
+    with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     logger.info(f"Data viety tiedostoon: {filename}")
 
 
+def render_fragments(fragments: List[DescriptionFragment], lang: str = "en") -> List[str]:
+    """
+    Muuntaa rakenteelliset fragmentit lokalisoiduiksi tekstimerkkijonoiksi.
+    Kutsutaan story_utils.py:stä — ei data_utils.py:stä.
+
+    Tarvitsee i18n_utils.get_text() -funktion.
+    Lazy import välttää sirkkulaarisen riippuvuuden.
+    """
+    try:
+        from i18n_utils import get_text
+    except ImportError:
+        # Fallback: palauta avain jos i18n ei ole saatavilla
+        return [f["key"] for f in fragments]
+
+    result = []
+    for frag in fragments:
+        try:
+            text = get_text(frag["key"], lang=lang, **frag.get("params", {}))
+            result.append(text)
+        except (KeyError, TypeError) as e:
+            logger.warning(f"Fragment render failed for key '{frag.get('key')}': {e}")
+            result.append(frag.get("key", ""))
+    return result
+
+
 # ------------------------------
-# Dynaamiset lähteet (API-esimerkit)
+# Dynaamiset lähteet
 # ------------------------------
 
 def fetch_from_pubmed(haplogroup: str) -> Dict:
     try:
-        url = f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
+        url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
         params = {
             "db": "pubmed",
             "term": f"{haplogroup} haplogroup ancient DNA",
@@ -186,7 +402,9 @@ def fetch_from_pubmed(haplogroup: str) -> Dict:
             count_match = re.search(r'<Count>(\d+)</Count>', response.text)
             num_papers = int(count_match.group(1)) if count_match else 0
             return {
-                "description_fragments": [f"PubMedissä tunnistettu {num_papers} tutkimusta haploryhmään liittyen."],
+                "description_fragments": [
+                    make_fragment("source_pubmed_count", "pubmed", haplogroup=haplogroup, count=num_papers)
+                ],
                 "sources": ["pubmed.ncbi.nlm.nih.gov"],
             }
         return {}
@@ -197,7 +415,9 @@ def fetch_from_pubmed(haplogroup: str) -> Dict:
 
 def fetch_from_isogg(haplogroup: str) -> Dict:
     return {
-        "description_fragments": [f"ISOGG Y-DNA Tree dokumentoi haploryhmän haarautumat ja SNP-mutaatiot."],
+        "description_fragments": [
+            make_fragment("source_isogg", "isogg", haplogroup=haplogroup)
+        ],
         "sources": ["isogg.org"],
     }
 
@@ -208,54 +428,54 @@ def fetch_from_isogg(haplogroup: str) -> Dict:
 
 def fetch_from_yfull(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["YFull tarjoaa kalibroidut fylogeneettiset puut ja aikasyvyysarviot."],
-        "regions": ["Eurooppa", "Lähi-itä", "Keski-Aasia"],
+        "description_fragments": [make_fragment("source_yfull", "yfull", haplogroup=haplogroup)],
+        "regions": ["Europe", "Middle East", "Central Asia"],
         "sources": ["yfull.com"],
     }
 
 
 def fetch_from_familytreedna(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["FamilyTreeDNA-projektit kartoittavat nykyaikaisia ja historiallisia haaroja."],
-        "regions": ["Eurooppa", "Pohjois-Amerikka"],
+        "description_fragments": [make_fragment("source_familytreedna", "familytreedna", haplogroup=haplogroup)],
+        "regions": ["Europe", "North America"],
         "sources": ["familytreedna.com"],
     }
 
 
 def fetch_from_haplogrep(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Haplogrep tarjoaa filogeneettisen luokittelun ja haploryhmäennusteet."],
+        "description_fragments": [make_fragment("source_haplogrep", "haplogrep", haplogroup=haplogroup)],
         "sources": ["haplogrep.i-med.ac.at"],
     }
 
 
 def fetch_from_eupedia(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Eupedia kuvaa haploryhmien historiallista levinneisyyttä ja kulttuuriyhteyksiä."],
-        "regions": ["Eurooppa", "Lähi-itä", "Pohjois-Afrikka"],
+        "description_fragments": [make_fragment("source_eupedia", "eupedia", haplogroup=haplogroup)],
+        "regions": ["Europe", "Middle East", "North Africa"],
         "sources": ["eupedia.com"],
     }
 
 
 def fetch_from_geni(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Geni yhdistää sukupuita haploryhmäpohjaisesti."],
+        "description_fragments": [make_fragment("source_geni", "geni", haplogroup=haplogroup)],
         "sources": ["geni.com"],
     }
 
 
 def fetch_from_ancientdna_info(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["AncientDNA-arkistot sisältävät muinaisnäytteitä, joita voidaan verrata moderniin DNA:han."],
-        "regions": ["Eurooppa", "Siperia", "Lähi-itä"],
+        "description_fragments": [make_fragment("source_ancientdna_info", "ancientdna_info", haplogroup=haplogroup)],
+        "regions": ["Europe", "Siberia", "Middle East"],
         "sources": ["ancientdna.info"],
     }
 
 
 def fetch_from_european_nucleotide_archive(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["European Nucleotide Archive tarjoaa raakadataa muinaisille ja moderneille näytteille."],
-        "regions": ["Eurooppa"],
+        "description_fragments": [make_fragment("source_ena", "ena", haplogroup=haplogroup)],
+        "regions": ["Europe"],
         "sources": ["ebi.ac.uk/ena"],
     }
 
@@ -266,32 +486,32 @@ def fetch_from_european_nucleotide_archive(haplogroup: str) -> Dict:
 
 def fetch_from_russian_academic_sources(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Venäläiset tutkimukset dokumentoivat haploryhmän esiintymistä Siperiassa ja Volgalla."],
-        "regions": ["Siperia", "Volga", "Kaukasus", "Itä-Eurooppa"],
+        "description_fragments": [make_fragment("source_russian_academic", "russian_academic", haplogroup=haplogroup)],
+        "regions": ["Siberia", "Volga", "Caucasus", "Eastern Europe"],
         "sources": ["eLIBRARY.RU", "Russian Academy of Sciences"],
     }
 
 
 def fetch_from_eurasian_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Euraasialaiset tutkimukset liittävät haploryhmät aroalueiden ja paimentolaiskulttuurien liikkeisiin."],
-        "regions": ["Keski-Aasia", "Pontinen aro", "Altai", "Ural"],
+        "description_fragments": [make_fragment("source_eurasian_archaeogenetics", "eurasian_arch", haplogroup=haplogroup)],
+        "regions": ["Central Asia", "Pontic Steppe", "Altai", "Ural"],
         "sources": ["Nature Eurasia"],
     }
 
 
 def fetch_from_middle_east_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Lähi-idän arkeogenetiikka yhdistää haploryhmät varhaisiin maanviljelijöihin ja kauppaverkostoihin."],
-        "regions": ["Lähi-itä"],
+        "description_fragments": [make_fragment("source_middle_east_archaeogenetics", "middle_east_arch", haplogroup=haplogroup)],
+        "regions": ["Middle East"],
         "sources": ["Middle Eastern Archaeogenetics Journals"],
     }
 
 
 def fetch_from_south_asian_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Etelä-Aasian tutkimukset liittävät haploryhmät Indus-laakson ja aroliikkeiden vuorovaikutukseen."],
-        "regions": ["Intia", "Pakistan", "Sri Lanka"],
+        "description_fragments": [make_fragment("source_south_asian_archaeogenetics", "south_asian_arch", haplogroup=haplogroup)],
+        "regions": ["India", "Pakistan", "Sri Lanka"],
         "sources": ["South Asian Archaeogenetics Journals"],
     }
 
@@ -302,15 +522,15 @@ def fetch_from_south_asian_archaeogenetics(haplogroup: str) -> Dict:
 
 def fetch_from_chinese_genomic_databases(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Kiinalaiset genomitietokannat dokumentoivat haploryhmien esiintymistä Itä- ja Keski-Aasiassa."],
-        "regions": ["Kiina", "Mongolia", "Tiibet"],
+        "description_fragments": [make_fragment("source_chinese_genomics", "chinese_genomics", haplogroup=haplogroup)],
+        "regions": ["China", "Mongolia", "Tibet"],
         "sources": ["cngb.org", "bgi.com"],
     }
 
 
 def fetch_from_korean_genomics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Korean genomitutkimukset osoittavat haploryhmien esiintymistä Korean niemimaalla."],
+        "description_fragments": [make_fragment("source_korean_genomics", "korean_genomics", haplogroup=haplogroup)],
         "regions": ["Korea"],
         "sources": ["Korean Genome Project"],
     }
@@ -318,16 +538,16 @@ def fetch_from_korean_genomics(haplogroup: str) -> Dict:
 
 def fetch_from_japanese_genomics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Japanilaiset genomitutkimukset liittävät haploryhmät Jōmon- ja Yayoi-populaatioihin."],
-        "regions": ["Japani"],
+        "description_fragments": [make_fragment("source_japanese_genomics", "japanese_genomics", haplogroup=haplogroup)],
+        "regions": ["Japan"],
         "sources": ["RIKEN", "Japanese Genome Database"],
     }
 
 
 def fetch_from_southeast_asian_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Kaakkois-Aasian tutkimukset yhdistävät haploryhmät varhaisiin merellisiin verkostoihin."],
-        "regions": ["Thaimaa", "Vietnam", "Indonesia", "Filippiinit"],
+        "description_fragments": [make_fragment("source_southeast_asian_archaeogenetics", "sea_arch", haplogroup=haplogroup)],
+        "regions": ["Thailand", "Vietnam", "Indonesia", "Philippines"],
         "sources": ["SE Asian Archaeogenetics Journals"],
     }
 
@@ -338,24 +558,24 @@ def fetch_from_southeast_asian_archaeogenetics(haplogroup: str) -> Dict:
 
 def fetch_from_african_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Afrikan arkeogenetiikka dokumentoi haploryhmien varhaisimmat juuret ja levinneisyyden."],
-        "regions": ["Afrikka"],
+        "description_fragments": [make_fragment("source_african_archaeogenetics", "african_arch", haplogroup=haplogroup)],
+        "regions": ["Africa"],
         "sources": ["African Archaeogenetics Journals"],
     }
 
 
 def fetch_from_north_african_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Pohjois-Afrikan tutkimukset yhdistävät haploryhmät Välimeren ja Saharan verkostoihin."],
-        "regions": ["Pohjois-Afrikka"],
+        "description_fragments": [make_fragment("source_north_african_archaeogenetics", "north_african_arch", haplogroup=haplogroup)],
+        "regions": ["North Africa"],
         "sources": ["North African Archaeogenetics Journals"],
     }
 
 
 def fetch_from_subsaharan_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Sub-Saharan Afrikan tutkimukset liittävät haploryhmät Bantu-laajenemiseen ja varhaisiin metsästäjä-keräilijöihin."],
-        "regions": ["Sub-Saharan Afrikka"],
+        "description_fragments": [make_fragment("source_subsaharan_archaeogenetics", "subsaharan_arch", haplogroup=haplogroup)],
+        "regions": ["Sub-Saharan Africa"],
         "sources": ["Sub-Saharan Archaeogenetics Journals"],
     }
 
@@ -366,32 +586,32 @@ def fetch_from_subsaharan_archaeogenetics(haplogroup: str) -> Dict:
 
 def fetch_from_native_american_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Pohjois-Amerikan alkuperäiskansojen tutkimukset yhdistävät haploryhmät Beringian reitteihin."],
-        "regions": ["Pohjois-Amerikka"],
+        "description_fragments": [make_fragment("source_native_american_archaeogenetics", "native_american_arch", haplogroup=haplogroup)],
+        "regions": ["North America"],
         "sources": ["Native American Archaeogenetics Journals"],
     }
 
 
 def fetch_from_south_american_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Etelä-Amerikan tutkimukset liittävät haploryhmät Andien, Amazonian ja rannikkokulttuurien verkostoihin."],
-        "regions": ["Etelä-Amerikka"],
+        "description_fragments": [make_fragment("source_south_american_archaeogenetics", "south_american_arch", haplogroup=haplogroup)],
+        "regions": ["South America"],
         "sources": ["South American Archaeogenetics Journals"],
     }
 
 
 def fetch_from_caribbean_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Karibian tutkimukset yhdistävät haploryhmät Taino- ja Arawak-kulttuureihin."],
-        "regions": ["Karibia"],
+        "description_fragments": [make_fragment("source_caribbean_archaeogenetics", "caribbean_arch", haplogroup=haplogroup)],
+        "regions": ["Caribbean"],
         "sources": ["Caribbean Archaeogenetics Journals"],
     }
 
 
 def fetch_from_arctic_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Arktiset tutkimukset liittävät haploryhmät paleo-eskimoihin ja inuiittikulttuureihin."],
-        "regions": ["Arktinen alue"],
+        "description_fragments": [make_fragment("source_arctic_archaeogenetics", "arctic_arch", haplogroup=haplogroup)],
+        "regions": ["Arctic"],
         "sources": ["Arctic Archaeogenetics Journals"],
     }
 
@@ -402,7 +622,7 @@ def fetch_from_arctic_archaeogenetics(haplogroup: str) -> Dict:
 
 def fetch_from_australian_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Australian tutkimukset liittävät haploryhmät varhaisiin Sahul-alueen populaatioihin."],
+        "description_fragments": [make_fragment("source_australian_archaeogenetics", "australian_arch", haplogroup=haplogroup)],
         "regions": ["Australia"],
         "sources": ["Australian Archaeogenetics Journals"],
     }
@@ -410,7 +630,7 @@ def fetch_from_australian_archaeogenetics(haplogroup: str) -> Dict:
 
 def fetch_from_polynesian_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Polynesian tutkimukset yhdistävät haploryhmät austronesialaiseen laajenemiseen."],
+        "description_fragments": [make_fragment("source_polynesian_archaeogenetics", "polynesian_arch", haplogroup=haplogroup)],
         "regions": ["Polynesia"],
         "sources": ["Polynesian Archaeogenetics Journals"],
     }
@@ -418,7 +638,7 @@ def fetch_from_polynesian_archaeogenetics(haplogroup: str) -> Dict:
 
 def fetch_from_melanesian_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Melanesian tutkimukset liittävät haploryhmät Sahulin ja Papuan varhaisiin väestöihin."],
+        "description_fragments": [make_fragment("source_melanesian_archaeogenetics", "melanesian_arch", haplogroup=haplogroup)],
         "regions": ["Melanesia"],
         "sources": ["Melanesian Archaeogenetics Journals"],
     }
@@ -426,32 +646,32 @@ def fetch_from_melanesian_archaeogenetics(haplogroup: str) -> Dict:
 
 def fetch_from_micronesian_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Mikronesian tutkimukset yhdistävät haploryhmät merellisiin siirtoreitteihin Tyynellämerellä."],
-        "regions": ["Mikronesia"],
+        "description_fragments": [make_fragment("source_micronesian_archaeogenetics", "micronesian_arch", haplogroup=haplogroup)],
+        "regions": ["Micronesia"],
         "sources": ["Micronesian Archaeogenetics Journals"],
     }
 
 
 def fetch_from_new_zealand_archaeogenetics(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Uuden-Seelannin tutkimukset liittävät haploryhmät maorien esi-isiin ja polynesialaiseen laajenemiseen."],
-        "regions": ["Uusi-Seelanti"],
+        "description_fragments": [make_fragment("source_new_zealand_archaeogenetics", "nz_arch", haplogroup=haplogroup)],
+        "regions": ["New Zealand"],
         "sources": ["New Zealand Archaeogenetics Journals"],
     }
 
 
 def fetch_from_indian_ocean_islands(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Intian valtameren saarien tutkimukset yhdistävät haploryhmät afrikkalaisiin, austronesialaisiin ja eteläaasialaisiin reitteihin."],
-        "regions": ["Intian valtameren saaret"],
+        "description_fragments": [make_fragment("source_indian_ocean_islands", "indian_ocean_arch", haplogroup=haplogroup)],
+        "regions": ["Indian Ocean Islands"],
         "sources": ["Indian Ocean Archaeogenetics Journals"],
     }
 
 
 def fetch_from_north_atlantic_islands(haplogroup: str) -> Dict:
     return {
-        "description_fragments": ["Pohjois-Atlantin saarten tutkimukset yhdistävät haploryhmät viikinkeihin ja varhaisiin merikulttuureihin."],
-        "regions": ["Islanti", "Färsaaret", "Orkneysaaret", "Shetlanti"],
+        "description_fragments": [make_fragment("source_north_atlantic_islands", "north_atlantic_arch", haplogroup=haplogroup)],
+        "regions": ["Iceland", "Faroe Islands", "Orkney", "Shetland"],
         "sources": ["North Atlantic Archaeogenetics Journals"],
     }
 
@@ -466,63 +686,68 @@ def fetch_raw_data_providers(haplogroup: str) -> Dict:
             "name": "Nebula Genomics",
             "type": "WGS",
             "coverage": "30x–100x WGS",
-            "focus": "Täysi genomi arkeogeneettiseen analyysiin.",
-            "notes": "Sopii MyTrueAncestry-, GEDmatch- ja G25-analyyseihin.",
+            "focus_key": "provider_focus_nebula",
+            "notes_key": "provider_notes_nebula",
             "url": "https://nebula.org",
         },
         {
             "name": "AncestryDNA",
             "type": "Autosomal SNP array",
-            "coverage": "~600k–700k SNP:tä",
-            "focus": "Laaja autosomaalidata muinais-DNA-vertailuun.",
-            "notes": "Hyvin tuettu kolmannen osapuolen työkaluissa.",
+            "coverage": "~600k–700k SNPs",
+            "focus_key": "provider_focus_ancestry",
+            "notes_key": "provider_notes_ancestry",
             "url": "https://www.ancestry.com/dna",
         },
         {
             "name": "FamilyTreeDNA",
-            "type": "Y-DNA / mtDNA / autosomaali",
-            "coverage": "Erikoistestit linjoille + autosomaali",
-            "focus": f"Syvät isä- ja äitilinjat haploryhmälle {haplogroup}.",
-            "notes": "Mahdollistaa linjapohjaisen syväanalyysin.",
+            "type": "Y-DNA / mtDNA / autosomal",
+            "coverage": "Specialized lineage tests + autosomal",
+            "focus_key": "provider_focus_ftdna",
+            "notes_key": "provider_notes_ftdna",
             "url": "https://www.familytreedna.com",
         },
         {
             "name": "Living DNA",
-            "type": "Autosomal + linjat",
-            "coverage": "Mikrosiru + linjatulkinta",
-            "focus": "Syvä alueellinen ja linjapohjainen raportointi.",
-            "notes": "Hyödyllinen eurooppalaisessa populaatiohistoriassa.",
+            "type": "Autosomal + lineages",
+            "coverage": "Microarray + lineage interpretation",
+            "focus_key": "provider_focus_livingdna",
+            "notes_key": "provider_notes_livingdna",
             "url": "https://livingdna.com",
         },
         {
             "name": "MyHeritage DNA",
             "type": "Autosomal SNP array",
-            "coverage": "Noin samaa luokkaa kuin Ancestry/23andMe",
-            "focus": "Laaja sukulaisverkosto ja moderni vertailu.",
-            "notes": "Yhteensopiva useiden analyysityökalujen kanssa.",
+            "coverage": "Comparable to Ancestry/23andMe",
+            "focus_key": "provider_focus_myheritage",
+            "notes_key": "provider_notes_myheritage",
             "url": "https://www.myheritage.com/dna",
         },
         {
             "name": "Sequencing.com",
             "type": "WGS / WES / SNP upload",
-            "coverage": "WGS/WES + sovellusmarkkinapaikka",
-            "focus": "Syvägenomi ja muinaisperimäanalyysit.",
-            "notes": "Mahdollistaa useiden tiedostomuotojen hyödyntämisen.",
+            "coverage": "WGS/WES + app marketplace",
+            "focus_key": "provider_focus_sequencing",
+            "notes_key": "provider_notes_sequencing",
             "url": "https://sequencing.com",
         },
         {
             "name": "Genomelink",
             "type": "Raw DNA upload",
-            "coverage": "Riippuu lähteestä",
-            "focus": "Ancient Ancestry -raportit ja fenotyyppianalyysit.",
-            "notes": "Hyödyntää kuluttajatestien raakadataa.",
+            "coverage": "Depends on source",
+            "focus_key": "provider_focus_genomelink",
+            "notes_key": "provider_notes_genomelink",
             "url": "https://genomelink.io",
         },
     ]
 
     return {
-        "description_fragments": ["Useat kaupalliset palvelut tarjoavat raakadataa, jota voidaan käyttää arkeogeneettiseen analyysiin."],
-        "sources": ["Nebula Genomics", "AncestryDNA", "FamilyTreeDNA", "Living DNA", "MyHeritage", "Sequencing.com", "Genomelink"],
+        "description_fragments": [
+            make_fragment("source_raw_data_providers", "raw_data_providers", haplogroup=haplogroup)
+        ],
+        "sources": [
+            "Nebula Genomics", "AncestryDNA", "FamilyTreeDNA",
+            "Living DNA", "MyHeritage", "Sequencing.com", "Genomelink",
+        ],
         "raw_data_providers": providers,
     }
 
@@ -532,56 +757,61 @@ def fetch_analysis_tools(haplogroup: str) -> Dict:
         {
             "name": "MyTrueAncestry",
             "type": "Ancient DNA matching",
-            "focus": "Vertaa käyttäjän DNA:ta tuhansiin muinaisnäytteisiin.",
-            "compatibility": "Autosomal, Y-DNA, mtDNA, WGS.",
-            "notes": "Tuottaa karttoja, aikajanoja ja kulttuuritulkintoja.",
+            "focus_key": "tool_focus_mytrueancestry",
+            "compatibility": "Autosomal, Y-DNA, mtDNA, WGS",
+            "notes_key": "tool_notes_mytrueancestry",
             "url": "https://mytrueancestry.com",
         },
         {
             "name": "GEDmatch",
             "type": "Admixture & heritage tools",
-            "focus": "Admixture/Oracle-laskurit muinaisista komponenttipopulaatioista.",
-            "compatibility": "Useimpien kuluttajatestien raakadatamuodot.",
-            "notes": "Sopii sekä muinaisten komponenttien arviointiin että sukutaustojen vertailuun.",
+            "focus_key": "tool_focus_gedmatch",
+            "compatibility": "Most consumer test raw data formats",
+            "notes_key": "tool_notes_gedmatch",
             "url": "https://www.gedmatch.com",
         },
         {
-            "name": "Genoplot / G25-työkalut",
+            "name": "Genoplot / G25",
             "type": "G25 modeling",
-            "focus": "Korkean resoluution populaatiomallinnus.",
-            "compatibility": "Yhteensopiva useiden raakadatamuotojen kanssa.",
-            "notes": "Mahdollistaa hienojakoisen mallinnuksen muinaisten ja modernien populaatioiden välillä.",
+            "focus_key": "tool_focus_genoplot",
+            "compatibility": "Multiple raw data formats",
+            "notes_key": "tool_notes_genoplot",
             "url": "https://genoplot.com",
         },
         {
             "name": "Illustrative DNA",
             "type": "G25-based ancient modeling",
-            "focus": "Granulaarinen muinaisväestöjen mallinnus.",
-            "compatibility": "Kuluttajatestit (Ancestry, 23andMe, MyHeritage, FTDNA).",
-            "notes": "Sopii syvälliseen arkeogeneettiseen jatkoanalyysiin.",
+            "focus_key": "tool_focus_illustrativedna",
+            "compatibility": "Ancestry, 23andMe, MyHeritage, FTDNA",
+            "notes_key": "tool_notes_illustrativedna",
             "url": "https://illustrativedna.com",
         },
         {
             "name": "Genomelink Ancient Ancestry",
             "type": "Trait & ancient ancestry",
-            "focus": "Muinaisperimä + fenotyyppianalyysit.",
-            "compatibility": "Useimmat kuluttajatestit.",
-            "notes": "Hyödyllinen yhdistelmätulkinnoissa.",
+            "focus_key": "tool_focus_genomelink_ancient",
+            "compatibility": "Most consumer tests",
+            "notes_key": "tool_notes_genomelink_ancient",
             "url": "https://genomelink.io",
         },
         {
             "name": "Nebula Genomics (upload)",
             "type": "Raw DNA upload & WGS analysis",
-            "focus": "Syvägenomi ja haploryhmäanalyysi täydestä genomista.",
-            "compatibility": "AncestryDNA, 23andMe, MyHeritage jne.",
-            "notes": "Kattaa syvä-esi-isä- ja haploryhmäanalyysin.",
+            "focus_key": "tool_focus_nebula_upload",
+            "compatibility": "AncestryDNA, 23andMe, MyHeritage etc.",
+            "notes_key": "tool_notes_nebula_upload",
             "url": "https://nebula.org/free-dna-upload-analysis/",
         },
     ]
 
     return {
-        "description_fragments": ["Useat analyysialustat mahdollistavat muinais-DNA-vertailut ja populaatiomallinnuksen."],
-        "sources": ["MyTrueAncestry", "GEDmatch", "Genoplot", "Illustrative DNA", "Genomelink", "Nebula Genomics"],
+        "description_fragments": [
+            make_fragment("source_analysis_tools", "analysis_tools", haplogroup=haplogroup)
+        ],
+        "sources": [
+            "MyTrueAncestry", "GEDmatch", "Genoplot",
+            "Illustrative DNA", "Genomelink", "Nebula Genomics",
+        ],
         "analysis_tools": tools,
     }
 
@@ -597,11 +827,10 @@ if __name__ == "__main__":
         print("Käyttö: python data_utils.py <haploryhmä> [export]")
         sys.exit(1)
 
-    haplogroup = sys.argv[1]
-    data = fetch_full_haplogroup_data(haplogroup)
+    haplogroup_arg = sys.argv[1]
+    result = fetch_full_haplogroup_data(haplogroup_arg)
 
-    print(json.dumps(data, indent=4, ensure_ascii=False))
+    print(json.dumps(result, indent=4, ensure_ascii=False))
 
     if len(sys.argv) > 2 and sys.argv[2] == "export":
-        export_to_json(data)
-
+        export_to_json(result)
