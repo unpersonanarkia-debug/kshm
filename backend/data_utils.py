@@ -299,6 +299,25 @@ def fetch_full_haplogroup_data(haplogroup: str) -> Dict:
         except Exception as e:
             logger.warning(f"Virhe lähteessä {source_func.__name__}: {e}")
 
+    # Integraatio: ancient_samples_db
+    # Kutsutaan source_funcs-loopin jälkeen — kureertu tietokanta, ei verkkohaku.
+    # Deduplikointi ID:n perusteella suojaa tuplilta jos muut lähteet
+    # lisäävät saman näytteen (esim. ancientdna_info).
+    try:
+        from ancient_samples_db import get_samples_for_haplogroup
+        db_samples = get_samples_for_haplogroup(haplogroup)
+        if db_samples:
+            data["ancient_samples"] = _merge_ancient_samples_by_id(
+                data["ancient_samples"], db_samples
+            )
+            logger.info(
+                f"ancient_samples_db: {len(db_samples)} näytettä haploryhmälle {haplogroup}"
+            )
+    except ImportError:
+        logger.warning("ancient_samples_db ei ole saatavilla — ohitetaan")
+    except Exception as e:
+        logger.warning(f"Virhe ancient_samples_db-haussa ({haplogroup}): {e}")
+
     # Final cleanup
     data["regions"] = sorted(set(data.get("regions", [])))
     data["sources"] = sorted(set(data.get("sources", [])))
@@ -352,6 +371,23 @@ def unique_by_key(items: List[Dict], key: str) -> List[Dict]:
             seen.add(val)
             out.append(item)
     return out
+
+
+def _merge_ancient_samples_by_id(
+    existing: List[Dict], incoming: List[Dict]
+) -> List[Dict]:
+    """
+    Yhdistää kaksi ancient_samples-listaa deduplikoiden ID:n perusteella.
+    Prioriteetti: existing voittaa — jo olemassa oleva data säilyy.
+    incoming-näytteet lisätään perään jos ID:tä ei vielä ole.
+    """
+    existing_ids = {s.get("id") for s in existing if s.get("id")}
+    merged = list(existing)
+    for sample in incoming:
+        if sample.get("id") not in existing_ids:
+            merged.append(sample)
+            existing_ids.add(sample.get("id"))
+    return merged
 
 
 def export_to_json(data: Dict, filename: str = "haplogroup_data.json"):
