@@ -2,16 +2,12 @@
 # KSHM – Archaeogenetic Bloodline Book PDF Engine
 
 from reportlab.platypus import (
-    SimpleDocTemplate,
     Paragraph,
     Spacer,
     Image,
     PageBreak,
     Table,
     TableStyle,
-    ListFlowable,
-    ListItem,
-    KeepTogether
 )
 from reportlab.platypus.tableofcontents import TableOfContents
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
@@ -22,7 +18,6 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
 from reportlab.platypus import BaseDocTemplate, Frame, PageTemplate
-from reportlab.platypus.doctemplate import Indenter
 import os
 
 
@@ -30,12 +25,16 @@ import os
 # TYPOGRAPHY REGISTRATION
 # =========================================================
 
+# Seurataan onnistuiko custom-fonttien rekisteröinti
+_CUSTOM_FONTS_LOADED = False
+
+
 def register_fonts(font_path="fonts"):
     """
     Register custom fonts if available.
-    Falls back safely if not found.
+    Falls back to built-in fonts if not found.
     """
-
+    global _CUSTOM_FONTS_LOADED
     try:
         pdfmetrics.registerFont(
             TTFont("Playfair", os.path.join(font_path, "PlayfairDisplay-Regular.ttf"))
@@ -46,9 +45,9 @@ def register_fonts(font_path="fonts"):
         pdfmetrics.registerFont(
             TTFont("Lora", os.path.join(font_path, "Lora-Regular.ttf"))
         )
+        _CUSTOM_FONTS_LOADED = True
     except Exception:
-        # Fallback to built-in fonts
-        pass
+        _CUSTOM_FONTS_LOADED = False
 
 
 # =========================================================
@@ -67,10 +66,15 @@ SEPIA_ACCENT = colors.HexColor("#6e4f2c")
 def get_styles():
     styles = getSampleStyleSheet()
 
+    # Fonttinimet — käytetään custom-fontteja jos rekisteröity, muuten builtinit
+    f_serif = "Playfair" if _CUSTOM_FONTS_LOADED else "Times-Roman"
+    f_serif_italic = "Playfair-Italic" if _CUSTOM_FONTS_LOADED else "Times-Italic"
+    f_body = "Lora" if _CUSTOM_FONTS_LOADED else "Helvetica"
+
     styles.add(
         ParagraphStyle(
             name="TitlePlayfair",
-            fontName="Playfair",
+            fontName=f_serif,
             fontSize=26,
             leading=32,
             textColor=SEPIA_TEXT,
@@ -82,7 +86,7 @@ def get_styles():
     styles.add(
         ParagraphStyle(
             name="Subtitle",
-            fontName="Playfair-Italic",
+            fontName=f_serif_italic,
             fontSize=16,
             leading=22,
             textColor=SEPIA_ACCENT,
@@ -94,7 +98,7 @@ def get_styles():
     styles.add(
         ParagraphStyle(
             name="HeadingChapter",
-            fontName="Playfair",
+            fontName=f_serif,
             fontSize=20,
             leading=26,
             textColor=SEPIA_TEXT,
@@ -106,7 +110,7 @@ def get_styles():
     styles.add(
         ParagraphStyle(
             name="HeadingSection",
-            fontName="Playfair-Italic",
+            fontName=f_serif_italic,
             fontSize=15,
             leading=20,
             textColor=SEPIA_ACCENT,
@@ -118,7 +122,7 @@ def get_styles():
     styles.add(
         ParagraphStyle(
             name="BodyLora",
-            fontName="Lora",
+            fontName=f_body,
             fontSize=12,
             leading=18,
             textColor=SEPIA_TEXT,
@@ -129,7 +133,7 @@ def get_styles():
     styles.add(
         ParagraphStyle(
             name="Caption",
-            fontName="Lora",
+            fontName=f_body,
             fontSize=9,
             leading=12,
             textColor=colors.HexColor("#6b5e4a"),
@@ -255,7 +259,7 @@ class BloodlinePDF:
     # -----------------------------------------------------
 
     def build(self):
-        self.doc.build(self.story)
+        self.doc.multiBuild(self.story)
 
 
 # =========================================================
@@ -315,3 +319,12 @@ def generate_pdf_from_story(story_mt, story_y=None, output_path="report.pdf", us
     
     # Build the PDF
     pdf.build()
+
+
+def generate_pdf(story, filename="report.pdf", lang="en"):
+    """
+    Alias for email_utils compatibility.
+    Wraps generate_pdf_from_story with the signature email_utils expects:
+        generate_pdf(story, filename=pdf_path, lang=lang)
+    """
+    generate_pdf_from_story(story_mt=story, output_path=filename, lang=lang)
