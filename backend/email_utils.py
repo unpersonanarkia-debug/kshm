@@ -2,9 +2,9 @@ import os
 import smtplib
 import ssl
 from email.message import EmailMessage
-from typing import Optional, Dict
+from typing import Optional
 
-from i18n_utils import get_translation
+from i18n_utils import get_text
 
 
 # -----------------------------
@@ -47,7 +47,7 @@ def _send_email_message(msg: EmailMessage) -> bool:
 # -----------------------------
 
 def build_email_subject(haplogroup: str, lang: str) -> str:
-    return get_translation(lang, "email_subject").format(haplogroup=haplogroup)
+    return get_text("email_subject", lang=lang, haplogroup=haplogroup)
 
 
 def build_email_body_text(
@@ -58,7 +58,9 @@ def build_email_body_text(
     mt_haplogroup: Optional[str] = None,
 ) -> str:
     key = "email_body_text_dual" if is_dual else "email_body_text"
-    return get_translation(lang, key).format(
+    return get_text(
+        key,
+        lang=lang,
         haplogroup=haplogroup,
         mt_haplogroup=mt_haplogroup or "",
         user_name=user_name or "",
@@ -73,7 +75,9 @@ def build_email_body_html(
     mt_haplogroup: Optional[str] = None,
 ) -> str:
     key = "email_body_html_dual" if is_dual else "email_body_html"
-    return get_translation(lang, key).format(
+    return get_text(
+        key,
+        lang=lang,
         haplogroup=haplogroup,
         mt_haplogroup=mt_haplogroup or "",
         user_name=user_name or "",
