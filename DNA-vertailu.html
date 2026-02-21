@@ -1,53 +1,14 @@
-const populations = [
-  {
-    name: "Suomi (Nykyväestö)",
-    sub: "Modern Finland (n~2000)",
-    n: 2000,
-    values: {
-      "H": 41.0,
-      "U5": 19.0,
-      "V (HV0)": 5.0,  // "Amazigh-linkki": Erittäin korkea Fennoskandiassa
-      "K1a4": 2.5,     // Neoliittinen maanviljelijälinja
-      "W": 3.0,        // Suomalainen erityispiirre
-      "J/T": 11.0,     // Yhteinen Lähi-itä-perimä
-      "Muut": 18.5
-    }
-  },
-  {
-    name: "Muumio (Egypti)",
-    sub: "Abusir el-Meleq (n=90) ~1388 BCE – 426 CE",
-    n: 90,
-    values: {
-      "H": 18.0,
-      "U6": 12.0,      // Pohjois-Afrikkalainen U-haara
-      "K1a4": 4.5,     // Vahva neoliittinen perintö
-      "V (HV0)": 1.5,  // Läsnä, mutta matala taajuus
-      "J/T": 19.0,
-      "M1": 3.0,       // Tyypillinen Niilin laakson linja
-      "L0-L3": 6.0,    // Saharan eteläpuolinen vaikutus
-      "Muut": 36.0
-    }
-  }
-  // Lisää muut populaatiot (Altai, Tarim, YOO) tähän perään...
-];
 <!DOCTYPE html>
 <html lang="fi">
 <head>
 <meta charset="UTF-8">
-<title>mtDNA-vertailu: Suomi · Egypti · Tarim · Oleniy Ostrov</title>
+<title>mtDNA-vertailu: Altai · Tarim · Oleniy Ostrov · Egypti</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#0e0d0b;--bg2:#161410;--bg3:#1e1b16;
   --line:#2e2a22;--dim:#5a5448;--mid:#8a7e6e;
   --text:#e8dcc8;--accent:#c8963c;--hot:#e05a3a;
-  /* Uudet kategoriakohtaiset värit */
-  --eurasia:#d4af37; /* K1a4 Maanviljely */
-  --amazigh:#e67e22;  /* HV0/V Berber-linkki */
-  --nordic:#3498db;   /* U5 Metsästäjä-keräilijä */
-  --sahara:#9b59b6;   /* U6/M1 Pohjois-Afrikka */
-  --africa:#444444;   /* L0-L3 SSA */
-  --east:#cc3300;     /* C4 Siperia */
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
@@ -58,7 +19,7 @@ header{padding:52px 0 40px;border-bottom:1px solid var(--line);display:grid;grid
 .kicker{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
 h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;line-height:1.1;letter-spacing:-.02em}
 h1 em{font-style:italic;color:var(--accent)}
-.subtitle{margin-top:12px;font-size:.74rem;line-height:1.85;color:var(--mid);max-width:620px}
+.subtitle{margin-top:12px;font-size:.74rem;line-height:1.85;color:var(--mid);max-width:580px}
 .meta{font-size:.63rem;line-height:2.1;color:var(--dim);text-align:right;white-space:nowrap}
 .meta strong{color:var(--mid)}
 .controls{display:flex;gap:8px;padding:22px 0 18px;border-bottom:1px solid var(--line);margin-bottom:28px;align-items:center;flex-wrap:wrap}
@@ -66,14 +27,15 @@ h1 em{font-style:italic;color:var(--accent)}
 .btn{font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.08em;padding:6px 16px;border:1px solid var(--line);background:transparent;color:var(--mid);cursor:pointer;transition:all .15s}
 .btn:hover{border-color:var(--dim);color:var(--text)}
 .btn.on{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:500}
-/* Stacked UI */
+/* Stacked */
 #view-bars{display:none}
-.pop-row{display:grid;grid-template-columns:240px 1fr;gap:0;align-items:center;margin-bottom:12px;opacity:0;transform:translateX(-10px);animation:si .38s forwards}
+.pop-row{display:grid;grid-template-columns:210px 1fr;gap:0;align-items:center;margin-bottom:7px;opacity:0;transform:translateX(-10px);animation:si .38s forwards}
 @keyframes si{to{opacity:1;transform:translateX(0)}}
-.pop-lbl{padding-right:24px;font-size:.61rem;line-height:1.5;color:var(--mid)}
-.pop-lbl strong{display:block;font-family:'Playfair Display',serif;font-size:.85rem;font-weight:500;color:var(--text);margin-bottom:1px}
+.pop-lbl{padding-right:18px;font-size:.61rem;line-height:1.5;color:var(--mid)}
+.pop-lbl strong{display:block;font-family:'Playfair Display',serif;font-size:.78rem;font-weight:500;color:var(--text);margin-bottom:1px}
 .pop-lbl .sub{color:var(--dim);font-size:.57rem}
-.sbar{display:flex;height:30px;gap:1px;cursor:crosshair;background:var(--bg3);border:1px solid var(--line)}
+.n-badge{display:inline-block;background:var(--bg3);border:1px solid var(--line);padding:1px 7px;font-size:.54rem;color:var(--accent);margin-top:3px;letter-spacing:.05em}
+.sbar{display:flex;height:28px;gap:1px;cursor:crosshair}
 .seg{height:100%;transition:opacity .15s,filter .15s;min-width:1px}
 .seg:hover{opacity:.82;filter:brightness(1.25)}
 /* Bars table */
@@ -81,6 +43,7 @@ h1 em{font-style:italic;color:var(--accent)}
 .bars-tbl{min-width:900px;width:100%;border-collapse:collapse}
 .bars-tbl th{font-family:'Playfair Display',serif;font-size:.7rem;font-weight:500;color:var(--text);padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:bottom}
 .bars-tbl th .ths{display:block;font-family:'IBM Plex Mono',monospace;font-size:.55rem;font-weight:300;color:var(--dim);margin-top:2px}
+.bars-tbl th .thn{color:var(--accent);font-size:.57rem}
 .bars-tbl td{padding:3px 10px;border-bottom:1px solid rgba(46,42,34,.55);vertical-align:middle}
 .bars-tbl tr:hover td{background:rgba(200,150,60,.04)}
 .cat-nm{font-size:.62rem;color:var(--mid);white-space:nowrap;display:flex;align-items:center;gap:7px}
@@ -92,23 +55,26 @@ h1 em{font-style:italic;color:var(--accent)}
 .plbl.v{color:var(--text)}
 .grp-hdr{padding:16px 0 4px;font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--line)}
 /* Legend */
-.leg-sec{margin-top:44px;padding:28px;background:var(--bg2);border:1px solid var(--line)}
-.leg-hd{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
-.leg-grp-title{width:100%;font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:12px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
-.leg-wrap{display:flex;flex-wrap:wrap;gap:8px 24px}
-.leg-item{display:flex;align-items:center;gap:8px;font-size:.62rem;color:var(--dim)}
+.leg-sec{margin-top:36px;padding-top:24px;border-top:1px solid var(--line)}
+.leg-hd{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+.leg-grp-title{width:100%;font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:8px 0 4px}
+.leg-wrap{display:flex;flex-wrap:wrap;gap:5px 18px}
+.leg-item{display:flex;align-items:center;gap:7px;font-size:.61rem;color:var(--dim)}
 .leg-sw{width:10px;height:10px;flex-shrink:0;border-radius:1px}
 /* Cards */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:44px}
-.card{background:var(--bg2);padding:28px;border:1px solid var(--line);border-top:2px solid var(--accent);position:relative}
-.card-lbl{font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
-.card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:500;color:var(--text);margin-bottom:12px;line-height:1.3}
-.card p{font-size:.72rem;line-height:1.8;color:var(--mid)}
-.card mark{background:none;color:var(--accent);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1px;margin-top:44px;background:var(--line);border:1px solid var(--line)}
+.card{background:var(--bg2);padding:26px 26px 22px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .4s .05s}
+.card:hover::before{transform:scaleX(1)}
+.card-lbl{font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:9px}
+.card h3{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.3}
+.card p{font-size:.71rem;line-height:1.82;color:var(--mid)}
+.card em{color:var(--text);font-style:normal;font-weight:500}
+.card mark{background:none;color:var(--accent);font-weight:500}
 /* Tooltip */
 .tt{position:fixed;pointer-events:none;z-index:1000;background:var(--bg);border:1px solid var(--accent);padding:9px 13px;font-size:.67rem;line-height:1.6;transform:translate(14px,-50%);display:none;max-width:200px}
 .tt strong{color:var(--accent);display:block;font-size:.7rem}
-@media(max-width:640px){header{grid-template-columns:1fr}.pop-row{grid-template-columns:1fr}.pop-lbl{padding-right:0;margin-bottom:8px}}
+@media(max-width:640px){header{grid-template-columns:1fr}.pop-row{grid-template-columns:1fr}.pop-lbl{padding-right:0;margin-bottom:5px}}
 </style>
 </head>
 <body>
@@ -116,168 +82,172 @@ h1 em{font-style:italic;color:var(--accent)}
 
 <header>
   <div>
-    <div class="kicker">Muinainen DNA · mtDNA-haploryhmät · AADR + Schuenemann 2017</div>
-    <h1>Fennoskandian ja Niilin<br><em>yhteinen koodi</em></h1>
-    <p class="subtitle">Vertailu nyky-Suomen, muinaisen Egyptin (Abusir el-Meleq) ja Euraasian muinaispopulaatioiden välillä. Visualisointi korostaa "silta-linjoja" kuten <strong>K1a4</strong> ja <strong>HV0/V</strong>.</p>
+    <div class="kicker">Muinainen DNA · mtDNA-haploryhmät · AADR v54.1 + Kilinc 2023 + Schuenemann 2017</div>
+    <h1>Mitokondriaalinen perintö:<br><em>Altai, Oleniy Ostrov,</em><br>Tarim &amp; Egypti</h1>
+    <p class="subtitle">Seitsemän populaation mtDNA-jakaumat ~6 500 BCE – 426 CE.
+    Punaiset = Siperia/Itä-Aasia, siniset = WHG/EHG, vihreät = Lähi-itä/Eurooppa.
+    Jakolinja Euraasian poikki näkyy välittömästi.</p>
   </div>
   <div class="meta">
-    <strong>Populaatioita</strong> 5<br>
-    <strong>Haploryhmiä</strong> 12 luokkaa<br>
-    <strong>Metodi</strong> Shotgun & Capture DNA
+    <strong>Näytteitä</strong> 200<br>
+    <strong>Populaatioita</strong> 7<br>
+    <strong>Haploryhmäluokkia</strong> 17<br>
+    <strong>Aikajana</strong> ~6500 BCE – 426 CE
   </div>
 </header>
 
 <div class="controls">
   <span class="ctrl-lbl">Näkymä ·</span>
-  <button class="btn on" id="btn-s" onclick="setView('stacked')">Pino-profiili</button>
+  <button class="btn on" id="btn-s" onclick="setView('stacked')">Pinotttu profiili</button>
   <button class="btn" id="btn-b" onclick="setView('bars')">Rinnakkaisvertailu</button>
 </div>
 
 <div id="view-stacked"></div>
 <div id="view-bars"><div class="bars-grid"><table class="bars-tbl" id="btbl"></table></div></div>
 
-<div class="leg-sec" id="legend-area"></div>
+<div class="leg-sec"><div class="leg-hd">Haploryhmäluokat</div><div class="leg-wrap" id="leg"></div></div>
 
 <div class="cards">
   <div class="card">
-    <div class="card-lbl">Analyysi: Katkeamaton ketju</div>
-    <h3>K1a4 ja HV0:n mysteeri</h3>
-    <p>Visualisointi paljastaa, että Suomen nykyväestö ja muinaisen Egyptin muumiot jakavat <mark>K1a4-linjan</mark>, joka on neoliittisen vallankumouksen globaali sormenjälki. Erityisen hätkähdyttävä on <mark>HV0 / V</mark> -linja: se on Suomessa korkea, mutta se on täsmälleen sama linja, joka on säilynyt korkeana Pohjois-Afrikan eristyneissä <em>Amazigh</em>-populaatioissa.</p>
+    <div class="card-lbl">Karjala vs. Kuola · YOO</div>
+    <h3>Samaa nimeä, eri maailma</h3>
+    <p><em>Yuzhnyy Oleni Ostrov</em> (~6 500 BCE) on yksi Euroopan tärkeimmistä mesoliittisista kohteista: <mark>C-haplotyyppi 50 %</mark> on Siperian/Itä-Aasian linja — poikkeuksellinen Euroopassa. Viittaa yhteyteen itäiseen metsästäjä-keräilijäväestöön (EHG). U4 33 % on klassinen EHG-merkki.<br><br>
+    <em>Bolshoy Oleniy Ostrov</em> (~1 800 BCE, Kuola) on täysin eri: Z+D-siperialaiset linjat rinnakkain T-Lähi-itä-haplo&shy;tyypin kanssa. Lamnidis 2018 tunnisti tämän ryhmän saamelaistenesi-isiksi.</p>
   </div>
   <div class="card">
-    <div class="card-lbl">Karjala vs. Muumiot</div>
-    <h3>Pohjoinen metsästäjäperintö</h3>
-    <p><em>Yuzhnyy Oleniy Ostrov</em> (~6 500 BCE) edustaa Euroopan vanhinta kerrostumaa. <mark>U5-linjan</mark> dominanssi yhdistää Karjalan suoraan nyky-Suomen suomalaiseen perimään, kun taas Egyptin muumioilla esiintyvä <mark>U6</mark> on saman linjan eteläinen, afrikkalainen sisarhaara kymmenien tuhansien vuosien takaa.</p>
+    <div class="card-lbl">Kilinc 2023 · Altai–Kamchatka</div>
+    <h3>Pohjoinen käytävä</h3>
+    <p>G+C+D muodostavat <mark>70 %</mark> kymmenestä Altain–Kamchatkan näytteestä (5 400 BCE – 1 000 CE) — lähes puhtaasti Siperia/Itä-Aasia. Ainoa poikkeus: <em>FRS001 U2e1b</em> (Altai ~5 400 BCE) kuuluu EHG-sukuiseen linjaan, ankkuroiden ANE-pohjan Länsi-Siperiaan.<br><br>
+    Kamchatkan G1b-haplotyyppi (~500–1 000 CE) on sama linja kuin Kolymalla ~7 800 BCE — 8 000 vuoden arktinen jatkuvuus.</p>
   </div>
   <div class="card">
-    <div class="card-lbl">Tarimin Arvoitus</div>
-    <h3>Idän kaukasialaiset</h3>
-    <p>Tarimin muumiot kantavat massiivista <mark>C4-linjaa</mark>, joka on Siperian ja Itä-Aasian merkki, mutta heidän kytköksensä <mark>K-haploryhmään</mark> osoittaa, että jo pronssikaudella euraasialaiset geenivirrat ulottuivat Niililtä Kiinan rajalle saakka.</p>
+    <div class="card-lbl">Xinjiang / Tarim BA</div>
+    <h3>Silkkitie ennen kaupankäyntiä</h3>
+    <p>C-linjat <mark>30 %</mark> esiintyvät rinnakkain U5:n ja R1b:n kanssa (yht. 26 %) — itä ja länsi samassa hautausmaassa. Afanasievan kulttuurin länsiläinen alkuperä näkyy U5/H/R1b:ssä, paikallinen sekoitus C+D:ssä.<br><br>
+    Zhang et al. 2021:n Tarimin mummiot ovat erikseen: puhtaat ANE-isolaatit ilman sekoitusta. Tämä aineisto edustaa jo sekoittuneempaa Xinjiang-populaatiota.</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">Schuenemann 2017 · Egypti</div>
+    <h3>Muinainen Egypti: Lähi-idän risteys</h3>
+    <p>T+J+K+R0 yhteensä <mark>43 %</mark>, H/HV 14 % — Lähi-itäinen profiili, ei afrikkalainen. L-linja (sub-Saharan) vain <mark>1 %</mark> mutta nousee myöhäisnäytteissä: Schuenemann osoitti sub-Saharan komponentin kasvavan Rooman ajalla.<br><br>
+    <em>M1 (7 %)</em> on Pohjois-Afrikan endeeminen haplotyyppi, eri alkuperää kuin sub-Saharan L-linjat.</p>
   </div>
 </div>
 
 </div>
-
 <div class="tt" id="tt"></div>
 
 <script>
-const cats = [
-  { id: "K1a4", nm: "K1a4 (Maanviljely)", col: "var(--eurasia)", grp: "Yhdistävä Euraasia" },
-  { id: "V", nm: "V / HV0 (Berber-linkki)", col: "var(--amazigh)", grp: "Yhdistävä Euraasia" },
-  { id: "U5", nm: "U5 (Metsästäjä-keräilijä)", col: "var(--nordic)", grp: "Pohjoinen Perintö" },
-  { id: "W", nm: "W (Suomalainen erityismerkki)", col: "var(--hot)", grp: "Pohjoinen Perintö" },
-  { id: "C", nm: "C / C4 (Siperia/Altai)", col: "var(--east)", grp: "Pohjoinen Perintö" },
-  { id: "U6", nm: "U6 / M1 (Pohjois-Afrikka)", col: "var(--sahara)", grp: "Eteläinen Perintö" },
-  { id: "L", nm: "L0-L3 (Sub-Sahara)", col: "var(--africa)", grp: "Eteläinen Perintö" },
-  { id: "H", nm: "H", col: "#666", grp: "Muut" },
-  { id: "JT", nm: "J / T", col: "#555", grp: "Muut" },
-  { id: "M", nm: "Muut", col: "#222", grp: "Muut" }
+const POPS=[
+  {id:"yoo",name:"Yuzhnyy Oleni Ostrov",sub:"~6500–5250 BCE · Karjala",n:6,
+   hgs:{"C (Siperia/Itä-As.)":50,"U4 (EHG)":33,"R1b mtDNA":17}},
+  {id:"boo",name:"Bolshoy Oleniy Ostrov",sub:"~1800 BCE · Kuola",n:6,
+   hgs:{"U4 (EHG)":17,"Z (Siperia)":17,"T (Lähi-itä/Eu)":17,"C (Siperia/Itä-As.)":17,"U5 (WHG/EHG)":17,"D (Itä-Aasia)":17}},
+  {id:"alt",name:"Altai — Kilinc 2023",sub:"~5400 BCE–1000 CE · Altai & Kamchatka",n:10,
+   hgs:{"G (Siperia/Itä-As.)":30,"C (Siperia/Itä-As.)":20,"D (Itä-Aasia)":20,"U2 (EHG/Siperia)":10,"R1b mtDNA":10,"A (Amer./Siperia)":10}},
+  {id:"tar",name:"Xinjiang / Tarim BA",sub:"~3000–1500 BCE · Länsi-Kiina",n:47,
+   hgs:{"C (Siperia/Itä-As.)":30,"U5 (WHG/EHG)":13,"R1b mtDNA":13,"H/HV (Länsi-Eu)":13,"T (Lähi-itä/Eu)":9,"U4 (EHG)":6,"D (Itä-Aasia)":6,"A (Amer./Siperia)":4,"Muut":6}},
+  {id:"shg",name:"SHG Skandinavia",sub:"~5800–5600 BCE · Ruotsi",n:7,
+   hgs:{"U5 (WHG/EHG)":57,"U2 (EHG/Siperia)":43}},
+  {id:"yam",name:"Yamnaya",sub:"~3200–2100 BCE · Steppi",n:34,
+   hgs:{"U5 (WHG/EHG)":29,"H/HV (Länsi-Eu)":26,"T (Lähi-itä/Eu)":15,"U4 (EHG)":9,"W (Eu/Kaakkois)":9,"J (Lähi-itä/Eu)":3,"K (Lähialue)":3,"R1b mtDNA":3,"Muut":3}},
+  {id:"egy",name:"Egypti — Abusir el-Meleq",sub:"~1400 BCE–426 CE",n:90,
+   hgs:{"T (Lähi-itä/Eu)":22,"U (muut)":16,"H/HV (Länsi-Eu)":14,"J (Lähi-itä/Eu)":9,"R0 (Arabia)":9,"M1 (Pohj-Afrikka)":7,"I (Länsi-Eu)":4,"W (Eu/Kaakkois)":3,"X (Lähi-itä)":3,"K (Lähialue)":3,"L (Afrikka)":1,"R* (basaali)":3,"Muut":4}}
 ];
 
-const data = [
-  {
-    name: "Suomi (Nykyväestö)",
-    sub: "Fennoskandian nykyperimä (n~2000)",
-    vals: { H: 41, U5: 19, V: 5, K1a4: 2.5, W: 3, JT: 11, M: 18.5 }
-  },
-  {
-    name: "Muumio (Egypti)",
-    sub: "Abusir el-Meleq (n=90) ~1388 BCE",
-    vals: { H: 18, U6: 12, K1a4: 4.5, V: 1.5, JT: 19, L: 6, M: 39 }
-  },
-  {
-    name: "Yuzhnyy Oleniy Ostrov",
-    sub: "Karjala, Venäjä (n=12) ~6500 BCE",
-    vals: { C: 50, U5: 33, JT: 8.5, M: 8.5 }
-  },
-  {
-    name: "Tarim (Muumio)",
-    sub: "Xiaohe, Kiina (n=18) ~2100 BCE",
-    vals: { C: 72, V: 2, K1a4: 5, M: 21 }
-  }
+const C={
+  "U5 (WHG/EHG)":"#2d6aaa","U4 (EHG)":"#4d8aca","U2 (EHG/Siperia)":"#7abaea","U (muut)":"#aad5ea",
+  "C (Siperia/Itä-As.)":"#c03020","D (Itä-Aasia)":"#e05a38","Z (Siperia)":"#f07858",
+  "G (Siperia/Itä-As.)":"#f09870","A (Amer./Siperia)":"#f8c098",
+  "H/HV (Länsi-Eu)":"#4a8a20","J (Lähi-itä/Eu)":"#6aaa40","T (Lähi-itä/Eu)":"#8aba60",
+  "K (Lähialue)":"#b8d088","R0 (Arabia)":"#8844aa","R1b mtDNA":"#aa6acc",
+  "W (Eu/Kaakkois)":"#5a7aaa","I (Länsi-Eu)":"#3a5a7a","X (Lähi-itä)":"#aa8a44",
+  "M1 (Pohj-Afrikka)":"#ca8020","L (Afrikka)":"#3a6a3a","R* (basaali)":"#a8905a","Muut":"#404040"
+};
+
+const GRPS=[
+  {title:"WHG/EHG-linjat",cats:["U5 (WHG/EHG)","U4 (EHG)","U2 (EHG/Siperia)","U (muut)"]},
+  {title:"Siperia / Itä-Aasia",cats:["C (Siperia/Itä-As.)","D (Itä-Aasia)","Z (Siperia)","G (Siperia/Itä-As.)","A (Amer./Siperia)"]},
+  {title:"Lähi-itä / Eurooppa",cats:["H/HV (Länsi-Eu)","J (Lähi-itä/Eu)","T (Lähi-itä/Eu)","K (Lähialue)","R0 (Arabia)","W (Eu/Kaakkois)","I (Länsi-Eu)","X (Lähi-itä)"]},
+  {title:"Afrikka / Muut",cats:["M1 (Pohj-Afrikka)","L (Afrikka)","R1b mtDNA","R* (basaali)","Muut"]}
 ];
 
-function setView(v) {
-  document.getElementById('view-stacked').style.display = v==='stacked'?'block':'none';
-  document.getElementById('view-bars').style.display = v==='bars'?'block':'none';
-  document.getElementById('btn-s').classList.toggle('on', v==='stacked');
-  document.getElementById('btn-b').classList.toggle('on', v==='bars');
+function tt(e,pop,cat,pct){
+  const el=document.getElementById('tt');
+  el.style.display='block';el.style.left=e.clientX+'px';el.style.top=e.clientY+'px';
+  el.innerHTML=`<strong>${pop}</strong>${cat}<br><span style="color:var(--text);font-size:.82rem">${pct}&thinsp;%</span>`;
 }
+function htt(){document.getElementById('tt').style.display='none'}
 
-function init() {
-  const sView = document.getElementById('view-stacked');
-  const bTbl = document.getElementById('btbl');
-  const legArea = document.getElementById('legend-area');
-  const tt = document.getElementById('tt');
-
-  // Stacked View
-  data.forEach(p => {
-    const row = document.createElement('div');
-    row.className = 'pop-row';
-    row.innerHTML = `<div class="pop-lbl"><strong>${p.name}</strong><span class="sub">${p.sub}</span></div>`;
-    const sbar = document.createElement('div');
-    sbar.className = 'sbar';
-    
-    cats.forEach(c => {
-      const val = p.vals[c.id] || 0;
-      if(val > 0) {
-        const seg = document.createElement('div');
-        seg.className = 'seg';
-        seg.style.width = val + '%';
-        seg.style.background = c.col;
-        seg.onmouseenter = (e) => {
-          tt.style.display = 'block';
-          tt.innerHTML = `<strong>${c.nm}</strong>${val}%`;
-        };
-        seg.onmousemove = (e) => {
-          tt.style.left = e.clientX + 'px';
-          tt.style.top = e.clientY + 'px';
-        };
-        seg.onmouseleave = () => tt.style.display='none';
-        sbar.appendChild(seg);
-      }
+// Stacked
+function buildS(){
+  const el=document.getElementById('view-stacked');el.innerHTML='';
+  POPS.forEach((p,i)=>{
+    const row=document.createElement('div');row.className='pop-row';row.style.animationDelay=(i*55)+'ms';
+    const lbl=document.createElement('div');lbl.className='pop-lbl';
+    lbl.innerHTML=`<strong>${p.name}</strong><span class="sub">${p.sub}</span><span class="n-badge">n&thinsp;=&thinsp;${p.n}</span>`;
+    const bar=document.createElement('div');bar.className='sbar';
+    Object.entries(p.hgs).sort((a,b)=>b[1]-a[1]).forEach(([cat,pct])=>{
+      const s=document.createElement('div');s.className='seg';s.style.flex=pct;s.style.background=C[cat]||'#444';
+      s.addEventListener('mousemove',e=>tt(e,p.name,cat,pct));s.addEventListener('mouseleave',htt);
+      bar.appendChild(s);
     });
-    row.appendChild(sbar);
-    sView.appendChild(row);
-  });
-
-  // Bars View
-  let bHtml = `<thead><tr><th>Kategoria</th>`;
-  data.forEach(p => bHtml += `<th>${p.name}<span class="ths">${p.sub}</span></th>`);
-  bHtml += `</tr></thead><tbody>`;
-
-  let lastGrp = "";
-  cats.forEach(c => {
-    if(c.grp !== lastGrp) {
-      bHtml += `<tr><td colspan="${data.length + 1}" class="grp-hdr">${c.grp}</td></tr>`;
-      lastGrp = c.grp;
-    }
-    bHtml += `<tr><td class="cat-nm"><span class="cdot" style="background:${c.col}"></span>${c.nm}</td>`;
-    data.forEach(p => {
-      const v = p.vals[c.id] || 0;
-      bHtml += `<td><div class="bwrap"><div class="mbar"><div class="mfill" style="width:${v}%;background:${c.col}"></div></div><span class="plbl ${v>0?'v':''}">${v}%</span></div></td>`;
-    });
-    bHtml += `</tr>`;
-  });
-  bTbl.innerHTML = bHtml + `</tbody>`;
-
-  // Legend
-  legArea.innerHTML = `<div class="leg-hd">Haploryhmätyypit & Alkuperä</div>`;
-  const grps = [...new Set(cats.map(c => c.grp))];
-  grps.forEach(g => {
-    const gDiv = document.createElement('div');
-    gDiv.innerHTML = `<div class="leg-grp-title">${g}</div>`;
-    const w = document.createElement('div');
-    w.className = 'leg-wrap';
-    cats.filter(c => c.grp === g).forEach(c => {
-      w.innerHTML += `<div class="leg-item"><span class="leg-sw" style="background:${c.col}"></span>${c.nm}</div>`;
-    });
-    gDiv.appendChild(w);
-    legArea.appendChild(gDiv);
+    row.appendChild(lbl);row.appendChild(bar);el.appendChild(row);
   });
 }
 
-window.onload = init;
+// Bars
+function buildB(){
+  const tbl=document.getElementById('btbl');tbl.innerHTML='';
+  const allCats=[];GRPS.forEach(g=>g.cats.forEach(c=>{if(POPS.some(p=>p.hgs[c]))allCats.push(c)}));
+  // thead
+  const thead=document.createElement('thead'),hr=document.createElement('tr');
+  const th0=document.createElement('th');th0.textContent='Haploryhmä';th0.style.width='155px';hr.appendChild(th0);
+  POPS.forEach(p=>{const th=document.createElement('th');
+    th.innerHTML=`${p.name.split('—')[0].split(' ').slice(0,3).join(' ')} <span class="thn">(${p.n})</span><span class="ths">${p.sub.split('·')[0].trim()}</span>`;
+    hr.appendChild(th);});
+  thead.appendChild(hr);tbl.appendChild(thead);
+  // tbody
+  const tbody=document.createElement('tbody');
+  GRPS.forEach(grp=>{
+    const cwd=grp.cats.filter(c=>POPS.some(p=>p.hgs[c]));if(!cwd.length)return;
+    const gtr=document.createElement('tr'),gtd=document.createElement('td');
+    gtd.colSpan=POPS.length+1;gtd.className='grp-hdr';gtd.textContent=grp.title;gtr.appendChild(gtd);tbody.appendChild(gtr);
+    cwd.forEach(cat=>{
+      const tr=document.createElement('tr');
+      const tdC=document.createElement('td');
+      tdC.innerHTML=`<div class="cat-nm"><div class="cdot" style="background:${C[cat]||'#444'}"></div>${cat}</div>`;tr.appendChild(tdC);
+      POPS.forEach(pop=>{
+        const pct=pop.hgs[cat]||0;const td=document.createElement('td');
+        td.innerHTML=`<div class="bwrap"><div class="mbar"><div class="mfill" style="width:${pct}%;background:${C[cat]||'#444'}"></div></div><span class="plbl${pct>0?' v':''}">${pct>0?pct+'%':''}</span></div>`;
+        if(pct>0){td.addEventListener('mousemove',e=>tt(e,pop.name,cat,pct));td.addEventListener('mouseleave',htt);}
+        tr.appendChild(td);
+      });tbody.appendChild(tr);
+    });
+  });tbl.appendChild(tbody);
+}
+
+// Legend
+function buildL(){
+  const el=document.getElementById('leg');
+  GRPS.forEach(grp=>{
+    const t=document.createElement('div');t.className='leg-grp-title';t.textContent=grp.title;el.appendChild(t);
+    grp.cats.forEach(cat=>{
+      if(!POPS.some(p=>p.hgs[cat]))return;
+      const it=document.createElement('div');it.className='leg-item';
+      it.innerHTML=`<div class="leg-sw" style="background:${C[cat]||'#444'}"></div>${cat}`;el.appendChild(it);
+    });
+  });
+}
+
+function setView(v){
+  document.getElementById('view-stacked').style.display=v==='stacked'?'block':'none';
+  document.getElementById('view-bars').style.display=v==='bars'?'block':'none';
+  document.getElementById('btn-s').classList.toggle('on',v==='stacked');
+  document.getElementById('btn-b').classList.toggle('on',v==='bars');
+}
+
+buildS();buildB();buildL();
 </script>
 </body>
 </html>
