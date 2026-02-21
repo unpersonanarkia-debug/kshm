@@ -72,54 +72,6 @@ h1 em{font-style:italic;color:var(--accent)}
 .card em{color:var(--text);font-style:normal;font-weight:500}
 .card mark{background:none;color:var(--accent);font-weight:500}
   
-  </style>
-</head>
-<body>
-
-<!-- NYKY-SUOMI VS. EGYPTI VERTAILU -->
-<div class="leg-grp-title" style="margin-top: 60px; border-color: var(--hot); color: var(--hot);">
-  Syntyperän risteyspisteet
-</div>
-
-<div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 20px;">
-  
-  <!-- K1a4 Maanviljelijälinkki -->
-  <div class="card">
-    <div class="card-lbl" style="color: var(--eurasia)">Levantti-yhteys</div>
-    <h3>K1a4: Neoliittinen perintö</h3>
-    <p>Muinaisen Egyptin muumioilla esiintyvä <mark>K1a4 (4,5 %)</mark> on suora sormenjälki Lähi-idästä alkaneesta maanviljelyn leviämisestä. Suomessa linja on säilynyt 3 % tasolla, mikä osoittaa, että Niilin laakson asuttajat ja Fennoskandian raivaajat kantavat edelleen samaa euraasialaista "maanviljelijä-koodia".</p>
-  </div>
-
-  <!-- W Fennoskandialinkki -->
-  <div class="card">
-    <div class="card-lbl" style="color: var(--eurasia)">Suomi-yhteys</div>
-    <h3>W: Neoliittinen perintö</h3>
-    <p>Muinaisen Egyptin muumioilla esiintyvä <mark>W (3 %)</mark> on samaa suuruusluokkaa kuin nyky-Suomessa. Tämä osoittaa, että sama euraasialainen mtDNA-linja esiintyy molemmissa populaatioissa tässä vertailussa.</p>
-  </div>
-
-  <!-- HV0/V Amazigh-linkki -->
-  <div class="card">
-    <div class="card-lbl" style="color: var(--amazigh)">Läntinen reitti</div>
-    <h3>HV0 / V: "Berber-mysteeri"</h3>
-    <p>Haploryhmä <mark>V (HV0)</mark> on Suomessa huomattava (5,0 %), mutta sama linja on säilynyt korkeana Pohjois-Afrikan <strong>Amazigh-populaatioissa</strong>. Egyptin muumioilla linja on läsnä (1,5 %), mikä kertoo laajasta euraasialaisesta leviämishistoriasta.</p>
-  </div>
-
-  <!-- U5 vs U6 Ero -->
-  <div class="card">
-    <div class="card-lbl" style="color: var(--nordic)">Vastakkaiset haarat</div>
-    <h3>U5 vs. U6: Kahtiajako</h3>
-    <p>Suomalainen <mark>U5 (19 %)</mark> on Euroopan vanhinta metsästäjä-keräilijäperintöä, joka on yli yli 45 000 vuotta vanhaa. Egyptissä yleisempi on alakladi <mark>U6 (12 %)</mark> sekä pienempi U5-osuus (4 %). Linjat erosivat toisistaan noin 15 000 vuotta sitten ja heijastavat eri alueiden väestöhistoriaa.</p>
-  </div>
-
-  <!-- Datan Panttaus & Todellisuus -->
-  <div class="card">
-    <div class="card-lbl" style="color: var(--hot)">Analyysi</div>
-    <h3>Datan panttaus vs. Faktat</h3>
-    <p>Julkaistut muumioaineistot osoittavat muinaisen Egyptin geneettisen profiilin olleen lähempänä Lähi-idän ja Kaakkois-Euroopan populaatioita kuin nykyistä Egyptiä, jossa Saharan eteläpuolinen komponentti on kasvanut historiallisella ajalla.</p>
-  </div>
-
-</div>
-
 /* Tooltip */
 .tt{position:fixed;pointer-events:none;z-index:1000;background:var(--bg);border:1px solid var(--accent);padding:9px 13px;font-size:.67rem;line-height:1.6;transform:translate(14px,-50%);display:none;max-width:200px}
 .tt strong{color:var(--accent);display:block;font-size:.7rem}
@@ -295,6 +247,52 @@ function setView(v){
   document.getElementById('btn-s').classList.toggle('on',v==='stacked');
   document.getElementById('btn-b').classList.toggle('on',v==='bars');
 }
+
+  </style>
+</head>
+<body>
+
+<!-- NYKY-SUOMI VS. EGYPTI VERTAILU -->
+<div class="leg-grp-title" style="margin-top: 60px; border-color: var(--hot); color: var(--hot);">
+  Syntyperän risteyspisteet
+</div>
+
+<div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 20px;">
+  
+  <!-- K1a4 Maanviljelijälinkki -->
+  <div class="card">
+    <div class="card-lbl" style="color: var(--eurasia)">Levantti-yhteys</div>
+    <h3>K1a4: Neoliittinen perintö</h3>
+    <p>Muinaisen Egyptin muumioilla esiintyvä <mark>K1a4 (4,5 %)</mark> on suora sormenjälki Lähi-idästä alkaneesta maanviljelyn leviämisestä. Suomessa linja on säilynyt 3 % tasolla, mikä osoittaa, että Niilin laakson asuttajat ja Fennoskandian raivaajat kantavat edelleen samaa euraasialaista "maanviljelijä-koodia".</p>
+  </div>
+
+  <!-- W Fennoskandialinkki -->
+  <div class="card">
+    <div class="card-lbl" style="color: var(--eurasia)">Suomi-yhteys</div>
+    <h3>W: Neoliittinen perintö</h3>
+    <p>Muinaisen Egyptin muumioilla esiintyvä <mark>W (3 %)</mark> on samaa suuruusluokkaa kuin nyky-Suomessa. Tämä osoittaa, että sama euraasialainen mtDNA-linja esiintyy molemmissa populaatioissa tässä vertailussa.</p>
+  </div>
+
+  <!-- HV0/V Amazigh-linkki -->
+  <div class="card">
+    <div class="card-lbl" style="color: var(--amazigh)">Läntinen reitti</div>
+    <h3>HV0 / V: "Berber-mysteeri"</h3>
+    <p>Haploryhmä <mark>V (HV0)</mark> on Suomessa huomattava (5,0 %), mutta sama linja on säilynyt korkeana Pohjois-Afrikan <strong>Amazigh-populaatioissa</strong>. Egyptin muumioilla linja on läsnä (1,5 %), mikä kertoo laajasta euraasialaisesta leviämishistoriasta.</p>
+  </div>
+
+  <!-- U5 vs U6 Ero -->
+  <div class="card">
+    <div class="card-lbl" style="color: var(--nordic)">Vastakkaiset haarat</div>
+    <h3>U5 vs. U6: Kahtiajako</h3>
+    <p>Suomalainen <mark>U5 (19 %)</mark> on Euroopan vanhinta metsästäjä-keräilijäperintöä, joka on yli yli 45 000 vuotta vanhaa. Egyptissä yleisempi on alakladi <mark>U6 (12 %)</mark> sekä pienempi U5-osuus (4 %). Linjat erosivat toisistaan noin 15 000 vuotta sitten ja heijastavat eri alueiden väestöhistoriaa.</p>
+  </div>
+
+  <!-- Datan Panttaus & Todellisuus -->
+  <div class="card">
+    <div class="card-lbl" style="color: var(--hot)">Analyysi</div>
+    <h3>Datan panttaus vs. Faktat</h3>
+    <p>Julkaistut muumioaineistot osoittavat muinaisen Egyptin geneettisen profiilin olleen lähempänä Lähi-idän ja Kaakkois-Euroopan populaatioita kuin nykyistä Egyptiä, jossa Saharan eteläpuolinen komponentti on kasvanut historiallisella ajalla.</p>
+  </div>
 
 buildS();buildB();buildL();
 </script>
