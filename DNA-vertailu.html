@@ -2,7 +2,7 @@
 <html lang="fi">
 <head>
 <meta charset="UTF-8">
-<title>mtDNA-vertailu: Altai · Tarim · Oleniy Ostrov · Egypti</title>
+<title>mtDNA-vertailu: Altai · Tarim · Oleniy Ostrov · Egypti · Suomi</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -14,7 +14,7 @@
 body{font-family:'IBM Plex Mono',monospace;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;
   background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.35}
-.wrap{max-width:1320px;margin:0 auto;padding:0 28px 80px}
+.wrap{max-width:1380px;margin:0 auto;padding:0 28px 80px}
 header{padding:52px 0 40px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end}
 .kicker{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
 h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;line-height:1.1;letter-spacing:-.02em}
@@ -27,7 +27,6 @@ h1 em{font-style:italic;color:var(--accent)}
 .btn{font-family:'IBM Plex Mono',monospace;font-size:.64rem;letter-spacing:.08em;padding:6px 16px;border:1px solid var(--line);background:transparent;color:var(--mid);cursor:pointer;transition:all .15s}
 .btn:hover{border-color:var(--dim);color:var(--text)}
 .btn.on{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:500}
-/* Stacked */
 #view-bars{display:none}
 .pop-row{display:grid;grid-template-columns:210px 1fr;gap:0;align-items:center;margin-bottom:7px;opacity:0;transform:translateX(-10px);animation:si .38s forwards}
 @keyframes si{to{opacity:1;transform:translateX(0)}}
@@ -38,7 +37,6 @@ h1 em{font-style:italic;color:var(--accent)}
 .sbar{display:flex;height:28px;gap:1px;cursor:crosshair}
 .seg{height:100%;transition:opacity .15s,filter .15s;min-width:1px}
 .seg:hover{opacity:.82;filter:brightness(1.25)}
-/* Bars table */
 .bars-grid{overflow-x:auto}
 .bars-tbl{min-width:900px;width:100%;border-collapse:collapse}
 .bars-tbl th{font-family:'Playfair Display',serif;font-size:.7rem;font-weight:500;color:var(--text);padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:bottom}
@@ -54,14 +52,12 @@ h1 em{font-style:italic;color:var(--accent)}
 .plbl{font-size:.59rem;color:var(--dim);width:26px;text-align:right;flex-shrink:0}
 .plbl.v{color:var(--text)}
 .grp-hdr{padding:16px 0 4px;font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--line)}
-/* Legend */
 .leg-sec{margin-top:36px;padding-top:24px;border-top:1px solid var(--line)}
 .leg-hd{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
 .leg-grp-title{width:100%;font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:8px 0 4px}
 .leg-wrap{display:flex;flex-wrap:wrap;gap:5px 18px}
 .leg-item{display:flex;align-items:center;gap:7px;font-size:.61rem;color:var(--dim)}
 .leg-sw{width:10px;height:10px;flex-shrink:0;border-radius:1px}
-/* Cards */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1px;margin-top:44px;background:var(--line);border:1px solid var(--line)}
 .card{background:var(--bg2);padding:26px 26px 22px;position:relative;overflow:hidden}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .4s .05s}
@@ -71,11 +67,70 @@ h1 em{font-style:italic;color:var(--accent)}
 .card p{font-size:.71rem;line-height:1.82;color:var(--mid)}
 .card em{color:var(--text);font-style:normal;font-weight:500}
 .card mark{background:none;color:var(--accent);font-weight:500}
-  
-/* Tooltip */
-.tt{position:fixed;pointer-events:none;z-index:1000;background:var(--bg);border:1px solid var(--accent);padding:9px 13px;font-size:.67rem;line-height:1.6;transform:translate(14px,-50%);display:none;max-width:200px}
+.tt{position:fixed;pointer-events:none;z-index:1000;background:var(--bg);border:1px solid var(--accent);padding:9px 13px;font-size:.67rem;line-height:1.6;transform:translate(14px,-50%);display:none;max-width:220px}
 .tt strong{color:var(--accent);display:block;font-size:.7rem}
-@media(max-width:640px){header{grid-template-columns:1fr}.pop-row{grid-template-columns:1fr}.pop-lbl{padding-right:0;margin-bottom:5px}}
+
+/* ── SUOMI vs EGYPTI -osio ── */
+.section-divider{
+  margin:72px 0 0;
+  padding:36px 0 0;
+  border-top:1px solid var(--line);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:24px;
+  align-items:end;
+}
+.section-divider h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.4rem,2.8vw,2.1rem);
+  font-weight:700;
+  letter-spacing:-.02em;
+  line-height:1.15;
+}
+.section-divider h2 em{font-style:italic;color:var(--accent)}
+.section-divider .smeta{font-size:.63rem;line-height:2;color:var(--dim);text-align:right}
+.section-divider .smeta strong{color:var(--mid)}
+.section-note{font-size:.72rem;line-height:1.85;color:var(--mid);margin:14px 0 28px;max-width:700px}
+.section-note mark{background:none;color:var(--accent)}
+
+/* Rinnakkainen bar-panel */
+.cmp-panel{display:grid;grid-template-columns:190px 1fr 1fr;gap:0;margin-bottom:3px;align-items:center}
+.cmp-panel.hdr .cmp-lbl{color:var(--dim);font-size:.57rem;letter-spacing:.1em;text-transform:uppercase}
+.cmp-panel.hdr .cmp-col-hd{
+  padding:10px 14px 8px;
+  font-family:'Playfair Display',serif;
+  font-size:.82rem;font-weight:500;
+  border-bottom:2px solid;
+  display:flex;align-items:baseline;gap:8px;
+}
+.cmp-panel.hdr .cmp-col-hd .nn{font-family:'IBM Plex Mono',monospace;font-size:.58rem;font-weight:300;color:var(--dim)}
+.fi-col{border-color:#4d8aca}
+.eg-col{border-color:#c8963c}
+.cmp-panel.grp-row{grid-template-columns:1fr;margin:14px 0 4px}
+.cmp-panel.grp-row .gcell{
+  font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);border-bottom:1px solid var(--line);padding-bottom:4px;
+}
+.cmp-lbl{font-size:.61rem;color:var(--mid);display:flex;align-items:center;gap:7px;padding-right:12px}
+.cmp-lbl .cdot{width:8px;height:8px;flex-shrink:0;border-radius:1px}
+.cmp-cell{padding:2px 14px;display:flex;align-items:center;gap:9px}
+.cmp-bar-wrap{flex:1;height:14px;background:var(--bg3);position:relative;overflow:hidden}
+.cmp-bar-fill{position:absolute;left:0;top:0;bottom:0;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.cmp-pct{font-size:.6rem;width:30px;text-align:right;flex-shrink:0;color:var(--dim)}
+.cmp-pct.has{color:var(--text)}
+.cmp-diff{font-size:.58rem;padding:0 8px;color:var(--dim);text-align:center}
+.cmp-diff.pos{color:#6aaa40}
+.cmp-diff.neg{color:#e05a3a}
+.cmp-row:hover .cmp-cell{background:rgba(200,150,60,.04)}
+.cmp-row:hover .cmp-lbl{color:var(--text)}
+
+@media(max-width:640px){
+  header{grid-template-columns:1fr}
+  .pop-row{grid-template-columns:1fr}
+  .pop-lbl{padding-right:0;margin-bottom:5px}
+  .cmp-panel{grid-template-columns:140px 1fr 1fr}
+  .section-divider{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -99,7 +154,7 @@ h1 em{font-style:italic;color:var(--accent)}
 
 <div class="controls">
   <span class="ctrl-lbl">Näkymä ·</span>
-  <button class="btn on" id="btn-s" onclick="setView('stacked')">Pinotttu profiili</button>
+  <button class="btn on" id="btn-s" onclick="setView('stacked')">Pinottu profiili</button>
   <button class="btn" id="btn-b" onclick="setView('bars')">Rinnakkaisvertailu</button>
 </div>
 
@@ -113,18 +168,18 @@ h1 em{font-style:italic;color:var(--accent)}
     <div class="card-lbl">Karjala vs. Kuola · YOO</div>
     <h3>Samaa nimeä, eri maailma</h3>
     <p><em>Yuzhnyy Oleni Ostrov</em> (~6 500 BCE) on yksi Euroopan tärkeimmistä mesoliittisista kohteista: <mark>C-haplotyyppi 50 %</mark> on Siperian/Itä-Aasian linja — poikkeuksellinen Euroopassa. Viittaa yhteyteen itäiseen metsästäjä-keräilijäväestöön (EHG). U4 33 % on klassinen EHG-merkki.<br><br>
-    <em>Bolshoy Oleniy Ostrov</em> (~1 800 BCE, Kuola) on täysin eri: Z+D-siperialaiset linjat rinnakkain T-Lähi-itä-haplo&shy;tyypin kanssa. Lamnidis 2018 tunnisti tämän ryhmän saamelaistenesi-isiksi.</p>
+    <em>Bolshoy Oleniy Ostrov</em> (~1 800 BCE, Kuola) on täysin eri: Z+D-siperialaiset linjat rinnakkain T-Lähi-itä-haplo&shy;tyypin kanssa. Lamnidis 2018 tunnisti tämän ryhmän saamelaisten esi-isiksi.</p>
   </div>
   <div class="card">
     <div class="card-lbl">Kilinc 2023 · Altai–Kamchatka</div>
     <h3>Pohjoinen käytävä</h3>
-    <p>G+C+D muodostavat <mark>70 %</mark> kymmenestä Altain–Kamchatkan näytteestä (5 400 BCE – 1 000 CE) — lähes puhtaasti Siperia/Itä-Aasia. Ainoa poikkeus: <em>FRS001 U2e1b</em> (Altai ~5 400 BCE) kuuluu EHG-sukuiseen linjaan, ankkuroiden ANE-pohjan Länsi-Siperiaan.<br><br>
+    <p>G+C+D muodostavat <mark>70 %</mark> kymmenestä Altain–Kamchatkan näytteestä (5 400 BCE – 1 000 CE) — lähes puhtaasti Siperia/Itä-Aasia. Ainoa poikkeus: <em>U2e1b</em> (Altai ~5 400 BCE) kuuluu EHG-sukuiseen linjaan, ankkuroiden ANE-pohjan Länsi-Siperiaan.<br><br>
     Kamchatkan G1b-haplotyyppi (~500–1 000 CE) on sama linja kuin Kolymalla ~7 800 BCE — 8 000 vuoden arktinen jatkuvuus.</p>
   </div>
   <div class="card">
     <div class="card-lbl">Xinjiang / Tarim BA</div>
     <h3>Silkkitie ennen kaupankäyntiä</h3>
-    <p>C-linjat <mark>30 %</mark> esiintyvät rinnakkain U5:n ja R1b:n kanssa (yht. 26 %) — itä ja länsi samassa hautausmaassa. Afanasievan kulttuurin länsiläinen alkuperä näkyy U5/H/R1b:ssä, paikallinen sekoitus C+D:ssä.<br><br>
+    <p>C-linjat <mark>30 %</mark> esiintyvät rinnakkain U5:n ja R1b:n kanssa — itä ja länsi samassa hautausmaassa. Afanasievan kulttuurin länsiläinen alkuperä näkyy U5/H/R1b:ssä, paikallinen sekoitus C+D:ssä.<br><br>
     Zhang et al. 2021:n Tarimin mummiot ovat erikseen: puhtaat ANE-isolaatit ilman sekoitusta. Tämä aineisto edustaa jo sekoittuneempaa Xinjiang-populaatiota.</p>
   </div>
   <div class="card">
@@ -135,15 +190,104 @@ h1 em{font-style:italic;color:var(--accent)}
   </div>
 </div>
 
+<!-- ════════════════════════════════════════════════
+     NYKY-SUOMI vs. MUINAINEN EGYPTI -OSIO
+     ════════════════════════════════════════════════ -->
+<div class="section-divider">
+  <div>
+    <div class="kicker" style="margin-bottom:10px">Synkroninen vertailu · Nykydata vs. Muinainen aDNA</div>
+    <h2>Nyky-Suomi vs.<br><em>Muinainen Egypti</em></h2>
+  </div>
+  <div class="smeta">
+    <strong>Suomi-data</strong> FinnGen / FTDNA<br>
+    <strong>Egypti-data</strong> Schuenemann 2017<br>
+    <strong>Egypti n</strong> 90 näytettä<br>
+    <strong>Aikajana</strong> 1388 BCE – 426 CE
+  </div>
 </div>
+<p class="section-note">
+  Suomen mtDNA-frekvenssit perustuvat FinnGen-projektiin ja FTDNA Finland DNA Project -aineistoihin
+  (n ≈ 3 000–5 000). Egyptin data: Schuenemann et al. 2017 (<em>Nature Communications</em>), 
+  Abusir el-Meleq, 90 näytettä 1 388 BCE – 426 CE.
+  <mark>Erotusluku</mark> = Suomi − Egypti (positiivinen = Suomessa yleisempi).
+  Jaetut linjat paljastavat yhteiset euraasialaiset juuret — eivät historiallisia yhteyksiä.
+</p>
+
+<div id="cmp-view"></div>
+
+<div class="cards" style="margin-top:32px">
+  <div class="card">
+    <div class="card-lbl">U5 — Euroopan vanhin linja</div>
+    <h3>Mesolittiset metsästäjä-keräilijät</h3>
+    <p>Suomalaisilla <mark>U5 ~19 %</mark> — yksi Euroopan korkeimmista — on yli 45 000 vuoden historia WHG-väestössä. Egyptin U-osuus (~16 %) kattaa useampia aliklaadeja (U6, U3, U1) eikä ole sukua suomalaiselle U5:lle. <em>U5b1b1a</em> on Suomessa saamelaisten ja Levänluhdan rautakautisen väestön merkkilinja.</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">H — Euroopan hallitseva linja</div>
+    <h3>Franco-Kantabrian refugium → pohjoinen</h3>
+    <p>H on sekä Suomessa (<mark>~40 %</mark>) että Egyptissä (<mark>~14 %</mark>) läsnä, mutta alikladit eroavat täysin. Suomen <em>H1f</em> on perustaja-efekti (~3 500–5 500 v.), berberien H1 on eri tytärklaadi. <em>H6</em> ja <em>H13</em> yhdistävät molempia Lähi-idän/steppin kautta, mutta konvergenssi on vanhaa yhteistä alkuperää — ei kontaktia.</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">K1a4 — Neoliittinen maanviljelijälinkki</div>
+    <h3>Levantista Fennoskandiaan</h3>
+    <p>Egyptin <mark>K ~3 %</mark> ja Suomen <mark>K ~3 %</mark> ovat lähes identtiset frekvenssit — mutta kyseessä on konvergenssi. Egyptin K1a4 ja Suomen K1a4a1b erkanivat ~5 000–7 000 vuotta sitten. Yhteinen esi-äiti on anatolialaisessa neoliitissä (~9 000 BCE), josta linjat levisivät eri reittejä: Egyptiin suoraan etelästä, Suomeen LBK-kulttuurin kautta.</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">T — Steppi ja Lähi-itä</div>
+    <h3>Yamnayan ja EEF:n jälki</h3>
+    <p>Egyptissä <mark>T ~22 %</mark> on ylivoimaisesti korkein — T2 dominoi selvästi, kuvastaa Lähi-idän maanviljelijäkomponenttia. Suomessa <mark>T ~5 %</mark>, pääasiassa T2b Yamnayan/CWC-reitin kautta. <em>T1a</em> on klassinen steppimarkkeri, esiintyy molemmissa mutta eri aliklaadeina.</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">J — Lähi-idän perintö</div>
+    <h3>Jakelu kertoo historiasta</h3>
+    <p>Egyptissä <mark>J ~9 %</mark> vastaa Lähi-idän EEF-komponenttia suoraan. Suomessa <mark>J ~4 %</mark>, mihin sisältyy J1c (maanviljelijät) ja J2b (steppi/pronssiaika). Sama linja, eri reitti: Egyptiin levanttilaisen maanviljelyksen mukana, Suomeen Corded Ware -kulttuurin kautta.</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">V / HV0 — Pohjois-Euroopan erikoisuus</div>
+    <h3>Refugiumin perustaja-efekti</h3>
+    <p>Suomessa <mark>V ~5 %</mark> — korkea luku selittyy perustaja-efektillä. V on erittäin harvinainen Egyptissä (<mark>&lt;1 %</mark>). Silti sama linja esiintyy korkeana Pohjois-Afrikan <em>Amazigh-populaatioissa</em> (~10 %) — yhteinen Franco-Kantabrian refugiumin alkuperä ~15 000 BCE, sitten täysin eri leviämispolut.</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">W — Harvinainen euraasialainen linja</div>
+    <h3>Pohjoisen erikoisuus</h3>
+    <p>W on Suomessa <mark>~2 %</mark> ja Egyptissä <mark>~3 %</mark> — vertailukelpoinen frekvenssi. Länsi-Aasiasta (~30 000 BCE) lähtöisin oleva W leviää Euroopassa erityisesti pohjoiseen: Suomessa, Virossa ja Skandinaviassa suhteellisen korkea, Keski-Euroopassa harvinaisempi. Egyptin W on todennäköisesti eri aliklaadeissa (W1, W4) kuin Suomen W (W1c, W6).</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">I — Euraasialainen relikki</div>
+    <h3>Pienifrekvenssiset mutta vanhat linjat</h3>
+    <p>Egyptissä <mark>I ~4 %</mark>, Suomessa <mark>I ~1 %</mark>. I-haplotyyppi on peräisin Lähi-idästä (~30 000 BCE) ja leviää laajalti Euraasian poikki. Egyptin korkeampi frekvenssi kuvastaa maantieteellistä läheisyyttä alkuperäalueeseen. Suomessa I1a on tyypillisin alaklaadi.</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">X — Mysteerihaplotyyppi</div>
+    <h3>Eri haarat, sama nimi</h3>
+    <p>Egyptissä <mark>X ~3 %</mark> on pääasiassa X1/X1c — Pohjois-Afrikan/Lähi-idän endeeminen haara. Suomessa <mark>X ~2–3 %</mark> on X2b — eurooppalainen haara, joka saapui Suomeen todennäköisesti rautakaudella tai viikinkiajalla. <em>Nämä ovat täysin eri klaadeja</em> — yhteinen esi-äiti ~30 000 BCE, sen jälkeen itsenäiset evoluutiopolut.</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">M1 vs. L — Afrikan eri ääret</div>
+    <h3>Pohjois-Afrikka ≠ Sub-Sahara</h3>
+    <p>Egyptissä <mark>M1 ~7 %</mark> on Pohjois-Afrikan endeeminen haplotyyppi — ei sukua sub-Saharan L-linjoille. Schuenemann 2017 osoitti, että <mark>L (sub-Saharan) ~1 %</mark> mutta kasvoi roomalaisella ajalla orjakaupan myötä. Suomessa M1 tai L ovat käytännössä olemattomat — pohjoinen pullonkaula eliminoi kaikki Afrikan linjat.</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">R0 / HV — Arabia ja Lähi-itä</div>
+    <h3>Egyptin erityislinja</h3>
+    <p>Egyptissä <mark>R0 ~9 %</mark> (mukaan lukien HV0 ja R0a) — selkeästi arabialais-lähi-itäinen komponentti, puuttuu lähes kokonaan Suomesta. R0a on tyypillinen Arabian niemimaan haplotyyppi. Suomen HV-osuus on minimaalinen (&lt;1 %) ja edustaa eri aliklaadeja kuin Egyptin R0.</p>
+  </div>
+  <div class="card">
+    <div class="card-lbl">Johtopäätös</div>
+    <h3>Kaksi eri maailmaa, yksi sukupuu</h3>
+    <p>Suomi ja muinainen Egypti jakavat <em>euraasialaiset juuret</em> — H, J, K, T, W löytyvät molemmista — mutta käytännössä kaikki jaetut linjat erkanivat toisistaan <mark>3 000–10 000 vuotta sitten</mark>. Yhtäläisyydet ovat konvergenssia, ei historiallisia kontakteja. Suurimmat erot: Suomessa U5+V dominoi (refugiumiperintö), Egyptissä T+J+R0 dominoi (Lähi-itä/steppi).</p>
+  </div>
+</div>
+
+</div><!-- /wrap -->
 <div class="tt" id="tt"></div>
 
 <script>
+// ── DATA ──────────────────────────────────────────────
 const POPS=[
   {id:"yoo",name:"Yuzhnyy Oleni Ostrov",sub:"~6500–5250 BCE · Karjala",n:6,
    hgs:{"C (Siperia/Itä-As.)":50,"U4 (EHG)":33,"R1b mtDNA":17}},
   {id:"boo",name:"Bolshoy Oleniy Ostrov",sub:"~1800 BCE · Kuola",n:6,
-   hgs:{"U4 (EHG)":17,"Z (Siperia)":17,"T (Lähi-itä/Eu)":17,"C (Siperia/Itä-As.)":17,"U5 (WHG/EHG)":17,"D (Itä-Aasia)":17}},
+   hgs:{"U4 (EHG)":17,"Z (Siperia)":17,"T (Lähi-itä/Eu)":17,"C (Siperia/Itä-As.)":17,"U5 (WHG/EHG)":17,"D (Itä-Aasia)":16}},
   {id:"alt",name:"Altai — Kilinc 2023",sub:"~5400 BCE–1000 CE · Altai & Kamchatka",n:10,
    hgs:{"G (Siperia/Itä-As.)":30,"C (Siperia/Itä-As.)":20,"D (Itä-Aasia)":20,"U2 (EHG/Siperia)":10,"R1b mtDNA":10,"A (Amer./Siperia)":10}},
   {id:"tar",name:"Xinjiang / Tarim BA",sub:"~3000–1500 BCE · Länsi-Kiina",n:47,
@@ -156,6 +300,53 @@ const POPS=[
    hgs:{"T (Lähi-itä/Eu)":22,"U (muut)":16,"H/HV (Länsi-Eu)":14,"J (Lähi-itä/Eu)":9,"R0 (Arabia)":9,"M1 (Pohj-Afrikka)":7,"I (Länsi-Eu)":4,"W (Eu/Kaakkois)":3,"X (Lähi-itä)":3,"K (Lähialue)":3,"L (Afrikka)":1,"R* (basaali)":3,"Muut":4}}
 ];
 
+// Nyky-Suomi vs. Muinainen Egypti -vertailudata
+// Suomi: FinnGen + FTDNA Finland DNA Project  
+const FI = {
+  "H (ml. H1, H2, H3, H5, H6...)": 40,
+  "U5 (WHG-relikki)":               19,
+  "J (J1c + J2b)":                   4,
+  "T (T2b + T1a)":                   5,
+  "K (K1a4a1 ym.)":                  3,
+  "V / HV0":                         5,
+  "U4 (EHG)":                        5,
+  "U2 (EHG/Siperia)":                2,
+  "W":                               2,
+  "I":                               1,
+  "X2b":                             2.5,
+  "N (Siperia)":                     1,
+  "Z (Siperia)":                     0.5,
+  "HV (ml. R0a)":                    0.5,
+  "R* / muut R":                     1,
+  "Muut / tunnistamattomat":         8.5,
+};
+
+const EG = {
+  "H (ml. H1, H2, H3, H5, H6...)": 14,
+  "U5 (WHG-relikki)":               4,   // osa U (muut) 16 % -ryhmästä
+  "J (J1c + J2b)":                   9,
+  "T (T2b + T1a)":                  22,
+  "K (K1a4a1 ym.)":                  3,
+  "V / HV0":                         0.5,
+  "U4 (EHG)":                        2,
+  "U2 (EHG/Siperia)":                1,
+  "W":                               3,
+  "I":                               4,
+  "X2b":                             0,   // Egyptissä X1/X1c, ei X2b
+  "N (Siperia)":                     0,
+  "Z (Siperia)":                     0,
+  "HV (ml. R0a)":                    9,   // R0 Arabia
+  "R* / muut R":                     3,
+  "Muut / tunnistamattomat":         6,
+  // Egypti-spesifiset
+  "M1 (Pohj-Afrikka)":              7,
+  "U6 (Pohjois-Afrikka)":           5,
+  "L (Sub-Sahara)":                  1,
+  "U3 (Lähi-itä)":                   3,
+  "X1/X1c (Lähi-itä/Afrikka)":      3,
+};
+
+// Värit — yhtenäiset POPS-datan kanssa
 const C={
   "U5 (WHG/EHG)":"#2d6aaa","U4 (EHG)":"#4d8aca","U2 (EHG/Siperia)":"#7abaea","U (muut)":"#aad5ea",
   "C (Siperia/Itä-As.)":"#c03020","D (Itä-Aasia)":"#e05a38","Z (Siperia)":"#f07858",
@@ -166,11 +357,65 @@ const C={
   "M1 (Pohj-Afrikka)":"#ca8020","L (Afrikka)":"#3a6a3a","R* (basaali)":"#a8905a","Muut":"#404040"
 };
 
+// Vertailudata värit
+const CC={
+  "H (ml. H1, H2, H3, H5, H6...)":    "#5aaa2a",
+  "U5 (WHG-relikti)":                  "#2d6aaa",
+  "U5 (WHG-relikki)":                  "#2d6aaa",
+  "J (J1c + J2b)":                     "#6aaa40",
+  "T (T2b + T1a)":                     "#8aba60",
+  "K (K1a4a1 ym.)":                    "#b8d088",
+  "V / HV0":                           "#4d8aca",
+  "U4 (EHG)":                          "#4d8aca",
+  "U2 (EHG/Siperia)":                  "#7abaea",
+  "W":                                 "#5a7aaa",
+  "I":                                 "#3a5a7a",
+  "X2b":                               "#aa8a44",
+  "N (Siperia)":                       "#c03020",
+  "Z (Siperia)":                       "#f07858",
+  "HV (ml. R0a)":                      "#8844aa",
+  "R* / muut R":                       "#a8905a",
+  "Muut / tunnistamattomat":           "#404040",
+  "M1 (Pohj-Afrikka)":                "#ca8020",
+  "U6 (Pohjois-Afrikka)":             "#e07830",
+  "L (Sub-Sahara)":                    "#3a6a3a",
+  "U3 (Lähi-itä)":                     "#aad5ea",
+  "X1/X1c (Lähi-itä/Afrikka)":        "#c8783c",
+};
+
 const GRPS=[
   {title:"WHG/EHG-linjat",cats:["U5 (WHG/EHG)","U4 (EHG)","U2 (EHG/Siperia)","U (muut)"]},
   {title:"Siperia / Itä-Aasia",cats:["C (Siperia/Itä-As.)","D (Itä-Aasia)","Z (Siperia)","G (Siperia/Itä-As.)","A (Amer./Siperia)"]},
   {title:"Lähi-itä / Eurooppa",cats:["H/HV (Länsi-Eu)","J (Lähi-itä/Eu)","T (Lähi-itä/Eu)","K (Lähialue)","R0 (Arabia)","W (Eu/Kaakkois)","I (Länsi-Eu)","X (Lähi-itä)"]},
   {title:"Afrikka / Muut",cats:["M1 (Pohj-Afrikka)","L (Afrikka)","R1b mtDNA","R* (basaali)","Muut"]}
+];
+
+// Vertailun ryhmittely
+const CMP_GRPS=[
+  {
+    title:"Euraasialainen metsästäjä-keräilijäperintö (WHG/EHG)",
+    rows:["H (ml. H1, H2, H3, H5, H6...)","U5 (WHG-relikki)","U4 (EHG)","U2 (EHG/Siperia)","V / HV0"]
+  },
+  {
+    title:"Lähi-itä / Maanviljelijäperintö (EEF + Levantti)",
+    rows:["T (T2b + T1a)","J (J1c + J2b)","K (K1a4a1 ym.)","I","W","HV (ml. R0a)"]
+  },
+  {
+    title:"Sekamuoto / Myöhäinen leviäminen",
+    rows:["X2b","X1/X1c (Lähi-itä/Afrikka)","R* / muut R"]
+  },
+  {
+    title:"Siperia / Pohjoinen",
+    rows:["N (Siperia)","Z (Siperia)"]
+  },
+  {
+    title:"Afrikka / Pohjois-Afrikan endemit",
+    rows:["M1 (Pohj-Afrikka)","U6 (Pohjois-Afrikka)","L (Sub-Sahara)","U3 (Lähi-itä)"]
+  },
+  {
+    title:"Muu / tunnistamattomat",
+    rows:["Muut / tunnistamattomat"]
+  }
 ];
 
 function tt(e,pop,cat,pct){
@@ -180,7 +425,7 @@ function tt(e,pop,cat,pct){
 }
 function htt(){document.getElementById('tt').style.display='none'}
 
-// Stacked
+// ── PINOTTU ────────────────────────────────────────────
 function buildS(){
   const el=document.getElementById('view-stacked');el.innerHTML='';
   POPS.forEach((p,i)=>{
@@ -197,18 +442,16 @@ function buildS(){
   });
 }
 
-// Bars
+// ── BARS ───────────────────────────────────────────────
 function buildB(){
   const tbl=document.getElementById('btbl');tbl.innerHTML='';
   const allCats=[];GRPS.forEach(g=>g.cats.forEach(c=>{if(POPS.some(p=>p.hgs[c]))allCats.push(c)}));
-  // thead
   const thead=document.createElement('thead'),hr=document.createElement('tr');
   const th0=document.createElement('th');th0.textContent='Haploryhmä';th0.style.width='155px';hr.appendChild(th0);
   POPS.forEach(p=>{const th=document.createElement('th');
     th.innerHTML=`${p.name.split('—')[0].split(' ').slice(0,3).join(' ')} <span class="thn">(${p.n})</span><span class="ths">${p.sub.split('·')[0].trim()}</span>`;
     hr.appendChild(th);});
   thead.appendChild(hr);tbl.appendChild(thead);
-  // tbody
   const tbody=document.createElement('tbody');
   GRPS.forEach(grp=>{
     const cwd=grp.cats.filter(c=>POPS.some(p=>p.hgs[c]));if(!cwd.length)return;
@@ -228,7 +471,7 @@ function buildB(){
   });tbl.appendChild(tbody);
 }
 
-// Legend
+// ── LEGENDA ─────────────────────────────────────────────
 function buildL(){
   const el=document.getElementById('leg');
   GRPS.forEach(grp=>{
@@ -241,6 +484,105 @@ function buildL(){
   });
 }
 
+// ── SUOMI vs. EGYPTI VERTAILU ───────────────────────────
+function buildCmp(){
+  const el=document.getElementById('cmp-view');
+  
+  // Kerää kaikki rivit molemmista
+  const allRows=new Set();
+  CMP_GRPS.forEach(g=>g.rows.forEach(r=>allRows.add(r)));
+  Object.keys(FI).forEach(k=>allRows.add(k));
+  Object.keys(EG).forEach(k=>allRows.add(k));
+  
+  const maxPct=Math.max(
+    ...Object.values(FI),
+    ...Object.values(EG)
+  );
+  const scale=100/maxPct; // skalaa 100% = korkein arvo
+
+  // Otsikkorivi
+  const hdr=document.createElement('div');
+  hdr.className='cmp-panel hdr';
+  hdr.innerHTML=`
+    <div class="cmp-lbl" style="font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)">Haploryhmä</div>
+    <div class="cmp-col-hd fi-col" style="color:#7abaea">
+      Nyky-Suomi
+      <span class="nn">FinnGen / FTDNA · n≈3000–5000</span>
+    </div>
+    <div class="cmp-col-hd eg-col" style="color:#c8963c">
+      Muinainen Egypti
+      <span class="nn">Schuenemann 2017 · n=90</span>
+    </div>
+  `;
+  el.appendChild(hdr);
+
+  CMP_GRPS.forEach(grp=>{
+    // Suodata: näytä vain ne rivit, joissa on dataa
+    const hasData=grp.rows.filter(r=>(FI[r]||0)+(EG[r]||0)>0);
+    if(!hasData.length)return;
+    
+    const gd=document.createElement('div');gd.className='cmp-panel grp-row';
+    gd.innerHTML=`<div class="gcell">${grp.title}</div>`;
+    el.appendChild(gd);
+
+    hasData.forEach(row=>{
+      const fi=FI[row]||0;
+      const eg=EG[row]||0;
+      const diff=fi-eg;
+      const color=CC[row]||'#888';
+      
+      const rw=document.createElement('div');
+      rw.className='cmp-panel cmp-row';
+      rw.style.cssText='display:grid;grid-template-columns:190px 1fr 1fr;gap:0;align-items:center;margin-bottom:2px';
+      
+      rw.innerHTML=`
+        <div class="cmp-lbl">
+          <div class="cdot" style="background:${color}"></div>
+          ${row}
+        </div>
+        <div class="cmp-cell" style="cursor:crosshair">
+          <div class="cmp-bar-wrap">
+            <div class="cmp-bar-fill" style="width:${Math.min(fi*scale,100)}%;background:${color}"></div>
+          </div>
+          <span class="cmp-pct ${fi>0?'has':''}">${fi>0?fi+'%':''}</span>
+        </div>
+        <div class="cmp-cell" style="cursor:crosshair">
+          <div class="cmp-bar-wrap">
+            <div class="cmp-bar-fill" style="width:${Math.min(eg*scale,100)}%;background:${color}"></div>
+          </div>
+          <span class="cmp-pct ${eg>0?'has':''}">${eg>0?eg+'%':''}</span>
+          ${fi+eg>0 ? `<span class="cmp-diff ${diff>0.4?'pos':diff<-0.4?'neg':''}" title="Erotus Suomi−Egypti">
+            ${diff>0.4?'+'+diff.toFixed(1):diff<-0.4?diff.toFixed(1):'≈'}
+          </span>` : ''}
+        </div>
+      `;
+      
+      // Tooltip
+      rw.querySelectorAll('.cmp-cell').forEach((cell,ci)=>{
+        const who=ci===0?'Nyky-Suomi':'Muinainen Egypti';
+        const pct=ci===0?fi:eg;
+        if(pct>0){
+          cell.addEventListener('mousemove',e=>tt(e,who,row,pct));
+          cell.addEventListener('mouseleave',htt);
+        }
+      });
+      
+      el.appendChild(rw);
+    });
+  });
+  
+  // Erotusselitys
+  const note=document.createElement('div');
+  note.style.cssText='margin-top:14px;padding:10px 14px;border:1px solid var(--line);font-size:.6rem;color:var(--dim);display:flex;gap:20px;flex-wrap:wrap';
+  note.innerHTML=`
+    <span><span style="color:#6aaa40">+X.X</span> = yleisempi Suomessa</span>
+    <span><span style="color:#e05a3a">−X.X</span> = yleisempi Egyptissä</span>
+    <span><span style="color:var(--mid)">≈</span> = lähes sama frekvenssi</span>
+    <span style="color:var(--dim)">Palkit skaalatttu: 100% = korkein yksittäinen arvo (T=22%)</span>
+  `;
+  el.appendChild(note);
+}
+
 function setView(v){
   document.getElementById('view-stacked').style.display=v==='stacked'?'block':'none';
   document.getElementById('view-bars').style.display=v==='bars'?'block':'none';
@@ -248,54 +590,7 @@ function setView(v){
   document.getElementById('btn-b').classList.toggle('on',v==='bars');
 }
 
-buildS();buildB();buildL();
+buildS();buildB();buildL();buildCmp();
 </script>
-  
-    </style>
-</head>
-<body>
-
-<!-- NYKY-SUOMI VS. EGYPTI VERTAILU -->
-<div class="leg-grp-title" style="margin-top: 60px; border-color: var(--hot); color: var(--hot);">
-  Syntyperän risteyspisteet
-</div>
-
-<div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 20px;">
-  
-  <!-- K1a4 Maanviljelijälinkki -->
-  <div class="card">
-    <div class="card-lbl" style="color: var(--eurasia)">Levantti-yhteys</div>
-    <h3>K1a4: Neoliittinen perintö</h3>
-    <p>Muinaisen Egyptin muumioilla esiintyvä <mark>K1a4 (4,5 %)</mark> on suora sormenjälki Lähi-idästä alkaneesta maanviljelyn leviämisestä. Suomessa linja on säilynyt 3 % tasolla, mikä osoittaa, että Niilin laakson asuttajat ja Fennoskandian raivaajat kantavat edelleen samaa euraasialaista "maanviljelijä-koodia".</p>
-  </div>
-
-  <!-- W Fennoskandialinkki -->
-  <div class="card">
-    <div class="card-lbl" style="color: var(--eurasia)">Suomi-yhteys</div>
-    <h3>W: Neoliittinen perintö</h3>
-    <p>Muinaisen Egyptin muumioilla esiintyvä <mark>W (3 %)</mark> on samaa suuruusluokkaa kuin nyky-Suomessa. Tämä osoittaa, että sama euraasialainen mtDNA-linja esiintyy molemmissa populaatioissa tässä vertailussa. W haploryhmä on harvinainen ja esiintyy Euroopassa lähinnä Suomessa.</p>
-  </div>
-
-  <!-- HV0/V Amazigh-linkki -->
-  <div class="card">
-    <div class="card-lbl" style="color: var(--amazigh)">Läntinen reitti</div>
-    <h3>HV0 / V: "Berber-mysteeri"</h3>
-    <p>Haploryhmä <mark>V (HV0)</mark> on Suomessa huomattava (5,0 %), mutta sama linja on säilynyt korkeana Pohjois-Afrikan <strong>Amazigh-populaatioissa</strong>. Egyptin muumioilla linja on läsnä (1,5 %), mikä kertoo laajasta euraasialaisesta leviämishistoriasta.</p>
-  </div>
-
-  <!-- U5 vs U6 Ero -->
-  <div class="card">
-    <div class="card-lbl" style="color: var(--nordic)">Vastakkaiset haarat</div>
-    <h3>U5 vs. U6: Kahtiajako</h3>
-    <p>Suomalainen <mark>U5 (19 %)</mark> on Euroopan vanhinta metsästäjä-keräilijäperintöä, joka on yli yli 45 000 vuotta vanhaa. Egyptissä yleisempi on alakladi <mark>U6 (12 %)</mark> sekä pienempi U5-osuus (4 %). Linjat erosivat toisistaan noin 15 000 vuotta sitten ja heijastavat eri alueiden väestöhistoriaa.</p>
-  </div>
-
-  <!-- Datan Panttaus & Todellisuus -->
-  <div class="card">
-    <div class="card-lbl" style="color: var(--hot)">Analyysi</div>
-    <h3>Datan panttaus vs. Faktat</h3>
-    <p>Julkaistut muumioaineistot osoittavat muinaisen Egyptin geneettisen profiilin olleen lähempänä Lähi-idän ja Kaakkois-Euroopan populaatioita kuin nykyistä Egyptiä, jossa Saharan eteläpuolinen komponentti on kasvanut historiallisella ajalla.</p>
-  </div>
-  </div
 </body>
 </html>
