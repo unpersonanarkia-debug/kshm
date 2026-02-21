@@ -410,29 +410,84 @@ BASAL_MARKERS["J"] = {
 # ---------------------------------------------------------------------------
 # Y-DNA — N-M46 / Tat (Suomen tärkein)
 # ---------------------------------------------------------------------------
+#
+# NIMIHISTORIA — N-haploryhmässä on tapahtunut enemmän uudelleennimeämisiä
+# kuin missään muussa Y-DNA-haploryhmässä. Tässä täydellinen aikajana:
+#
+# ISOGG 2006:  N3          (M46/Tat-klade)
+#              N3a         (M178, Eurooppa+Siperia)
+#              N3a1        (P21, Itä-Eurooppa)
+# ISOGG 2008:  N1c         (M46/Tat, "formerly N3")
+#              N1c1        (M178, "formerly N3a")
+#              N1c1a       (P21, "formerly N3a1")
+# ISOGG 2011:  N1c1        (M178 — päähaara säilyy)
+#              N1c1 + L550 löydetty (Länsi-Suomi/Skandinavia)
+# ISOGG 2015:  N1c1        (M178 — sama)
+#              N1c1a1      (L708 — Eurooppa-haara)
+# ISOGG 2017:  N1a1        (M46 — SUURI NIMIUUDISTUS)
+#              N1a1a       (M178)
+#              N1a1a1      (L392)
+#              N1a1a1a     (L1026 — eurooppalais-siperialainen)
+#              N1a1a1a1    (CTS2929/VL29 — Länsi-Eurooppa/Baltia/Suomi)
+# ISOGG 2018+: N1a1        (M46, virallinen nimitys säilyy)
+#              N1a1a1a1a   (CTS2929/VL29)
+#              N1a1a1a1a1  (L550 — Länsi-Suomi, Skandinavia, Baltia)
+#              N1a1a1a1a2  (Z1936 — Itä-Suomi, Karjala, Volgalaiset)
+#
+# ERITYINEN VAARA: Julkaisut ennen 2017 käyttävät N1c tai N1c1.
+# Julkaisut 2017+ käyttävät N1a1. MOLEMMAT tarkoittavat samaa kladia.
+# N3 on VAIN löydettävissä ennen 2008 julkaistuissa papereissa.
+# ---------------------------------------------------------------------------
+
+# Suomi-spesifiset alaklaadinimet (ISOGG 2018+):
+#
+#  N1a1a1a (L1026)       — koko eurooppalainen+siperialainen haara
+#  N1a1a1a1 (VL29/CTS2929) — Länsi-Eurooppa, Baltia, Suomi, NW-Venäjä
+#    ├── N1a1a1a1a1 (L550) — "Länsi-Suomi + Skandinavia + Baltia"
+#    │     ├── N1a1a1a1a1a1 (M2783) — Liettua, Latvia (Baltti-haara)
+#    │     └── N1a1a1a1a1a2 (Y4706) — Suomi, Skandinavia (Fennoskandiahaara)
+#    └── N1a1a1a1a2 (Z1936/CTS10082) — "Itä-Suomi, Karjala, Komi, Volga"
+#          └── N1a1a1a1a2a1 (Z1925) — Savon/Karjalan haara, myös Lappi
+#  N1a1a1a2 (B211) — Udmurtit, Komit, Mansit (Uralin itäpuoli)
+#
+# Eupedian vanha nimistö (edelleen laajalti käytössä):
+#  N1c1a1a1a1 = N1a1a1a1a1 (L550)   Länsi-Suomi
+#  N1c1a1a1a2 = N1a1a1a1a2 (Z1936)  Itä-Suomi/Karjala
+#  N1c1a1a1a1a1 = M2783              Baltit
+#  N1c1a1a1a1a2 = Y4706              Fennoskandialaiset
+# ---------------------------------------------------------------------------
 
 BASAL_MARKERS["N-M46"] = {
     "id":              "N-M46",
     "lineage":         "Y-DNA",
-    "parent":          "N",
+    "parent":          "N-M231",
     "children_note":   (
-        "N-M46 = N-Tat. Haarat: N1a1a (N-L392, Siperia/Mongolia), "
-        "N1a1a1a (N-L1026, Eurooppa+Siperia), "
-        "N1a1a1a1a4 (suomalainen haara, ~60 % Suomen miehistä)."
+        "Kaksi päähaaraa: (1) N1a1a1 (L392) — Siperia, Mongolia, Jakutia; "
+        "(2) N1a1a1a (L1026) — Eurooppa + Länsi-Siperia. "
+        "Eurooppalainen haara jakautuu edelleen: "
+        "N1a1a1a1a1 (L550) = Länsi-Suomi + Skandinavia + Baltia, "
+        "N1a1a1a1a2 (Z1936) = Itä-Suomi + Karjala + Volgalaiset."
     ),
-    "origin_region":   "Siperia / Itä-Aasia",
-    "origin_date_bce": -14000,
+    "origin_region":   "Koillis-Aasia / Siperia (Baikal-alue)",
+    "origin_date_bce": -16000,
     "tmrca_note":      (
-        "Tat-mutaatio (M46/P105) syntyi Siperiassa arviolta 14 000–10 000 BCE. "
-        "Eurooppalainen haara N1a1a1a1 erosi ~8 000 BCE, "
-        "suomalainen N1a1a1a1a4 ~2 500 BCE."
+        "Tat-mutaatio (M46/P105) syntyi arviolta 16 000–14 000 BCE Koillis-Aasiassa. "
+        "Vanhimmat aDNA-näytteet ovat Trans-Baikalista (~6 000–8 000 BCE). "
+        "Eurooppalainen haara (L1026) erosi ~8 000 BCE, "
+        "VL29-haara ~3 600 BCE (Kiukainen-kulttuurin aika), "
+        "L550-haara (Suomi/Skandinavia) ja Z1936-haara (Itä-Suomi) "
+        "erosivat toisistaan ~2 600 BCE."
     ),
     "finland_relevance": (
         "N-Tat on Suomen ylivoimaisesti yleisin Y-DNA-haploryhmä (~60 %). "
-        "Se liittyy uralilaisten kielten leviämiseen — suomi, viro, saame, "
-        "unkari, komi ja muut uralilaiset kielet korreloivat N-Tat:in kanssa. "
-        "Saapui Fennoskandiaan todennäköisesti pronssikaudella (~2 000–1 500 BCE) "
-        "Siperian metsävyöhykkeeltä kulkien Volgan ja Itämeren kautta."
+        "Saag et al. 2019 osoitti: Siperialaista autosomaalia DNA:ta ja "
+        "Y-haploryhmä N1c puuttuivat pronssikaudelta Virosta — ne saapuivat "
+        "vasta rautakaudella (~500 BCE). Tämä ankkuroi N-Tatin Suomeen "
+        "historiallisesti myöhäiseen ajankohtaan, ei Kivikautiseen asutukseen. "
+        "Suomalaiselle linjalle tyypilliset haarat: "
+        "L550 (Länsi-Suomi, Eura, Turku) ja Z1936/Z1925 (Savo, Karjala, Lappi). "
+        "Uralilaisten kielten korrelaatio N-Tatin kanssa on vahva mutta "
+        "ei täydellinen — haploryhmä levisi nopeammin kuin kielet."
     ),
     "narrative_hook": (
         "Noin 14 000 vuotta sitten Siperiassa syntyi mutaatio — Tat. "
@@ -440,30 +495,87 @@ BASAL_MARKERS["N-M46"] = {
         "länteen ja pohjoiseen niin menestyksekkäästi, että tänä päivänä "
         "kuusi kymmenestä suomalaisesta miehestä kantaa sitä. "
         "Samaa linjaa kantavat myös virolaiset, saamelaisten suuri osa, "
-        "ja se korreloii suomenkielisyyden kanssa vahvemmin kuin "
+        "ja se korreloi suomenkielisyyden kanssa vahvemmin kuin "
         "mikään muu tunnistettu Y-DNA-merkki Euroopassa."
     ),
     "disambiguation": (
-        "N-M46 = N-Tat = N1a1 (ISOGG 2023). Eri nimitykset eri aikakausilta: "
-        "vanha ISOGG käytti N1c1, uudempi N1a1a1a. "
-        "N-Tat EI liity Y-DNA N makrohaploryhmän muihin haaroihin (N-M231 jne.) "
-        "mitenkään erityisesti — ne ovat vain saman suppeemman kladin eri haarat."
+        "NIMIKAOS: N-M46-klade on nimetty uudelleen useita kertoja. "
+        "N3 = N1c = N1c1 = N1a1 — kaikki tarkoittavat samaa Tat-mutaation määrittelemää kladia. "
+        "Aikajana: N3 (ISOGG ≤2006) → N1c/N1c1 (ISOGG 2008–2016) → N1a1 (ISOGG 2017+). "
+        "VAROITUS 1: N3 on VAIN vanha nimi N-Tat:ille — ÄLÄ sekoita mtDNA:n N3:een "
+        "(joka on aivan eri linja, esiintyy vain Valko-Venäjällä). "
+        "VAROITUS 2: N1c tarkoittaa eri asiaa mtDNA:ssa (harvinainen mtDNA-haploryhmä) "
+        "kuin Y-DNA:ssa (= N-Tat). Aina tarkistettava konteksti. "
+        "VAROITUS 3: N1a1 Y-DNA:ssa ≠ N1a mtDNA:ssa. "
+        "N1a mtDNA = LBK-viljelijöiden haploryhmä (Anatoliasta). "
+        "N1a1 Y-DNA = Tat/M46 (Siperiasta). Täysin eri linjat."
     ),
+    # Suomi-spesififit alaklaadialiaset — molemmat nimistöt
+    "subclades_finland": {
+        "L550":  {
+            "isogg_new": "N1a1a1a1a1",
+            "isogg_old": "N1c1a1a1a1",
+            "distribution": "Länsi-Suomi, Skandinavia, Baltia",
+            "note": "Etelä-Baltian haara (M2783) ja Fennoskandian haara (Y4706) erosivat ~2 600 BCE",
+        },
+        "Z1936": {
+            "isogg_new": "N1a1a1a1a2",
+            "isogg_old": "N1c1a1a1a2",
+            "distribution": "Itä-Suomi, Karjala, Komi, Volga-tatarit",
+            "note": "Z1925-alahaara tyypillinen Savolle, Karjalalle ja Lapille",
+        },
+        "VL29":  {
+            "isogg_new": "N1a1a1a1a",
+            "isogg_old": "N1c1a1a1",
+            "distribution": "koko Fennoskandia+Baltia+NW-Venäjä",
+            "note": "Kattaa L550 + Z1936 — vanhin yhteinen eurooppalainen haara, ~3 600 BCE",
+        },
+        "L1026": {
+            "isogg_new": "N1a1a1a",
+            "isogg_old": "N1c1a1a",
+            "distribution": "Eurooppa + Länsi-Siperia",
+            "note": "Uralin ylitys ~4 000 BCE — haarautui Euroopan puolelle",
+        },
+    },
     "references": [
         "Rootsi et al. 2007. Eur. J. Hum. Genet. 15:204–211",
-        "Lamnidis et al. 2018. Nature Comm. 9:5018",
-        "Saag et al. 2019. Curr. Biol. 29:3445–3456",
-        "Tambets et al. 2018. Curr. Biol. 28:2277–2283",
-        "Ilumäe et al. 2016. Am. J. Hum. Genet. 99:163–173",
+        "Ilumäe et al. 2016. Am. J. Hum. Genet. 99:163–173 (non-trivial phylogeography)",
+        "Lamnidis et al. 2018. Nature Comm. 9:5018 (Levänluhta, Kola)",
+        "Saag et al. 2019. Curr. Biol. 29:3445–3456 (N-Tat saapuu rautakaudella)",
+        "Tambets et al. 2018. Curr. Biol. 28:2277–2283 (Suomen geneettiset rajat)",
+        "ISOGG 2008 N-tree (N3→N1c muutos)",
+        "ISOGG 2018 N-tree (N1c→N1a1 muutos)",
     ],
 }
 
-# Alias — käyttäjä voi kirjoittaa "N-Tat" tai "N-M46"
-# HUOM: N1a1 EI ole alias tässä — N1a1 on mtDNA EEF-linja (BASAL_MARKERS["N1a"])
-# Y-DNA N-Tat:in vanhat ISOGG-nimet: N1c (2010), N1c1 (2015), N1a1 (2017+)
-# Käytämme vain N-M46 ja N-TAT aliaksina sekaannusten välttämiseksi.
-BASAL_MARKERS["N-TAT"]    = BASAL_MARKERS["N-M46"]
-BASAL_MARKERS["N1c1"]     = BASAL_MARKERS["N-M46"]   # vanha ISOGG-nimike (2015)
+# ---------------------------------------------------------------------------
+# N-M46 ALIAS-TAULUKKO — kaikki historialliset nimet
+# ---------------------------------------------------------------------------
+# Periaate: kaikki alle listatut ovat VAIN Y-DNA N-Tat -kladin nimiä.
+# mtDNA:n sekaannusten välttämiseksi N1a1 EI ole alias täällä
+# (N1a mtDNA = LBK-viljelijät, täysin eri linja).
+
+# Vanhat ISOGG-nimet (2006–2016) — kaikki = N-Tat
+BASAL_MARKERS["N3"]       = BASAL_MARKERS["N-M46"]   # ISOGG ≤2006
+BASAL_MARKERS["N1c"]      = BASAL_MARKERS["N-M46"]   # ISOGG 2008–2016
+BASAL_MARKERS["N1c1"]     = BASAL_MARKERS["N-M46"]   # ISOGG 2008–2016 (M178)
+BASAL_MARKERS["N-TAT"]    = BASAL_MARKERS["N-M46"]   # SNP-nimi (synonyymi M46)
+BASAL_MARKERS["N-Tat"]    = BASAL_MARKERS["N-M46"]   # sama, eri kirjoitusasu
+BASAL_MARKERS["N-P105"]   = BASAL_MARKERS["N-M46"]   # SNP-synonyymi (P105 = M46)
+BASAL_MARKERS["N-M178"]   = BASAL_MARKERS["N-M46"]   # M178 = N1c1 = N1a1a
+
+# Uudet ISOGG-nimet (2017+)
+# N1a1 EI lisätä aliakseksi — mtDNA-konflikti (ks. yllä)
+# Käytetään SNP-pohjaisia nimiä jotka ovat yksiselitteisiä
+BASAL_MARKERS["N-L1026"]  = BASAL_MARKERS["N-M46"]   # eurooppalainen päähaara
+BASAL_MARKERS["N-VL29"]   = BASAL_MARKERS["N-M46"]   # Baltia+Suomi+NW-Venäjä
+BASAL_MARKERS["N-L550"]   = BASAL_MARKERS["N-M46"]   # Länsi-Suomi+Skandinavia
+BASAL_MARKERS["N-Z1936"]  = BASAL_MARKERS["N-M46"]   # Itä-Suomi+Karjala+Volga
+
+# Eupedian nimistö (edelleen laajalti käytössä blogeissa/foorumeilla)
+BASAL_MARKERS["N1c1a1a1a1"]  = BASAL_MARKERS["N-M46"]   # = L550
+BASAL_MARKERS["N1c1a1a1a2"]  = BASAL_MARKERS["N-M46"]   # = Z1936
+BASAL_MARKERS["N1c1a1a"]     = BASAL_MARKERS["N-M46"]   # = L1026
 
 # ---------------------------------------------------------------------------
 # Y-DNA — I1 (Skandinaavinen)
