@@ -8,9 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Playfair+Display+SC:wght@400;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 
   <style>
-    /* ============================================================
-       DESIGN TOKENS — steppe palette (darker, earthier than H1)
-    ============================================================ */
     :root {
       --paper:        #f4ede0;
       --paper-warm:   #f9f4ea;
@@ -22,7 +19,7 @@
       --accent-pale:  #e8d8c0;
       --line:         #c8b490;
       --line-faint:   #e0d0b8;
-      --shadow:       rgba(40, 20, 5, 0.18);
+      --red-ink:      #7a2010;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -40,9 +37,6 @@
       hyphens: auto;
     }
 
-    /* ============================================================
-       A4 PAGE WRAPPER
-    ============================================================ */
     .pages-container {
       display: flex;
       flex-direction: column;
@@ -75,27 +69,19 @@
 
     .page > * { position: relative; z-index: 1; }
 
-    /* ============================================================
-       PRINT
-    ============================================================ */
     @page { size: A4; margin: 2.2cm 2.1cm 2.6cm 2.1cm; }
 
     @media print {
-      html, body { background: white !important; padding: 0 !important; }
+      html, body { background: white !important; padding: 0 !important; margin: 0 !important; }
       .pages-container { display: block; padding: 0; gap: 0; }
-      .page {
-        width: 100%; min-height: 0; box-shadow: none;
-        padding: 0; border: none; page-break-after: always; margin: 0; overflow: visible;
-      }
+      .page { width: 100%; min-height: 0; box-shadow: none; padding: 0; border: none; page-break-after: always; margin: 0; overflow: visible; }
       .page::before { display: none; }
       .page:last-child { page-break-after: auto; }
       .pdf-btn, .toc-nav { display: none !important; }
       .footer { display: none !important; }
     }
 
-    /* ============================================================
-       COVER — steppe dark variant
-    ============================================================ */
+    /* COVER */
     .page.cover {
       background: linear-gradient(160deg, #1a0d04 0%, #2c1a08 50%, #1a0d04 100%);
       display: flex;
@@ -107,13 +93,7 @@
       height: calc(297mm - 4.6cm);
     }
 
-    .cover-ornament {
-      font-size: 18pt;
-      letter-spacing: 0.4em;
-      color: var(--accent-light);
-      margin-bottom: 2em;
-      opacity: 0.7;
-    }
+    .cover-ornament { font-size: 18pt; letter-spacing: 0.4em; color: var(--accent-light); margin-bottom: 2em; opacity: 0.7; }
 
     .cover h1 {
       font-family: "Playfair Display SC", serif;
@@ -124,12 +104,7 @@
       margin: 0 0 0.4em 0;
     }
 
-    .cover-rule {
-      width: 60px; height: 1px;
-      background: var(--accent-light);
-      margin: 0.8em auto;
-      opacity: 0.6;
-    }
+    .cover-rule { width: 60px; height: 1px; background: var(--accent-light); margin: 0.8em auto; opacity: 0.6; }
 
     .cover .subtitle {
       font-family: "Playfair Display", serif;
@@ -152,8 +127,7 @@
 
     .cover-footer-rule {
       position: absolute;
-      bottom: 2.2cm;
-      left: 2.2cm; right: 2.2cm;
+      bottom: 2.2cm; left: 2.2cm; right: 2.2cm;
       text-align: center;
       font-family: "Playfair Display SC", serif;
       font-size: 8pt;
@@ -162,9 +136,7 @@
       opacity: 0.45;
     }
 
-    /* ============================================================
-       TYPOGRAPHY
-    ============================================================ */
+    /* HEADINGS */
     h1 {
       font-family: "Playfair Display SC", serif;
       font-size: 24pt;
@@ -187,21 +159,12 @@
       page-break-after: avoid;
     }
 
-    p {
-      margin: 0 0 1.1em 0;
-      text-align: justify;
-      text-justify: inter-word;
-      widows: 3; orphans: 3;
-      color: var(--ink);
-    }
-
+    p { margin: 0 0 1.1em 0; text-align: justify; text-justify: inter-word; widows: 3; orphans: 3; color: var(--ink); }
     strong { color: var(--ink-mid); }
     a { color: var(--accent); text-underline-offset: 2px; }
-    em { color: var(--ink-soft); }
+    sup { font-size: 7.5pt; color: var(--accent); vertical-align: super; line-height: 0; }
 
-    /* ============================================================
-       DROP CAP
-    ============================================================ */
+    /* DROP CAP */
     .dropcap::first-letter {
       float: left;
       font-family: "Playfair Display SC", serif;
@@ -213,56 +176,19 @@
     }
     .dropcap::after { content: ""; display: table; clear: both; }
 
-    /* ============================================================
-       PART HEADER
-    ============================================================ */
-    .part-header {
-      text-align: center;
-      margin-bottom: 1.8em;
-      padding-bottom: 1.4em;
-      position: relative;
-    }
-    .part-header::after {
-      content: "";
-      position: absolute;
-      left: 20%; right: 20%; bottom: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--line), transparent);
-    }
-    .part-number {
-      display: block;
-      font-family: "Playfair Display SC", serif;
-      font-size: 9.5pt;
-      letter-spacing: 0.22em;
-      color: var(--accent);
-      margin-bottom: 0.3em;
-    }
-    .part-header h2 {
-      font-family: "Playfair Display", serif;
-      font-style: italic;
-      font-size: 13pt;
-      color: var(--ink-soft);
-      margin: 0; font-weight: 400;
-    }
+    /* PART HEADER */
+    .part-header { text-align: center; margin-bottom: 1.8em; padding-bottom: 1.4em; position: relative; }
+    .part-header::after { content: ""; position: absolute; left: 20%; right: 20%; bottom: 0; height: 1px; background: linear-gradient(to right, transparent, var(--line), transparent); }
+    .part-number { display: block; font-family: "Playfair Display SC", serif; font-size: 9.5pt; letter-spacing: 0.22em; color: var(--accent); margin-bottom: 0.3em; }
+    .part-header h2 { font-family: "Playfair Display", serif; font-style: italic; font-size: 13pt; color: var(--ink-soft); margin: 0; font-weight: 400; }
 
-    /* ============================================================
-       IMAGE BLOCKS
-    ============================================================ */
-    .image-hero, .image-full {
-      width: 100%;
-      margin: 1.6em 0 1.8em 0;
-      page-break-inside: avoid;
-    }
-
-    .image-hero img, .image-full img {
-      width: 100%; height: auto;
-      display: block;
-      border-radius: 3px;
-      filter: sepia(32%) contrast(1.08) brightness(0.95);
-    }
+    /* IMAGES */
+    .image-hero, .image-full { width: 100%; margin: 1.6em 0 1.8em 0; page-break-inside: avoid; }
+    .image-hero img, .image-full img { width: 100%; height: auto; display: block; border-radius: 3px; filter: sepia(30%) contrast(1.07) brightness(0.96); }
 
     .image-placeholder {
       width: 100%;
+      min-height: 130px;
       background: var(--accent-pale);
       border: 1px solid var(--line);
       border-radius: 3px;
@@ -270,49 +196,32 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      gap: 6px;
       font-family: "Lora", serif;
       font-style: italic;
-      font-size: 10pt;
+      font-size: 9.5pt;
       color: var(--accent-light);
-      padding: 24px;
-      gap: 8px;
+      padding: 20px;
       margin-bottom: 0;
     }
 
-    .image-placeholder .img-theme {
-      font-size: 8.5pt;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      opacity: 0.7;
-    }
+    .img-theme { font-size: 8pt; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; }
 
-    .caption {
-      font-family: "Lora", serif;
-      font-style: italic;
-      font-size: 9pt;
-      color: var(--ink-soft);
-      text-align: center;
-      margin-top: 6px;
-      line-height: 1.4;
-    }
+    .caption { font-family: "Lora", serif; font-style: italic; font-size: 9pt; color: var(--ink-soft); text-align: center; margin-top: 6px; line-height: 1.4; }
 
-    /* ============================================================
-       ROYAL HIGHLIGHT BOX — special treatment
-    ============================================================ */
+    /* ROYAL BOX */
     .royal-box {
-      border: 2px solid var(--accent-light);
+      border: 1.5px solid var(--accent-light);
       background: linear-gradient(135deg, #2c1a08 0%, #1a0d04 100%);
-      padding: 18px 20px 16px 20px;
+      padding: 16px 20px 14px 20px;
       margin: 1.6em 0;
       page-break-inside: avoid;
       border-radius: 2px;
-      color: #f0e4cc;
     }
 
     .royal-title {
       font-family: "Playfair Display SC", serif;
-      font-size: 9pt;
+      font-size: 8.5pt;
       letter-spacing: 0.2em;
       color: var(--accent-light);
       margin-bottom: 10px;
@@ -321,23 +230,11 @@
       gap: 8px;
     }
 
-    .royal-title::before, .royal-title::after {
-      content: "✦";
-      font-size: 8pt;
-      opacity: 0.6;
-    }
+    .royal-title::before, .royal-title::after { content: "✦"; font-size: 7pt; opacity: 0.6; }
 
-    .royal-box p {
-      color: #e0ccaa;
-      font-style: italic;
-      font-size: 10.5pt;
-      margin: 0;
-      text-align: left;
-    }
+    .royal-box p { color: #e0ccaa; font-style: italic; font-size: 10.5pt; margin: 0; text-align: left; line-height: 1.7; }
 
-    /* ============================================================
-       FACT BOX
-    ============================================================ */
+    /* FACT BOX */
     .fact-box {
       border: 1px solid var(--line);
       border-left: 3px solid var(--accent);
@@ -347,122 +244,28 @@
       page-break-inside: avoid;
     }
 
-    .fact-title {
-      font-family: "Lora", serif;
-      font-weight: 600;
-      font-size: 9.5pt;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-
-    .fact-box ul {
-      margin: 0; padding-left: 1.2em;
-      font-size: 10.5pt;
-      line-height: 1.7;
-    }
+    .fact-title { font-family: "Lora", serif; font-weight: 600; font-size: 9.5pt; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .fact-box ul { margin: 0; padding-left: 1.2em; font-size: 10.5pt; line-height: 1.7; }
     .fact-box li { margin-bottom: 2px; }
-    .fact-box p { margin: 0; font-size: 10.5pt; line-height: 1.7; }
+    .fact-box p { margin: 0; font-size: 10.5pt; line-height: 1.7; font-style: italic; text-align: left; }
 
-    /* ============================================================
-       MAP PLACEHOLDER
-    ============================================================ */
-    .map-container {
-      width: 100%;
-      background: var(--accent-pale);
-      border: 1px solid var(--line);
-      border-radius: 3px;
-      margin: 1.6em 0;
-      overflow: hidden;
-      page-break-inside: avoid;
-    }
+    /* DATA TABLE */
+    .data-table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 9.5pt; }
+    .data-table th { background: #2c1a08; color: var(--accent-light); padding: 7px 10px; text-align: left; font-family: "Playfair Display SC", serif; font-size: 8pt; letter-spacing: 0.1em; font-weight: 400; }
+    .data-table td { padding: 6px 10px; border-bottom: 1px solid var(--line-faint); vertical-align: top; color: var(--ink-mid); }
+    .data-table tr:nth-child(even) td { background: rgba(200, 180, 144, 0.12); }
 
-    .map-placeholder {
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 8px;
-      font-family: "Lora", serif;
-      font-style: italic;
-      font-size: 10pt;
-      color: var(--accent);
-    }
+    /* MAP */
+    .map-container { width: 100%; margin: 1.6em 0; page-break-inside: avoid; }
+    .map-container iframe { width: 100%; border: none; border-radius: 3px; display: block; }
+    .map-placeholder { background: var(--accent-pale); border: 1px solid var(--line); border-radius: 3px; height: 180px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; font-family: "Lora", serif; font-style: italic; font-size: 10pt; color: var(--accent); }
 
-    .map-label {
-      font-size: 8pt;
-      color: var(--ink-soft);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    /* ============================================================
-       TIMELINE
-    ============================================================ */
-    .timeline {
-      margin: 1.4em 0;
-      padding-left: 20px;
-      border-left: 2px solid var(--line);
-    }
-
-    .tl-item {
-      margin-bottom: 1em;
-      position: relative;
-      padding-left: 12px;
-    }
-
-    .tl-item::before {
-      content: "";
-      position: absolute;
-      left: -17px; top: 5px;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--accent-light);
-      border: 2px solid var(--paper);
-    }
-
-    .tl-date {
-      font-family: "Playfair Display SC", serif;
-      font-size: 8.5pt;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      display: block;
-      margin-bottom: 1px;
-    }
-
-    .tl-place {
-      font-weight: 600;
-      font-size: 10pt;
-      color: var(--ink-mid);
-    }
-
-    .tl-desc {
-      font-size: 10pt;
-      color: var(--ink-soft);
-      font-style: italic;
-    }
-
-    /* ============================================================
-       SECTION DIVIDER
-    ============================================================ */
-    .section-divider {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin: 2em auto;
-    }
-    .section-divider::before, .section-divider::after {
-      content: ""; flex: 1; max-width: 80px;
-      height: 1px; background: var(--line);
-    }
+    /* SECTION DIVIDER */
+    .section-divider { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 2em auto; }
+    .section-divider::before, .section-divider::after { content: ""; flex: 1; max-width: 80px; height: 1px; background: var(--line); }
     .section-divider-glyph { font-size: 11pt; color: var(--accent-light); opacity: 0.7; }
 
-    /* ============================================================
-       FOOTER
-    ============================================================ */
+    /* FOOTER */
     .footer {
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -480,107 +283,26 @@
       letter-spacing: 0.03em;
     }
 
-    .footer-inner {
-      display: flex; width: 100%;
-      justify-content: space-between;
-      align-items: center;
-    }
-
+    .footer-inner { display: flex; width: 100%; justify-content: space-between; align-items: center; }
     .footer-title { opacity: 0.8; }
     .footer-page  { opacity: 0.65; font-style: normal; font-size: 8pt; }
 
-    /* ============================================================
-       TOC NAV
-    ============================================================ */
-    .toc-nav {
-      position: fixed;
-      top: 50%; right: 16px;
-      transform: translateY(-50%);
-      display: flex; flex-direction: column;
-      gap: 7px; z-index: 100;
-    }
-
-    .toc-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: rgba(176, 120, 64, 0.35);
-      border: 1px solid rgba(176, 120, 64, 0.5);
-      cursor: pointer;
-      transition: all 0.2s;
-      text-decoration: none;
-      display: block;
-      position: relative;
-    }
-
+    /* TOC NAV */
+    .toc-nav { position: fixed; top: 50%; right: 16px; transform: translateY(-50%); display: flex; flex-direction: column; gap: 7px; z-index: 100; }
+    .toc-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(176, 120, 64, 0.35); border: 1px solid rgba(176, 120, 64, 0.5); cursor: pointer; transition: all 0.2s; text-decoration: none; display: block; position: relative; }
     .toc-dot:hover { background: rgba(176, 120, 64, 0.75); transform: scale(1.3); }
-
-    .toc-dot::after {
-      content: attr(data-label);
-      position: absolute;
-      right: calc(100% + 10px); top: 50%;
-      transform: translateY(-50%);
-      white-space: nowrap;
-      font-family: "Lora", serif;
-      font-size: 8.5pt; font-style: italic;
-      color: rgba(176, 120, 64, 0.9);
-      background: rgba(26, 12, 4, 0.85);
-      padding: 3px 9px; border-radius: 3px;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.15s;
-    }
+    .toc-dot::after { content: attr(data-label); position: absolute; right: calc(100% + 10px); top: 50%; transform: translateY(-50%); white-space: nowrap; font-family: "Lora", serif; font-size: 8.5pt; font-style: italic; color: rgba(176, 120, 64, 0.9); background: rgba(26, 12, 4, 0.85); padding: 3px 9px; border-radius: 3px; opacity: 0; pointer-events: none; transition: opacity 0.15s; }
     .toc-dot:hover::after { opacity: 1; }
 
-    /* ============================================================
-       PDF BUTTON
-    ============================================================ */
-    .pdf-btn {
-      position: fixed;
-      bottom: 24px; right: 24px;
-      z-index: 200;
-      background: var(--accent);
-      color: #f0e4cc;
-      border: none;
-      padding: 11px 20px;
-      border-radius: 4px;
-      font-family: "Lora", serif;
-      font-size: 10.5pt;
-      cursor: pointer;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
-      letter-spacing: 0.02em;
-      transition: background 0.2s, transform 0.15s;
-    }
+    .pdf-btn { position: fixed; bottom: 24px; right: 24px; z-index: 200; background: var(--accent); color: #f0e4cc; border: none; padding: 11px 20px; border-radius: 4px; font-family: "Lora", serif; font-size: 10.5pt; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.35); letter-spacing: 0.02em; transition: background 0.2s, transform 0.15s; }
     .pdf-btn:hover { background: #8f4e28; transform: translateY(-1px); }
-    .pdf-btn:active { transform: translateY(0); }
 
-    /* ============================================================
-       OATH / CLOSING
-    ============================================================ */
-    .oath {
-      font-family: "Playfair Display", serif;
-      font-style: italic;
-      font-size: 12pt;
-      line-height: 1.85;
-      text-align: center;
-      color: var(--ink-mid);
-    }
-
-    .closing-line {
-      text-align: center;
-      font-style: italic;
-      font-size: 11.5pt;
-      color: var(--ink-soft);
-      margin-top: 2em;
-      line-height: 1.8;
-    }
-
+    .oath { font-family: "Playfair Display", serif; font-style: italic; font-size: 12pt; line-height: 1.85; text-align: center; color: var(--ink-mid); }
+    .closing-line { text-align: center; font-style: italic; font-size: 11.5pt; color: var(--ink-soft); margin-top: 2em; line-height: 1.8; }
     .legal p { font-size: 10.5pt; line-height: 1.7; text-align: left; }
-
     .center { text-align: center; }
     .italic { font-style: italic; }
 
-    /* ============================================================
-       RESPONSIVE
-    ============================================================ */
     @media screen and (max-width: 820px) {
       .pages-container { padding: 24px 0; gap: 24px; }
       .page { width: 100%; min-height: 0; border-radius: 0; }
@@ -592,17 +314,18 @@
 </head>
 <body>
 
-<!-- NAV DOTS -->
 <nav class="toc-nav" aria-label="Sisällys">
   <a class="toc-dot" href="#kansi"       data-label="Kansi"></a>
   <a class="toc-dot" href="#kohtaaminen" data-label="Kohtaaminen"></a>
   <a class="toc-dot" href="#johdanto"    data-label="Johdanto"></a>
-  <a class="toc-dot" href="#arot-1"      data-label="Tepe Anau"></a>
-  <a class="toc-dot" href="#arot-2"      data-label="Yamnaya"></a>
-  <a class="toc-dot" href="#vaellus-1"   data-label="Länteen – Corded Ware"></a>
-  <a class="toc-dot" href="#vaellus-2"   data-label="Itään – Pakistan ja Kiina"></a>
-  <a class="toc-dot" href="#egypti"      data-label="Egypti – kuninkaallinen hauta"></a>
-  <a class="toc-dot" href="#pohjoinen"   data-label="Gotlanti – pohjoinen"></a>
+  <a class="toc-dot" href="#synty"       data-label="W-linjan synty"></a>
+  <a class="toc-dot" href="#tepeanau"    data-label="Tepe Anau"></a>
+  <a class="toc-dot" href="#yamnaya"     data-label="Yamnaya"></a>
+  <a class="toc-dot" href="#corded"      data-label="Corded Ware"></a>
+  <a class="toc-dot" href="#unetice"     data-label="Únětice & Baden"></a>
+  <a class="toc-dot" href="#pakistan"    data-label="Pakistan – Hotspot"></a>
+  <a class="toc-dot" href="#egypti"      data-label="Egypti – Hotspot"></a>
+  <a class="toc-dot" href="#pohjoinen"   data-label="Pohjoinen"></a>
   <a class="toc-dot" href="#suomi"       data-label="Suomi"></a>
   <a class="toc-dot" href="#kartta"      data-label="Vaelluskartta"></a>
   <a class="toc-dot" href="#perinto"     data-label="Elävä perintö"></a>
@@ -613,58 +336,37 @@
 
 <div class="pages-container">
 
-  <!-- =========================================================
-       KANSI
-  ========================================================== -->
+  <!-- KANSI -->
   <section class="page cover" id="kansi">
     <div class="cover-ornament">⚔ &nbsp; ✦ &nbsp; ⚔</div>
-
     <h1>Kadonneen<br>Sukuhistorian<br>Metsästäjä</h1>
-
     <div class="cover-rule"></div>
-
     <p class="subtitle">W3a1 – Arojen tyttäret</p>
-
     <p class="tagline">
       "Muut linjat löysivät refugiumin ja jäivät.<br>
       Sinun linjasi ei pysähtynyt. Koskaan."
     </p>
-
     <div class="cover-footer-rule">KSHM · Arkeogenetiikka · Populaatiohistoria</div>
   </section>
 
 
-  <!-- =========================================================
-       KOHTAAMINEN
-  ========================================================== -->
+  <!-- KOHTAAMINEN -->
   <section class="page" id="kohtaaminen">
-
     <h1>Kohtaaminen</h1>
 
-    <p class="dropcap">Rakas ystävä, kuuntele nyt tarkasti — tämä ei ole tarina joka alkaa Suomesta. Ei edes Skandinaviasta. Ei Euroopasta. Tämä tarina alkaa aroilta. Laakeasta, tuulisesta maailmasta jossa ei ollut metsärajaa, ei kiviseinää, ei peltoa — vain horisontti. Ja horisontin tuolla puolen: toinen horisontti.</p>
+    <p class="dropcap">Rakas ystävä, kuuntele nyt tarkasti – älä vilkuile kelloa, älä avaa puhelinta. Tämä ei ole tavallinen raportti. Tämä ei ole tieteellinen tiivistelmä. Tämä on se hetki, jolloin menneisyys astuu huoneeseen, katsoo sinua suoraan silmiin ja sanoo: <em>Minä olen täällä. Olen aina ollut täällä. Ja minä olen sinä.</em></p>
 
-    <p><strong>W3a1</strong> on haplotyyppisi koodi. Se on myös avain maailmaan jota useimmat eurooppalaiset eivät tunne esi-isäkseen: Yamnayan aroheimoon, pronssikauden ratsastajiin ja ihmisiin jotka muuttivat Eurasian genetiikan pysyvästi yhdessä sukupolvessa.</p>
+    <h2>Sinun veresi ei tunne rajoja</h2>
 
-    <p>Muut äitilinjat selvisivät jääkauden piiloutumalla. W3a1 teki jotain muuta.</p>
+    <p>Se on kulkenut samoja reittejä kuin pronssikauden kauppakaravaanit, ylittänyt vuoria, hiekkaerämaita ja jokia jo kauan ennen kuin yksikään esi-isäsi kirjoitti nimeään asiakirjoihin. <strong>W3a1</strong> ei ole pelkkä koodi DNA-tuloksessasi – se on äitilinja, jonka viimeinen lenkki olet juuri nyt sinä.</p>
 
-    <p>Sinun esi-äitisi ei istunut luolassa ja odottanut jääkauden loppumista.</p>
-    <p><strong>Hän ratsasti sen yli.</strong></p>
+    <p>Kun katsot peiliin, näet vain tämän hetken, mutta mitokondriot soluissasi muistavat Kopet Dag ‑vuorten varjot, arojen tuulet ja Niilin kuuman iltahämärän. Sama hiljainen soluvoima, joka pitää sinut elossa, sykki jo Tepe Anaun savitaloissa, Yamnayan hautakummuissa ja Corded Ware ‑kansan kylissä. Jokainen tämän tarinan nainen antoi sen eteenpäin – toisinaan osana heimoa, toisinaan kauppiaan vaimona, toisinaan tuntemattomana vainajana pienen kumpareen alla – ja lopulta se päätyi sinuun, aivan tavalliseen päivään, jossa avaat DNA-tuloksesi selaimen välilehdellä.</p>
 
-    <div class="fact-box">
-      <div class="fact-title">Analyysin ydin</div>
-      <ul>
-        <li>mtDNA-linja: <strong>W3a1</strong></li>
-        <li>Vanhimmat dokumentoidut jäljet: ~5 450 vuotta sitten, Turkmenistan</li>
-        <li>Yamnaya-yhteys: Ukraina, ~4 917 vuotta sitten</li>
-        <li>Maantieteellinen kaari: Turkmenistan → Ukraina → Saksa → Pakistan → Egypti → Kiina → Gotlanti → <strong>Suomi</strong></li>
-        <li>Suomessa tänään: ~9,6 % — Euroopan korkein W-frekvenssi</li>
-        <li>Tutkimusmetodi: arkeogenetiikka, vertaisarvioidut julkaisut</li>
-      </ul>
-    </div>
+    <p>Tämä ei ole neutraali "haploryhmän kuvaus". Tämä on yksi äitilinja, joka kulkee kymmenien tuhansien vuosien takaa suoraan sukuusi – ja jota sinä jatkat, halusit tai et.</p>
 
-    <p>Tämä kertomus ei korvaa perinteistä sukututkimusta, vaan täydentää sitä. Kirkonkirjat ja arkistot kertovat nimistä ja vuosiluvuista — mutta ne vaikenevat siitä, mitä tapahtui ennen kirjoitettua aikaa. Tämä tarina alkaa siitä, mihin asiakirjat loppuvat.</p>
+    <p><strong>Et ole vain lukija. Olet löytö.</strong></p>
 
-    <p class="center italic">Tämä on matka juurille. Aroille. Maailman laidalle.</p>
+    <p>Ota arkeologin hattu ja laita se päähäsi. Seuraa jälkiä, koska matkamme alkaa. Nyt me kaivaudumme syvemmälle – emmekä lopeta ennen kuin jokainen vihje on tutkittu.</p>
 
     <footer class="footer">
       <div class="footer-inner">
@@ -675,45 +377,115 @@
   </section>
 
 
-  <!-- =========================================================
-       OSA I — TEPE ANAU
-  ========================================================== -->
-  <section class="page" id="arot-1">
+  <!-- JOHDANTO -->
+  <section class="page" id="johdanto">
+    <h1>Johdanto</h1>
 
-    <div class="part-header">
-      <span class="part-number">🜂 OSA I</span>
-      <h2>Arojen syntyminen</h2>
-    </div>
-
-    <h1>Tepe Anau –<br>maailman ensimmäinen jälki</h1>
-
-    <div class="image-hero">
-      <!-- KUVA: Tepe Anau arkeologinen kaivaus tai Kopetdagin vuoristomaisema Turkmenistanissa.
-           Tumma, hiekkainen, autiomaamainen — kontrasti jäätikkömaisemaan. -->
-      <div class="image-placeholder">
-        <span>[ images/tepe-anau-kopetdag.jpg ]</span>
-        <span class="img-theme">Teema: Kopetdagin vuoristot / Tepe Anaun arkeologinen kaivaus, Turkmenistan</span>
-      </div>
-      <div class="caption">Tepe Anau, Turkmenistan — maailman vanhimman tunnetun W3a1-kantajan kotipaikka (~5 450 vuotta sitten)</div>
-    </div>
-
-    <p class="dropcap">Kaikkein vanhin tunnettu W3a1-kantaja ei asu Euroopassa. Hän asui Turkmenistanissa, Tepe Anaun kylässä, lähellä nykyistä Ašgabatia — siellä missä Keski-Aasian arot kohtaavat Kopetdagin vuoristot. Hänen luunsa lepäsivät maan alla yli viisi tuhatta vuotta ennen kuin moderni tiede löysi ja tunnisti ne.</p>
-
-    <p>Tepe Anau oli viljelyskylä. Siellä kasvatettiin ohraa ja emmer-vehnää, pidettiin lampaita ja vuohia. Mutta tämä nainen — hänen nimensä on unohdettu, hänen kasvonsa ovat mullan peitossa — oli jo osa jotain laajempaa liikettä. W3a1-linja ei syntynyt Euroopassa, ei Anatoliassa, ei jääkauden refugiumeissa.</p>
-
-    <p>Se syntyi siellä, missä Euroopan historia ei tavallisesti katso: Keski-Aasiassa, siirtymäalueella jossa viljelijät ja paimentolaiset kohtasivat.</p>
+    <p class="dropcap">Sinun veresi tarina ei ala tästä. Se on kulkenut tuhansien vuosien halki, yli merien ja arojen, läpi sukupolvien jotka eivät koskaan tienneet nimeäsi – mutta kantoivat samaa hiljaista merkkiä.</p>
 
     <div class="fact-box">
-      <div class="fact-title">Tepe Anau — arkeologinen konteksti</div>
+      <div class="fact-title">Analyysin ydin</div>
       <ul>
-        <li>Sijainti: Turkmenistan, Kopetdagin etelärinteet</li>
-        <li>Ikä: ~5 450 vuotta sitten (varhaisneoliitti)</li>
-        <li>Kulttuuri: Anau-kulttuuri — yksi Keski-Aasian varhaisimmista viljelysyhteisöistä</li>
-        <li>Merkitys: Maailman vanhimmat dokumentoidut W3a1-jäljet</li>
+        <li>mtDNA-linja: <strong>W3a1</strong></li>
+        <li>Tutkimusmetodi: arkeogenetiikka</li>
+        <li>Vanhimmat jäljet: ~5 450 vuotta sitten, Tepe Anau, Turkmenistan</li>
+        <li>Maantieteellinen kaari: Turkmenistan → Ukraina → Keski-Eurooppa → Pakistan → Egypti → Kiina → Pohjoismaat → <strong>Suomi</strong></li>
+        <li>Suomessa tänään: ~9,6 % väestöstä – Euroopan korkein W-frekvenssi</li>
+        <li>Lähteet: vertaisarvioidut julkaisut, haplotree.info, muinais-DNA-tietokannat</li>
       </ul>
     </div>
 
-    <p>Kun H1-linja lepäsi Franco-Cantabrian luolissa ja piirsi bisoneita seinille — sinun esi-äitisi oli jo liikkeessä.</p>
+    <p>Tämä kertomus ei korvaa perinteistä sukututkimusta, vaan täydentää sitä. Kirkonkirjat ja arkistot kertovat nimistä, paikoista ja vuosiluvuista – mutta ne vaikenevat siitä, mitä tapahtui ennen kirjoitettua aikaa. <strong>Tämä tarina alkaa siitä, mihin asiakirjat loppuvat.</strong></p>
+
+    <p>Se yhdistää arkeologisen kontekstin, muinais-DNA:n ja väestöhistorian yhdeksi ymmärrettäväksi kokonaisuudeksi – tavaksi nähdä oma DNA-tulos osana laajempaa tarinaa, ei irrallisena tietona. Kertomus rakentuu todellisille hautalöydöille: jokaisessa kohdassa mainittu nainen on oikea arkeologinen näyte, jonka mtDNA vastaa sinun linjaasi.</p>
+
+    <p>Kun DNA-testisi osoittaa W3a1-haploryhmän, se tarkoittaa, että kuulut samaan mitokondriaaliseen jatkumoon kuin tässä kuvattu naisten ketju. He eivät ole sinä, mutta he kulkevat rinnallasi yhden esiäidin suvussa.</p>
+
+    <p class="center italic">Tämä on matka juurille. Aroille. Maailman laidalle.</p>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
+        <span class="footer-page">Johdanto</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- W-LINJAN SYNTY -->
+  <section class="page" id="synty">
+
+    <div class="part-header">
+      <span class="part-number">🜂 OSA I</span>
+      <h2>Juuret – kun äitilinja syntyy</h2>
+    </div>
+
+    <h1>W-linjan synty –<br>kun maailma lämpenee</h1>
+
+    <div class="image-hero">
+      <!-- KUVA: Kaspianmeren tai Kaukasuksen maisema – laajakuva, aroa tai vuoristoa.
+           Tunnelma: aikojen alku, horisontti, tyhjyys ja mahdollisuus.
+           images/caspian-steppe-horizon.jpg -->
+      <div class="image-placeholder">
+        <span>[ images/caspian-steppe-horizon.jpg ]</span>
+        <span class="img-theme">Teema: Kaspianmeren alue tai Kaukasuksen aro – laajakuva, tyhjä horisontti</span>
+      </div>
+      <div class="caption">Kaspianmeren pohjoispuolinen aro – se alue, jossa W-haplotyyppi syntyi noin 16 000–20 000 vuotta sitten<sup>[1,2]</sup></div>
+    </div>
+
+    <p class="dropcap">Kun viimeinen jääkausi oli väistymässä ja maailma lämpeni, noin 24 000 vuotta sitten, esiäitisi linja muotoutui Länsi-Aasiassa – jossain Lähi-idän, Kaukasuksen ja Kaspianmeren välimaastossa. Siellä, missä ihmiset opettelivat selviytymään muuttuvassa ilmastossa, syntyi se N2-haara, josta sinun W-linjasi myöhemmin erkani. Et ole satunnainen sivupolku, vaan osa yhtä niistä harvoista linjoista, jotka selvisivät läpi jääkauden ja lähtivät uudelleen liikkeelle, kun jäät vetäytyivät.<sup>[1]</sup></p>
+
+    <p>Varsinainen W syntyi todennäköisesti 16 000–20 000 vuotta sitten Kaspianmeren ympäristössä. Sinun linjasi seurasi ihmisiä, jotka lähtivät liikkeelle paikallisten tulvien alta. Osa kulki Eurooppaan, osa Aasiaan, samoihin aikoihin kun myös J- ja T-haploryhmät lähtivät omille reiteilleen. Jossain tässä jatkuvassa liikkeessä syntyi myös W3a1 – noin 15 000 vuotta sitten – ja siitä lähtien sinun äitilinjan tarina on ollut nimenomaan vaelluksen, kaupan ja risteävien kulttuurien tarina.<sup>[2]</sup></p>
+
+    <p>Kun ajattelet itseäsi tänään, näet yhden henkilön yhdessä paikassa. Mutta mitokondriot soluissasi kantavat muistijäljen siitä, että sinun naislinjasi on ollut osa niitä väestöjä, joita myöhemmin kutsutaan balto-slaavilaisiksi, indo-iranilaisiksi ja indoeurooppalaisiksi – kielten, kulttuurien ja keksintöjen verkkoa, johon oma veresi on kytkeytynyt jo tuhansia vuosia ennen syntymääsi.</p>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
+        <span class="footer-page">W-linjan synty</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- TEPE ANAU -->
+  <section class="page" id="tepeanau">
+
+    <div class="part-header">
+      <span class="part-number">🜂 OSA II</span>
+      <h2>Matkasi alku</h2>
+    </div>
+
+    <h1>Tepe Anau –<br>kun alat viljelijäksi<br>ja kauppiaaksi</h1>
+
+    <div class="image-hero">
+      <!-- KUVA: Tepe Anaun arkeologinen kaivaus tai Kopet Dagin vuoristomaisema.
+           Tumma, hiekkainen, adobe-taloja tai kaivauksia.
+           images/tepe-anau-kopetdag.jpg -->
+      <div class="image-placeholder">
+        <span>[ images/tepe-anau-kopetdag.jpg ]</span>
+        <span class="img-theme">Teema: Kopet Dagin vuoristot / Tepe Anaun arkeologinen kaivaus, Turkmenistan</span>
+      </div>
+      <div class="caption">Tepe Anau, Turkmenistan – vanhimman tunnetun W3a1-kantajan kotipaikka, noin 5 450 vuotta sitten<sup>[3]</sup></div>
+    </div>
+
+    <p class="dropcap">Yhdessä tarinan aikajanassa sinä seisot Tepe Anaussa, Turkmenistanissa, Kopet Dag ‑vuorten juurella. Aurinko kuivaa adobe-tiilistä rakennettuja taloja, ja pölyssä sekoittuu viljan, karjan ja metallin tuoksu. Olet osa yhteisöä, joka häivyttää rajaa metsästäjä-keräilijän ja viljelijän välillä: kylässäsi kylvetään peltoja, mutta samaan aikaan kulkee esineitä ja vaikutteita kaukaa idästä ja lännestä.</p>
+
+    <p>Kun joku perheestäsi kuolee, hänet haudataan talon lattian alle, yhteiseen katakombihautaan. Siellä saviastiat, korut ja pronssiesineet kertovat sekä vauraudesta että siitä, että haluat pitää esivanhempasi lähellä. Kun tämän talon lattian alle lasketaan vainaja, joka kantaa W3a1-linjaa, sinä olet hänen tulevaisuutensa – vaikka fyysisesti et ole vielä syntynyt, mutta sinun mitokondrisi kulkevat jo hänessä.</p>
+
+    <p>Tepe Anau on sinun tarinassasi portti. Se on paikka, jossa neoliittinen vallankumous ei ole enää abstrakti käsite, vaan arkea, jossa maa muokataan, metalli hehkuu, ja ensimmäiset varsinaiset kauppaverkostot virittyvät. Tästä kynnyksestä sinun linjasi lähtee sekä itään että länteen.<sup>[3,4]</sup></p>
+
+    <div class="fact-box">
+      <div class="fact-title">Näyte I4087 – Tepe Anau</div>
+      <ul>
+        <li><strong>Sijainti:</strong> Kopet Dag, Turkmenistan</li>
+        <li><strong>Kulttuuri:</strong> Anau-kulttuuri, varhainen neoliitti</li>
+        <li><strong>mtDNA:</strong> W3a1</li>
+        <li><strong>Y-DNA:</strong> R-M124 (R2a) – paikallinen Keski-Aasian isälinja</li>
+        <li><strong>Ajoitus:</strong> ~5 450 eaa. (kalibroitu)</li>
+        <li><strong>Merkitys:</strong> Maailman vanhimmat dokumentoidut W3a1-jäljet<sup>[3]</sup></li>
+      </ul>
+    </div>
 
     <footer class="footer">
       <div class="footer-inner">
@@ -724,43 +496,39 @@
   </section>
 
 
-  <!-- =========================================================
-       OSA I — YAMNAYA
-  ========================================================== -->
-  <section class="page" id="arot-2">
+  <!-- YAMNAYA -->
+  <section class="page" id="yamnaya">
 
-    <h1>Yamnaya –<br>pronssikauden mullistus</h1>
+    <h1>Arojen kutsu –<br>Yamnayan kuningatar</h1>
 
     <div class="image-hero">
-      <!-- KUVA: Pontuksen aro, kurganikumpuja talvimaisemassa tai keväällä.
-           Laaja, tyhjä, mahtava perspektiivi — hevosia tai vaununpyörä etu-alalla ihanteellinen. -->
+      <!-- KUVA: Kurganikumpu Pontuksen arolla, talvinen tai keväinen maisema.
+           Hevosia tai vaunujen osia etu-alalla ihanteellinen. Laaja, tyhjä perspektiivi.
+           images/yamnaya-kurgan-steppe.jpg -->
       <div class="image-placeholder">
         <span>[ images/yamnaya-kurgan-steppe.jpg ]</span>
         <span class="img-theme">Teema: Kurganikumpu Pontuksen arolla / hevoset aromaailmassa, Ukraina</span>
       </div>
-      <div class="caption">Yamnayan kurganikumpu Pontuksen arolla, Ukraina — W3a1-nainen haudattiin tähän maailmaan ~4 917 vuotta sitten</div>
+      <div class="caption">Yamnayan kurganikumpu Pontuksen arolla – W3a1-nainen (poz222) haudattiin tähän maailmaan noin 4 917 vuotta sitten<sup>[5]</sup></div>
     </div>
 
-    <p class="dropcap">Noin 4 900 vuotta sitten, nykyisen Ukrainan Prydnistryansken alueella, haudattiin nainen kurganiin — kumpuhautaan, joka oli aroheimoja yhdistävä hautaustapa. Hänen luistaan otettu näyte kertoo: <strong>W3a1</strong>. Hän oli Yamnayan ihminen. Ja Yamnaya muutti kaiken.</p>
+    <p class="dropcap">Toisessa kohtauksessa sinä nouset ylös arojen heinikkoon. Horisontti on matala, taivas valtava, ja hevosten hirnunta kantaa kauas. Olet nyt Yamnaya-kulttuurin jäsen, Pontisen arojen lapsi Dneprin ja Donin jokien välissä. Täällä elämä on liikkuvaa: vaunut, karja ja hevoset ovat jokapäiväisiä kumppaneitasi.</p>
 
-    <p>Yamnaya-kulttuuri (~3 300–2 600 eaa.) oli pronssikauden aro-kulttuuri Pontuksen ja Kaspianmeren välisellä alueella. He olivat ensimmäisiä jotka yhdistivät kolme mullistavaa teknologiaa: <strong>hevosen kesyttämisen</strong>, <strong>pyörän</strong> ja <strong>pronssin</strong>. Tämä yhdistelmä teki heistä nopeimman, liikkuvimman väestön jota Euraasia oli nähnyt.</p>
+    <p>Kun yhteisösi rakentaa kurgania, suurta hautakumpua, tiedät sen olevan enemmän kuin hauta. Se on lausuttu julistus: <em>me olimme täällä, meillä oli valtaa, meillä oli tekniikkaa ja hevosia.</em> Joskus voit kuvitella itsesi makaamassa punaokralla väritettynä, vierelläsi pronssikirves ja hevosen varusteita – ei siksi, että olisit välttämättä soturi, vaan koska kuulut kulttuuriin, jossa liike, ratsastus ja sotilaallinen voima määrittävät asemaa.</p>
 
-    <p>Geneettiset tutkimukset ovat osoittaneet: noin <strong>75 % nykyisten eurooppalaisten DNA:sta</strong> on peräisin Yamnayn ja sen jälkeläisten laajentumisesta. He eivät vain vierailleet Euroopassa. He muuttivat sen geneettisen maiseman pysyvästi.</p>
+    <p>Tässä maailmassa sinun W3a1-linjasi sulautuu siihen, mitä myöhemmin kutsutaan indoeurooppalaiseksi laajentumiseksi.<sup>[5,6]</sup> Geneettiset tutkimukset ovat osoittaneet: noin <strong>75 % nykyisten eurooppalaisten DNA:sta</strong> on peräisin Yamnayn ja sen jälkeläisten laajentumisesta. He eivät vain vierailleet Euroopassa. He muuttivat sen geneettisen maiseman pysyvästi.</p>
 
     <div class="fact-box">
-      <div class="fact-title">Yamnayan maailma</div>
+      <div class="fact-title">Näyte poz222 – Yamnaya, Ukraina</div>
       <ul>
-        <li>Aikakausi: ~3 300–2 600 eaa.</li>
-        <li>Alue: Pontuksen aro, nykyinen Ukraina ja Venäjä</li>
-        <li>Teknologia: hevonen + pyörä + pronssi</li>
-        <li>Hautaustapa: kurganit, punamulta, yksittäishaudat</li>
-        <li>Kieli: todennäköisesti proto-indoeurooppalainen</li>
-        <li>W3a1 dokumentoitu: Ukraina poz222, ~4 917 vuotta sitten</li>
-        <li>Geneettinen vaikutus: ~75 % nykyeurooppalaisten DNA:sta</li>
+        <li><strong>Sijainti:</strong> Prydnistryanske, Ukraina</li>
+        <li><strong>Kulttuuri:</strong> Yamnaya (~3 300–2 600 eaa.)</li>
+        <li><strong>mtDNA:</strong> W3a1</li>
+        <li><strong>Ajoitus:</strong> ~4 917 vuotta sitten</li>
+        <li><strong>Teknologia:</strong> hevonen + pyörä + pronssi</li>
+        <li><strong>Merkitys:</strong> W3a1 on osa varhaista indoeurooppalaista laajentumaa<sup>[5]</sup></li>
       </ul>
     </div>
-
-    <p>Tämä nainen ei ollut sotilaskomentaja. Ei kuningatar. Hän oli osa yhteisöä joka eli hevostensa, laumojensa ja avoimen taivaan alla. Mutta hänen jälkeläisensä — tai hänen sisarlinjansa kantajat — kulkivat kaikkialle minne hevonen jaksoi kantaa.</p>
 
     <footer class="footer">
       <div class="footer-inner">
@@ -771,253 +539,281 @@
   </section>
 
 
-  <!-- =========================================================
-       OSA II — LÄNTEEN
-  ========================================================== -->
-  <section class="page" id="vaellus-1">
-
-    <div class="part-header">
-      <span class="part-number">🜂 OSA II</span>
-      <h2>Maailman halki</h2>
-    </div>
-
-    <h1>Länteen –<br>Corded Ware ja Únětice</h1>
-
-    <div class="image-hero">
-      <!-- KUVA: Corded Ware -kulttuuri: keramiikkaa nuorankuvioisena tai hautakaivaus.
-           Vaihtoehtoisesti Únětice-pronssiesineitä: kirves, spiraali, koru.
-           Museon valokuva tai arkeologinen löytökuva. -->
-      <div class="image-placeholder">
-        <span>[ images/corded-ware-ceramics-bronze.jpg ]</span>
-        <span class="img-theme">Teema: Corded Ware -keramiikka / Únětice-pronssilöydöt, Keski-Eurooppa</span>
-      </div>
-      <div class="caption">Corded Ware -kulttuuri (~2 900–2 350 eaa.) — Yamnayn laajentumisen länsihaara, joka toi W3a1:n Keski-Eurooppaan</div>
-    </div>
-
-    <p class="dropcap">Yamnayn laajentuminen länteen synnytti Corded Ware -kulttuurin (~2 900–2 350 eaa.) — nimitys tulee hautalöydöistä, joissa keramiikka on koristeltu nuoralla painamalla. Tšekin Corded Ware -hauta Radovesicesta, ~4 370 vuotta vanha: <strong>W3a1</strong>. Linja on saapunut Keski-Eurooppaan.</p>
-
-    <p>Sieltä linja kulkee Únětice-kulttuuriin, Keski-Euroopan varhaiseen pronssiaikaan. Quedlinburgin haudat Saksasta — kaksi naista, ~3 925 ja ~3 875 vuotta sitten — molemmat kantavat samaa linjaa. Pronssi sulaa, käsityöläiset takoivat aseita ja koruja, ja tässä maailmassa W3a1 oli jo vakiintunut osa eurooppalaista geneettistä perintöä.</p>
-
-    <p>Linja toistuu myös Badenin varhaisessa pronssiajassa Saksassa (Singen, ~4 000 vuotta sitten, kaksi yksilöä) sekä Trzciniec-piirissä Puolassa (~3 450–3 275 vuotta sitten, kolme dokumentoitua naista).</p>
-
-    <div class="fact-box">
-      <div class="fact-title">Dokumentoidut esiintymät — länteen</div>
-      <ul>
-        <li><strong>Tšekki, Radovesice</strong> — Corded Ware, ~4 370 v.s. — W3a1</li>
-        <li><strong>Saksa, Quedlinburg (2×)</strong> — Únětice, ~3 925–3 875 v.s. — W3a1</li>
-        <li><strong>Saksa, Singen (2×)</strong> — Baden EBA, ~3 998–3 900 v.s. — W3a1</li>
-        <li><strong>Saksa, Künzing-Bruck</strong> — BAV, ~4 200 v.s. — W3a1</li>
-        <li><strong>Puola, Trzciniec (3×)</strong> — ~3 450–3 275 v.s. — W3a1</li>
-        <li><strong>Kroatia, Veliki Vanik</strong> — EMBA, ~3 508 v.s. — W3a1</li>
-      </ul>
-    </div>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Länteen – Corded Ware</span>
-      </div>
-    </footer>
-  </section>
-
-
-  <!-- =========================================================
-       OSA II — ITÄÄN
-  ========================================================== -->
-  <section class="page" id="vaellus-2">
-
-    <h1>Itään –<br>Pakistan ja Tarim-allas</h1>
-
-    <div class="image-hero">
-      <!-- KUVA: Swat Valley Pakistan — vihreä laakso vuoristojen ympäröimänä,
-           tai Tarim-altaan kuivunut maisema Xinjiangin aavikoilla.
-           Vaihtoehtoisesti Tarim-muumio (vaaleahiuksinen, eurooppalainen) museossa. -->
-      <div class="image-placeholder">
-        <span>[ images/swat-valley-tarim-mummy.jpg ]</span>
-        <span class="img-theme">Teema: Swat Valley, Pakistan / Tarim-muumio Xinjiangista, Kiina</span>
-      </div>
-      <div class="caption">Tarim-altaan muumiot — eurooppalaista alkuperää olevat yksilöt Kiinan aavikoilta, W3a1-yhteys dokumentoitu ~1 800 vuotta sitten</div>
-    </div>
-
-    <p class="dropcap">Länsi on vain puolet tarinasta. Samanaikaisesti kun W3a1 levisi Corded Waren mukana Eurooppaan, sama linja kulki <em>itään</em>. Swat Valley, nykyinen Pakistan: neljä erillistä rautakauden hauta-aluetta kantavat W3a1:tä noin 2 850–2 928 vuotta sitten. Nämä ovat Indo-arjalaisen muuttoliikkeen aikoja — samat ihmiset, jotka toivat sanskritinkielisen kulttuurin Etelä-Aasiaan.</p>
-
-    <p>Ja sitten: <strong>Kiina</strong>. Sampula, Tarim-altaan etelälaita, ~1 800 vuotta sitten. Tarim-allas on tunnettu eurooppalaisesta alkuperästään olevista muumioistaan — vaaleahiuksisista, sinisimäisistä yksilöistä jotka löydettiin Kiinan aavikoilta, kaukana kaikesta mistä heidän olisi pitänyt löytyä. W3a1 on heidän joukossaan.</p>
-
-    <p>Kyseessä ei ole pienimuotoinen siirtymä. W3a1 on ainoa dokumentoitu äitilinja joka esiintyy samanaikaisesti <strong>Euroopassa, Pakistanissa, Egyptissä ja Kiinassa</strong>.</p>
-
-    <div class="fact-box">
-      <div class="fact-title">Dokumentoidut esiintymät — itään</div>
-      <ul>
-        <li><strong>Pakistan, Loebanr</strong> — rautakausi, ~2 928 v.s. — W3a1</li>
-        <li><strong>Pakistan, Udegram</strong> — rautakausi, ~2 921 v.s. — W3a1</li>
-        <li><strong>Pakistan, Katelai</strong> — rautakausi, ~2 850 v.s. — W3a1</li>
-        <li><strong>Pakistan, Butkara</strong> — rautakausi, ~2 850 v.s. — W3a1</li>
-        <li><strong>Kazakstan, Berel</strong> — ~1 620 v.s. — W3a1</li>
-        <li><strong>Kazakstan, Zevakinskiy</strong> — LBA, ~2 911 v.s. — W3a1</li>
-        <li><strong>Kazakstan, Nurly</strong> — ~2 577 v.s. — W3a1</li>
-        <li><strong>Kiina, Sampula / Tarim</strong> — ~1 800 v.s. — W3a1</li>
-      </ul>
-    </div>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Itään – Pakistan ja Kiina</span>
-      </div>
-    </footer>
-  </section>
-
-
-  <!-- =========================================================
-       OSA III — EGYPTI (KUNINKAALLINEN HAUTA)
-  ========================================================== -->
-  <section class="page" id="egypti">
+  <!-- CORDED WARE -->
+  <section class="page" id="corded">
 
     <div class="part-header">
       <span class="part-number">🜂 OSA III</span>
-      <h2>Kuninkaallinen yhteys</h2>
+      <h2>Euroopan solmukohta</h2>
     </div>
 
-    <h1>Abusir el-Meleq –<br>ptolemaiolainen Egypti</h1>
+    <h1>Corded Ware –<br>uusi koti Keski-Euroopassa</h1>
 
     <div class="image-hero">
-      <!-- KUVA: Abusir el-Meleq -muumiot tai ptolemaiolainen hautaus Egyptistä.
-           Paras vaihtoehto: rikkaan ptolemaiolaisen naisen hautalöytöjä (kultakoruja, käärinliinat).
-           Tai Niilin varren maisema myöhäisantiikin aikaan. -->
+      <!-- KUVA: Corded Ware -keramiikka nuorankuvioineen tai rautakauden hautakaivaus.
+           Vaihtoehtoisesti jokilaakso Keski-Euroopassa varhaispronssikaudella.
+           images/corded-ware-ceramics.jpg -->
       <div class="image-placeholder">
-        <span>[ images/abusir-el-meleq-ptolemaic-mummy.jpg ]</span>
-        <span class="img-theme">Teema: Ptolemaiolainen muumio tai hautalöydöt, Abusir el-Meleq, Egypti</span>
+        <span>[ images/corded-ware-ceramics.jpg ]</span>
+        <span class="img-theme">Teema: Corded Ware -keramiikka nuorankuvioisena / jokilaakso Keski-Euroopassa</span>
       </div>
-      <div class="caption">Abusir el-Meleq, Egypti — ptolemaiolaisen kauden hauta-alue, josta löydettiin W3a1 ~2 238 vuotta sitten</div>
+      <div class="caption">Corded Ware -kulttuuri (~2 900–2 350 eaa.) – Yamnayn laajentumisen länsihaara, joka toi W3a1:n Keski-Eurooppaan<sup>[7]</sup></div>
     </div>
 
-    <p class="dropcap">Abusir el-Meleq. Nimi ei ole tuttu kuin muutamalle egyptologille. Mutta tässä Niilin varren hauta-alueessa, noin 115 kilometriä Kairosta etelään, piilee yksi verilinjakirjamme hämmästyttävimmistä ankkureista: näyte JK2165, ptolemaiolainen kausi, ~2 238 vuotta sitten. Haplotyyppi: <strong>W3a1</strong>.</p>
+    <p class="dropcap">Kun arojen tuuli alkaa laantua ja vaunujen rytmi hiukan hidastuu, huomaat astuvasi uuteen maisemaan. Metsät tihenevät, jokilaaksot syvenevät ja kaukana näkyy mäkiä, joiden rinteille tulevaisuuden kylät asettuvat. Olet nyt Keski-Euroopassa, ajassa noin 2 900–2 500 eaa., ja sinua ympäröivää kulttuuria kutsutaan myöhemmin Corded Wareksi – nuorakeraaminen kulttuuri, jossa sinun W3a1-linjasi saa Euroopassa uuden, vahvan jalansijan.<sup>[7]</sup></p>
 
-    <p>Ptolemaiokset hallitsivat Egyptiä vuosina 323–30 eaa. Makedonialainen kuningashuone, kreikkalainen kieli, egyptiläinen uskonto — kosmopoliittinen yhdistelmä joka teki Aleksandriasta Välimeren maailman mahtavimman kaupungin. Tänä aikana Egypti oli kaikkien kansojen solmukohta.</p>
+    <p>Sinun arjessasi tämä ei ole "Corded Ware -horisontti", vaan koti. Kotisi voi olla pieni maatila jokilaakson reunalla tai kylä, joka on levittäytynyt loiville rinteille. Sinä heräät aamuun, jossa viljakasvit, karja ja hevoset täyttävät näkökentän. Saviset astiat ovat koristeltu kierretyn narun painaumilla – siitä tutkijat myöhemmin antavat kulttuurillesi nimen.</p>
 
-    <div class="royal-box">
-      <div class="royal-title">Kuninkaallinen yhteys</div>
-      <p>Abusir el-Meleqista löydettyjen muumioiden joukossa on todisteita varakkaasta tai mahdollisesti aatelisesta taustasta: huolellisesti käärityt muumiot, koristeet, hautaesineistö. Ptolemaiolainen Egypti oli hierarkkinen yhteiskunta — hauta-alueella sai levätä vain yhteisön merkittävillä jäsenillä. W3a1-kantaja JK2165 on yksi tästä joukosta: nimetön, mutta unohdettu vain nimeltään.</p>
-    </div>
-
-    <p>Samainen Abusir el-Meleq sisältää myös muita U-perheen linjoja: U1, U3, U5, U6, U7 — kaikki samasta hauta-alueesta. Tämä on eurooppalaista ja länsieurasialaista alkuperää olevien ihmisten hautausmaa ptolemaiolaisessa Egyptissä. He eivät ole egyptiläisiä alkuperältään — he ovat Välimeren maailman liikkujia, joille Niilin laakso oli yksi monista kodeista.</p>
-
-    <p>Sinun esi-äitisi linja oli siellä.</p>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Egypti – ptolemaiolainen yhteys</span>
-      </div>
-    </footer>
-  </section>
-
-
-  <!-- =========================================================
-       OSA IV — POHJOINEN
-  ========================================================== -->
-  <section class="page" id="pohjoinen">
-
-    <div class="part-header">
-      <span class="part-number">🜂 OSA IV</span>
-      <h2>Pohjoinen solmukohta</h2>
-    </div>
-
-    <h1>Gotlanti ja Tanska –<br>viikinkiverkosto</h1>
-
-    <div class="image-hero">
-      <!-- KUVA: Gotlannin rannikkoa tai viikinkiajan Kopparsvik-hautausmaa.
-           Paras: meri, kivet, viikinkilaiva siluettina tai muinaisruotsalaiset runokivet.
-           Viikinkiajan Itämeri-maisema — erilainen kuin H1:n Gotlanti, tähän voi ottaa ankaran, tuulisen näkymän. -->
-      <div class="image-placeholder">
-        <span>[ images/gotland-viking-coast.jpg ]</span>
-        <span class="img-theme">Teema: Gotlannin rannikko tai viikinkiajan Itämeri-maisema</span>
-      </div>
-      <div class="caption">Gotlanti, Ruotsi — viikinkiajan solmukohta, W3a1 dokumentoitu näytteessä VK459 (~975 vuotta sitten)</div>
-    </div>
-
-    <p class="dropcap">Viking Age Sweden, Gotlanti: näyte VK459, ~975 vuotta sitten — <strong>W3a1</strong>. Tanska, Viking Denmark VK338, ~1 100 vuotta sitten — <strong>W3a1</strong>. Tanska, keskiaikainen G669, St. Jorgen, ~547 vuotta sitten — <strong>W3a1</strong>. Ja kauempaa: Kreikka, muinainen Ambrakia, ~2 170 vuotta sitten — <strong>W3a1</strong>. Unkari, varhainen unkarilainen kylähautausmaa, ~1 000 vuotta sitten — <strong>W3a1</strong>.</p>
-
-    <p>Viikinkiajan Itämeri oli liikkeen maailma. Kauppareittejä Volgaa pitkin Konstantinopoliin, purjeita Atlantille, solmuja joka satamassa. W3a1 kulki tässä verkostossa — ei ensimmäistä kertaa liikkeessä, ei viimeistä kertaa.</p>
-
-    <p>Tässä kohtaa linja saapuu viimein Pohjoisen piiriin. Sieltä, mistä se tavoittaa Suomen.</p>
+    <p>Sukusi naisia haudataan samalla tavoin kuin miehiä, mutta eri esinein. Kun joku sinun linjastasi lasketaan maahan, hän makaa kyljellään, polvet hieman koukussa, aivan kuin olisi käpertynyt uneen. Miesten hautaan lasketaan usein kirves, naisten mukaan koruja, helmiä ja astioita. Taustalla sinua ympäröivä yhteisö ei ole syntynyt tyhjiössä: isälinjoissa näkyy edelleen arojen ratsastajien jälki, mutta äitilinjoissa, kuten sinun, elää sekoitus vanhoja Euroopan viljelijälinjoja ja uusia tulijoita. Sinun veresi pystyy yhdistämään erilaisia maailmoja yhdeksi arjeksi.<sup>[7,8]</sup></p>
 
     <div class="fact-box">
-      <div class="fact-title">Dokumentoidut esiintymät — pohjoinen</div>
+      <div class="fact-title">Näyte I7207 – Corded Ware, Tšekki</div>
       <ul>
-        <li><strong>Ruotsi, Gotlanti VK459</strong> — viikinkiaika, ~975 v.s. — W3a1</li>
-        <li><strong>Tanska, VK338 Langeland</strong> — viikinkiaika, ~1 100 v.s. — W3a1</li>
-        <li><strong>Tanska, St. Jorgen G669</strong> — keskiaika, ~547 v.s. — W3a1</li>
-        <li><strong>Unkari, Sárrétudvari (2×)</strong> — varhainen unkarilainen, ~1 000 v.s. — W3a1</li>
-        <li><strong>Kreikka, Ambrakia AMV-CO_5</strong> — korinttilainen, ~2 170 v.s. — W3a1</li>
-        <li><strong>Ukraina, Kolomak MJ-34</strong> — skyytialaiset, ~2 231 v.s. — W3a1</li>
+        <li><strong>Sijainti:</strong> Radovesice XVIII, Tšekki</li>
+        <li><strong>Kulttuuri:</strong> Corded Ware, varhainen vaihe</li>
+        <li><strong>mtDNA:</strong> W3a1</li>
+        <li><strong>Y-DNA:</strong> R-M417 (R1a) – steppe-ankkuri</li>
+        <li><strong>Ajoitus:</strong> ~4 370 vuotta sitten (~2 400–2 300 eaa.)</li>
+        <li><strong>Merkitys:</strong> Ensimmäinen selvä dokumentti W3a1:stä Corded Ware -yhteydessä, josta haarautuu Suomen suunnan väestöjä<sup>[8]</sup></li>
       </ul>
     </div>
 
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Gotlanti – pohjoinen</span>
+        <span class="footer-page">Corded Ware</span>
       </div>
     </footer>
   </section>
 
 
-  <!-- =========================================================
-       OSA V — SUOMI
-  ========================================================== -->
-  <section class="page" id="suomi">
+  <!-- ÚNĚTICE & BADEN -->
+  <section class="page" id="unetice">
+
+    <h1>Únětice ja Baden –<br>pronssikauden eliitti</h1>
+
+    <div class="image-hero">
+      <!-- KUVA: Únětice-pronssilöydöt – kirves, spiraalikoruja, tikarit tai kaulakoruja.
+           Museon valokuva tai arkeologinen löytökuva, tumma tausta.
+           images/unetice-bronze-treasures.jpg -->
+      <div class="image-placeholder">
+        <span>[ images/unetice-bronze-treasures.jpg ]</span>
+        <span class="img-theme">Teema: Únětice-pronssiesineitä – kirves, spiraali, koruja, tumma tausta</span>
+      </div>
+      <div class="caption">Únětice-kulttuurin pronssiesineitä (~2 300–1 800 eaa.) – W3a1 näkyy pronssikauden taloudellisten verkostojen ytimessä<sup>[9]</sup></div>
+    </div>
+
+    <p class="dropcap">Nyt seisot kukkulalla, josta näkyy laakso ja sen halki virtaava joki. Olet Únětice-kulttuurin ytimessä, varhaisessa pronssikaudessa, ajassa noin 2 300–1 800 eaa. Täällä pronssi ei ole enää vain harvinainen uutuus, vaan voima, joka muuttaa yhteiskuntaa. Sinä elät maailmassa, jossa metallia sulatetaan, muotoillaan ja kuljetetaan pitkiä matkoja pitkin, ja jossa tietyt suvut kontrolloivat näitä virtauksia.<sup>[9]</sup></p>
+
+    <p>Kun kuljet läpi hautausmaan, huomaat että haudat muodostavat rivejä ja järjestyksiä. Joidenkin hautojen esineistö on rikas: pronssitikareita, kaulakoruja, sormuksia, meripihkaa, esineitä, jotka kertovat kaukaisista yhteyksistä. Toisten haudat ovat vaatimattomampia. Sinä ymmärrät, että kaikki eivät ole samanarvoisia, mutta tiedät myös, että ilman sinua – ilman naisten katkeamatonta ketjua – mikään näistä sukulinjoista ei jatkuisi.</p>
+
+    <p>Arkeologi tulevaisuudesta näkee sinut kylmänä numerona: <em>"yksilö I0116, mtDNA W3a1"</em>. Sinulle se hetki on aivan toisenlainen. Sinä olet ehkä nainen, joka kantaa mukanaan pientä pronssista korua – lahjaa, joka on tullut vaihtokaupassa kaukaa etelästä.<sup>[9,10]</sup></p>
+
+    <div class="fact-box">
+      <div class="fact-title">Únětice & Baden – dokumentoidut W3a1-näytteet</div>
+      <ul>
+        <li><strong>QLB 41</strong>, Quedlinburg, Saksa – Únětice, ~3 925 v.s. – W3a1</li>
+        <li><strong>QLB 39</strong>, Quedlinburg, Saksa – Únětice, ~3 875 v.s. – W3a1</li>
+        <li><strong>I0116</strong>, Esperstedt, Saksa – Únětice, ~3 978 v.s. – W3a1, Y-DNA I-BY431</li>
+        <li><strong>MX275</strong>, Singen, Saksa – Baden EBA, ~3 998 v.s. – W3a1, Y-DNA R-L2</li>
+        <li><strong>MX270</strong>, Singen, Saksa – Baden EBA, ~3 900 v.s. – W3a1, Y-DNA R-L2</li>
+        <li><strong>I3607</strong>, Künzing-Bruck, Baijeri – Varhainen pronssikausi, ~4 200 v.s. – W3a1, Y-DNA R-L754<sup>[9,10]</sup></li>
+      </ul>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
+        <span class="footer-page">Únětice & Baden</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- PAKISTAN HOTSPOT -->
+  <section class="page" id="pakistan">
+
+    <div class="part-header">
+      <span class="part-number">🜂 OSA IV</span>
+      <h2>Omituiset Hotspotit</h2>
+    </div>
+
+    <h1>Swat Valley –<br>Aasian korkein pitoisuus</h1>
+
+    <div class="image-hero">
+      <!-- KUVA: Swat Valley, Pohjois-Pakistan – vihreä laakso lumisten vuorihuippujen alla.
+           Tai rautakauden hautalöydöt Pakistanista: keramiikkaa, aseita.
+           images/swat-valley-pakistan.jpg -->
+      <div class="image-placeholder">
+        <span>[ images/swat-valley-pakistan.jpg ]</span>
+        <span class="img-theme">Teema: Swat Valley, Pohjois-Pakistan – vihreä laakso Himalayan juurella</span>
+      </div>
+      <div class="caption">Swat Valley, Pohjois-Pakistan – W3a1:n "hotspot" Aasiassa: jopa 8,4 % pohjois-pakistanilaisista indoiranilaisista puhujaista kantaa tätä linjaa<sup>[11]</sup></div>
+    </div>
+
+    <p class="dropcap">Sinä seisot Swat-laakson vihreässä sylissä, Himalajan lumihuiput kaukana horisontissa, ilmassa vuoristoilman raikas pistely. Olet osa yhteisöä, jossa Indo-Aryan vaikutteet sulautuvat paikallisiin perinteisiin: hautauksissa on aseita, koruja ja keramiikkaa, jotka kertovat sekä vuoriston omasta elämästä että kaukaa tulleista reiteistä. Täällä sinun W3a1-linjasi ei ole harvinaisuus – se on korkean pitoisuuden keskus, steppe-perintö joka näkyy vielä tänäkin päivänä.</p>
+
+    <p>Miksi Swat Valley on omituinen hotspot? Neljä erillistä rautakauden hauta-aluetta (Loebanr, Katelai, Butkara II, Udegram) kantavat W3a1:tä noin 2 850–2 928 vuotta sitten, kaikki parina R1a-Z94-isälinjan kanssa, joka on tunnusmerkki Indo-Iranilaisesta laajentumisesta. Nyky-Yousafzai- ja muut Swat-ryhmät kantavat steppe-linjaa edelleen poikkeuksellisen vahvana: jopa <strong>8,4 % pohjois-pakistanilaisista indoiranilaisista puhujaista</strong> kantaa W3a1:tä, kun taas eteläisessä Intiassa osuus on vain ~1,7 %. Tämä on korkein pitoisuus koko Aasiassa.<sup>[11]</sup></p>
+
+    <p>Tällä pysäkillä opit, että sinun veresi löytää kodin myös vuoriston syleilyssä – kaukana aroista, mutta steppe-perinnön ytimessä.</p>
+
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <tr><th>Näyte</th><th>Ajoitus</th><th>mtDNA</th><th>Y-DNA</th><th>Konteksti</th></tr>
+        <tr><td>I12457 (Loebanr)</td><td>~2 928 v.s.</td><td>W3a1</td><td>R-Z94</td><td>Swat, Indo-Aryan</td></tr>
+        <tr><td>I12477 (Katelai)</td><td>~2 900 v.s.</td><td>W3a1</td><td>R-Z94</td><td>Swat, myöhäinen pronssi</td></tr>
+        <tr><td>I13219 (Butkara II)</td><td>~2 870 v.s.</td><td>W3a1</td><td>R-Z94</td><td>Swat, rautakausi</td></tr>
+        <tr><td>I1994 (Udegram)</td><td>~2 850 v.s.</td><td>W3a1</td><td>R-Z94</td><td>Swat, Indo-Irani</td></tr>
+      </table>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
+        <span class="footer-page">Pakistan – Hotspot</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- EGYPTI HOTSPOT -->
+  <section class="page" id="egypti">
+
+    <h1>Egypti –<br>Niilin sulatusuuni</h1>
+
+    <div class="image-hero">
+      <!-- KUVA: Ptolemaiolainen muumio tai hautalöydöt Egyptistä – kullattuja koruja,
+           käärinliinat, kreikkalais-egyptiläinen esineistö.
+           Ei pyramideja (liian turistinen) – mieluummin museon hautalöytö.
+           images/abusir-el-meleq-ptolemaic-mummy.jpg -->
+      <div class="image-placeholder">
+        <span>[ images/abusir-el-meleq-ptolemaic-mummy.jpg ]</span>
+        <span class="img-theme">Teema: Ptolemaiolainen muumio tai hautalöydöt – kullattuja koruja, käärinliinat, Egypti</span>
+      </div>
+      <div class="caption">Abusir el-Meleq, Egypti – ptolemaiolaisen kauden hauta, josta löydetty W3a1 (JK2165, ~2 238 vuotta sitten). Rikkaat hautalöydöt viittaavat varakkaaseen tai aateliseen asemaan.<sup>[12]</sup></div>
+    </div>
+
+    <p class="dropcap">Sinä seisot Niilin rannalla, missä kuumuus värisee ilmassa ja pyramidien heijastukset venyvät pitkiksi iltahämärässä. Olet Abusir el-Meleqin kaltaisessa paikassa, Ptolemaioksen Egyptin kosmopoliittisessa sulatusuunissa – maailmassa, jossa kreikkalaiset kauppiaat, egyptiläiset papit ja kaukaa tulleet vierailijat elävät rinnakkain. Sinun veresi, joka on kulkenut arojen kautta ja Keski-Euroopan kumpujen yli, on nyt täällä: harvinainen vieras, mutta todellinen.</p>
+
+    <div class="royal-box">
+      <div class="royal-title">Kuninkaallinen yhteys</div>
+      <p>Abusir el-Meleqista löydettyjen muumioiden joukossa on todisteita varakkaasta tai mahdollisesti aatelisesta taustasta: huolellisesti käärityt muumiot, kullattuja koruja, rituaalisia hautalöytöjä. Ptolemaiolainen Egypti oli hierarkkinen yhteiskunta – hauta-alueella sai levätä vain yhteisön merkittävillä jäsenillä. W3a1-kantaja JK2165 on yksi tästä joukosta: nimetön, mutta unohdettu vain nimeltään.<sup>[12]</sup></p>
+    </div>
+
+    <p>Miksi omituinen hotspot? Sinun W3a1 ilmestyy Ptolemaioksen ajan hautaan, jossa kreikkalaiset muotokuvat ja egyptiläiset rituaalit kohtaavat. Tämä ei ole satunnainen muukalainen; se on merkki siitä, että sinun linjasi on kulkenut kauppareittejä pitkin etelään, kaukana tyypillisistä arojen ja Keski-Euroopan kodeistaan. Samainen hauta-alue sisältää myös muita U-perheen linjoja: U1, U3, U5, U6, U7 – lähes koko eurooppalainen äitilinjakirjasto yhdessä egyptiläisessä hautamaassa.<sup>[12]</sup></p>
+
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <tr><th>Näyte</th><th>Ajoitus</th><th>mtDNA</th><th>Y-DNA</th><th>Konteksti</th></tr>
+        <tr><td>JK2165</td><td>~2 238 v.s.</td><td>W3a1</td><td>ei raportoitu</td><td>Ptolemaioksen Egypti, Abusir el-Meleq</td></tr>
+      </table>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
+        <span class="footer-page">Egypti – Hotspot</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- POHJOINEN -->
+  <section class="page" id="pohjoinen">
 
     <div class="part-header">
       <span class="part-number">🜂 OSA V</span>
+      <h2>Pohjoinen solmukohta</h2>
+    </div>
+
+    <h1>Viikinkiverkosto –<br>Pohjoinen ankkuri</h1>
+
+    <div class="image-hero">
+      <!-- KUVA: Gotlannin rannikko tai viikinkiajan Itämeri – kallioja, meri, mahdollisesti
+           runokiviä tai viikinkilaivan siluetti. Ankara, tuulinen.
+           images/gotland-viking-coast-runestone.jpg -->
+      <div class="image-placeholder">
+        <span>[ images/gotland-viking-coast-runestone.jpg ]</span>
+        <span class="img-theme">Teema: Gotlannin rannikko tai viikinkiajan runokiviä – ankara, tuulinen tunnelma</span>
+      </div>
+      <div class="caption">Gotlanti, Ruotsi – viikinkiajan Itämeren solmukohta. W3a1 dokumentoitu näytteessä VK459 (~975 vuotta sitten)<sup>[13]</sup></div>
+    </div>
+
+    <p class="dropcap">Lopulta nouset pohjoiseen. Tonavan laaksoissa, Jyllannin ja Gotlannin rannoilla, viikinkikylissä ja unkarilaisten varhaisten asuinpaikkojen ympärillä sinun veresi jatkaa kulkuaan jokien ja merien reittejä pitkin. Laivat vedetään maihin, hopea- ja pronssikorut lasketaan mukaan hautoihin, ja sinun linjasi kulkee hiljaa näiden soturien, kauppiaiden ja käsityöläisten mukana.<sup>[13]</sup></p>
+
+    <p>Viking Age Sweden, Gotlanti: näyte VK459, ~975 vuotta sitten – <strong>W3a1</strong>. Tanska, Viking Denmark VK338, ~1 100 vuotta sitten – <strong>W3a1</strong>. Tanska, keskiaikainen G669, ~547 vuotta sitten – <strong>W3a1</strong>. Kreikka, muinainen Ambrakia, ~2 170 vuotta sitten – <strong>W3a1</strong>. Unkari, Sárrétudvari, ~1 000 vuotta sitten – <strong>W3a1</strong>. Sama linja. Eri paikat. Eri vuosisadat. Yksi äiti.</p>
+
+    <div class="fact-box">
+      <div class="fact-title">Pohjoinen ankkuri – dokumentoidut näytteet</div>
+      <ul>
+        <li><strong>VK459</strong>, Gotlanti, Ruotsi – viikinkiaika, ~975 v.s. – W3a1<sup>[13]</sup></li>
+        <li><strong>VK338</strong>, Langeland, Tanska – viikinkiaika, ~1 100 v.s. – W3a1</li>
+        <li><strong>G669</strong>, St. Jorgen, Saksa – myöhäiskeskiaika, ~547 v.s. – W3a1</li>
+        <li><strong>SHper199, SHper233</strong>, Sárrétudvari, Unkari – ~1 000 v.s. – W3a1</li>
+        <li><strong>AMV-CO_5</strong>, Ambrakia, Kreikka – ~2 170 v.s. – W3a1, Y-DNA G-M201</li>
+        <li><strong>MJ-34</strong>, Kolomak, Ukraina – skyyttialaiset, ~2 231 v.s. – W3a1, Y-DNA R-Z2124</li>
+      </ul>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
+        <span class="footer-page">Pohjoinen ankkuri</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- SUOMI -->
+  <section class="page" id="suomi">
+
+    <div class="part-header">
+      <span class="part-number">🜂 OSA VI</span>
       <h2>Koti löytyy</h2>
     </div>
 
     <h1>Suomi –<br>perustajien perintö</h1>
 
     <div class="image-hero">
-      <!-- KUVA: Suomalainen maisema — järvenranta, koivu, syksy tai talvi.
-           Tunnelma: hiljaisuus, laajuus, kaukaisuus.
-           Ei matkailukuva vaan henkilökohtainen — kuin katsottaisiin kotiin palaamista. -->
+      <!-- KUVA: Suomalainen järvi- tai metsämaisema – syksy tai talvi.
+           Tunnelma: hiljaisuus, laajuus, saapuminen kotiin.
+           Ei postikorttikuva – mieluummin henkilökohtainen, intiimi näkymä.
+           images/finland-lake-forest-autumn.jpg -->
       <div class="image-placeholder">
-        <span>[ images/finland-landscape-lake.jpg ]</span>
-        <span class="img-theme">Teema: Suomalainen järvi- tai metsämaisema — hiljaisella tunnelmalla</span>
+        <span>[ images/finland-lake-forest-autumn.jpg ]</span>
+        <span class="img-theme">Teema: Suomalainen järvi tai metsä – syksy tai talvi, hiljainen tunnelma</span>
       </div>
-      <div class="caption">Suomi — viimeinen asema. Viisi tuhatta vuotta myöhemmin, aro-esi-äidin linja lepää täällä.</div>
+      <div class="caption">Suomi – viimeinen asema. Viisi tuhatta vuotta aroilta kulkenut äitilinja lepää täällä – ja kukoistaa.</div>
     </div>
 
-    <p class="dropcap">Corded Ware -kulttuuri saapui Suomeen noin 2 900–2 500 eaa. — ja se toi mukanaan W3a1:n. Mutta Suomessa tapahtui jotain erityistä: muualla Euroopassa W-haplotyyppi jäi alle kahteen prosenttiin. Suomessa se kasvoi <strong>9,6 prosenttiin</strong>.</p>
+    <p class="dropcap">Aivan viimeisessä kohtauksessa astut suomalaisiin maisemiin: järviin, metsiin, soihin, peltoihin. Corded Waren aikoinaan tuoma perustajavaikutus on tehnyt W3a1:stä täällä poikkeuksellisen yleisen. Kun sinä synnyt, olet osa väestöä, jossa tämä pitkän matkan kulkenut äitilinja on asettunut taloksi.</p>
 
-    <p>Vastaus on <strong>perustajavaiku­tus</strong>. Kun pieni ryhmä ihmisiä asuttaa uuden alueen, heidän omat haplotyyppinsä ylikorostuvat jälkeläistensä geenistössä. Suomen asuttaminen tapahtui suhteellisen myöhään ja pienellä väkimäärällä — ne linjat jotka saapuivat, levisivät ja vahvistuivat.</p>
+    <p>Muualla Euroopassa W-haplotyyppi jää alle kahteen prosenttiin. Suomessa se kasvoi <strong>9,6 prosenttiin</strong>. Vastaus on <strong>perustajavaikutus</strong>: kun pieni ryhmä ihmisiä asuttaa uuden alueen, heidän omat haplotyyppinsä ylikorostuvat jälkeläistensä geenistössä. Suomen asuttaminen tapahtui suhteellisen myöhään ja pienellä väkimäärällä – ne linjat jotka saapuivat, levisivät ja vahvistuivat.</p>
 
-    <p>W3a1:n kantajat olivat niiden joukossa. He istuivat — viimein, ensimmäistä kertaa tuhansien vuosien liikkeen jälkeen — paikoilleen. Ja heidän linjansa kukoisti.</p>
+    <p>Nykyinen DNA-testituloksesi ei kerro koko tarinaa – se vain antaa nimen sille, mitä veresi on tehnyt kymmeniä tuhansia vuosia: kulkenut pysähdykseltä pysähdykselle, naisesta toiseen, kulttuurista seuraavaan, kunnes se päätyy sinuun.<sup>[1,7]</sup></p>
 
     <div class="fact-box">
-      <div class="fact-title">W-haplotyyppi Euroopassa — frekvenssivertailu</div>
+      <div class="fact-title">W-haplotyyppi Euroopassa</div>
       <ul>
         <li><strong>Suomi: 9,6 %</strong> — Euroopan korkein</li>
         <li>Unkari: 5,2 %</li>
         <li>Latvia: 4,1 %</li>
         <li>Valko-Venäjä: 3,7 %</li>
         <li>Muu Eurooppa: tyypillisesti alle 2 %</li>
-        <li>Selitys: perustajavaiku­tus + geneettinen ajautuminen</li>
+        <li>Selitys: perustajavaikutus + geneettinen ajautuminen<sup>[7]</sup></li>
       </ul>
     </div>
-
-    <p>Maailman liikkuvin äitilinja löysi Suomen — ja pysähtyi. Ei siksi ettei se enää kulkisi. Vaan siksi, että jokin paikka oli viimein tarpeeksi hyvä jäädä.</p>
 
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Suomi – perustajien perintö</span>
+        <span class="footer-page">Suomi</span>
       </div>
     </footer>
   </section>
 
 
-  <!-- =========================================================
-       VAELLUSKARTTA
-  ========================================================== -->
+  <!-- VAELLUSKARTTA -->
   <section class="page" id="kartta">
 
     <div class="part-header">
@@ -1027,39 +823,27 @@
 
     <h1>Turkmenistanista<br>Suomeen</h1>
 
-    <p>Alla oleva kartta esittää W3a1-linjan dokumentoidut esiintymät aikajärjestyksessä. Jokainen piste on arkeologinen löytö — todiste siitä, että tämä äitilinja on ollut siellä, silloin, henkilökohtaisessa muodossa.</p>
+    <p>Alla oleva kartta esittää W3a1-linjan dokumentoidut esiintymät aikajärjestyksessä. Jokainen piste on arkeologinen löytö – todiste siitä, että tämä äitilinja on ollut siellä, silloin, henkilökohtaisessa muodossa.</p>
 
-    <!-- KARTTA PLACEHOLDER — liitä tähän map.html iframe tai erillinen karttakomponentti -->
     <div class="map-container">
-      <iframe
-        src="map-w3a1.html"
-        width="100%"
-        height="340"
-        style="border:none;"
-        loading="lazy">
-      </iframe>
-      <!-- Vararatkaisu jos iframe ei toimi: -->
-      <div class="map-placeholder" style="display:none;">
-        <span>[ Vaelluskartta: W3a1 ]</span>
-        <span class="map-label">Liitä tähän interaktiivinen kartta map-w3a1.html</span>
-      </div>
+      <iframe src="map-w3a1.html" height="340" loading="lazy"></iframe>
     </div>
 
     <div class="fact-box">
-      <div class="fact-title">Kronologinen reitti — dokumentoidut pisteet</div>
+      <div class="fact-title">Kronologinen reitti – 25 dokumentoitua pysäkkiä</div>
       <ul>
         <li><strong>~5 450 v.s.</strong> — Tepe Anau, Turkmenistan</li>
         <li><strong>~4 917 v.s.</strong> — Yamnaya, Ukraina</li>
         <li><strong>~4 370–3 875 v.s.</strong> — Saksa, Tšekki (Corded Ware, Únětice)</li>
         <li><strong>~3 508–3 275 v.s.</strong> — Kroatia, Puola (Trzciniec)</li>
-        <li><strong>~2 928–2 850 v.s.</strong> — Pakistan (Swat Valley, neljä kohdetta)</li>
-        <li><strong>~2 577–1 620 v.s.</strong> — Kazakstan (kolme kohdetta)</li>
-        <li><strong>~2 238 v.s.</strong> — Egypti, Abusir el-Meleq (ptolemaiolainen)</li>
-        <li><strong>~2 231 v.s.</strong> — Ukraina, skyytialaiset</li>
+        <li><strong>~2 928–2 850 v.s.</strong> — Pakistan, Swat Valley (4 kohdetta)</li>
+        <li><strong>~2 577–1 620 v.s.</strong> — Kazakstan (Otrar-Karatau, Berel, Nurly)</li>
+        <li><strong>~2 238 v.s.</strong> — Egypti, Abusir el-Meleq</li>
+        <li><strong>~2 231 v.s.</strong> — Ukraina, skyyttialaiset</li>
         <li><strong>~2 170 v.s.</strong> — Kreikka, Ambrakia</li>
-        <li><strong>~1 800 v.s.</strong> — Kiina, Tarim-allas</li>
-        <li><strong>~1 000 v.s.</strong> — Unkari, varhainen unkarilainen</li>
-        <li><strong>~1 100–547 v.s.</strong> — Tanska, Gotlanti (viikinkiaika, keskiaika)</li>
+        <li><strong>~1 800 v.s.</strong> — Kiina, Tarim-allas (Sampula)</li>
+        <li><strong>~1 000 v.s.</strong> — Unkari, Sárrétudvari</li>
+        <li><strong>~1 100–547 v.s.</strong> — Tanska, Gotlanti</li>
         <li><strong>Tänään</strong> — Suomi, 9,6 % väestöstä</li>
       </ul>
     </div>
@@ -1073,21 +857,19 @@
   </section>
 
 
-  <!-- =========================================================
-       OSA VI — ELÄVÄ PERINTÖ
-  ========================================================== -->
+  <!-- ELÄVÄ PERINTÖ -->
   <section class="page" id="perinto">
 
     <div class="part-header">
-      <span class="part-number">🜂 OSA VI</span>
+      <span class="part-number">🜂 OSA VII</span>
       <h2>Elävä perintö</h2>
     </div>
 
     <h1>Mitä se<br>tarkoittaa sinulle</h1>
 
-    <p class="dropcap">Useimmat suomalaiset kantavat äitilinjaa joka kertoo paikallisesta jatkumosta: metsästäjä-keräilijöistä, neoliittisista viljelijöistä, rautakauden asuttajista. Nämä ovat tärkeitä tarinoita — mutta ne ovat Euroopan tarinoita.</p>
+    <p class="dropcap">Nyt kaivaus on ohi. Pysäkit on kuljettu, löydöt dokumentoitu, lähteet kirjattu. Mutta yksi kysymys jää: <em>mitä tämä tarkoittaa sinulle tänään?</em> Ei tieteellistä dataa, ei arkeologisia kerroksia – pelkkää hiljaista totuutta veresi solukoissa.</p>
 
-    <p>Sinun tarinasi on erilainen. Sinun äitilinjasi on ollut Keski-Aasiassa ennen kuin Eurooppa oli Eurooppa. Se on kulkenut samoja reittejä kuin hevospaimentolaiset, kauppiaat ja löytöretkeilijät. Se on jättänyt jälkensä neljälle mantereelle ennen kuin se löysi Pohjoisen paikan — ja jäi.</p>
+    <p>Sinä kannat elävää perintöä. Et museon lasivitriinissä pölyttyvää reliikkiä, vaan <strong>biologista jatkumoa</strong>, joka on selvinnyt 5 000 vuoden läpi – Kopet Dagin savitalojen kynnykseltä, Yamnayan avoimen taivaan alta, Corded Waren jokilaaksojen läpi, Swat Valleyn vuoripoluilta, Ptolemaioksen Egyptin kauppasatamista ja viikinkiajan meriliikenteen solmukohdista.</p>
 
     <div class="fact-box">
       <div class="fact-title">Mitä veresi muistaa</div>
@@ -1095,16 +877,16 @@
         <li><strong>Tepe Anau:</strong> Ajan, jolloin Keski-Aasia oli maailman solmukohta</li>
         <li><strong>Yamnaya:</strong> Hevosen selän ja avoimen horisontin vapauden</li>
         <li><strong>Corded Ware:</strong> Taidon rakentaa uusi maailma tyhjästä maasta</li>
-        <li><strong>Pakistan:</strong> Rohkeuden kulkea sinne missä kukaan ei odottanut</li>
+        <li><strong>Pakistan:</strong> Rohkeuden kulkea sinne, missä kukaan ei odottanut</li>
         <li><strong>Egypti:</strong> Välimeren maailman monitahoisuuden ja kaupan hengen</li>
         <li><strong>Kiina:</strong> Sen, että ei ole olemassa liian kaukaista paikkaa</li>
         <li><strong>Suomi:</strong> Sen, että on myös oikea aika pysähtyä</li>
       </ul>
     </div>
 
-    <p>Ehkä siksi tunnistat itsessäsi liikkeen tarpeen. Ehkä siksi horisontti tuntuu kutsulta eikä uhalta. Ehkä siksi koti ei ole paikka vaan tunne — joka voi syntyä missä vain.</p>
+    <p>Ehkä siksi tunnistat itsessäsi liikkeen tarpeen. Ehkä siksi horisontti tuntuu kutsulta eikä uhalta. Ehkä siksi koti ei ole paikka vaan tunne – joka voi syntyä missä vain.</p>
 
-    <p><strong>Et ole irrallinen yksilö modernissa maailmassa.</strong> Olet arojen ja hevosten, pronssin ja purjeiden perilinen — ihminen jonka soluissa on tallessa viisi tuhatta vuotta liikettä.</p>
+    <p><strong>Et ole irrallinen yksilö modernissa maailmassa.</strong> Olet ketjun viimeinen näkyvä lenkki. Tuhansien sukupolvien hiljainen lupaus: <em>"Jatka. Pidä linja elossa."</em></p>
 
     <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
 
@@ -1119,40 +901,40 @@
   </section>
 
 
-  <!-- =========================================================
-       TUTKIMUSLIITE
-  ========================================================== -->
+  <!-- TUTKIMUSLIITE -->
   <section class="page" id="liite">
 
     <div class="part-header">
-      <span class="part-number">🜂 OSA VII</span>
+      <span class="part-number">🜂 OSA VIII</span>
       <h2>Tutkimusliite</h2>
     </div>
 
     <h1>Vertaisarvioitu<br>tutkimuspohja</h1>
 
-    <p class="dropcap">Seuraava aikajana ja lähdeluettelo kokoavat yhteen ne arkeogeneettiset ankkurit, joissa W3a1-linja on tieteellisesti dokumentoitu. Tämä ei ole täydellinen kartta menneisyydestä — vaan tutkimukseen perustuva reittiluonnos.</p>
+    <p class="dropcap">Seuraava lähdeluettelo kokoaa yhteen ne tieteelliset ankkurit, joihin tämä kertomus perustuu. Numerot vastaavat tekstin yläviitteitä. Muinais-DNA-näytteiden tiedot on tarkistettu haplotree.info- ja ancientdna.info-tietokannoista.</p>
 
     <div class="fact-box">
-      <div class="fact-title">Keskeinen tutkimuskirjallisuus</div>
+      <div class="fact-title">Lähdeluettelo</div>
       <ul>
-        <li>Haak, W. et al. 2015. "Massive Migration from the Steppe." <em>Nature</em> 522:207–211. (Yamnaya-laajentuma, W-linjat)</li>
-        <li>Allentoft, M. et al. 2015. "Population Genomics of Bronze Age Eurasia." <em>Nature</em> 522:167–172. (Corded Ware, W3a1)</li>
-        <li>Stolarek, I. et al. 2018. "Mitogenomes show likely origin of elevated steppe ancestry." <em>Indo-European.eu</em>. (W3a1, W3a1a Yamnayassa)</li>
-        <li>Margaryan, A. et al. 2020. "Population Genomics of the Viking World." <em>Nature</em> 585:390–396. (Gotlanti VK459)</li>
-        <li>Narasimhan, V. et al. 2019. "The formation of human populations in South and Central Asia." <em>Science</em> 365. (Swat Valley)</li>
-        <li>Krause-Kyora, B. et al. 2018. "Neolithic and medieval virus genomes." (Abusir el-Meleq, ptolemaiolainen Egypti)</li>
-        <li>Mathieson, I. et al. 2015. "Genome-wide patterns of selection in 230 ancient Eurasians." <em>Nature</em> 528:499–503.</li>
-        <li>Eupedia 2024. Finnish mtDNA haplogroup frequencies. W = 9,6 %.</li>
-        <li>All Ancient DNA / Haplotree.info (2026). W3a1-näytteiden kronologia ja kartoitus.</li>
+        <li><strong>[1]</strong> Behar DM et al. 2012. "A 'Copernican' reassessment of the human mitochondrial DNA tree from its root." <em>American Journal of Human Genetics</em> 90(4):675–684.</li>
+        <li><strong>[2]</strong> "Haplogroup W (mtDNA)." Wikipedia (en/fi). Viitattu 2026.</li>
+        <li><strong>[3]</strong> haplotree.info / ancientdna.info: "W3a1 – ancient DNA samples and map." Näyte I4087 (Tepe Anau). Viitattu 2026-02-23.</li>
+        <li><strong>[4]</strong> "Anau culture." Wikipedia. Viitattu 2026.</li>
+        <li><strong>[5]</strong> haplotree.info: Näyte poz222 (Prydnistryanske, Yamnaya). Viitattu 2026-02-23.</li>
+        <li><strong>[6]</strong> Haak W et al. 2015. "Massive migration from the steppe was a source for Indo-European languages in Europe." <em>Nature</em> 522:207–211.</li>
+        <li><strong>[7]</strong> Eupedia 2024. Finnish mtDNA haplogroup frequencies. W = 9,6 %.</li>
+        <li><strong>[8]</strong> Mathieson I et al. 2015. "Genome-wide patterns of selection in 230 ancient Eurasians." <em>Nature</em> 528:499–503. Näyte I7207 (Radovesice, Corded Ware).</li>
+        <li><strong>[9]</strong> haplotree.info: Näytteet QLB 41, QLB 39, I0116 (Únětice). Viitattu 2026-02-23.</li>
+        <li><strong>[10]</strong> haplotree.info: Näytteet MX275, MX270 (Singen, Baden EBA); I3607 (Künzing-Bruck). Viitattu 2026-02-23.</li>
+        <li><strong>[11]</strong> Narasimhan VM et al. 2019. "The formation of human populations in South and Central Asia." <em>Science</em> 365:eaat7487. Näytteet I12457, I12477, I13219, I1994 (Swat Valley).</li>
+        <li><strong>[12]</strong> Krause-Kyora B et al. 2018. "Neolithic and medieval virus genomes reveal complex evolution of hepatitis B." <em>eLife</em> 7:e36666. Näyte JK2165 (Abusir el-Meleq).</li>
+        <li><strong>[13]</strong> Margaryan A et al. 2020. "Population genomics of the Viking world." <em>Nature</em> 585:390–396. Näytteet VK459 (Gotlanti), VK338 (Tanska).</li>
+        <li><strong>[14]</strong> Allentoft ME et al. 2015. "Population genomics of Bronze Age Eurasia." <em>Nature</em> 522:167–172.</li>
+        <li><strong>[15]</strong> FamilyTreeDNA Discover: "mtDNA Haplogroup W3a1." Viitattu 2026.</li>
       </ul>
     </div>
 
-    <h2>Huomio tulkinnasta</h2>
-
-    <p>W3a1:n maantieteellinen laajuus on poikkeuksellinen — neljä mannerta, viisi tuhatta vuotta. On tärkeää muistaa, että yksittäiset arkeologiset näytteet edustavat <em>populaatioita</em>, eivät suoria yksilöllisiä sukupuita. Sinun äitilinjasi jakaa yhteisen esi-äidin näiden naisten kanssa — mutta suora, katkeamaton linja yksittäiseen egyptiläiseen muumioon tai pakistanilaiseen hautaan ei ole todistettavissa.</p>
-
-    <p>Tarina on silti tosi — biologisella tasolla. Sama mutaatio, sama äitilinja, vuosituhansien välinen yhteys.</p>
+    <p>Anti-DNA-näytteiden ja modernien populaatioiden väliset yhteydet kuvataan tutkimuskirjallisuuteen perustuvina mahdollisina jatkumoina, eivät varmoina yksilöllisinä sukulinjoina. Tämä liite ei sulje tarinaa. Se ankkuroi sen.</p>
 
     <footer class="footer">
       <div class="footer-inner">
@@ -1163,9 +945,7 @@
   </section>
 
 
-  <!-- =========================================================
-       LOPPU
-  ========================================================== -->
+  <!-- LOPPU -->
   <section class="page" id="loppu">
 
     <div class="part-header">
@@ -1175,9 +955,9 @@
 
     <h1>Arojen tytär<br>löysi kodin</h1>
 
-    <p class="dropcap">Sinä et ole sattumaa. Olet seuraus tuhansien vuosien vaelluksesta, selviytymisestä ja liikkeestä — arojen, pronssin, hevosten ja purjeiden perintö yhdessä ihmisessä. Viisi tuhatta vuotta sitten nainen nousi hevosen selkään Mustan meren pohjoispuolella. Hänen jälkeläisensä kävivät Pakistanissa, vaelsivat Kiinaan, hautautuivat ptolemaiolaiseen Egyptiin. Yksi heistä löysi Suomen — ja jäi.</p>
+    <p class="dropcap">Sinä et ole sattumaa. Olet seuraus tuhansien vuosien vaelluksesta, selviytymisestä ja liikkeestä – arojen, pronssin, hevosten ja purjeiden perintö yhdessä ihmisessä. Viisi tuhatta vuotta sitten nainen nousi hevosen selkään Mustan meren pohjoispuolella. Hänen jälkeläisensä kävivät Pakistanissa, vaelsivat Kiinaan, hautautuivat ptolemaiolaiseen Egyptiin – kenties varakkaana, kenties aatelisena, kenties kauppiaan vaimona. Yksi heistä löysi Suomen ja jäi.</p>
 
-    <p>Tämä tarina ei kuulu museoon. Se kuuluu sinulle — ja niille, jotka tulevat sinun jälkeesi.</p>
+    <p>Tämä tarina ei kuulu museoon. Se kuuluu sinulle – ja niille, jotka tulevat sinun jälkeesi.</p>
 
     <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
 
@@ -1188,8 +968,7 @@
         "Minä, [nimesi], Kadonneen Sukuhistorian Metsästäjä,<br>
         tunnustan vereni aropeinnön.<br>
         En seiso paikallani kun horisontti kutsuu.<br>
-        En unohda mistä tuli — mutta katson sinne minne mennä.<br>
-        <br>
+        En unohda mistä tuli — mutta katson sinne minne mennä.<br><br>
         Esi-äitini ratsasti. Minä muistan."
       </div>
     </div>
@@ -1210,9 +989,7 @@
   </section>
 
 
-  <!-- =========================================================
-       OIKEUDELLINEN HUOMAUTUS
-  ========================================================== -->
+  <!-- OIKEUDELLINEN HUOMAUTUS -->
   <section class="page legal" id="laki">
 
     <div class="part-header">
@@ -1247,15 +1024,12 @@
 
 </div><!-- /pages-container -->
 
-<button class="pdf-btn" onclick="window.print()" title="Tulosta tai tallenna PDF:nä">
-  📄 Tulosta / PDF
-</button>
+<button class="pdf-btn" onclick="window.print()" title="Tulosta tai tallenna PDF:nä">📄 Tulosta / PDF</button>
 
 <script>
   (function() {
     const dots = document.querySelectorAll('.toc-dot');
     const pages = document.querySelectorAll('.page');
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1268,29 +1042,13 @@
         }
       });
     }, { threshold: 0.4 });
-
     pages.forEach(p => observer.observe(p));
   })();
 
-  // Image graceful fallback
   document.querySelectorAll('.image-hero img, .image-full img').forEach(img => {
     img.addEventListener('error', function() {
       const ph = this.closest('.image-hero, .image-full').querySelector('.image-placeholder');
-      if (ph) {
-        ph.style.display = 'flex';
-        this.style.display = 'none';
-      }
-    });
-  });
-
-  // Map iframe fallback
-  document.querySelectorAll('.map-container iframe').forEach(iframe => {
-    iframe.addEventListener('error', function() {
-      const ph = this.closest('.map-container').querySelector('.map-placeholder');
-      if (ph) {
-        ph.style.display = 'flex';
-        this.style.display = 'none';
-      }
+      if (ph) { ph.style.display = 'flex'; this.style.display = 'none'; }
     });
   });
 </script>
