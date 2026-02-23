@@ -265,6 +265,78 @@
     .section-divider::before, .section-divider::after { content: ""; flex: 1; max-width: 80px; height: 1px; background: var(--line); }
     .section-divider-glyph { font-size: 11pt; color: var(--accent-light); opacity: 0.7; }
 
+    /* ============================================================
+       LÖYTÖ-PYSÄKKI — persoonallinen fakta-ankkuri joka sivulle
+    ============================================================ */
+    .loyto-box {
+      margin: auto 0 0 0;
+      page-break-inside: avoid;
+      border-top: 1.5px solid var(--line);
+      padding-top: 1.1em;
+    }
+
+    .loyto-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 0.45em;
+    }
+
+    .loyto-badge {
+      font-family: "Playfair Display SC", serif;
+      font-size: 7.5pt;
+      letter-spacing: 0.22em;
+      color: var(--accent);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .loyto-header::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line-faint);
+    }
+
+    .loyto-title {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-size: 10pt;
+      color: var(--ink-soft);
+      margin-bottom: 0.55em;
+      line-height: 1.45;
+    }
+
+    .loyto-fields {
+      display: grid;
+      grid-template-columns: auto 1fr auto 1fr;
+      gap: 2px 12px;
+      font-size: 8.5pt;
+      margin-bottom: 0.55em;
+    }
+
+    .lf-key {
+      font-family: "Lora", serif;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .lf-val {
+      color: var(--ink-mid);
+    }
+
+    .loyto-link {
+      font-family: "Lora", serif;
+      font-style: italic;
+      font-size: 8.5pt;
+      color: var(--ink-soft);
+      border-left: 2px solid var(--accent-light);
+      padding-left: 9px;
+      line-height: 1.5;
+    }
+
     /* FOOTER */
     .footer {
       position: absolute;
@@ -325,6 +397,7 @@
   <a class="toc-dot" href="#unetice"     data-label="Únětice & Baden"></a>
   <a class="toc-dot" href="#pakistan"    data-label="Pakistan – Hotspot"></a>
   <a class="toc-dot" href="#egypti"      data-label="Egypti – Hotspot"></a>
+  <a class="toc-dot" href="#nlinjakohtaa"  data-label="Skyytit – N-linjan kohtaaminen"></a>
   <a class="toc-dot" href="#pohjoinen"   data-label="Pohjoinen"></a>
   <a class="toc-dot" href="#suomi"       data-label="Suomi"></a>
   <a class="toc-dot" href="#kartta"      data-label="Vaelluskartta"></a>
@@ -526,6 +599,18 @@
 
     <p>Kun ajattelet itseäsi tänään, näet yhden henkilön yhdessä paikassa. Mutta mitokondriot soluissasi kantavat muistijäljen siitä, että sinun naislinjasi on ollut osa niitä väestöjä, joita myöhemmin kutsutaan balto-slaavilaisiksi, indo-iranilaisiksi ja indoeurooppalaisiksi – kielten, kulttuurien ja keksintöjen verkkoa, johon oma veresi on kytkeytynyt jo tuhansia vuosia ennen syntymääsi.</p>
 
+    <div class="loyto-box">
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 0 · W-linjan synty</span></div>
+      <div class="loyto-title">"Et ole satunnainen sivupolku, vaan osa yhtä niistä harvoista linjoista, jotka selvisivät läpi jääkauden."</div>
+      <div class="loyto-fields">
+        <span class="lf-key">Haploryhmä</span><span class="lf-val">W → W3 → W3a → W3a1</span>
+        <span class="lf-key">Syntyaika</span><span class="lf-val">~15 000–20 000 v.s.</span>
+        <span class="lf-key">Lähtöalue</span><span class="lf-val">Kaspianmeri / Kaukasus</span>
+        <span class="lf-key">Kantahaara</span><span class="lf-val">N2 → N → R → W</span>
+      </div>
+      <div class="loyto-link">Sama linja, josta myöhemmin tulevat balto-slaavilaiset, indo-iranilaiset ja indoeurooppalaiset — sinun mitokondrioihin kaiverrettu historia.<sup>[1,2]</sup></div>
+    </div>
+
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
@@ -562,22 +647,24 @@
 
     <p>Tepe Anau on sinun tarinassasi portti. Se on paikka, jossa neoliittinen vallankumous ei ole enää abstrakti käsite, vaan arkea, jossa maa muokataan, metalli hehkuu, ja ensimmäiset varsinaiset kauppaverkostot virittyvät. Tästä kynnyksestä sinun linjasi lähtee sekä itään että länteen.<sup>[3,4]</sup></p>
 
-    <div class="fact-box">
-      <div class="fact-title">Näyte I4087 – Tepe Anau</div>
-      <ul>
-        <li><strong>Sijainti:</strong> Kopet Dag, Turkmenistan</li>
-        <li><strong>Kulttuuri:</strong> Anau-kulttuuri, varhainen neoliitti</li>
-        <li><strong>mtDNA:</strong> W3a1</li>
-        <li><strong>Y-DNA:</strong> R-M124 (R2a) – paikallinen Keski-Aasian isälinja</li>
-        <li><strong>Ajoitus:</strong> ~5 450 eaa. (kalibroitu)</li>
-        <li><strong>Merkitys:</strong> Maailman vanhimmat dokumentoidut W3a1-jäljet<sup>[3]</sup></li>
-      </ul>
+    <div class="loyto-box">
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 1 · Tepe Anau, Turkmenistan · ~5 450 eaa.</span></div>
+      <div class="loyto-title">"Tällä pysäkillä opit, mikä merkitys on maalla, vedellä — ja sillä, että kuolleet haudataan kotiin, keskelle arkea, ei sen ulkopuolelle."</div>
+      <div class="loyto-fields">
+        <span class="lf-key">Näyte</span><span class="lf-val">I4087 (Tepe Anau EN)</span>
+        <span class="lf-key">mtDNA</span><span class="lf-val">W3a1</span>
+        <span class="lf-key">Y-DNA</span><span class="lf-val">R-M124 (R2a)</span>
+        <span class="lf-key">Kulttuuri</span><span class="lf-val">Anau, varhainen neoliitti</span>
+        <span class="lf-key">Konteksti</span><span class="lf-val">Adobe-taloja, katakombihautauksia</span>
+        <span class="lf-key">Sijainti</span><span class="lf-val">Kopet Dag, Turkmenistan</span>
+      </div>
+      <div class="loyto-link">Maailman vanhimmat dokumentoidut W3a1-jäljet — sinun linjasi lähtöasema ennen kaikkea muuta.<sup>[3]</sup></div>
     </div>
 
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Tepe Anau</span>
+        <span class="footer-page">Pysäkki 1 · Tepe Anau</span>
       </div>
     </footer>
   </section>
@@ -605,22 +692,24 @@
 
     <p>Tässä maailmassa sinun W3a1-linjasi sulautuu siihen, mitä myöhemmin kutsutaan indoeurooppalaiseksi laajentumiseksi.<sup>[5,6]</sup> Geneettiset tutkimukset ovat osoittaneet: noin <strong>75 % nykyisten eurooppalaisten DNA:sta</strong> on peräisin Yamnayn ja sen jälkeläisten laajentumisesta. He eivät vain vierailleet Euroopassa. He muuttivat sen geneettisen maiseman pysyvästi.</p>
 
-    <div class="fact-box">
-      <div class="fact-title">Näyte poz222 – Yamnaya, Ukraina</div>
-      <ul>
-        <li><strong>Sijainti:</strong> Prydnistryanske, Ukraina</li>
-        <li><strong>Kulttuuri:</strong> Yamnaya (~3 300–2 600 eaa.)</li>
-        <li><strong>mtDNA:</strong> W3a1</li>
-        <li><strong>Ajoitus:</strong> ~4 917 vuotta sitten</li>
-        <li><strong>Teknologia:</strong> hevonen + pyörä + pronssi</li>
-        <li><strong>Merkitys:</strong> W3a1 on osa varhaista indoeurooppalaista laajentumaa<sup>[5]</sup></li>
-      </ul>
+    <div class="loyto-box">
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 2 · Yamnaya, Ukraina · ~4 917 eaa.</span></div>
+      <div class="loyto-title">"Tällä pysäkillä opit, että joskus koti ei ole paikka vaan suunta."</div>
+      <div class="loyto-fields">
+        <span class="lf-key">Näyte</span><span class="lf-val">poz222 (Prydnistryanske)</span>
+        <span class="lf-key">mtDNA</span><span class="lf-val">W3a1</span>
+        <span class="lf-key">Y-DNA</span><span class="lf-val">R1a/R1b steppe-profiili</span>
+        <span class="lf-key">Kulttuuri</span><span class="lf-val">Yamnaya, varhainen pronssikausi</span>
+        <span class="lf-key">Konteksti</span><span class="lf-val">Kurgan, punaokra, hevosvarusteet</span>
+        <span class="lf-key">Perintö</span><span class="lf-val">~75 % eurooppalaisista polveutuu</span>
+      </div>
+      <div class="loyto-link">Sinun linjasi on osa indoeurooppalaista laajentumaa — ratsastajia, jotka muuttivat Euroopan geneettisen maiseman pysyvästi.<sup>[5,6]</sup></div>
     </div>
 
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Yamnaya</span>
+        <span class="footer-page">Pysäkki 2 · Yamnaya</span>
       </div>
     </footer>
   </section>
@@ -653,22 +742,24 @@
 
     <p>Sukusi naisia haudataan samalla tavoin kuin miehiä, mutta eri esinein. Kun joku sinun linjastasi lasketaan maahan, hän makaa kyljellään, polvet hieman koukussa, aivan kuin olisi käpertynyt uneen. Miesten hautaan lasketaan usein kirves, naisten mukaan koruja, helmiä ja astioita. Taustalla sinua ympäröivä yhteisö ei ole syntynyt tyhjiössä: isälinjoissa näkyy edelleen arojen ratsastajien jälki, mutta äitilinjoissa, kuten sinun, elää sekoitus vanhoja Euroopan viljelijälinjoja ja uusia tulijoita. Sinun veresi pystyy yhdistämään erilaisia maailmoja yhdeksi arjeksi.<sup>[7,8]</sup></p>
 
-    <div class="fact-box">
-      <div class="fact-title">Näyte I7207 – Corded Ware, Tšekki</div>
-      <ul>
-        <li><strong>Sijainti:</strong> Radovesice XVIII, Tšekki</li>
-        <li><strong>Kulttuuri:</strong> Corded Ware, varhainen vaihe</li>
-        <li><strong>mtDNA:</strong> W3a1</li>
-        <li><strong>Y-DNA:</strong> R-M417 (R1a) – steppe-ankkuri</li>
-        <li><strong>Ajoitus:</strong> ~4 370 vuotta sitten (~2 400–2 300 eaa.)</li>
-        <li><strong>Merkitys:</strong> Ensimmäinen selvä dokumentti W3a1:stä Corded Ware -yhteydessä, josta haarautuu Suomen suunnan väestöjä<sup>[8]</sup></li>
-      </ul>
+    <div class="loyto-box">
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 3 · Corded Ware, Tšekki · ~4 370 v.s.</span></div>
+      <div class="loyto-title">"Tällä pysäkillä opit, että sinun veresi pystyy yhdistämään erilaisia maailmoja yhdeksi arjeksi."</div>
+      <div class="loyto-fields">
+        <span class="lf-key">Näyte</span><span class="lf-val">I7207 (Radovesice XVIII)</span>
+        <span class="lf-key">mtDNA</span><span class="lf-val">W3a1</span>
+        <span class="lf-key">Y-DNA</span><span class="lf-val">R-M417 (R1a) — steppe-ankkuri</span>
+        <span class="lf-key">Kulttuuri</span><span class="lf-val">Corded Ware, varhainen vaihe</span>
+        <span class="lf-key">Konteksti</span><span class="lf-val">Yksittäishauta, korulöydöt</span>
+        <span class="lf-key">Merkitys</span><span class="lf-val">Silta aroilta Suomen suuntaan</span>
+      </div>
+      <div class="loyto-link">Ensimmäinen selvä dokumentti W3a1:stä Corded Ware -yhteydessä — siitä haarautuu myöhemmin myös Suomen väestö.<sup>[8]</sup></div>
     </div>
 
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Corded Ware</span>
+        <span class="footer-page">Pysäkki 3 · Corded Ware</span>
       </div>
     </footer>
   </section>
@@ -696,22 +787,24 @@
 
     <p>Arkeologi tulevaisuudesta näkee sinut kylmänä numerona: <em>"yksilö I0116, mtDNA W3a1"</em>. Sinulle se hetki on aivan toisenlainen. Sinä olet ehkä nainen, joka kantaa mukanaan pientä pronssista korua – lahjaa, joka on tullut vaihtokaupassa kaukaa etelästä.<sup>[9,10]</sup></p>
 
-    <div class="fact-box">
-      <div class="fact-title">Únětice & Baden – dokumentoidut W3a1-näytteet</div>
-      <ul>
-        <li><strong>QLB 41</strong>, Quedlinburg, Saksa – Únětice, ~3 925 v.s. – W3a1</li>
-        <li><strong>QLB 39</strong>, Quedlinburg, Saksa – Únětice, ~3 875 v.s. – W3a1</li>
-        <li><strong>I0116</strong>, Esperstedt, Saksa – Únětice, ~3 978 v.s. – W3a1, Y-DNA I-BY431</li>
-        <li><strong>MX275</strong>, Singen, Saksa – Baden EBA, ~3 998 v.s. – W3a1, Y-DNA R-L2</li>
-        <li><strong>MX270</strong>, Singen, Saksa – Baden EBA, ~3 900 v.s. – W3a1, Y-DNA R-L2</li>
-        <li><strong>I3607</strong>, Künzing-Bruck, Baijeri – Varhainen pronssikausi, ~4 200 v.s. – W3a1, Y-DNA R-L754<sup>[9,10]</sup></li>
-      </ul>
+    <div class="loyto-box">
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 4 · Únětice & Baden, Saksa · ~4 200–3 875 v.s.</span></div>
+      <div class="loyto-title">"Tällä pysäkillä opit, että sinun veresi kulkee hierarkioiden läpi — sekä niiden ylä- että alapuolella."</div>
+      <div class="loyto-fields">
+        <span class="lf-key">Näytteet</span><span class="lf-val">QLB41, QLB39, I0116 (Únětice)</span>
+        <span class="lf-key">mtDNA</span><span class="lf-val">W3a1 kaikissa</span>
+        <span class="lf-key">Y-DNA</span><span class="lf-val">I-BY431 (I2a), R-L2 (R1b)</span>
+        <span class="lf-key">Baden</span><span class="lf-val">MX275, MX270, I3607 (Singen/Baijeri)</span>
+        <span class="lf-key">Ajoitus</span><span class="lf-val">~4 200–3 875 v.s.</span>
+        <span class="lf-key">Konteksti</span><span class="lf-val">Pronssia, kauppaa, hierarkiaa</span>
+      </div>
+      <div class="loyto-link">Sinun linjasi kulkee Keski-Euroopan varhaisessa pronssiyhteiskunnassa — uuden eliitin, sepän ja kauppiaan maailmassa.<sup>[9,10]</sup></div>
     </div>
 
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Únětice & Baden</span>
+        <span class="footer-page">Pysäkki 4 · Únětice & Baden</span>
       </div>
     </footer>
   </section>
@@ -744,20 +837,24 @@
 
     <p>Tällä pysäkillä opit, että sinun veresi löytää kodin myös vuoriston syleilyssä – kaukana aroista, mutta steppe-perinnön ytimessä.</p>
 
-    <div class="data-table-wrap">
-      <table class="data-table">
-        <tr><th>Näyte</th><th>Ajoitus</th><th>mtDNA</th><th>Y-DNA</th><th>Konteksti</th></tr>
-        <tr><td>I12457 (Loebanr)</td><td>~2 928 v.s.</td><td>W3a1</td><td>R-Z94</td><td>Swat, Indo-Aryan</td></tr>
-        <tr><td>I12477 (Katelai)</td><td>~2 900 v.s.</td><td>W3a1</td><td>R-Z94</td><td>Swat, myöhäinen pronssi</td></tr>
-        <tr><td>I13219 (Butkara II)</td><td>~2 870 v.s.</td><td>W3a1</td><td>R-Z94</td><td>Swat, rautakausi</td></tr>
-        <tr><td>I1994 (Udegram)</td><td>~2 850 v.s.</td><td>W3a1</td><td>R-Z94</td><td>Swat, Indo-Irani</td></tr>
-      </table>
+    <div class="loyto-box">
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 5 · Swat Valley, Pakistan · ~2 928–2 850 v.s.</span></div>
+      <div class="loyto-title">"Tällä pysäkillä opit, että sinun veresi ei valitse vain yhtä mannerta — se on kahden maailman risteyskohdassa."</div>
+      <div class="loyto-fields">
+        <span class="lf-key">Näytteet</span><span class="lf-val">I12457 · I12477 · I13219 · I1994</span>
+        <span class="lf-key">Sijainnit</span><span class="lf-val">Loebanr, Katelai, Butkara II, Udegram</span>
+        <span class="lf-key">mtDNA</span><span class="lf-val">W3a1 kaikissa</span>
+        <span class="lf-key">Y-DNA</span><span class="lf-val">R-Z94 (R1a, indo-irani)</span>
+        <span class="lf-key">Nykypitoisuus</span><span class="lf-val">~8,4 % Pohjois-Pakistanissa (korkein Aasiassa)</span>
+        <span class="lf-key">Konteksti</span><span class="lf-val">Indo-Aryan laajentuma, Himalajan juuri</span>
+      </div>
+      <div class="loyto-link">Sinun linjasi esiintyy Indo-iranilaisessa väestöliikkeessä Himalajan juurella — reiteillä, jotka liittyvät Veda-kulttuuriin ja Gandharan alueeseen.<sup>[11]</sup></div>
     </div>
 
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Pakistan – Hotspot</span>
+        <span class="footer-page">Pysäkki 5 · Swat Valley</span>
       </div>
     </footer>
   </section>
@@ -789,17 +886,24 @@
 
     <p>Miksi omituinen hotspot? Sinun W3a1 ilmestyy Ptolemaioksen ajan hautaan, jossa kreikkalaiset muotokuvat ja egyptiläiset rituaalit kohtaavat. Tämä ei ole satunnainen muukalainen; se on merkki siitä, että sinun linjasi on kulkenut kauppareittejä pitkin etelään, kaukana tyypillisistä arojen ja Keski-Euroopan kodeistaan. Samainen hauta-alue sisältää myös muita U-perheen linjoja: U1, U3, U5, U6, U7 – lähes koko eurooppalainen äitilinjakirjasto yhdessä egyptiläisessä hautamaassa.<sup>[12]</sup></p>
 
-    <div class="data-table-wrap">
-      <table class="data-table">
-        <tr><th>Näyte</th><th>Ajoitus</th><th>mtDNA</th><th>Y-DNA</th><th>Konteksti</th></tr>
-        <tr><td>JK2165</td><td>~2 238 v.s.</td><td>W3a1</td><td>ei raportoitu</td><td>Ptolemaioksen Egypti, Abusir el-Meleq</td></tr>
-      </table>
+    <div class="loyto-box">
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 6 · Abusir el-Meleq, Egypti · ~2 238 v.s.</span></div>
+      <div class="loyto-title">"Tällä pysäkillä opit, että identiteetti voi olla kerroksellinen — aivan kuten siteet, joihin ruumiisi kääritään."</div>
+      <div class="loyto-fields">
+        <span class="lf-key">Näyte</span><span class="lf-val">JK2165 (Abusir el-Meleq)</span>
+        <span class="lf-key">mtDNA</span><span class="lf-val">W3a1</span>
+        <span class="lf-key">Y-DNA</span><span class="lf-val">ei raportoitu</span>
+        <span class="lf-key">Kulttuuri</span><span class="lf-val">Ptolemaioksen Egypti</span>
+        <span class="lf-key">Konteksti</span><span class="lf-val">Varakas/aatelinen muumio, kullattuja koruja</span>
+        <span class="lf-key">Aikakausi</span><span class="lf-val">Kreikkalais-egyptiläinen yhdistelmä</span>
+      </div>
+      <div class="loyto-link">W3a1 ei jää pohjoisen ja arojen haploryhmäksi — se ilmestyy myös Niilin varren kosmopoliittisen eliitin joukkoon.<sup>[12]</sup></div>
     </div>
 
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Egypti – Hotspot</span>
+        <span class="footer-page">Pysäkki 6 · Egypti</span>
       </div>
     </footer>
   </section>
@@ -830,22 +934,84 @@
 
     <p>Viking Age Sweden, Gotlanti: näyte VK459, ~975 vuotta sitten – <strong>W3a1</strong>. Tanska, Viking Denmark VK338, ~1 100 vuotta sitten – <strong>W3a1</strong>. Tanska, keskiaikainen G669, ~547 vuotta sitten – <strong>W3a1</strong>. Kreikka, muinainen Ambrakia, ~2 170 vuotta sitten – <strong>W3a1</strong>. Unkari, Sárrétudvari, ~1 000 vuotta sitten – <strong>W3a1</strong>. Sama linja. Eri paikat. Eri vuosisadat. Yksi äiti.</p>
 
-    <div class="fact-box">
-      <div class="fact-title">Pohjoinen ankkuri – dokumentoidut näytteet</div>
-      <ul>
-        <li><strong>VK459</strong>, Gotlanti, Ruotsi – viikinkiaika, ~975 v.s. – W3a1<sup>[13]</sup></li>
-        <li><strong>VK338</strong>, Langeland, Tanska – viikinkiaika, ~1 100 v.s. – W3a1</li>
-        <li><strong>G669</strong>, St. Jorgen, Saksa – myöhäiskeskiaika, ~547 v.s. – W3a1</li>
-        <li><strong>SHper199, SHper233</strong>, Sárrétudvari, Unkari – ~1 000 v.s. – W3a1</li>
-        <li><strong>AMV-CO_5</strong>, Ambrakia, Kreikka – ~2 170 v.s. – W3a1, Y-DNA G-M201</li>
-        <li><strong>MJ-34</strong>, Kolomak, Ukraina – skyyttialaiset, ~2 231 v.s. – W3a1, Y-DNA R-Z2124</li>
-      </ul>
+    <div class="loyto-box">
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 7 · Pohjoinen verkosto · ~2 231–547 v.s.</span></div>
+      <div class="loyto-title">"Tällä pysäkillä opit, että pohjoinen ei ole 'reuna' — vaan yksi niistä solmuista, joihin koko verkosto lopulta sitoutuu."</div>
+      <div class="loyto-fields">
+        <span class="lf-key">VK459</span><span class="lf-val">Gotlanti, Ruotsi · ~975 v.s. · viikinkiaika</span>
+        <span class="lf-key">VK338</span><span class="lf-val">Langeland, Tanska · ~1 100 v.s.</span>
+        <span class="lf-key">AMV-CO_5</span><span class="lf-val">Ambrakia, Kreikka · ~2 170 v.s. · Y-DNA G-M201</span>
+        <span class="lf-key">MJ-34</span><span class="lf-val">Kolomak, Ukraina · ~2 231 v.s. · skyytit · Y-DNA R-Z2124</span>
+        <span class="lf-key">SHper199/233</span><span class="lf-val">Sárrétudvari, Unkari · ~1 000 v.s.</span>
+        <span class="lf-key">G669</span><span class="lf-val">St. Jorgen, Saksa · ~547 v.s. · myöhäiskeskiaika</span>
+      </div>
+      <div class="loyto-link">Enää lyhyt matka sinun omaan sukuusi — W3a1 on jo Itämeren rannoilla, odottaen Suomea.<sup>[13]</sup></div>
     </div>
 
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Pohjoinen ankkuri</span>
+        <span class="footer-page">Pysäkki 7 · Pohjoinen ankkuri</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- KESKI-AASIA / N-LINJA -->
+  <section class="page" id="nlinjakohtaa">
+
+    <div class="part-header">
+      <span class="part-number">🜂 OSA V·b</span>
+      <h2>Genetiikan risteyskohta</h2>
+    </div>
+
+    <h1>Skyytit ja kurganit –<br>W3a1 kohtaa<br>N-linjan</h1>
+
+    <div class="image-hero">
+      <!-- KUVA: Saka/skyyttien kurganikumpu Keski-Aasian arolla Kazakstanissa.
+           Ihanteellinen: Berelin jäätynyt kurgan tai Otrar-Karataun arkeologinen kaivaus.
+           Vaihtoehtoisesti hevosuhri tai pronssikirves museo-kontekstissa.
+           images/berel-saka-kurgan-kazakhstan.jpg -->
+      <div class="image-placeholder">
+        <span>[ images/berel-saka-kurgan-kazakhstan.jpg ]</span>
+        <span class="img-theme">Teema: Saka/skyyttien kurganikumpu Kazakstanissa – Berel tai Otrar-Karatau, arkeologinen kaivaus</span>
+      </div>
+      <div class="caption">Berelin jäätyneet saka-kurganit, Itä-Kazakstan – W3a1 ja N-isälinja kohtaavat, genetiikan risteyskohta joka selittää suomalaisen perimän kaksinaisuuden<sup>[16]</sup></div>
+    </div>
+
+    <p class="dropcap">Sinä seisot Keski-Aasian aroilla kurganin varjossa, missä tuuli kantaa hiekkaa ja hevosten hirnunta kaikuu kaukaa. Olet Otrar-Karataun keitaiden ja Berelin jäätyneiden saka-kurganien maailmassa, ajalla joka kattaa myöhäispronssikauden ja hellenistisen ajan (~2 100–300 eaa.). Täällä sinun W3a1-linjasi – steppe-juurinen äitilinja – kohtaa jotain uutta. Jotain josta tulee osa suomalaista tarinaa.</p>
+
+    <p>Y-haploryhmä <strong>N</strong>. Suomalaisten miesten isälinjan tunnus.</p>
+
+    <p>Vanhin dokumentoitu N-esiintymä Keski-Aasian aromaalta on Koken, Itä-Kazakstan, ~4 000 eaa. – tuhansia vuosia ennen historiallista aikaa. N:n kantajat liikkuivat täällä jo silloin, rinnakkain W3a1-äitilinjan kanssa. Keski-Aasia ei ole vain läpikulkumaa – se on se paikka, jossa nämä kaksi linjaa ensin kohtasivat.</p>
+
+    <p>Otrar-Karataun kaivauksissa löydetty KNT003 yhdistää W3a1-mtDNA:n J2a-Y-DNA:han: iranilaisten kauppiaiden keitasyhteisö, johon kuuluu sekä steppe- että itäisiä linjoja. Berelin jäätyneissä eliittikurganeissa BRE011 yhdistää W3a1:n Q1a-isälinjaan – saka-soturipäällikön tai hänen puolisonsa hauta, rikkaine hevosuhreineen.<sup>[16]</sup></p>
+
+    <div class="royal-box">
+      <div class="royal-title">Seima-Turbino – silta Siperiasta Itämerelle</div>
+      <p>Noin 2 200–1 900 eaa. Siperiasta Baltiaan kulki pronssikirveiden ja hevosten levikkikausi: Seima-Turbino -ilmiö. Sen mukana kulki N-kantajia W3a1-äitilinjojen rinnalla. Tämä on se silta, joka selittää miksi suomalaisessa DNA:ssa näkyy yhtä aikaa sekä Corded Ware -perimä (W3a1, ~9,6 % Suomessa) että suomalais-ugrilainen N3a4-perintö – molemmat kohtaavat Keski-Aasian kurganeissa ennen kuin kulkeutuvat Itämerelle.<sup>[16]</sup></p>
+    </div>
+
+    <p>Kurganin juurella seisot karavaanin keskellä, hevonen valjaissaan. Olet saka-nainen – kauppiaan tai soturipäällikön puoliso – ja tiedät reittisi ulottuvan länteen skyytteihin ja itään altai-paimentolaisiin. Kun tyttäresi syntyy, hänen soluihinsa kätkeytyy W3a1. Mutta isälinjaksi käy N3 tai Q1a – genetiikan risteys, joka päätyy Suomeen.</p>
+
+    <div class="loyto-box">
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 7b · Keski-Aasia · ~4 000 eaa.–300 eaa.</span></div>
+      <div class="loyto-title">"Tällä pysäkillä opit, että tarina voi toistaa itseään, muttei koskaan täysin samalla tavalla — ja että kaksi linjaa löytää saman kodin."</div>
+      <div class="loyto-fields">
+        <span class="lf-key">Koken</span><span class="lf-val">Itä-Kazakstan · ~4 000 eaa. · Y-DNA N · vanhin N aromaalta</span>
+        <span class="lf-key">KNT003</span><span class="lf-val">Otrar-Karatau · ~1 650 eaa. · W3a1 + J2a</span>
+        <span class="lf-key">NUL001</span><span class="lf-val">Nurly · ~1 577 eaa. · W3a1 · paimentolaiset</span>
+        <span class="lf-key">BRE011</span><span class="lf-val">Berel · ~300 eaa. · W3a1 + Q1a · saka-eliitti</span>
+        <span class="lf-key">Seima-Turbino</span><span class="lf-val">~2 200–1 900 eaa. · N-kantajat kohti Itämerta</span>
+        <span class="lf-key">Tulos</span><span class="lf-val">W3a1 + N3a4 = suomalainen DNA:n kaksinaisuus</span>
+      </div>
+      <div class="loyto-link">Jos sinulla on sekä W3a1-äitilinja että N3a4-isälinja — olet elävä todiste tästä kohtaamisesta.<sup>[16]</sup></div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
+        <span class="footer-page">Pysäkki 7b · Skyytit & N-linja</span>
       </div>
     </footer>
   </section>
@@ -879,22 +1045,24 @@
 
     <p>Nykyinen DNA-testituloksesi ei kerro koko tarinaa – se vain antaa nimen sille, mitä veresi on tehnyt kymmeniä tuhansia vuosia: kulkenut pysähdykseltä pysähdykselle, naisesta toiseen, kulttuurista seuraavaan, kunnes se päätyy sinuun.<sup>[1,7]</sup></p>
 
-    <div class="fact-box">
-      <div class="fact-title">W-haplotyyppi Euroopassa</div>
-      <ul>
-        <li><strong>Suomi: 9,6 %</strong> — Euroopan korkein</li>
-        <li>Unkari: 5,2 %</li>
-        <li>Latvia: 4,1 %</li>
-        <li>Valko-Venäjä: 3,7 %</li>
-        <li>Muu Eurooppa: tyypillisesti alle 2 %</li>
-        <li>Selitys: perustajavaikutus + geneettinen ajautuminen<sup>[7]</sup></li>
-      </ul>
+    <div class="loyto-box">
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 8 · Suomi · Tähän päivään asti</span></div>
+      <div class="loyto-title">"Maailman liikkuvin äitilinja löysi Suomen — ja pysähtyi. Pysähdyksistä suurin."</div>
+      <div class="loyto-fields">
+        <span class="lf-key">Suomi</span><span class="lf-val">W-frekvenssi 9,6 % — Euroopan korkein</span>
+        <span class="lf-key">Unkari</span><span class="lf-val">5,2 %</span>
+        <span class="lf-key">Latvia</span><span class="lf-val">4,1 %</span>
+        <span class="lf-key">Valko-Venäjä</span><span class="lf-val">3,7 %</span>
+        <span class="lf-key">Muu Eurooppa</span><span class="lf-val">tyypillisesti alle 2 %</span>
+        <span class="lf-key">Syy</span><span class="lf-val">perustajavaikutus + geneettinen ajautuminen</span>
+      </div>
+      <div class="loyto-link">Joka kymmenes suomalainen jakaa saman äitilinjan kanssasi — viiden tuhannen vuoden arovaellusten yhteinen päätepisteensä.<sup>[7]</sup></div>
     </div>
 
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Suomi</span>
+        <span class="footer-page">Pysäkki 8 · Suomi</span>
       </div>
     </footer>
   </section>
@@ -1018,6 +1186,7 @@
         <li><strong>[13]</strong> Margaryan A et al. 2020. "Population genomics of the Viking world." <em>Nature</em> 585:390–396. Näytteet VK459 (Gotlanti), VK338 (Tanska).</li>
         <li><strong>[14]</strong> Allentoft ME et al. 2015. "Population genomics of Bronze Age Eurasia." <em>Nature</em> 522:167–172.</li>
         <li><strong>[15]</strong> FamilyTreeDNA Discover: "mtDNA Haplogroup W3a1." Viitattu 2026.</li>
+        <li><strong>[16]</strong> haplotree.info / ancientdna.info: Näytteet KNT003 (Otrar-Karatau), BRE011 (Berel), NUL001 (Nurly). Koken N-esiintymä: Ning C et al. 2019. "Ancient genomes from northern China suggest links between subsistence changes and human migration." <em>Nature Communications</em> 10:2700. Seima-Turbino: Anthony DW 2007. <em>The Horse, the Wheel, and Language.</em> Princeton University Press. Viitattu 2026-02-23.</li>
       </ul>
     </div>
 
