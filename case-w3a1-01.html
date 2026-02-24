@@ -23,10 +23,10 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; }
-    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; min-height: 100%; }
 
     body {
-      margin: 0; padding: 0; width: 100%;
+      margin: 0; padding: 0; width: 100%; min-height: 100vh;
       background: #ddd5c5;
       color: var(--ink);
       font-family: "Lora", Georgia, serif;
@@ -42,14 +42,19 @@
       width: 100%;
       flex-direction: column;
       align-items: center;
-      padding: 40px 0;
+      justify-content: flex-start;
+      padding: 40px 20px;
       gap: 32px;
+      box-sizing: border-box;
     }
 
     .page {
       position: relative;
       width: 210mm;
+      max-width: 100%;
       min-height: 297mm;
+      margin-left: auto;
+      margin-right: auto;
       background: var(--paper);
       padding: 2.2cm 2.1cm 3.2cm 2.1cm;
       box-shadow:
