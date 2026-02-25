@@ -56,7 +56,7 @@
       margin-left: auto;
       margin-right: auto;
       background: var(--paper);
-      padding: 2.2cm 2.1cm 3.2cm 2.1cm;
+      padding: 2.2cm 2.1cm 3.8cm 2.1cm;
       box-shadow:
         0 2px 4px rgba(0,0,0,0.10),
         0 8px 20px rgba(0,0,0,0.16),
@@ -348,15 +348,15 @@
     /* FOOTER */
     .footer {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 1.8cm;
+      bottom: 0;
+      left: 2.1cm;
+      right: 2.1cm;
+      height: 1.6cm;
       display: flex;
-      width: 100%;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
-      padding-top: 8px;
+      padding-top: 6px;
       border-top: 1px solid var(--line-faint);
-      margin: 0 2.1cm;
       font-family: "Lora", serif;
       font-style: italic;
       font-size: 8.5pt;
@@ -531,18 +531,38 @@
 <div class="pages-container">
 
   <!-- KANSI -->
-  <section class="page cover" id="kansi">
-    <div class="cover-ornament">⚔ &nbsp; ✦ &nbsp; ⚔</div>
-    <h1>Kadonneen<br>Sukuhistorian<br>Metsästäjä</h1>
-    <div class="cover-rule"></div>
-    <p class="subtitle">W3a1 – Arojen tyttäret</p>
-    <p class="tagline">
-      "Muut linjat löysivät refugiumin ja jäivät.<br>
-      Sinun linjasi ei pysähtynyt. Koskaan."
-    </p>
-    <div class="cover-footer-rule">KSHM · Arkeogenetiikka · Populaatiohistoria</div>
-  </section>
+  <section class="page" id="kansi" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; min-height:297mm;">
+    <div style="font-size:13pt; letter-spacing:0.45em; color:var(--accent-light); margin-bottom:2.2em; opacity:0.7;">⚔ &nbsp; ✦ &nbsp; ⚔</div>
 
+    <div style="margin-bottom:0.5em;">
+      <span style="font-family:'Playfair Display SC',serif; font-size:8.5pt; letter-spacing:0.25em; color:var(--accent); display:block; margin-bottom:0.7em;">KSHM · VERILINJAKIRJA</span>
+    </div>
+
+    <h1 style="font-family:'Playfair Display SC',serif; font-size:32pt; letter-spacing:0.04em; line-height:1.15; color:var(--ink); margin:0 0 0.15em 0;">Kadonneen<br>Sukuhistorian<br>Metsästäjä</h1>
+
+    <div style="width:60px; height:1.5px; background:var(--accent-light); margin:0.9em auto; opacity:0.55;"></div>
+
+    <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:15pt; color:var(--accent); margin:0.2em 0 2.4em 0; letter-spacing:0.02em;">W3a1 – Arojen tyttäret</p>
+
+    <div style="max-width:340px; margin:0 auto;">
+      <p style="font-family:'Lora',serif; font-style:italic; font-size:11pt; color:var(--ink-soft); line-height:1.8; margin:0 0 2.2em 0;">"Muut linjat löysivät refugiumin ja jäivät.<br>Sinun linjasi ei pysähtynyt. Koskaan."</p>
+    </div>
+
+    <div style="width:40%; height:1px; background:linear-gradient(to right, transparent, var(--line), transparent); margin:0 auto 2em auto;"></div>
+
+    <div style="display:flex; gap:2em; justify-content:center; font-family:'Playfair Display SC',serif; font-size:8pt; letter-spacing:0.18em; color:var(--accent-light); opacity:0.65;">
+      <span>Arkeogenetiikka</span>
+      <span>✦</span>
+      <span>Populaatiohistoria</span>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
+        <span class="footer-page">Kansi</span>
+      </div>
+    </footer>
+  </section>
 
   <!-- KOHTAAMINEN 1/2 -->
   <section class="page" id="kohtaaminen">
@@ -561,17 +581,20 @@
     <strong>Tämä on biologiaa, joka on yhtä todellinen kuin sormenjälkesi näppäimistöllä.</strong></p>
     <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
     <p>Kun DNA-raporttisi avautui ja silmäsi osuivat koodiin <strong>W3a1</strong>, huoneeseen ilmestyi jotain, mitä ei voi selittää sanoilla. Mennyt astui tähän huoneeseen. Ei mörkönä, ei legendana, vaan elävänä voimana soluissa, joka on kulkenut rikkoutumattomana naisten ketjuna:</p>
-    <ul style="list-style:none; padding-left:1.4em; margin:1.2em 0; font-style:italic; line-height:2.1; font-size:10.5pt; color:var(--ink-soft);">
-      <li>Tepe Anaun lattian alta savihautauksesta</li>
-      <li>Yamnayan punaokran peittämästä kurganista</li>
-      <li>Úněticen pronssikirveiden ja kaulakorujen keskeltä</li>
-      <li>Swat-laakson vuoristopolun varjosta</li>
-      <li>Niilin varren kreikkalais-egyptiläisestä muumiokankaasta</li>
-      <li>Tarim-altaan kuivassa ruuhihaudassa makaavasta naisesta</li>
-      <li>Skyytin hevosen vierellä lepäävästä äidistä</li>
-      <li>Viikinkilaivan laidalla seisoneesta tyttärestä</li>
-      <li style="color:var(--accent); font-style:normal; font-size:9.5pt; letter-spacing:0.03em; margin-top:0.4em;">…kaikista niistä nimettömistä naisista, joiden nimet eivät säilyneet kivissä, mutta joiden mitokondriot säilyivät – sinussa.</li>
-    </ul>
+    <div class="gold-chain">
+      <div class="gold-chain-intro">Hän on kulkenut läpi kaikkien näiden – ja jokainen on sinussa:</div>
+      <ul>
+        <li>Tepe Anaun lattian alta savihautauksesta</li>
+        <li>Yamnayan punaokran peittämästä kurganista</li>
+        <li>Úněticen pronssikirveiden ja kaulakorujen keskeltä</li>
+        <li>Swat-laakson vuoristopolun varjosta</li>
+        <li>Niilin varren kreikkalais-egyptiläisestä muumiokankaasta</li>
+        <li>Tarim-altaan kuivassa ruuhihaudassa makaavasta naisesta</li>
+        <li>Skyytin hevosen vierellä lepäävästä äidistä</li>
+        <li>Viikinkilaivan laidalla seisoneesta tyttärestä</li>
+      </ul>
+      <div class="gold-chain-coda">…ja kaikista niistä nimettömistä, joiden nimet eivät säilyneet kivissä — mutta joiden mitokondriot säilyivät sinussa.</div>
+    </div>
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
@@ -1196,7 +1219,7 @@
 
     <!-- Leaflet-kartta iframena – tarvitsee w3a1_map.html samaan kansioon -->
     <div style="width:100%; height:310px; margin: 0.6em 0 0.8em 0; border-radius:3px; overflow:hidden; border:1px solid var(--line); print-color-adjust:exact;">
-      <iframe src="w3a1_map.html"
+      <iframe src="https://kshm.fi/w3a1_map.html"
               style="width:100%; height:100%; border:none; display:block;"
               title="W3a1 vaelluskartta"
               loading="lazy">
@@ -1417,10 +1440,6 @@
       const ph = this.closest('.image-hero, .image-full').querySelector('.image-placeholder');
       if (ph) { ph.style.display = 'flex'; this.style.display = 'none'; }
     });
-  });
-</script>
-</body>
-</html>
   });
 </script>
 </body>
