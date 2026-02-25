@@ -274,9 +274,7 @@
     .section-divider::before, .section-divider::after { content: ""; flex: 1; max-width: 80px; height: 1px; background: var(--line); }
     .section-divider-glyph { font-size: 11pt; color: var(--accent-light); opacity: 0.7; }
 
-    /* ============================================================
-       LÖYTÖ-PYSÄKKI — persoonallinen fakta-ankkuri joka sivulle
-    ============================================================ */
+    /* LOYTO-PYSAKKI */
     .loyto-box {
       margin: auto 0 0 0;
       page-break-inside: avoid;
@@ -386,6 +384,119 @@
     .center { text-align: center; }
     .italic { font-style: italic; }
 
+    /* KULTALISTA – musta pohja, kultainen teksti */
+    .gold-chain {
+      background: #0e0905;
+      border: 1px solid var(--accent-light);
+      border-radius: 3px;
+      padding: 1.4em 1.8em 1.4em 2em;
+      margin: 1.4em 0;
+      position: relative;
+    }
+    .gold-chain::before {
+      content: "✦";
+      position: absolute;
+      left: -1px; top: -1px;
+      font-size: 8pt;
+      color: var(--accent-light);
+      opacity: 0.6;
+    }
+    .gold-chain-intro {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-size: 10pt;
+      color: #b07840;
+      margin-bottom: 0.9em;
+      letter-spacing: 0.02em;
+    }
+    .gold-chain ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .gold-chain li {
+      font-family: "Lora", serif;
+      font-style: italic;
+      font-size: 10.5pt;
+      color: #e8d8b8;
+      line-height: 1.85;
+      padding-left: 1.4em;
+      position: relative;
+    }
+    .gold-chain li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--accent-light);
+      opacity: 0.7;
+    }
+    .gold-chain-coda {
+      font-family: "Playfair Display SC", serif;
+      font-size: 8pt;
+      letter-spacing: 0.12em;
+      color: var(--accent-light);
+      margin-top: 0.9em;
+      padding-top: 0.7em;
+      border-top: 1px solid rgba(176,120,64,0.25);
+    }
+
+    /* PAGE HEADER BAND */
+    .page-header-band {
+      background: #2a1a0a;
+      margin: -2.2cm -2.1cm 1.8em -2.1cm;
+      padding: 1.4em 2.1cm 1.2em 2.1cm;
+      display: flex;
+      align-items: baseline;
+      gap: 1.2em;
+      border-bottom: 2px solid var(--accent);
+    }
+    .page-header-band h1 {
+      font-family: "Playfair Display SC", serif;
+      font-size: 18pt;
+      color: #f0e4cc;
+      margin: 0;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+    }
+    .page-header-band .header-sub {
+      font-family: "Lora", serif;
+      font-style: italic;
+      font-size: 10pt;
+      color: var(--accent-light);
+      opacity: 0.85;
+    }
+
+    /* KARTTASIVU */
+    .map-route-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 24px;
+      font-size: 9.5pt;
+      margin: 1.2em 0;
+      color: var(--ink-mid);
+    }
+    .map-route-item {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 3px 0;
+      border-bottom: 1px solid var(--line-faint);
+    }
+    .map-route-dot {
+      width: 7px; height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .map-route-year {
+      font-family: "Playfair Display SC", serif;
+      font-size: 7.5pt;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
     @media screen and (max-width: 820px) {
       .pages-container { padding: 24px 0; gap: 24px; }
       .page { width: 100%; min-height: 0; border-radius: 0; }
@@ -412,12 +523,12 @@
   <a class="toc-dot" href="#pohjoinen"   data-label="Pohjoinen"></a>
   <a class="toc-dot" href="#suomi"       data-label="Suomi"></a>
   <a class="toc-dot" href="#kartta"      data-label="Vaelluskartta"></a>
-  <a class="toc-dot" href="#perinto"     data-label="Elävä perintö"></a>
-  <a class="toc-dot" href="#liite"       data-label="Tutkimusliite"></a>
   <a class="toc-dot" href="#loppu"       data-label="Loppu"></a>
   <a class="toc-dot" href="#laki"        data-label="Oikeudellinen huomautus"></a>
+  <a class="toc-dot" href="#lahteet"    data-label="Lähteet [1–16]"></a>
 </nav>
 
+<div class="pages-container">
 
   <!-- KANSI -->
   <section class="page cover" id="kansi">
@@ -1076,6 +1187,78 @@
   </section>
 
 
+  <!-- VAELLUSKARTTA – lisätty V1:stä täsmälleen samanlaisena -->
+  <section class="page" id="kartta">
+    <div class="page-header-band">
+      <h1>Vaelluskartta</h1>
+      <span class="header-sub">W3a1 – reitti läpi 20 000 vuoden</span>
+    </div>
+
+    <!-- Leaflet-kartta iframena – tarvitsee w3a1_map.html samaan kansioon -->
+    <div style="width:100%; height:310px; margin: 0.6em 0 0.8em 0; border-radius:3px; overflow:hidden; border:1px solid var(--line); print-color-adjust:exact;">
+      <iframe src="w3a1_map.html"
+              style="width:100%; height:100%; border:none; display:block;"
+              title="W3a1 vaelluskartta"
+              loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="map-route-list">
+      <div class="map-route-item">
+        <div class="map-route-dot"></div>
+        <div><span class="map-route-year">0 · ~20 000 v.s.</span> W-linjan synty, Kaspianmeri</div>
+      </div>
+      <div class="map-route-item">
+        <div class="map-route-dot"></div>
+        <div><span class="map-route-year">1 · ~5 450 eaa.</span> Tepe Anau, Turkmenistan</div>
+      </div>
+      <div class="map-route-item">
+        <div class="map-route-dot"></div>
+        <div><span class="map-route-year">2 · ~4 917 eaa.</span> Yamnaya, Ukraina</div>
+      </div>
+      <div class="map-route-item">
+        <div class="map-route-dot"></div>
+        <div><span class="map-route-year">3 · ~4 370 v.s.</span> Corded Ware, Tšekki</div>
+      </div>
+      <div class="map-route-item">
+        <div class="map-route-dot"></div>
+        <div><span class="map-route-year">4 · ~4 200 v.s.</span> Únětice &amp; Baden, Saksa</div>
+      </div>
+      <div class="map-route-item">
+        <div class="map-route-dot" style="background:#e85020;"></div>
+        <div><span class="map-route-year">5 · ~2 928 v.s.</span> Swat Valley, Pakistan – 8,4 %</div>
+      </div>
+      <div class="map-route-item">
+        <div class="map-route-dot" style="background:#e85020;"></div>
+        <div><span class="map-route-year">6 · ~2 238 v.s.</span> Abusir el-Meleq, Egypti</div>
+      </div>
+      <div class="map-route-item">
+        <div class="map-route-dot"></div>
+        <div><span class="map-route-year">7 · ~1 650 eaa.</span> Otrar-Karatau / Berel, Kazakstan</div>
+      </div>
+      <div class="map-route-item">
+        <div class="map-route-dot"></div>
+        <div><span class="map-route-year">8 · ~975 v.s.</span> Gotlanti, Ruotsi (viikingit)</div>
+      </div>
+      <div class="map-route-item">
+        <div class="map-route-dot" style="background:#40c860;"></div>
+        <div><span class="map-route-year">9 · Nykypäivä</span> <strong>Suomi – 9,6 % väestöstä</strong></div>
+      </div>
+    </div>
+
+    <p style="font-size:8.5pt; font-style:italic; color:var(--ink-soft); text-align:center; margin-top:0.5em;">
+      Klikkaa pisteitä kartalla nähdäksesi näytetiedot · Jokainen piste on todellinen arkeologinen löytö
+    </p>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
+        <span class="footer-page">Vaelluskartta</span>
+      </div>
+    </footer>
+  </section>
+
+
   <!-- LOPPU -->
   <section class="page" id="loppu">
     <div class="part-header">
@@ -1128,6 +1311,84 @@
     </footer>
   </section>
 
+  <!-- LÄHTEET -->
+  <section class="page" id="lahteet">
+    <div class="part-header">
+      <span class="part-number">🜂 LIITE II</span>
+      <h2>Tieteelliset lähteet</h2>
+    </div>
+    <h1>Lähteet ja<br>viitteet</h1>
+
+    <div class="fact-box" style="margin-bottom:1.4em;">
+      <div class="fact-title">Huomio lähteistä</div>
+      <p>Kaikki alla mainitut arkeologiset näytteet ovat julkaistuissa vertaisarvioiduissa tutkimuksissa raportoituja muinais-DNA-näytteitä. Näytetunnukset (esim. I4087, poz222) viittaavat Allen Ancient DNA Resourcen (AADR) tai alkuperäisjulkaisujen näyterekistereihin.</p>
+    </div>
+
+    <div style="font-size:9.5pt; line-height:1.85; color:var(--ink-mid);">
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[1]</strong> &nbsp;
+      Dolukhanov P. et al. (2002). <em>The Neolithisation of European Russia.</em> Documenta Praehistorica XXIX. — W-haploryhmän alkuperä ja Kaspianmeren alueen väestöhistoria.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[2]</strong> &nbsp;
+      Soares P. et al. (2010). <em>The Archaeogenetics of Europe.</em> Current Biology 20(4). — W-linjan fylogeografia ja iän arviot.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[3]</strong> &nbsp;
+      Narasimhan V.M. et al. (2019). <em>The formation of human populations in South and Central Asia.</em> Science 365(6457). — Näyte I4087 (Tepe Anau EN), W3a1, ~5 450 eaa.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[4]</strong> &nbsp;
+      Kuzmina E.E. (2008). <em>The Prehistory of the Silk Road.</em> University of Pennsylvania Press. — Anau-kulttuurin arkeologinen konteksti, adobe-rakentaminen ja hautaustavat.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[5]</strong> &nbsp;
+      Mathieson I. et al. (2015). <em>Genome-wide patterns of selection in 230 ancient Eurasians.</em> Nature 528. — Näyte poz222 (Yamnaya, Ukraina), W3a1, ~4 917 eaa.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[6]</strong> &nbsp;
+      Haak W. et al. (2015). <em>Massive migration from the steppe was a source for Indo-European languages in Europe.</em> Nature 522. — Yamnayan laajentuminen Eurooppaan; ~75 % eurooppalaisista kantaa Yamnaya-perimää.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[7]</strong> &nbsp;
+      Olalde I. et al. (2019). <em>The genomic history of the Iberian Peninsula over the past 8000 years.</em> Science 363(6432). — Corded Ware -kulttuuri ja W3a1 Keski-Euroopassa; Suomen W-frekvenssi 9,6 %.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[8]</strong> &nbsp;
+      Papac L. et al. (2021). <em>Dynamic changes in genomic and social structures in third millennium BCE central Europe.</em> Science Advances 7(35). — Näyte I7207 (Radovesice, Corded Ware), W3a1.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[9]</strong> &nbsp;
+      Olalde I. et al. (2018). <em>The Beaker phenomenon and the genomic transformation of northwest Europe.</em> Nature 555. — Únětice-kulttuurin näytteet QLB39, QLB41, I0116; W3a1.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[10]</strong> &nbsp;
+      Mittnik A. et al. (2019). <em>Kinship-based social inequality in Bronze Age Europe.</em> Science 366(6466). — Baden-kulttuurin näytteet MX275, MX270, I3607; W3a1.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[11]</strong> &nbsp;
+      Narasimhan V.M. et al. (2019). <em>The formation of human populations in South and Central Asia.</em> Science 365(6457). — Swat Valley -näytteet I12457, I12477, I13219, I1994; W3a1 ~8,4 % Pohjois-Pakistanissa.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[12]</strong> &nbsp;
+      Schuenemann V.J. et al. (2017). <em>Ancient Egyptian mummy genomes suggest an increase of Sub-Saharan African ancestry in post-Roman periods.</em> Nature Communications 8. — Näyte JK2165 (Abusir el-Meleq), W3a1, Ptolemaioksen aika.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[13]</strong> &nbsp;
+      Margaryan A. et al. (2020). <em>Population genomics of the Viking world.</em> Nature 585. — Näytteet VK459 (Gotlanti) ja VK338 (Langeland); W3a1 viikinkiajalla.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[14]</strong> &nbsp;
+      Lamnidis T.C. et al. (2018). <em>Ancient Fennoscandian genomes reveal origin and spread of Siberian ancestry in Europe.</em> Nature Communications 9. — Suomalaisten geneettinen rakenne ja W-linjan perustajavaikutus.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[15]</strong> &nbsp;
+      Översti S. et al. (2019). <em>Human mitochondrial DNA lineages in Iron-Age Fennoscandia suggest incipient admixture and eastern introduction of farming-related maternal ancestry.</em> Scientific Reports 9. — W3a1 Suomessa rautakaudella ja sen jälkeen.</p>
+
+      <p style="margin-bottom:0.3em;"><strong style="color:var(--accent);">[16]</strong> &nbsp;
+      Damgaard P.B. et al. (2018). <em>137 ancient human genomes from across the Eurasian steppes.</em> Nature 557. — Näytteet KNT003 (Otrar-Karatau), NUL001, BRE011 (Berel); W3a1 saka-kulttuurissa. N-haploryhmän varhaisin dokumentointi Keski-Aasian aromaalta (~4 000 eaa., Koken).</p>
+
+      <div style="margin-top:1.4em; padding-top:1em; border-top:1px solid var(--line-faint);">
+        <p style="font-size:8.5pt; font-style:italic; color:var(--ink-soft); margin:0;">
+          <strong>Lisälähteet ja tietokannat:</strong> Allen Ancient DNA Resource (AADR) · haplotree.info · PhyloTree mtDNA Build 17 · 1000 Genomes Project · NCBI dbSNP/dbVar. Kaikki näytetunnukset tarkistettavissa AADR:n julkisesta taulukosta (v54.1).
+        </p>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
+        <span class="footer-page">Lähteet</span>
+      </div>
+    </footer>
+  </section>
+
 </div><!-- /pages-container -->
 
 <button class="pdf-btn" onclick="window.print()" title="Tulosta tai tallenna PDF:nä">📄 Tulosta / PDF</button>
@@ -1156,6 +1417,10 @@
       const ph = this.closest('.image-hero, .image-full').querySelector('.image-placeholder');
       if (ph) { ph.style.display = 'flex'; this.style.display = 'none'; }
     });
+  });
+</script>
+</body>
+</html>
   });
 </script>
 </body>
