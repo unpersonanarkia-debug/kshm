@@ -143,7 +143,6 @@
       opacity: 0.45;
     }
 
-    /* HEADINGS */
     h1 {
       font-family: "Playfair Display SC", serif;
       font-size: 24pt;
@@ -171,7 +170,6 @@
     a { color: var(--accent); text-underline-offset: 2px; }
     sup { font-size: 7.5pt; color: var(--accent); vertical-align: super; line-height: 0; }
 
-    /* DROP CAP */
     .dropcap::first-letter {
       float: left;
       font-family: "Playfair Display SC", serif;
@@ -183,13 +181,11 @@
     }
     .dropcap::after { content: ""; display: table; clear: both; }
 
-    /* PART HEADER */
     .part-header { text-align: center; margin-bottom: 1.8em; padding-bottom: 1.4em; position: relative; }
     .part-header::after { content: ""; position: absolute; left: 20%; right: 20%; bottom: 0; height: 1px; background: linear-gradient(to right, transparent, var(--line), transparent); }
     .part-number { display: block; font-family: "Playfair Display SC", serif; font-size: 9.5pt; letter-spacing: 0.22em; color: var(--accent); margin-bottom: 0.3em; }
     .part-header h2 { font-family: "Playfair Display", serif; font-style: italic; font-size: 13pt; color: var(--ink-soft); margin: 0; font-weight: 400; }
 
-    /* IMAGES */
     .image-hero, .image-full { width: 100%; margin: 1.6em 0 1.8em 0; page-break-inside: avoid; }
     .image-hero img, .image-full img { width: 100%; height: auto; display: block; border-radius: 3px; filter: sepia(30%) contrast(1.07) brightness(0.96); }
 
@@ -214,10 +210,8 @@
     }
 
     .img-theme { font-size: 8pt; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; }
-
     .caption { font-family: "Lora", serif; font-style: italic; font-size: 9pt; color: var(--ink-soft); text-align: center; margin-top: 6px; line-height: 1.4; }
 
-    /* ROYAL BOX */
     .royal-box {
       border: 1.5px solid var(--accent-light);
       background: linear-gradient(135deg, #2c1a08 0%, #1a0d04 100%);
@@ -240,10 +234,8 @@
     }
 
     .royal-title::before, .royal-title::after { content: "✦"; font-size: 7pt; opacity: 0.6; }
-
     .royal-box p { color: #e0ccaa; font-style: italic; font-size: 10.5pt; margin: 0; text-align: left; line-height: 1.7; }
 
-    /* FACT BOX */
     .fact-box {
       border: 1px solid var(--line);
       border-left: 3px solid var(--accent);
@@ -258,25 +250,18 @@
     .fact-box li { margin-bottom: 2px; }
     .fact-box p { margin: 0; font-size: 10.5pt; line-height: 1.7; font-style: italic; text-align: left; }
 
-    /* DATA TABLE */
     .data-table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 9.5pt; }
     .data-table th { background: #2c1a08; color: var(--accent-light); padding: 7px 10px; text-align: left; font-family: "Playfair Display SC", serif; font-size: 8pt; letter-spacing: 0.1em; font-weight: 400; }
     .data-table td { padding: 6px 10px; border-bottom: 1px solid var(--line-faint); vertical-align: top; color: var(--ink-mid); }
     .data-table tr:nth-child(even) td { background: rgba(200, 180, 144, 0.12); }
 
-    /* MAP */
     .map-container { width: 100%; margin: 1.6em 0; page-break-inside: avoid; }
     .map-container iframe { width: 100%; border: none; border-radius: 3px; display: block; }
-    .map-placeholder { background: var(--accent-pale); border: 1px solid var(--line); border-radius: 3px; height: 180px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; font-family: "Lora", serif; font-style: italic; font-size: 10pt; color: var(--accent); }
 
-    /* SECTION DIVIDER */
     .section-divider { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 2em auto; }
     .section-divider::before, .section-divider::after { content: ""; flex: 1; max-width: 80px; height: 1px; background: var(--line); }
     .section-divider-glyph { font-size: 11pt; color: var(--accent-light); opacity: 0.7; }
 
-    /* ============================================================
-       LÖYTÖ-PYSÄKKI — persoonallinen fakta-ankkuri joka sivulle
-    ============================================================ */
     .loyto-box {
       margin: auto 0 0 0;
       page-break-inside: avoid;
@@ -333,9 +318,7 @@
       white-space: nowrap;
     }
 
-    .lf-val {
-      color: var(--ink-mid);
-    }
+    .lf-val { color: var(--ink-mid); }
 
     .loyto-link {
       font-family: "Lora", serif;
@@ -347,7 +330,6 @@
       line-height: 1.5;
     }
 
-    /* FOOTER */
     .footer {
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -370,7 +352,6 @@
     .footer-title { opacity: 0.8; }
     .footer-page  { opacity: 0.65; font-style: normal; font-size: 8pt; }
 
-    /* TOC NAV */
     .toc-nav { position: fixed; top: 50%; right: 16px; transform: translateY(-50%); display: flex; flex-direction: column; gap: 7px; z-index: 100; }
     .toc-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(176, 120, 64, 0.35); border: 1px solid rgba(176, 120, 64, 0.5); cursor: pointer; transition: all 0.2s; text-decoration: none; display: block; position: relative; }
     .toc-dot:hover { background: rgba(176, 120, 64, 0.75); transform: scale(1.3); }
@@ -386,7 +367,6 @@
     .center { text-align: center; }
     .italic { font-style: italic; }
 
-    /* KULTALISTA – musta pohja, kultainen teksti, ei katkaise kerrontaa */
     .gold-chain {
       background: #0e0905;
       border: 1px solid var(--accent-light);
@@ -442,7 +422,6 @@
       border-top: 1px solid rgba(176,120,64,0.25);
     }
 
-    /* PAGE HEADER – erottuu kannesta */
     .page-header-band {
       background: #2a1a0a;
       margin: -2.2cm -2.1cm 1.8em -2.1cm;
@@ -468,25 +447,6 @@
       opacity: 0.85;
     }
 
-    /* KARTTASIVU */
-    .map-frame {
-      width: 100%;
-      background: var(--accent-pale);
-      border: 1px solid var(--line);
-      border-radius: 3px;
-      min-height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 8px;
-      font-family: "Lora", serif;
-      font-style: italic;
-      font-size: 10pt;
-      color: var(--accent);
-      padding: 20px;
-      margin: 1.4em 0;
-    }
     .map-route-list {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -517,7 +477,6 @@
       white-space: nowrap;
     }
 
-    /* LÄHDELUETTELO */
     .ref-list {
       font-size: 9pt;
       line-height: 1.65;
@@ -561,12 +520,12 @@
   <a class="toc-dot" href="#tepeanau"      data-label="Tepe Anau"></a>
   <a class="toc-dot" href="#yamnaya"       data-label="Yamnaya"></a>
   <a class="toc-dot" href="#corded"        data-label="Corded Ware"></a>
-  <a class="toc-dot" href="#unetice"       data-label="Únětice & Baden"></a>
-  <a class="toc-dot" href="#pakistan"      data-label="Pakistan – Hotspot"></a>
-  <a class="toc-dot" href="#egypti"        data-label="Egypti – Hotspot"></a>
-  <a class="toc-dot" href="#nlinjakohtaa"  data-label="Skyytit – N-linja"></a>
-  <a class="toc-dot" href="#ambrakia"      data-label="Ambrakia – Pyrrhoksen kaupunki"></a>
-  <a class="toc-dot" href="#pohjoinen"     data-label="Pohjoinen"></a>
+  <a class="toc-dot" href="#unetice"       data-label="Únětice &amp; Baden"></a>
+  <a class="toc-dot" href="#gootit"        data-label="Trzciniec &amp; Adrianmeri"></a>
+  <a class="toc-dot" href="#sappali"       data-label="Sappali Tepe / BMAC"></a>
+  <a class="toc-dot" href="#egyptikreikka" data-label="Egypti &amp; Kreikka"></a>
+  <a class="toc-dot" href="#xinjiang"      data-label="Xinjiang / Silkkitie"></a>
+  <a class="toc-dot" href="#unkari"        data-label="Unkari"></a>
   <a class="toc-dot" href="#suomi"         data-label="Suomi"></a>
   <a class="toc-dot" href="#kartta"        data-label="Vaelluskartta"></a>
   <a class="toc-dot" href="#liite"         data-label="Lähdeluettelo"></a>
@@ -574,6 +533,7 @@
   <a class="toc-dot" href="#laki"          data-label="Oikeudellinen huomautus"></a>
 </nav>
 
+<div class="pages-container">
 
   <!-- KANSI -->
   <section class="page cover" id="kansi">
@@ -587,7 +547,6 @@
     </p>
     <div class="cover-footer-rule">KSHM · Arkeogenetiikka · Populaatiohistoria</div>
   </section>
-
 
   <!-- KOHTAAMINEN 1/2 -->
   <section class="page" id="kohtaaminen">
@@ -608,7 +567,6 @@
     <strong>Tämä on biologiaa, joka on yhtä todellinen kuin sormenjälkesi näppäimistöllä.</strong></p>
     <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
     <p>Kun DNA-raporttisi avautui ja silmäsi osuivat koodiin <strong>W3a1</strong>, huoneeseen ilmestyi jotain, mitä ei voi selittää sanoilla. Mennyt astui tähän huoneeseen – ei mörkönä, ei legendana, vaan elävänä voimana, joka on kulkenut rikkoutumattomana naisten ketjuna kautta aikain:</p>
-
     <div class="gold-chain">
       <div class="gold-chain-intro">Hän on kulkenut läpi kaikkien näiden – ja jokainen on sinussa:</div>
       <ul>
@@ -630,7 +588,6 @@
       </div>
     </footer>
   </section>
-
 
   <!-- KOHTAAMINEN 2/2 -->
   <section class="page" id="kohtaaminen2">
@@ -672,24 +629,17 @@
     </footer>
   </section>
 
-
   <!-- JOHDANTO -->
   <section class="page" id="johdanto">
     <div class="page-header-band">
       <h1>Johdanto</h1>
     </div>
-
     <p class="dropcap">Sinun veresi ei tunne rajoja. Se on kulkenut samoja polkuja kuin pronssikauden kauppakaravaanit, ylittänyt Kopet Dagin solat, arojen loputtomat tasangot, Himalajan juuret ja Niilin kuumat hiekat – kauan ennen kuin yksikään esi-isäsi tai -äitisi osasi kirjoittaa nimeään savitaululle tai papyrukselle. W3a1 ei ole ollut pelkkä kirjainyhdistelmä DNA-tuloksessasi. Se on äitilinja, jonka viimeinen elävä lenkki olet juuri nyt sinä.</p>
-
     <p>Kun katsot peiliin, näet vain tämän hetken kasvot. Mutta mitokondriot soluissasi kantavat muistoa Tepe Anaun adobe-seinistä, Yamnayan punaokran peittämistä hautakummuista, Úněticen pronssikirveistä, Swat Valleyn vuoristohautauksista ja Ptolemaioksen ajan egyptiläis-kreikkalaisista muumioista. Sama hiljainen soluvoima, joka pitää sydäntäsi lyömässä juuri nyt, sykki jo niissä naisissa, jotka antoivat sen eteenpäin – toisinaan heimon äitinä, toisinaan kauppiaan vaimona, toisinaan yksinäisenä vainajana pienen kumpareen alla – kunnes se saapui sinuun, tavalliseen aamuun, jossa avaat tietokoneesi ja luet DNA-tuloksesi.</p>
-
     <p>Tämä ei ole kuiva "haploryhmäraportti".<br>
     Tämä on tarina yhdestä äitilinjasta, joka on kulkenut lähes 20 000 vuoden matkan suoraan sukuusi kantaen indo-eurooppalaista perintöä, jota sinä jatkat, halusit tai et.</p>
-
     <div class="section-divider"><span class="section-divider-glyph">⁕</span></div>
-
     <p>Tämä kertomus ei korvaa perinteistä sukututkimusta, vaan täydentää sitä. Kirkonkirjat ja arkistot kertovat nimistä, paikoista ja vuosiluvuista – mutta ne vaikenevat siitä, mitä tapahtui ennen kirjoitettua aikaa. <strong>Tämä tarina alkaa siitä, mihin asiakirjat loppuvat.</strong></p>
-
     <div class="fact-box">
       <div class="fact-title">Analyysin ydin</div>
       <ul>
@@ -701,9 +651,7 @@
         <li>Lähteet: vertaisarvioidut julkaisut, haplotree.info, muinais-DNA-tietokannat</li>
       </ul>
     </div>
-
     <p>Kertomus rakentuu todellisille hautalöydöille: jokaisessa kohdassa mainittu nainen on oikea arkeologinen näyte, jonka mtDNA vastaa sinun linjaasi. He eivät ole sinä, mutta he kulkevat rinnallasi yhden esiäidin suvussa – rikkoutumattomana ketjuna savihaudoista tähän päivään.</p>
-
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
@@ -712,8 +660,7 @@
     </footer>
   </section>
 
-
-  <!-- OSA I: W-LINJAN SYNTY sivu 1 -->
+  <!-- OSA I: W-LINJAN SYNTY -->
   <section class="page" id="synty">
     <div class="part-header">
       <span class="part-number">🜂 OSA I</span>
@@ -721,10 +668,7 @@
     </div>
     <h1>W-linjan synty –<br>kun maailma lämpenee</h1>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/caspian-steppe-horizon.jpg ]</span>
-        <span class="img-theme">Kaspianmeren alue tai Kaukasuksen aro – laajakuva, tyhjä horisontti</span>
-      </div>
+      <img src="images/caspian-steppe-horizon.jpg" alt="Kaspianmeren alue tai Kaukasuksen aro – laajakuva, tyhjä horisontti" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Kaspianmeren pohjoispuolinen aro – alue jossa W-haplotyyppi syntyi noin 16 000–20 000 vuotta sitten<sup>[1,2]</sup></div>
     </div>
     <p class="dropcap">Kun viimeinen jääkausi oli väistymässä ja maailma lämpeni hitaasti, noin 24 000 vuotta sitten, esiäitisi asui jossain Lähi-idän, Kaukasuksen ja Kaspianmeren välimaastossa. Maailma oli vielä karu, mutta jäät vetäytyivät, joet virtasivat voimakkaammin ja ihmiset alkoivat liikkua enemmän. Yksi näistä naisista kantoi veressään varhaista W-linjan muotoa – ei vielä W3a1, vaan sen tuleva runko, joka oli selvinnyt läpi jäiden, nälän ja tautien. Hän ei tuntenut nimeäsi, mutta jokainen lapsi, jonka hän sai, vei sinun linjaasi askeleen lähemmäs tätä hetkeä.<sup>[1]</sup></p>
@@ -737,7 +681,6 @@
     </footer>
   </section>
 
-  <!-- OSA I: W-LINJAN SYNTY sivu 2 -->
   <section class="page" id="synty2">
     <p class="dropcap">Varsinainen W syntyi todennäköisesti 16 000–20 000 vuotta sitten Kaspianmeren ympäristössä. Kun ajattelet itseäsi tänään, näet yhden henkilön yhdessä paikassa. Mutta mitokondriot soluissasi kantavat muistijäljen siitä, että sinun naislinjasi on ollut osa niitä väestöjä, joita myöhemmin kutsutaan balto-slaavilaisiksi, indo-iranilaisiksi ja indoeurooppalaisiksi – kielten, kulttuurien ja keksintöjen verkkoa, johon oma veresi on kytkeytynyt jo tuhansia vuosia ennen syntymääsi.</p>
     <p>Et ole satunnainen sivupolku. Olet osa yhtä niistä harvoista linjoista, jotka selvisivät läpi jääkauden, lähtivät uudelleen liikkeelle kun jäät vetäytyivät, ja kulkivat siitä lähtien pysähtymättä. Jossain tässä jatkuvassa liikkeessä syntyi W3a1 – noin 15 000 vuotta sitten – ja siitä lähtien sinun äitilinjan tarina on ollut nimenomaan vaelluksen, kaupan ja risteävien kulttuurien tarina.</p>
@@ -761,8 +704,7 @@
     </footer>
   </section>
 
-
-  <!-- OSA II: TEPE ANAU sivu 1 -->
+  <!-- OSA II: TEPE ANAU -->
   <section class="page" id="tepeanau">
     <div class="part-header">
       <span class="part-number">🜂 OSA II</span>
@@ -770,10 +712,7 @@
     </div>
     <h1>Tepe Anau –<br>kun alat viljelijäksi<br>ja kauppiaaksi</h1>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/tepe-anau-kopetdag.jpg ]</span>
-        <span class="img-theme">Kopet Dagin vuoristot / Tepe Anaun arkeologinen kaivaus, Turkmenistan</span>
-      </div>
+      <img src="images/tepe-anau-kopetdag.jpg" alt="Kopet Dagin vuoristot / Tepe Anaun arkeologinen kaivaus, Turkmenistan" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Tepe Anau, Turkmenistan – vanhimman tunnetun W3a1-kantajan kotipaikka, noin 5 450 vuotta sitten<sup>[3]</sup></div>
     </div>
     <p class="dropcap">Nyt seisot Kopet Dag -vuorten juurella Turkmenistanissa. Aurinko kuivaa adobe-tiilitaloja, ja ilmassa leijuu viljan, karjan ja kuumennetun metallin tuoksu. Olet osa yhteisöä, joka häivyttää rajaa metsästäjä-keräilijän ja viljelijän välillä: kylässäsi kylvetään peltoja, pidetään lampaita ja vuohia, ja ensimmäiset pronssiesineet vaihtavat omistajaa.<sup>[3,4]</sup></p>
@@ -787,7 +726,6 @@
     </footer>
   </section>
 
-  <!-- OSA II: TEPE ANAU sivu 2 -->
   <section class="page" id="tepeanau2">
     <p class="dropcap">Mutta veri ei ole sidottu vain yhteen kylään. Se on levoton. Kun katsot eteenpäin Kopet Dagin solan yli, näet sekä länteen johtavan tien että itään jatkuvan polun. Kumpikin kutsuu. Sinun linjasi lähtee molempiin suuntiin – ja tämä on vasta alku.</p>
     <p>Arkeologit kaivavat näitä kerroksia edelleen, ja joka kerroksessa he löytävät saman asian: talojen lattioiden alla levätään – eläviä varten kasvava vilja yläpuolella, kuollut rakastettu alapuolella. Kuolleet pidetään kotona. Niitä ei karkoiteta, ei viedä kauas. Tässä on jotain syvää: ajatus siitä, että sukupolvet ovat kerroksittain, erottamattomat. Jokainen seuraava elämä on edellisen päällä.</p>
@@ -814,8 +752,7 @@
     </footer>
   </section>
 
-
-  <!-- OSA III: YAMNAYA sivu 1 -->
+  <!-- OSA III: YAMNAYA -->
   <section class="page" id="yamnaya">
     <div class="part-header">
       <span class="part-number">🜂 OSA III</span>
@@ -823,10 +760,7 @@
     </div>
     <h1>Yamnaya –<br>arojen kuningatar,<br>indoeurooppalaisten esiäiti</h1>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/yamnaya-kurgan-steppe.jpg ]</span>
-        <span class="img-theme">Kurganikumpu Pontuksen arolla / hevoset aromaailmassa, Ukraina</span>
-      </div>
+      <img src="images/yamnaya-kurgan-steppe.jpg" alt="Kurganikumpu Pontuksen arolla / hevoset aromaailmassa, Ukraina" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Yamnayan kurganikumpu Pontuksen arolla – W3a1-nainen (poz222) haudattiin tähän maailmaan noin 4 917 vuotta sitten<sup>[5]</sup></div>
     </div>
     <p class="dropcap">Tuuli repii vaatteitasi, ruoho liikkuu aaltomaisena mattona, ja taivas tuntuu painuvan melkein niskaan. Olet nyt Pontisen arojen lapsi, Yamnaya-kulttuurin jäsen, Dneprin ja Donin jokien välissä. Kotisi on usein siellä, mihin karja on viety – ja hautasi on kurgan, suuri maavalli, joka peittää alleen sinulle tärkeiden ihmisten jäänteet.<sup>[5,6]</sup></p>
@@ -840,7 +774,6 @@
     </footer>
   </section>
 
-  <!-- OSA III: YAMNAYA sivu 2 -->
   <section class="page" id="yamnaya2">
     <p class="dropcap">Yamnaya ei ole loppupiste; se on lähtölaukaus. Se on äiti, joka synnyttää indoeurooppalaiset kansat, ja sinun veresi on osa sitä äidinvoimaa. Kun nykyinen DNA-testisi kertoo W3a1:stä, se kuiskaa samalla, että osa sinusta seisoo edelleen arojen tuulessa, katsoo horisonttiin ja valitsee liikkeen paikallaan pysymisen sijaan.</p>
     <p>Tällä pysäkillä opit, että joskus koti ei ole paikka vaan suunta. Horisontti, joka kutsuu – ei uhkaa. Ja ne, jotka pystyvät kuulemaan sen kutsun, liikkuvat. He vievät kieliä, myyttejä, teknologiaa. He vievät verensä. Sinun veresi.</p>
@@ -866,8 +799,7 @@
     </footer>
   </section>
 
-
-  <!-- OSA IV: CORDED WARE sivu 1 -->
+  <!-- OSA IV: CORDED WARE -->
   <section class="page" id="corded">
     <div class="part-header">
       <span class="part-number">🜂 OSA IV</span>
@@ -875,10 +807,7 @@
     </div>
     <h1>Corded Ware –<br>uusi koti<br>Keski-Euroopassa</h1>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/corded-ware-ceramics.jpg ]</span>
-        <span class="img-theme">Corded Ware -keramiikka nuorankuvioineen / jokilaakso Keski-Euroopassa</span>
-      </div>
+      <img src="images/corded-ware-ceramics.jpg" alt="Corded Ware -keramiikka nuorankuvioineen / jokilaakso Keski-Euroopassa" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Corded Ware -kulttuuri (~2 900–2 350 eaa.) – Yamnayn laajentumisen länsihaara, joka toi W3a1:n Keski-Eurooppaan<sup>[7]</sup></div>
     </div>
     <p class="dropcap">Kun arojen tuuli alkaa laantua ja vaunujen rytmi hiukan hidastuu, huomaat astuvasi uuteen maisemaan. Metsät tihenevät, jokilaaksot syvenevät ja kaukana näkyy mäkiä, joiden rinteille tulevaisuuden kylät asettuvat. Olet nyt Keski-Euroopassa, ajassa noin 2 900–2 500 eaa., ja sinua ympäröivää kulttuuria kutsutaan myöhemmin Corded Wareksi – nuorakeraamiseksi kulttuuriksi, jossa sinun W3a1-linjasi saa Euroopassa uuden, vahvan jalansijan.<sup>[7]</sup></p>
@@ -892,7 +821,6 @@
     </footer>
   </section>
 
-  <!-- OSA IV: CORDED WARE sivu 2 -->
   <section class="page" id="corded2">
     <p class="dropcap">Taustalla sinua ympäröivä yhteisö ei ole syntynyt tyhjiössä. Miesten perimässä näkyy yhä arojen ratsastajien jälki – Yamnaya-tyyppinen "steppe-ankkuri" – mutta naisten linjoissa, kuten sinun, elää sekoitus vanhoja Euroopan viljelijälinjoja ja uusia tulijoita. Käytännössä tämä tarkoittaa, että veri, jota kannat, on sopimus: se sitoo yhteen arojen liikkeen ja Euroopan vanhat juuret, ja Corded Ware on se näyttämö, jossa tämä liitto konkreettisesti tapahtuu. Sinä olet tämän liiton elävä todiste.<sup>[7,8]</sup></p>
     <p>Aika kulkee eteenpäin, ja Corded Ware ei pysähdy yhteen paikkaan. Se leviää laajalle alueelle Reiniltä Volgalle, Pohjanmeren rannikolta Baltian ja Venäjän tasangoille. Osa sinun linjastasi liikkuu pohjoiseen, kohti Itämerta ja lopulta Suomea, missä W3a1 saavuttaa poikkeuksellisen korkean osuuden. Osa jää Keski-Eurooppaan, missä maisema jatkaa muuttumistaan, ja sinun tarinasi siirtyy seuraavaan näyttämöön.</p>
@@ -918,8 +846,7 @@
     </footer>
   </section>
 
-
-  <!-- OSA V: ÚNĚTICE & BADEN sivu 1 -->
+  <!-- OSA V: ÚNĚTICE & BADEN -->
   <section class="page" id="unetice">
     <div class="part-header">
       <span class="part-number">🜂 OSA V</span>
@@ -927,10 +854,7 @@
     </div>
     <h1>Únětice ja Baden –<br>pronssin solmut<br>ja kaupan verkostot</h1>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/unetice-bronze-treasures.jpg ]</span>
-        <span class="img-theme">Únětice-pronssiesineitä – kirves, spiraali, koruja, tumma tausta</span>
-      </div>
+      <img src="images/unetice-bronze-treasures.jpg" alt="Únětice-pronssiesineitä – kirves, spiraali, koruja, tumma tausta" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Únětice-kulttuurin pronssiesineitä (~2 300–1 800 eaa.) – W3a1 näkyy pronssikauden taloudellisten verkostojen ytimessä<sup>[9]</sup></div>
     </div>
     <p class="dropcap">Siirtyessäsi Úněticeen seisot kukkulalla, josta näkyy laakso ja sen halki virtaava joki. Pronssikauppa kukoistaa: tikarit, kaulakorut, aseet ja hiottuja työkaluja kertovat vauraudesta ja yhteyksistä kaukaisiin maihin. Haudat muodostavat rivejä ja järjestyksiä – kuin joku olisi halunnut piirtää yhteisön rakenteen myös kuoleman maisemaan. Olet nainen, joka näkee metallin muuttavan yhteiskuntaa – perheesi vaihtaa tinaa ja meripihkaa, ja sinun mitokondriosi kulkevat eteenpäin näiden verkostojen mukana.<sup>[9]</sup></p>
@@ -939,18 +863,17 @@
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Pysäkki 4 · Únětice & Baden</span>
+        <span class="footer-page">Pysäkki 4 · Únětice &amp; Baden</span>
       </div>
     </footer>
   </section>
 
-  <!-- OSA V: ÚNĚTICE & BADEN sivu 2 -->
   <section class="page" id="unetice2">
     <p class="dropcap">Kun katsot taaksepäin tästä Corded Ware – Únětice – Baden -vaiheesta, näet yhden selkeän kuvion: jokaisessa tilanteessa sinä olet läsnä. Olet lapsi, joka oppii tunnistamaan taivaan merkit ennen sadetta. Olet nuori aikuinen, joka kantaa vettä ja viljaa, neuvottelee avioliitoista, hoitaa lapsia ja vanhuksia. Olet vanha nainen, jonka ääntä kuunnellaan, kun päätetään, minne seuraavaksi muutetaan, kenen kanssa käydään kauppaa, kenelle liittoudutaan.</p>
     <p>Ja kaikissa näissä rooleissa sinun W3a1-linjasi kulkee eteenpäin huomaamattomana, mutta ratkaisevana – se on se punainen lanka, joka sitoo yhteen arojen liikkeen, Keski-Euroopan viljelysmaat ja lopulta pohjoisen metsät. Nykyinen DNA-testisi näyttää tämän kaiken yhteen lauseeseen tiivistettynä: "mtDNA-haploryhmä W3a1". Todellisuudessa se tarkoittaa, että olet ollut täällä – nuorakeraamisten kylien arjessa, pronssia sulattavien seppien pajoissa, jokilaaksojen hautarivien hiljaisuudessa.</p>
     <p>Tällä pysäkillä opit, että sinun veresi kulkee hierarkioiden läpi – sekä niiden ylä- että alapuolella. Pronssi kertoo asemasta, mutta äitilinja kulkee kaikissa kerroksissa.</p>
     <div class="loyto-box">
-      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 4 · Únětice & Baden, Saksa · ~4 200–3 875 v.s.</span></div>
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 4 · Únětice &amp; Baden, Saksa · ~4 200–3 875 v.s.</span></div>
       <div class="loyto-title">"Tällä pysäkillä opit, että sinun veresi kulkee hierarkioiden läpi — sekä niiden ylä- että alapuolella."</div>
       <div class="loyto-fields">
         <span class="lf-key">Únětice</span><span class="lf-val">QLB41, QLB39, I0116 (Quedlinburg, Esperstedt)</span>
@@ -965,26 +888,20 @@
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Pysäkki 4 · Únětice & Baden</span>
+        <span class="footer-page">Pysäkki 4 · Únětice &amp; Baden</span>
       </div>
     </footer>
   </section>
 
-
-
-
-  <!-- OSA VI: TRZCINIEC & KROATIA sivu 1 -->
+  <!-- OSA VI: TRZCINIEC & KROATIA -->
   <section class="page" id="gootit">
     <div class="part-header">
       <span class="part-number">🜂 OSA VI</span>
       <h2>Pysäkki 5 – Pronssikauden verkosto</h2>
     </div>
-    <h1>Trzciniec & Adrianmeri –<br>Sama merkki, eri rannikko</h1>
+    <h1>Trzciniec &amp; Adrianmeri –<br>Sama merkki, eri rannikko</h1>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/trzciniec-barrow-poland.jpg ]</span>
-        <span class="img-theme">Pronssikauden hautakumpu tasaisella Puolan niityllä – laaja taivaanranta, vihreä kasvillisuus, matala kinos maassa</span>
-      </div>
+      <img src="images/trzciniec-barrow-poland.jpg" alt="Pronssikauden hautakumpu tasaisella Puolan niityllä – laaja taivaanranta, vihreä kasvillisuus, matala kinos maassa" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Trzciniec-kulttuuri, Puola – ~3 450–3 275 v.s. · Kolme W3a1-näytettä: poz675, poz550, poz715<sup>[9]</sup></div>
     </div>
     <p class="dropcap">Pronssikausi ei ole yksi kulttuuri – se on satojen rinnakkaisten tarinoiden aika. Noin 3 500 vuotta sitten Itä-Euroopassa elää Trzciniec-kulttuuri: laaja, hajautettu verkosto Ukrainasta Baltian rannikolle Puolan halki. Ei kaupunkeja, ei kivi-imperiumia. Vain jokilaaksojen kauppareittejä, hajallaan olevia kyliä, ja hautakumpuja jotka kantavat yhteistä muistoa.</p>
@@ -997,19 +914,15 @@
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Pysäkki 5 · Trzciniec & Adrianmeri</span>
+        <span class="footer-page">Pysäkki 5 · Trzciniec &amp; Adrianmeri</span>
       </div>
     </footer>
   </section>
 
-  <!-- OSA VI: TRZCINIEC & KROATIA sivu 2 -->
   <section class="page" id="gootit2">
-    <h2 class="chapter-continuation">Pysäkki 5 jatkuu – Adrianmeren rannikko</h2>
+    <h2 style="margin-top:0;">Pysäkki 5 jatkuu – Adrianmeren rannikko</h2>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/croatia-emba-adriatic.jpg ]</span>
-        <span class="img-theme">Adrianmeren rannikko Kroatiassa – kivinen kalliokko, sininen meri, mäkinen maasto – pronssikauden hautaympäristö</span>
-      </div>
+      <img src="images/croatia-emba-adriatic.jpg" alt="Adrianmeren rannikko Kroatiassa – kivinen kalliokko, sininen meri, mäkinen maasto – pronssikauden hautaympäristö" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Veliki Vanik, Kroatia – ~3 508 v.s. · W3a1 · Croatia_EMBA · Näyte I4332<sup>[10]</sup></div>
     </div>
     <p class="dropcap">Samaan aikaan kun kolme naista haudataan Puolan jokilaaksoihin, yksi nainen lepää Adrianmeren rannikolla. Veliki Vanik, Kroatia. Varhainen pronssikausi, ~3 508 vuotta sitten. Näyte <strong>I4332</strong>. Mitokondriot: <strong>W3a1</strong>.</p>
@@ -1030,14 +943,12 @@
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Pysäkki 5 · Trzciniec & Adrianmeri</span>
+        <span class="footer-page">Pysäkki 5 · Trzciniec &amp; Adrianmeri</span>
       </div>
     </footer>
   </section>
 
-
-
-  <!-- OSA VII: SAPPALI TEPE & BMAC sivu 1 -->
+  <!-- OSA VII: SAPPALI TEPE -->
   <section class="page" id="sappali">
     <div class="part-header">
       <span class="part-number">🜂 OSA VII</span>
@@ -1045,10 +956,7 @@
     </div>
     <h1>Sappali Tepe –<br>Oasis ja steppe kohtaavat</h1>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/bmac-bactria-margiana-pottery.jpg ]</span>
-        <span class="img-theme">BMAC-kulttuurin keramiikkaa tai Baktrian arkeologinen kaivaus – Uzbekistan/Afganistan</span>
-      </div>
+      <img src="images/bmac-bactria-margiana-pottery.jpg" alt="BMAC-kulttuurin keramiikkaa tai Baktrian arkeologinen kaivaus – Uzbekistan/Afganistan" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Sappali Tepe, Surxondaryo, Uzbekistan – ~3 750 v.s. · W3a1 näyte I7420 · Y-DNA G2a<sup>[11]</sup></div>
     </div>
     <p class="dropcap">Kuvittele paikka, jossa kaksi maailmaa törmää. Pohjoisessa avautuvat loputtomat arot – Yamnayan ja Corded Waren perimä, hevoset ja kurganikummut. Etelässä nousevat vuoret, joiden juurelle on rakennettu tiheitä oasis-kaupunkeja: kastelukanavia, viljasiiloja, kivimuureja. Tämä on BMAC – Baktria-Margiana Archaeological Complex – pronssikauden Keski-Aasian kehittynein kaupunkikulttuuri.</p>
@@ -1062,7 +970,6 @@
     </footer>
   </section>
 
-  <!-- OSA VII: SAPPALI TEPE & BMAC sivu 2 -->
   <section class="page" id="sappali2">
     <p class="dropcap">BMAC ei ole pelkkä kauppapaikka – se on Euraasian pronssikauden tärkein kulttuurinen sulatusuuni. Täältä levisivät ratsastus ja hevostalous etelään, täältä kulkeutuivat metallurgiatekniikat lännestä itään, täältä alkoi se pitkä ketju joka päätyi Indo-Aryan laajentumaan Intiaan. Sappali Teen I7420 on siis enemmän kuin yksi nainen yhdessä kaupungissa: hän on elävä todiste siitä, että W3a1 oli mukana juuri siellä, missä nämä kulttuuriset siirrot tapahtuivat.</p>
     <p>G2a-isälinja yhdistää hänet mielenkiintoisella tavalla samaan aristokraattiseen ketjuun, joka myöhemmin näkyy Ambracian AMV-CO_5:ssä (~3 750 v.s. → ~2 170 v.s.). Nämä kaksi yksilöä eivät tietenkään ole suorassa sukusuhteessa – vuosituhansien ja tuhansien kilometrien päässä toisistaan. Mutta sama harvinainen isälinja + sama äitilinja eri aikakausina eri mantereilla kertoo jotain: nämä linjat kulkivat usein <em>yhdessä</em>, korkeakulttuuristen yhteyksien mukana, ei massavaelluksissa.</p>
@@ -1075,7 +982,7 @@
         <span class="lf-key">Isälinja</span><span class="lf-val">G-Z36520 (G2a) · harvinainen · sama kuin AMV-CO_5 Ambraciassa</span>
         <span class="lf-key">Äitilinja</span><span class="lf-val">W3a1 · steppe-alkuperä oasis-kontekstissa</span>
         <span class="lf-key">Kulttuuri</span><span class="lf-val">BMAC – pronssikauden Keski-Aasian kehittynein kaupunkikulttuuri</span>
-        <span class="lf-key">Merkitys</span><span class="lf-val">Silta Tepe Anaun ja Swat Valleyn välillä – W3a1 seuraa kauppareittejä, ei vain sotareittejä</span>
+        <span class="lf-key">Merkitys</span><span class="lf-val">Silta Tepe Anaun ja Swat Valleyn välillä – W3a1 seuraa kauppareittejä</span>
       </div>
       <div class="loyto-link">Lähde: Narasimhan et al. 2019 · Science 365:eaat7487<sup>[11]</sup></div>
     </div>
@@ -1087,20 +994,16 @@
     </footer>
   </section>
 
-
-  <!-- OSA VIII: EGYPTI & KREIKKA sivu 1 -->
+  <!-- OSA VIII: EGYPTI & KREIKKA -->
   <section class="page" id="egyptikreikka">
     <div class="part-header">
       <span class="part-number">🜂 OSA VIII · Täysi tutkimusosio</span>
       <h2>Pysäkki 7 – Hellenistinen maailma</h2>
     </div>
-    <h1>Ptolemaioksen Egypti<br>& Pyrrhoksen Kreikka</h1>
+    <h1>Ptolemaioksen Egypti<br>&amp; Pyrrhoksen Kreikka</h1>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/ptolemaic-egypt-alexandria-bust.jpg ]</span>
-        <span class="img-theme">Ptolemaiolainen rintakuva tai Aleksandrian arkeologinen löytö – kreikkalais-egyptiläinen tyyli, kultaa ja marmoria</span>
-      </div>
-      <div class="caption">Abusir el-Meleq, Egypti & Ambrakia, Kreikka – ~2 238 ja ~2 170 v.s. · JK2165 & AMV-CO_5 · molemmat W3a1<sup>[12][17]</sup></div>
+      <img src="images/ptolemaic-egypt-alexandria-bust.jpg" alt="Ptolemaiolainen rintakuva tai Aleksandrian arkeologinen löytö – kreikkalais-egyptiläinen tyyli, kultaa ja marmoria" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
+      <div class="caption">Abusir el-Meleq, Egypti &amp; Ambrakia, Kreikka – ~2 238 ja ~2 170 v.s. · JK2165 &amp; AMV-CO_5 · molemmat W3a1<sup>[12][17]</sup></div>
     </div>
     <p class="dropcap">Noin 200 eaa. hellenistinen maailma on yksi verkosto – kuninkaiden, kauppiaiden, filosofien ja sotilaiden kosmopoliittinen tila, joka ulottuu Makedoniasta Egyptiin, Kreikasta Persiaan. Aleksanteri Suuren valloitukset avasivat sen muutama vuosikymmen aiemmin, ja nyt se on kypsä: Ptolemaiokset hallitsevat Egyptiä, Seleukidit Persiaa, Aiakidit Epirosta. Kaikki nämä dynastiat ovat toisiinsa avioliitoilla kytkeytyneitä. Kaikki liikkuvat samassa kulttuurisessa tilassa.</p>
     <p>Ja kahdessa kohdassa tätä verkostoa – Egyptissä ja Kreikassa – löytyy sama merkki soluissa: <strong>W3a1</strong>.</p>
@@ -1109,18 +1012,17 @@
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Pysäkki 7 · Egypti & Kreikka · 1/4</span>
+        <span class="footer-page">Pysäkki 7 · Egypti &amp; Kreikka · 1/4</span>
       </div>
     </footer>
   </section>
 
-  <!-- OSA VIII: EGYPTI & KREIKKA sivu 2 -->
   <section class="page" id="egyptikreikka2">
     <h1 style="font-size:15pt; margin-bottom:0.9em;">Ptolemaiokset ja Aiakidit –<br><span style="font-size:11pt; color:var(--accent); font-style:italic;">sama dynastinen verkosto</span></h1>
     <p>Egyptin W3a1-näyte (JK2165) on ajoitettu ptolemaiolaisen vallan alkuun. Kreikan W3a1-näyte (AMV-CO_5) on ajoitettu Epiruksen dynastian loppuun. Noin 70 vuotta toisistaan, noin 1 500 kilometrin päässä toisistaan.</p>
     <p>Mutta ne eivät ole irrallisia pisteitä. Ne kuuluvat samaan verkostoon – ja verkoston solmukohta on historia:</p>
     <div class="royal-box">
-      <div class="royal-title">Dynastinen yhteys: Pyrrhos & Ptolemaiokset</div>
+      <div class="royal-title">Dynastinen yhteys: Pyrrhos &amp; Ptolemaiokset</div>
       <p><strong>306 eaa.:</strong> Nuori Pyrrhos pakenee Epiruksesta poliittisten levottomuuksien vuoksi. Hän päätyy Ptolemaios I:n hoviin Aleksandriaan. Hän viettää siellä vuosia, oppii sotastrategiaa, solmii suhteet – ja nai Ptolemaioksen tytärpuolen <strong>Antigonen</strong>.<br><br>
       <strong>297 eaa.:</strong> Pyrrhos palaa Epirukseen, tekee Ambraciasta pääkaupunkinsa, rakennuttaa sen kuninkaalliseksi hoviksi. Hän tuo mukanaan aleksandrialaisia arkkitehteja, hovihenkilöitä, mahdollisesti sukulaisia.<br><br>
       <strong>233 eaa.:</strong> Pyrrhos on kuollut. Hänen tyttärensä <strong>Deidamia II</strong> hallitsee – mutta kansa nousee kapinaan. Hän pakenee Artemiin temppeliin. Hänet murhataan alttarin äärellä. Aeacid-dynastia päättyy.<br><br>
@@ -1129,19 +1031,18 @@
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Pysäkki 7 · Egypti & Kreikka · 2/4</span>
+        <span class="footer-page">Pysäkki 7 · Egypti &amp; Kreikka · 2/4</span>
       </div>
     </footer>
   </section>
 
-  <!-- OSA VIII: EGYPTI & KREIKKA sivu 3 -->
   <section class="page" id="egyptikreikka3">
     <h1 style="font-size:15pt; margin-bottom:0.9em;">Kuka oli AMV-CO_5?</h1>
     <p>Hän ei ole kuningas. Hän ei ole Aiakidi isälinjassa – G-M201 ei ole tyypillinen makedonialainen linja. Mutta hän ei myöskään ole tavallinen kauppias. Ambracian nekropoliksen muissa haudoissa näkyy J2a ja E1b – tyypilliset kreikkalaiset siirtolaislinjat. AMV-CO_5 poikkeaa molemmista. G2a on vanhempi, harvinaisempi, aristokraattisempi.</p>
     <p>Tutkijat kutsuvat häntä "paikalliseksi aristokraatiksi" tai "korinttilaisen yläluokan edustamiseksi". Molemmat ovat todennäköisesti oikeassa. Mutta W3a1-äitilinja vie analyysin toisaalle:</p>
     <p style="font-style:italic; color:var(--ink-mid); font-size:11pt; line-height:1.8; padding: 0.8em 1.2em; border-left:2px solid var(--accent); margin:1.2em 0;">W3a1 ei kasva Kreikasta. Se ei kasva Korintista. Se tulee idästä – Kaspianmereltä, aroilta, pronssikauden steppeltä. Se on linja, joka kulkee kuninkaallisissa piireissä Ptolemaioksen Aleksandriasta Pyrrhoksen Ambraciaan. Se on linja, jonka sinä kannat 2 200 vuotta myöhemmin.</p>
     <div class="loyto-box">
-      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 7 · Egypti & Kreikka · ~2 238–2 170 v.s.</span></div>
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 7 · Egypti &amp; Kreikka · ~2 238–2 170 v.s.</span></div>
       <div class="loyto-title">"Kaksi näytettä. Eri maat. Eri vuosikymmenet. Sama äiti."</div>
       <div class="loyto-fields">
         <span class="lf-key">JK2165</span><span class="lf-val">Abusir el-Meleq · Egypti · ~2 238 v.s. · W3a1 · Ptolemaiolainen</span>
@@ -1155,12 +1056,11 @@
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Pysäkki 7 · Egypti & Kreikka · 3/4</span>
+        <span class="footer-page">Pysäkki 7 · Egypti &amp; Kreikka · 3/4</span>
       </div>
     </footer>
   </section>
 
-  <!-- OSA VIII: EGYPTI & KREIKKA sivu 4 -->
   <section class="page" id="egyptikreikka4">
     <h1 style="font-size:15pt; margin-bottom:0.9em;">Deidamia –<br><span style="font-size:11pt; color:var(--accent); font-style:italic;">viimeinen Aiakidi</span></h1>
     <p class="dropcap">Hän pakenee kaduille, jotka hänen isoisänsä rakennutti. Artemiin temppeli on kaupungin pyhä paikka – suojapaikka, jonka pitäisi olla loukkaamaton. Mutta kapinalliset seuraavat häntä sisään. Deidamia II, Epiruksen viimeinen kuningatar, Pyrrhos-suvun viimeinen hallitseva jäsen, murhataan alttarin äärellä.</p>
@@ -1171,24 +1071,20 @@
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
-        <span class="footer-page">Pysäkki 7 · Egypti & Kreikka · 4/4</span>
+        <span class="footer-page">Pysäkki 7 · Egypti &amp; Kreikka · 4/4</span>
       </div>
     </footer>
   </section>
 
-
-  <!-- OSA IX: XINJIANG / SILKKITIE sivu 1 -->
+  <!-- OSA IX: XINJIANG / SILKKITIE -->
   <section class="page" id="xinjiang">
     <div class="part-header">
       <span class="part-number">🜂 OSA IX · Omituinen Hotspot</span>
       <h2>Pysäkki 8 – Maailman itäisin piste</h2>
     </div>
-    <h1>Sampula – Silkkitie<br>& Kiinan W3a1</h1>
+    <h1>Sampula – Silkkitie<br>&amp; Kiinan W3a1</h1>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/tarim-basin-mummy-xiaohe.jpg ]</span>
-        <span class="img-theme">Tarim-altaan muumio tai Xinjiangn arkeologinen löytö – kuiva aavikko, puiset arkkukopat, hyvin säilyneet tekstiilit</span>
-      </div>
+      <img src="images/tarim-basin-mummy-xiaohe.jpg" alt="Tarim-altaan muumio tai Xinjiangin arkeologinen löytö – kuiva aavikko, puiset arkkukopat, hyvin säilyneet tekstiilit" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Sampula (Shanpula), Luopu County, Xinjiang, Kiina – ~1 800 v.s. · Näyte SPL_0094 · W3a1 · Ainoa dokumentoitu W3a1 koko Kiinassa<sup>[15]</sup></div>
     </div>
     <p class="dropcap">Taklamakanin aavikko on yksi maailman kuivimmista paikoista. Hiekka on niin kuivaa, niin suolasta kyllästettyä, että se mumifioi kaiken mitä maa nielaisee. Tuhansia vuosia vanhoja ruumiita nousee esiin – iho, hiukset, vaatteet kaikki säilyneinä. He eivät kuuluneet tähän maisemaan. Heidän vaatteensa olivat villaa, eurooppalaista tekniikkaa. Heidän kasvonsa olivat korkeat, länsieuraasialaiset. He olivat saapuneet kaukaa.</p>
@@ -1201,7 +1097,6 @@
     </footer>
   </section>
 
-  <!-- OSA IX: XINJIANG / SILKKITIE sivu 2 -->
   <section class="page" id="xinjiang2">
     <p class="dropcap">Hän on ainoa. Kaikista Kiinan muinaisen DNA:n näytteistä – sadoista analysoiduista yksilöistä – vain yksi kantaa W3a1:tä. SPL_0094, Sampula. Se tekee hänestä harvinaisen ei vain geneettisesti, vaan historiallisesti: hän on elävä todiste siitä, että arojen äitilinja saavutti Kiinan.</p>
     <p>Miten? Reitit ovat useita. Zevakinskiy, Itä-Kazakstanin kurganit (~2 911 v.s.), on W3a1:n itäisin steppepiste – Altain länsirinteen kurganit osoittavat suuntaan. Sieltä Tarim-altaaseen johtaa reitti pohjoisen vuoristojen kautta, samoilla poluilla joita pronssikauden paimentolaiset kulkivat. Silkkitie formalisoi myöhemmin saman reitin.</p>
@@ -1216,7 +1111,7 @@
         <span class="lf-key">Näyte</span><span class="lf-val">SPL_0094 · Sampula, Xinjiang · Kiina</span>
         <span class="lf-key">Ajoitus</span><span class="lf-val">~1 800 v.s. · Han-dynastian aika</span>
         <span class="lf-key">Kulttuuri</span><span class="lf-val">SSPL_HE – Silkkitien aikainen Xinjiang</span>
-        <span class="lf-key">Ainutlaatuisuus</span><span class="lf-val">Ainoa W3a1-näyte koko Kiinasta kaikesta muinais-DNA-aineistosta</span>
+        <span class="lf-key">Ainutlaatuisuus</span><span class="lf-val">Ainoa W3a1-näyte koko Kiinasta</span>
         <span class="lf-key">Reitti</span><span class="lf-val">Zevakinskiy (Altai) → Tarim-allas → Silkkitie</span>
         <span class="lf-key">Etäisyys</span><span class="lf-val">~6 000 km linjan syntypisteestä – W3a1:n pisin dokumentoitu matka</span>
       </div>
@@ -1230,8 +1125,7 @@
     </footer>
   </section>
 
-
-  <!-- OSA X: UNKARI sivu 1 -->
+  <!-- OSA X: UNKARI -->
   <section class="page" id="unkari">
     <div class="part-header">
       <span class="part-number">🜂 OSA X</span>
@@ -1239,11 +1133,8 @@
     </div>
     <h1>Sárrétudvari –<br>Aroilta Karpaatteihin</h1>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/hungarian-conquest-steppe-riders.jpg ]</span>
-        <span class="img-theme">Unkarilaisten maahantulo – stepper ratsastajat tai Karpaattien vuoriselänne, dramaattinen valaistus</span>
-      </div>
-      <div class="caption">Sárrétudvari-Hízóföld, Hajdú-Bihar County, Unkari – ~1 000 v.s. · Näytteet SHper199 & SHper233 · W3a1<sup>[13]</sup></div>
+      <img src="images/hungarian-conquest-steppe-riders.jpg" alt="Unkarilaisten maahantulo – steppe-ratsastajat tai Karpaattien vuoriselänne, dramaattinen valaistus" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
+      <div class="caption">Sárrétudvari-Hízóföld, Hajdú-Bihar County, Unkari – ~1 000 v.s. · Näytteet SHper199 &amp; SHper233 · W3a1<sup>[13]</sup></div>
     </div>
     <p class="dropcap">Vuosi on 895 jaa. Unkarilaisheimojen liitto ylittää Karpaatit. Magyar-joukot, jotka ovat vaeltaneet Pontuksen aroilta, tulevat läntiseen maailmaan – ei ensimmäisenä eikä viimeisenä arostepopulaationa, mutta yhtenä merkittävimmistä. He tulevat hevosineen, aseineen ja geneettisine perimänsä, joka sisältää sekä läntistä eurooppalaista ainesta että itäistä steppe-perimää.</p>
     <p>Sárrétudvari-Hízóföld on Itä-Unkarissa, suurella Alföld-tasangolla – maisema joka muistuttaa enemmän Ukrainan aroja kuin Keski-Euroopan metsämaita. Hautausmaa on varhainen unkarilainen kyläkalmisto, 800-luvun lopulta tai 900-luvun alusta. Kaksi näytettä: <strong>SHper199</strong> ja <strong>SHper233</strong>, molemmat samalta hautausmaalta, molemmat äitilinjalla <strong>W3a1</strong>.<sup>[13]</sup></p>
@@ -1256,7 +1147,6 @@
     </footer>
   </section>
 
-  <!-- OSA X: UNKARI sivu 2 -->
   <section class="page" id="unkari2">
     <p class="dropcap">Mitä tarkoittaa se, että W3a1 tulee Unkariin juuri unkarilaisten maahantulossa? Se ei ole sattuma – se on historia. Magyar-heimojen geneettinen rakenne oli sekoitus: osa perimästä oli Uralilta (N-isälinja, sama kuin suomalaisten isälinja), osa Pontuksen aroilta (steppe-perimä, sama kuin Yamnayan jälkeläiset), osa Keski-Aasian paimentolaisista (kontaktit türkkiläisiin ja alaaneihin). W3a1 kuuluu tähän steppe-komponenttiin – se on merkki siitä, että vähintään kaksi naista unkarilaisheimoissa oli perinyt äitilinjan, joka ylsi Kaspianmerelle 15 000 vuotta taaksepäin.</p>
     <p>Mielenkiintoista on myös tämä: suomalaisten isälinja (N3a4) ja unkarilaisten steppe-perimä ovat kaksi eri reittiä samalle alkuperälle. Suomalaiset N-linja tuli pohjoisen kautta, unkarilainen steppe-linja etelän kautta – mutta molemmat kohtaavat saman Keski-Aasian paimentolaismaailman kontekstissa, jossa W3a1 myös liikkui.</p>
@@ -1281,11 +1171,7 @@
     </footer>
   </section>
 
-
-
-
-
-  <!-- OSA XI: SUOMI sivu 1 -->
+  <!-- OSA XI: SUOMI -->
   <section class="page" id="suomi">
     <div class="part-header">
       <span class="part-number">🜂 OSA XI</span>
@@ -1293,10 +1179,7 @@
     </div>
     <h1>Suomi –<br>maailman liikkuvin<br>äitilinja pysähtyy</h1>
     <div class="image-hero">
-      <div class="image-placeholder">
-        <span>[ images/finland-lake-forest-autumn.jpg ]</span>
-        <span class="img-theme">Suomalainen järvi tai metsä – syksy tai talvi, hiljainen tunnelma</span>
-      </div>
+      <img src="images/finland-lake-forest-autumn.jpg" alt="Suomalainen järvi tai metsä – syksy tai talvi, hiljainen tunnelma" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Suomi – viimeinen asema. Viisi tuhatta vuotta aroilta kulkenut äitilinja lepää täällä – ja kukoistaa.</div>
     </div>
     <p class="dropcap">Aivan viimeisessä kohtauksessa astut suomalaisiin maisemiin: järviin, metsiin, soihin, peltoihin. Corded Waren aikoinaan tuoma perustajavaikutus on tehnyt W3a1:stä täällä poikkeuksellisen yleisen. Kun sinä synnyt, olet osa väestöä, jossa tämä pitkän matkan kulkenut äitilinja on asettunut taloksi.</p>
@@ -1310,7 +1193,6 @@
     </footer>
   </section>
 
-  <!-- OSA XI: SUOMI sivu 2 -->
   <section class="page" id="suomi2">
     <p class="dropcap">Kun istut nykyhetkessä – ehkä keittiönpöydän ääressä, ehkä tietokoneen sinertävässä valossa – kaikki nämä naiset istuvat hiljaa kanssasi. Tepe Anaun viljelijä, Yamnayan ratsastaja, Corded Ware -kylän äiti, Swat-laakson vuoristopolulla kulkeva vaeltaja, Niilin varren muumioitu kaupunkilainen, Berelin kurganeissa lepäävä saka-nainen, Gotlannin viikinkirannan asukas – he eivät tienneet sinusta mitään, mutta jokainen heistä valitsi elää, selvitä ja synnyttää.</p>
     <p>Ja siksi sinä istut tässä, katsot omaa DNA-tulostasi, ja luet tarinaa, joka on lopulta hyvin yksinkertainen: <strong>tämä kaikki on sinun veresi matka.</strong></p>
@@ -1339,70 +1221,34 @@
     </footer>
   </section>
 
-
   <!-- VAELLUSKARTTA -->
   <section class="page" id="kartta">
     <div class="page-header-band">
       <h1>Vaelluskartta</h1>
       <span class="header-sub">W3a1 – reitti läpi 20 000 vuoden</span>
     </div>
-
-    <!-- Leaflet-kartta iframena – tarvitsee w3a1_map.html samaan kansioon -->
-    <div style="width:100%; height:310px; margin: 0.6em 0 0.8em 0; border-radius:3px; overflow:hidden; border:1px solid var(--line); print-color-adjust:exact;">
+    <div style="width:100%; height:310px; margin: 0.6em 0 0.8em 0; border-radius:3px; overflow:hidden; border:1px solid var(--line);">
       <iframe src="w3a1_map.html"
               style="width:100%; height:100%; border:none; display:block;"
               title="W3a1 vaelluskartta"
               loading="lazy">
       </iframe>
     </div>
-
     <div class="map-route-list">
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">0 · ~20 000 v.s.</span> W-linjan synty, Kaspianmeri</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">1 · ~5 450 eaa.</span> Tepe Anau, Turkmenistan</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">2 · ~4 917 eaa.</span> Yamnaya, Ukraina</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">3 · ~4 370 v.s.</span> Corded Ware, Tšekki</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">4 · ~4 200 v.s.</span> Únětice & Baden, Saksa</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot" style="background:#e85020;"></div>
-        <div><span class="map-route-year">5 · ~2 928 v.s.</span> Swat Valley, Pakistan – 8,4 %</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot" style="background:#e85020;"></div>
-        <div><span class="map-route-year">6 · ~2 238 v.s.</span> Abusir el-Meleq, Egypti</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">7 · ~1 650 eaa.</span> Otrar-Karatau / Berel, Kazakstan</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">8 · ~975 v.s.</span> Gotlanti, Ruotsi (viikingit)</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot" style="background:#40c860;"></div>
-        <div><span class="map-route-year">9 · Nykypäivä</span> <strong>Suomi – 9,6 % väestöstä</strong></div>
-      </div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">0 · ~20 000 v.s.</span> W-linjan synty, Kaspianmeri</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">1 · ~5 450 eaa.</span> Tepe Anau, Turkmenistan</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">2 · ~4 917 eaa.</span> Yamnaya, Ukraina</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">3 · ~4 370 v.s.</span> Corded Ware, Tšekki</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">4 · ~4 200 v.s.</span> Únětice &amp; Baden, Saksa</div></div>
+      <div class="map-route-item"><div class="map-route-dot" style="background:#e85020;"></div><div><span class="map-route-year">5 · ~2 928 v.s.</span> Swat Valley, Pakistan – 8,4 %</div></div>
+      <div class="map-route-item"><div class="map-route-dot" style="background:#e85020;"></div><div><span class="map-route-year">6 · ~2 238 v.s.</span> Abusir el-Meleq, Egypti</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">7 · ~1 650 eaa.</span> Otrar-Karatau / Berel, Kazakstan</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">8 · ~975 v.s.</span> Gotlanti, Ruotsi (viikingit)</div></div>
+      <div class="map-route-item"><div class="map-route-dot" style="background:#40c860;"></div><div><span class="map-route-year">9 · Nykypäivä</span> <strong>Suomi – 9,6 % väestöstä</strong></div></div>
     </div>
-
     <p style="font-size:8.5pt; font-style:italic; color:var(--ink-soft); text-align:center; margin-top:0.5em;">
       Klikkaa pisteitä kartalla nähdäksesi näytetiedot · Jokainen piste on todellinen arkeologinen löytö
     </p>
-
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
@@ -1411,85 +1257,31 @@
     </footer>
   </section>
 
-
   <!-- LÄHDELUETTELO -->
   <section class="page" id="liite">
     <div class="page-header-band">
       <h1>Lähdeluettelo</h1>
       <span class="header-sub">Viitteet [1]–[17] · Versio 2</span>
     </div>
-
     <div class="ref-list">
-      <div class="ref-item">
-        <div class="ref-num">[1]</div>
-        <div class="ref-text"><strong>Metspalu et al. (2004)</strong> – Most of the extant mtDNA boundaries in South and Southwest Asia were likely shaped during the initial settlement of Eurasia by anatomically modern humans. <em>BMC Genetics 5:26.</em></div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[2]</div>
-        <div class="ref-text"><strong>van Oven & Kayser (2009)</strong> – Updated comprehensive phylogenetic tree of global human mitochondrial DNA variation. <em>Human Mutation 30(2):E386–E394.</em> · haplotree.info</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[3]</div>
-        <div class="ref-text"><strong>Narasimhan et al. (2019)</strong> – The formation of human populations in South and Central Asia. <em>Science 365(6457):eaat7487.</em> · näyte I4087, Tepe Anau</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[4]</div>
-        <div class="ref-text"><strong>Lazaridis et al. (2016)</strong> – Genomic insights into the origin of farming in the ancient Near East. <em>Nature 536:419–424.</em></div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[5]</div>
-        <div class="ref-text"><strong>Mathieson et al. (2015)</strong> – Genome-wide patterns of selection in 230 ancient Eurasians. <em>Nature 528:499–503.</em> · näyte poz222</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[6]</div>
-        <div class="ref-text"><strong>Haak et al. (2015)</strong> – Massive migration from the steppe was a source for Indo-European languages in Europe. <em>Nature 522:207–211.</em></div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[7]</div>
-        <div class="ref-text"><strong>Lamnidis et al. (2018)</strong> – Ancient Fennoscandian genomes reveal origin and spread of Siberian ancestry in Europe. <em>Nature Communications 9:5018.</em> · W-frekvenssi Suomessa</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[8]</div>
-        <div class="ref-text"><strong>Olalde et al. (2019)</strong> – The genomic history of the Iberian Peninsula over the past 8000 years. <em>Science 363(6432):1230–1234.</em> · näyte I7207</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[9]</div>
-        <div class="ref-text"><strong>Olalde et al. (2018)</strong> – The Beaker phenomenon and the genomic transformation of northwest Europe. <em>Nature 555:190–196.</em> · Únětice-näytteet QLB41, QLB39, I0116</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[10]</div>
-        <div class="ref-text"><strong>Lipson et al. (2017)</strong> – Parallel palaeogenomic transects reveal complex genetic history of early European farmers. <em>Nature 551:368–372.</em> · Baden-näytteet MX275, MX270, I3607</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[11]</div>
-        <div class="ref-text"><strong>Narasimhan et al. (2019)</strong> – The formation of human populations in South and Central Asia. <em>Science 365:eaat7487.</em> · Swat Valley -näytteet I12457, I12477, I13219, I1994</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[12]</div>
-        <div class="ref-text"><strong>Schuenemann et al. (2017)</strong> – Ancient Egyptian mummy genomes suggest an increase of Sub-Saharan African ancestry in post-Roman periods. <em>Nature Communications 8:15694.</em> · näyte JK2165</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[13]</div>
-        <div class="ref-text"><strong>Margaryan et al. (2020)</strong> – Population genomics of the Viking world. <em>Nature 585:390–396.</em> · näytteet VK459 (Gotlanti), VK338 (Tanska)</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[14]</div>
-        <div class="ref-text"><strong>Damgaard et al. (2018)</strong> – 137 ancient human genomes from across the Eurasian steppes. <em>Nature 557:369–374.</em> · skyyttinäytteet, MJ-34</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[15]</div>
-        <div class="ref-text"><strong>Jeong et al. (2019)</strong> – The genetic history of admixture across inner Eurasia. <em>Nature Ecology &amp; Evolution 3:966–976.</em> · Otrar-Karatau, Nurly, Berel</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[16]</div>
-        <div class="ref-text"><strong>Sikora et al. (2019)</strong> – The population history of northeastern Siberia since the Pleistocene. <em>Nature 570:182–188.</em> · N-haplotyyppi, Seima-Turbino, Koken</div>
-      </div>
-      <div class="ref-item">
-        <div class="ref-num">[17]</div>
-        <div class="ref-text"><strong>Lazaridis et al. (2022)</strong> – The genetic history of the Southern Arc: A bridge between West Asia and Europe. <em>Science 377:eabm4247.</em> · AMV-CO_5, Ambrakia/Epeiros · sekä: <em>Genetic affinities between the ancient Greek colony of Amvrakia and its metropolis</em> (preprint 2025–2026)</div>
-      </div>
+      <div class="ref-item"><div class="ref-num">[1]</div><div class="ref-text"><strong>Metspalu et al. (2004)</strong> – Most of the extant mtDNA boundaries in South and Southwest Asia were likely shaped during the initial settlement of Eurasia by anatomically modern humans. <em>BMC Genetics 5:26.</em></div></div>
+      <div class="ref-item"><div class="ref-num">[2]</div><div class="ref-text"><strong>van Oven &amp; Kayser (2009)</strong> – Updated comprehensive phylogenetic tree of global human mitochondrial DNA variation. <em>Human Mutation 30(2):E386–E394.</em> · haplotree.info</div></div>
+      <div class="ref-item"><div class="ref-num">[3]</div><div class="ref-text"><strong>Narasimhan et al. (2019)</strong> – The formation of human populations in South and Central Asia. <em>Science 365(6457):eaat7487.</em> · näyte I4087, Tepe Anau</div></div>
+      <div class="ref-item"><div class="ref-num">[4]</div><div class="ref-text"><strong>Lazaridis et al. (2016)</strong> – Genomic insights into the origin of farming in the ancient Near East. <em>Nature 536:419–424.</em></div></div>
+      <div class="ref-item"><div class="ref-num">[5]</div><div class="ref-text"><strong>Mathieson et al. (2015)</strong> – Genome-wide patterns of selection in 230 ancient Eurasians. <em>Nature 528:499–503.</em> · näyte poz222</div></div>
+      <div class="ref-item"><div class="ref-num">[6]</div><div class="ref-text"><strong>Haak et al. (2015)</strong> – Massive migration from the steppe was a source for Indo-European languages in Europe. <em>Nature 522:207–211.</em></div></div>
+      <div class="ref-item"><div class="ref-num">[7]</div><div class="ref-text"><strong>Lamnidis et al. (2018)</strong> – Ancient Fennoscandian genomes reveal origin and spread of Siberian ancestry in Europe. <em>Nature Communications 9:5018.</em> · W-frekvenssi Suomessa</div></div>
+      <div class="ref-item"><div class="ref-num">[8]</div><div class="ref-text"><strong>Olalde et al. (2019)</strong> – The genomic history of the Iberian Peninsula over the past 8000 years. <em>Science 363(6432):1230–1234.</em> · näyte I7207</div></div>
+      <div class="ref-item"><div class="ref-num">[9]</div><div class="ref-text"><strong>Olalde et al. (2018)</strong> – The Beaker phenomenon and the genomic transformation of northwest Europe. <em>Nature 555:190–196.</em> · Únětice-näytteet QLB41, QLB39, I0116</div></div>
+      <div class="ref-item"><div class="ref-num">[10]</div><div class="ref-text"><strong>Lipson et al. (2017)</strong> – Parallel palaeogenomic transects reveal complex genetic history of early European farmers. <em>Nature 551:368–372.</em> · Baden-näytteet MX275, MX270, I3607</div></div>
+      <div class="ref-item"><div class="ref-num">[11]</div><div class="ref-text"><strong>Narasimhan et al. (2019)</strong> – The formation of human populations in South and Central Asia. <em>Science 365:eaat7487.</em> · Swat Valley -näytteet I12457, I12477, I13219, I1994</div></div>
+      <div class="ref-item"><div class="ref-num">[12]</div><div class="ref-text"><strong>Schuenemann et al. (2017)</strong> – Ancient Egyptian mummy genomes suggest an increase of Sub-Saharan African ancestry in post-Roman periods. <em>Nature Communications 8:15694.</em> · näyte JK2165</div></div>
+      <div class="ref-item"><div class="ref-num">[13]</div><div class="ref-text"><strong>Margaryan et al. (2020)</strong> – Population genomics of the Viking world. <em>Nature 585:390–396.</em> · näytteet VK459 (Gotlanti), VK338 (Tanska)</div></div>
+      <div class="ref-item"><div class="ref-num">[14]</div><div class="ref-text"><strong>Damgaard et al. (2018)</strong> – 137 ancient human genomes from across the Eurasian steppes. <em>Nature 557:369–374.</em> · skyyttinäytteet, MJ-34</div></div>
+      <div class="ref-item"><div class="ref-num">[15]</div><div class="ref-text"><strong>Jeong et al. (2019)</strong> – The genetic history of admixture across inner Eurasia. <em>Nature Ecology &amp; Evolution 3:966–976.</em> · Otrar-Karatau, Nurly, Berel</div></div>
+      <div class="ref-item"><div class="ref-num">[16]</div><div class="ref-text"><strong>Sikora et al. (2019)</strong> – The population history of northeastern Siberia since the Pleistocene. <em>Nature 570:182–188.</em> · N-haplotyyppi, Seima-Turbino, Koken</div></div>
+      <div class="ref-item"><div class="ref-num">[17]</div><div class="ref-text"><strong>Lazaridis et al. (2022)</strong> – The genetic history of the Southern Arc: A bridge between West Asia and Europe. <em>Science 377:eabm4247.</em> · AMV-CO_5, Ambrakia/Epeiros · sekä: <em>Genetic affinities between the ancient Greek colony of Amvrakia and its metropolis</em> (preprint 2025–2026)</div></div>
     </div>
-
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
@@ -1497,7 +1289,6 @@
       </div>
     </footer>
   </section>
-
 
   <!-- LOPPU -->
   <section class="page" id="loppu">
@@ -1573,13 +1364,6 @@
     }, { threshold: 0.4 });
     pages.forEach(p => observer.observe(p));
   })();
-
-  document.querySelectorAll('.image-hero img, .image-full img').forEach(img => {
-    img.addEventListener('error', function() {
-      const ph = this.closest('.image-hero, .image-full').querySelector('.image-placeholder');
-      if (ph) { ph.style.display = 'flex'; this.style.display = 'none'; }
-    });
-  });
 </script>
 </body>
 </html>
