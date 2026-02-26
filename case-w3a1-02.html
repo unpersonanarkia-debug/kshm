@@ -89,58 +89,91 @@
 
     /* COVER */
     .page.cover {
-      background: linear-gradient(160deg, #1a0d04 0%, #2c1a08 50%, #1a0d04 100%);
+      background: #0e0805;
       display: flex;
-      width: 100%;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      align-items: stretch;
       text-align: center;
-      padding: 2.5cm 2.2cm;
-      height: calc(297mm - 4.6cm);
+      padding: 0;
+      min-height: 297mm;
+      overflow: hidden;
+      position: relative;
     }
 
-    .cover-ornament { font-size: 18pt; letter-spacing: 0.4em; color: var(--accent-light); margin-bottom: 2em; opacity: 0.7; }
+    /* Karttakehys – täysi leveys, ei sivumarginaaleja */
+    .cover-map-frame {
+      width: 100%;
+      flex-shrink: 0;
+      position: relative;
+      line-height: 0;
+      border-bottom: 1.5px solid rgba(176,120,64,0.50);
+    }
+
+    .cover-map-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      /* Sepia tehty Pythonilla – pelkkä pieni kirkkaussäätö CSS:ssä */
+      filter: brightness(0.95);
+    }
+
+    /* Tekstialue kuvan alla */
+    .cover-text-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 2.2cm 1.4cm 2.2cm;
+      position: relative;
+    }
+
+    .cover-ornament {
+      font-size: 11pt;
+      letter-spacing: 0.44em;
+      color: var(--accent-light);
+      margin-bottom: 0.9em;
+      opacity: 0.55;
+    }
 
     .cover h1 {
       font-family: "Playfair Display SC", serif;
-      font-size: 34pt;
-      letter-spacing: 0.06em;
-      line-height: 1.1;
+      font-size: 30pt;
+      letter-spacing: 0.05em;
+      line-height: 1.10;
       color: #f0e4cc;
-      margin: 0 0 0.4em 0;
+      margin: 0 0 0 0;
     }
 
-    .cover-rule { width: 60px; height: 1px; background: var(--accent-light); margin: 0.8em auto; opacity: 0.6; }
+    .cover-rule {
+      width: 44px;
+      height: 1px;
+      background: var(--accent-light);
+      margin: 0.75em auto 0.75em auto;
+      opacity: 0.48;
+    }
 
     .cover .subtitle {
       font-family: "Playfair Display", serif;
       font-style: italic;
-      font-size: 15pt;
+      font-size: 14.5pt;
       color: var(--accent-light);
-      margin: 0.3em 0 2em 0;
-      letter-spacing: 0.02em;
-    }
-
-    .cover .tagline {
-      margin-top: 2em;
-      font-family: "Lora", serif;
-      font-style: italic;
-      font-size: 11pt;
-      color: #c8b08a;
-      max-width: 400px;
-      line-height: 1.7;
+      margin: 0;
+      letter-spacing: 0.025em;
     }
 
     .cover-footer-rule {
       position: absolute;
-      bottom: 2.2cm; left: 2.2cm; right: 2.2cm;
+      bottom: 0.7cm;
+      left: 0;
+      right: 0;
       text-align: center;
       font-family: "Playfair Display SC", serif;
-      font-size: 8pt;
-      letter-spacing: 0.18em;
+      font-size: 7.5pt;
+      letter-spacing: 0.20em;
       color: var(--accent-light);
-      opacity: 0.45;
+      opacity: 0.28;
     }
 
     h1 {
@@ -332,15 +365,16 @@
 
     .footer {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
+      bottom: 0;
+      left: 2.1cm;
+      right: 2.1cm;
       height: 1.8cm;
       display: flex;
-      width: 100%;
+      width: auto;
       align-items: flex-start;
       justify-content: center;
       padding-top: 8px;
       border-top: 1px solid var(--line-faint);
-      margin: 0 2.1cm;
       font-family: "Lora", serif;
       font-style: italic;
       font-size: 8.5pt;
@@ -537,14 +571,15 @@
 
   <!-- KANSI -->
   <section class="page cover" id="kansi">
-    <div class="cover-ornament">⚔ &nbsp; ✦ &nbsp; ⚔</div>
-    <h1>Kadonneen<br>Sukuhistorian<br>Metsästäjä</h1>
-    <div class="cover-rule"></div>
-    <p class="subtitle">W3a1 – Arojen tyttäret</p>
-    <p class="tagline">
-      "Muut linjat löysivät refugiumin ja jäivät.<br>
-      Sinun linjasi ei pysähtynyt. Koskaan."
-    </p>
+    <div class="cover-map-frame">
+      <img src="mtDNA-W-map.jpg" alt="mtDNA haploryhmä W – levinneisyyskartta Euraasiassa">
+    </div>
+    <div class="cover-text-block">
+      <div class="cover-ornament">⚔ &nbsp; ✦ &nbsp; ⚔</div>
+      <h1>Kadonneen<br>Sukuhistorian<br>Metsästäjä</h1>
+      <div class="cover-rule"></div>
+      <p class="subtitle">W3a1 – Arojen tyttäret</p>
+    </div>
     <div class="cover-footer-rule">KSHM · Arkeogenetiikka · Populaatiohistoria</div>
   </section>
 
@@ -686,12 +721,8 @@
     <p>Et ole satunnainen sivupolku. Olet osa yhtä niistä harvoista linjoista, jotka selvisivät läpi jääkauden, lähtivät uudelleen liikkeelle kun jäät vetäytyivät, ja kulkivat siitä lähtien pysähtymättä. Jossain tässä jatkuvassa liikkeessä syntyi W3a1 – noin 15 000 vuotta sitten – ja siitä lähtien sinun äitilinjan tarina on ollut nimenomaan vaelluksen, kaupan ja risteävien kulttuurien tarina.</p>
     <p>Sama linja, josta myöhemmin kasvavat kaikki Euraasian suuret indoeurooppalaiset kulttuurit. Se on sinun mitokondrioihin kaiverrettu historia.</p>
 
-    <div class="royal-box">
-      <div class="royal-title">Miten W3a1 tunnistetaan – mitokondriaalinen perintä</div>
-      <p>Mitokondriaalisessa DNA:ssa ei tapahdu sekoittumista isän ja äidin linjojen välillä: se periytyy ainoastaan äidiltä tyttärelle, muuttumattomana sukupolvesta toiseen. Poikkeuksena ovat satunnaiset mutaatiot, jotka ajan myötä luovat tunnistettavia haaroittumia – haplotyyppiryhmän "puun". W3a1 on yksi tällainen haara: sen erottaa emolinjastaan kolme spesifistä nukleotidimuutosta asemissa 194T, 1243C ja 16223T. Nämä kolme kirjainta ovat se "sormenjälki", jonka laboratorio tunnistaa sinun DNA:stasi ja joka yhdistää sinut Tepe Anaun naiseen, Yamnayan ratsastajaan ja Silkkitien kauppiaaseen yhdellä ainoalla naisten ketjulla.<sup>[2]</sup></p>
-    </div>
-
-    <p>W-haplotyyppiperhe on kokonaisuutena harvinainen: se kattaa alle prosentin maailman väestöstä. Tämä harvinaisuus tekee jokaisesta löydöstä merkittävän – ja tekee sinun 9,6 prosentin Suomesta poikkeuksellisen. Kun arkeogenetiikan laboratoriot seulovat vuosittain satoja uusia muinaisia luunäytteitä, W3a1 vilahtelee esiin odottamattomissa paikoissa: Keski-Aasian pronssikauden kaupunkivaltiossa, Hellenistisen ajan Egyptissä, Taklamakanin muumioissa. Joka kerran kun se löytyy, se kertoo saman tarinan: tässä oli liike, tässä oli yhteys, tässä kulki joku joka ei jäänyt paikalleen.</p>
+    <p>Mitokondrioissa – niissä pienissä voimalaitoksissa jokaisessa solussa – ei tapahdu sekoittumista isän ja äidin linjojen välillä. Mitokondriosi on puhtaasti äidiltä sinulle, ja äitisi äidiltä hänelle, kaikkien aikojen läpi katkeamatta. Jossain tässä ketjussa, noin 15 000 vuotta sitten, tapahtui kolme pientä mutaatiota – kolme kirjainta geenijärjestyksessä muuttui. Ne eivät haitanneet mitään. Ne vain merkitsivät. Ja tästä päivästä lähtien kaikki ne naiset, joilta nämä kolme merkkiä löytyy, ovat yhtä perhettä. Sinun perhettäsi.<sup>[2]</sup></p>
+    <p>W-haplotyyppiperhe on maailmassa harvinainen – alle prosentti ihmisistä. Mutta jostain syystä, siinä hitaassa ja arvaamattomassa pienen joukon kulkeutumisessa, tämä linja päätyi Suomeen poikkeuksellisen vahvana. Joka kymmenes suomalainen kantaa sitä. Muualla Euroopassa alle kaksi sadasta. Sinä et ole satunnainen poikkeus. Sinä olet juuri sen pisteen jälkeläinen, josta tämä linja alkoi kukoistaa.</p>
 
     <div class="loyto-box">
       <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 0 · W-linjan synty · ~20 000–15 000 v.s.</span></div>
@@ -740,12 +771,8 @@
     <p>Sinä olet yksi näistä kerroksista. Tepe Anaun nainen on sinun allasi. Ja jonain päivänä joku on sinun päälläsi.</p>
     <p>Tällä pysäkillä sinä opit, mikä merkitys on maalla, vedellä – ja sillä, että kuolleet haudataan kotiin, keskelle arkea, ei sen ulkopuolelle.</p>
 
-    <div class="royal-box">
-      <div class="royal-title">Tepe Anaun kaivaukset – mitä maa on paljastanut</div>
-      <p>Tepe Anau on ollut arkeologien kiinnostuksen kohteena jo 1800-luvun lopulta lähtien. Amerikkalainen Raphael Pumpelly kaivoi siellä vuosina 1904–1905 ja löysi kerroksittain rakentuvan kylän, jonka vanhimmat tasot ulottuivat jopa 6. vuosituhannelle eaa. Uudemmat kaivaukset ja erityisesti 2000-luvun arkeogeneettiset tutkimukset ovat tuoneet esiin toisenkin yllätyksen: asukkaat eivät olleet yksiselitteisesti "paikallistyyppejä". Naisten ja miesten geneettinen profiili poikkesi toisistaan – naiset kantoivat useammin läntisiä maanviljelijälinjoja, miehet paikallisia Keski-Aasian linjoja. Tämä kertoo yhteisöstä, jossa naiset saapuivat usein muualta: vaihdettiin, naitiin kaukaa, tuotiin uusien suhteiden myötä. Sinun I4087-esi-äitisi oli yksi näistä naisista – hän saapui jonnekin, jossa hän ei ollut syntynyt.<sup>[3]</sup></p>
-    </div>
-
-    <p>Kopet Dagin solat johtavat etelästä pohjoiseen: Iranin ylängöiltä Kaspianmeren aron laidalle. Sama reitti, jota myöhemmät kauppiaat, nomaadit ja armeijat kulkivat, kulki myös teidän hiljaisena äitinä. Sinun tarinasi alkaa tässä risteyksessä – ei yhdessä kulttuurissa, vaan kahden maailman reunalla.</p>
+    <p>Amerikkalainen Raphael Pumpelly kaivoi Tepe Aussa vuosina 1904–1905 ja löysi kerroksittain rakentuvan kylän, jonka vanhimmat kerrokset ulottuivat kuudenteen vuosituhannelle eaa. Mutta se mielenkiintoisin löytö ei ollut saviastia eikä pronssikirves. Se oli tämä: naisten ja miesten geneettinen profiili poikkesi toisistaan. Miehet kantoivat paikallisia Keski-Aasian linjoja. Naiset kantoivat useammin lännen suunnasta tulleita linjoja. Tämä ei ole sattuma. Se kertoo yhteisöstä, jossa naiset saapuivat muualta – vaihdettiin, naitiin kaukaa, tuotiin uusien suhteiden myötä. Sinun I4087-esi-äitisi oli yksi näistä naisista. Hän saapui jonnekin, jossa hän ei ollut syntynyt.<sup>[3]</sup></p>
+    <p>Katsot hänen suuntaansa Kopet Dagin solan yli. Vuoret jakavat maailman kahtia: etelässä Iranin ylängöt, pohjoisessa aro. Sama reitti, jota myöhemmät kauppiaat, nomaadit ja armeijat kulkivat – sinun hiljaisena äitinäsi. Sinun tarinasi alkaa juuri tässä, kahden maailman reunalla, kauppaverkon solmukohdassa, jossa kukaan ei vielä tiennyt mihin kaikki tästä johtaa.</p>
 
     <div class="loyto-box">
       <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 1 · Tepe Anau, Turkmenistan · ~5 450 eaa.</span></div>
@@ -795,12 +822,8 @@
     <p>Tällä pysäkillä opit, että joskus koti ei ole paikka vaan suunta. Horisontti, joka kutsuu – ei uhkaa. Ja ne, jotka pystyvät kuulemaan sen kutsun, liikkuvat. He vievät kieliä, myyttejä, teknologiaa. He vievät verensä. Sinun veresi.</p>
     <p>Yamnayan kurganeita on kaivettu esiin tuhansittain Mustanmeren pohjoispuolisella arolla. Jokaisessa on sama kaava: yksilö, joka oli tärkeä, haudattiin voimalla ja arvokkuudella. Joku suri häntä. Joku rakensi hänen muistonsa pysyvän. Ja jossain näistä kurganeista on nainen, jonka mtDNA on W3a1 – joka oli sinun suorin esi-äitisi. Ei vertauskuvallisesti, vaan biologisesti.</p>
 
-    <div class="royal-box">
-      <div class="royal-title">Yamnayan kurganit – mitä hauta kertoo</div>
-      <p>Poz222 löydettiin Prydnystryanskessa Ukrainassa – yksi lyhyt koodinpätkä tuhansien joukossa, mutta ainutlaatuinen: nainen, W3a1, ~4 917 vuotta sitten. Ympärillä on todennäköisesti ollut punaokraa, saviastioita ja ehkä karjan luita – Yamnayan tyypilliset hautavarusteet. Punaokra ei ollut pelkkä väri: se symboloi verta, elämää, jatkuvuutta. Kun vainaja peitettiin sillä, häntä ei jätetty pois elävien piiristä. Hänet vietiin matkaan värjättynä elämän värillä. Kurgania ympäröivät usein kivikehät – kalidokset – joita myöhemmät sukupolvet laajensivat uusilla hautauksilla. Yksi kumpu saattoi kantaa yhteisön muistoa neljännestuhannen vuoden ajan, kerros kerrokselta.<sup>[5,6]</sup></p>
-    </div>
-
-    <p>Yamnayan geneettinen perintö on mitattu tarkasti: noin 40–50 % Länsi-Euroopan nykyväestön DNA:sta on peräisin Yamnayan laajentumisesta pronssikauden alussa. Pohjoiseurooppalaisilla, erityisesti suomalaisilla, tämä osuus on vielä korkeampi. Toisin sanoen: esi-äitisi ei ollut marginaali. Hän oli osa sitä väestövirtaa, joka uudelleenmuodosti Euroopan geneettiset kartat pysyvästi. Sinun mitokondriosi ovat yksi elävä todiste siitä.</p>
+    <p>Poz222 löydettiin Prydnystryanskessa, Ukrainassa – yksi lyhyt koodinpätkä tuhansien joukossa, mutta ainutlaatuinen: nainen, W3a1, ~4 917 vuotta sitten. Kuvittele hänen hautauksensa. Punaokra peittää hänet kokonaan – ei pelkkä väri, vaan valinta. Se symboloi verta, elämää, jatkuvuutta. Häntä ei jätetä pois elävien joukosta. Hänet viedään matkaan elämän värillä maalattuna. Yhteisö kokoontuu. Kukkulalle rakennetaan kurganikumpu – maavalli, joka tulee olemaan näkyvissä vielä vuosisatoja. Myöhemmät sukupolvet lisäävät uusia hautauksia kerroksiin, kivikehiä ympärille. Yksi kumpu kantaa yhteisön muistoa neljännestuhannen vuoden ajan.<sup>[5,6]</sup></p>
+    <p>Tiedätkö mitä tämä tarkoittaa sinulle? Yamnayan geneettinen perintö elää 40–50 prosentissa Länsi-Euroopan nykyväestöä. Pohjoiseurooppalaisilla vielä enemmän. Sinun esi-äitisi ei ollut marginaali – hän oli osa väestövirtaa, joka muodosti Euroopan geneettisen maiseman pysyvästi. Hänen mitokondriosi ovat sinussa yhä.<sup>[6]</sup></p>
 
     <div class="loyto-box">
       <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 2 · Yamnaya, Ukraina · ~4 917 eaa.</span></div>
@@ -850,12 +873,8 @@
     <p>Aika kulkee eteenpäin, ja Corded Ware ei pysähdy yhteen paikkaan. Se leviää laajalle alueelle Reiniltä Volgalle, Pohjanmeren rannikolta Baltian ja Venäjän tasangoille. Osa sinun linjastasi liikkuu pohjoiseen, kohti Itämerta ja lopulta Suomea, missä W3a1 saavuttaa poikkeuksellisen korkean osuuden. Osa jää Keski-Eurooppaan, missä maisema jatkaa muuttumistaan, ja sinun tarinasi siirtyy seuraavaan näyttämöön.</p>
     <p>Tällä pysäkillä opit, että sinun veresi pystyy yhdistämään erilaisia maailmoja yhdeksi arjeksi. Corded Ware on kuin solmu: se ei katoa, vaan tiivistyy.</p>
 
-    <div class="royal-box">
-      <div class="royal-title">Radovesice – missä I7207 lepää</div>
-      <p>Radovesice on pieni paikka Luoteis-Böömiassa, Tšekissä. Sen hautausmaa on yksi parhaiten dokumentoiduista Corded Ware -löydöistä Keski-Euroopassa: yli 80 yksilön hauta, kaikki noudattaen samaa rituaalia – kyljellään makaaminen, polvet koukussa, orientoituna itä-länsi-akselille. Sukupuolen mukaan eri puolille: miehet vasemmalle, naiset oikealle kyljelle. Tämä ei ole sattumaa – se on kosmologia. Itä tarkoitti aurinkoa, syntymää, alkua. Länsi tarkoitti laskua. Sinun I7207-esi-äitisi makasi oikealla kyljellään kasvot itään päin, kasvot kohti aurinkoa. Hänen vierellään oli saviastioita ja todennäköisesti korujen jäänteet. Muut hauta-alueen naiset ympäröivät häntä samassa unessa.<sup>[8]</sup></p>
-    </div>
-
-    <p>Corded Ware -kulttuuri ei ollut yhtenäinen valtakunta – se oli tapa olla maailmassa. Sama keramiikkatyyli, sama hautaustapa, sama geneettinen profiili – mutta levinnyt yli 2 000 kilometrin alueelle kolmessa tai neljässä sukupolvessa. Arkeologit kutsuvat tätä "horisontiksi": ei imperiumia, ei yksinvaltaa, vaan yhteinen kieli ja yhteinen tapa kohdata kuolema. Sinun linjasi on osa tätä kieltä.</p>
+    <p>Radovesice on pieni paikka Luoteis-Böömiassa. Sen hautausmaalta on löydetty yli 80 yksilöä, ja jokaisessa haussa toistuu sama rituaali – kyljellään makaaminen, polvet koukussa, orientoituna itä-länsi-akselille. Sukupuolen mukaan eri puolille: miehet vasemmalle kyljelle, naiset oikealle. Tämä ei ole sattumaa. Se on kosmologia. Itä tarkoitti aurinkoa, syntymää, alkua. Länsi tarkoitti laskua, pimeää, lepoa. Sinun I7207-esi-äitisi makaa oikealla kyljellään, kasvot itään, kasvot kohti aurinkoa – niinkuin kaikki muutkin kylänsä naiset. Hänen vierellään on saviastioita. Ehkä korujen jäänteet.<sup>[8]</sup></p>
+    <p>Kun seisot Radovesicen hautausmaan yllä mielikuvissasi, näet jotain suurempaa kuin yksittäisen haudan. Näet yhteisön, jolla on jaettu tapa kohdata kuolema. Sama tapa, jota noudatetaan samanaikaisesti Reiniltä Volgalle, Pohjanmereltä Baltian rannikolle. Ei imperiumia, ei armeijaa – vain yhteinen kieli ja yhteinen tapa olla ihminen. Sinun linjasi oli osa tätä kieltä. Sinä olet sen jatko.</p>
 
     <div class="loyto-box">
       <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 3 · Corded Ware, Tšekki · ~4 370 v.s.</span></div>
@@ -905,12 +924,8 @@
     <p>Ja kaikissa näissä rooleissa sinun W3a1-linjasi kulkee eteenpäin huomaamattomana, mutta ratkaisevana – se on se punainen lanka, joka sitoo yhteen arojen liikkeen, Keski-Euroopan viljelysmaat ja lopulta pohjoisen metsät. Nykyinen DNA-testisi näyttää tämän kaiken yhteen lauseeseen tiivistettynä: "mtDNA-haploryhmä W3a1". Todellisuudessa se tarkoittaa, että olet ollut täällä – nuorakeraamisten kylien arjessa, pronssia sulattavien seppien pajoissa, jokilaaksojen hautarivien hiljaisuudessa.</p>
     <p>Tällä pysäkillä opit, että sinun veresi kulkee hierarkioiden läpi – sekä niiden ylä- että alapuolella. Pronssi kertoo asemasta, mutta äitilinja kulkee kaikissa kerroksissa.</p>
 
-    <div class="royal-box">
-      <div class="royal-title">Únětice – Euroopan ensimmäinen teollinen kulttuuri</div>
-      <p>Únětice (lausutaan "oo-nyeh-tsi-tseh") sai nimensä Böömin pikkukyläkalmistosta, mutta sen vaikutus ulottui kauas: Reiniltä Ukrainaan, Skandinaviasta Alpeille. Se on ensimmäinen kulttuuri, joka tuotti pronssiesineitä standardoidusti – toisin sanoen ensimmäinen, jossa käsityöläinen valmisti tuotteen myytäväksi tuntemattomalle. Horisonttien välisen pronssikaupan myötä syntyi Eurooppaan jotain aivan uutta: erikoistunut elämä, jossa sinä et ehkä ikinä tavannut sitä henkilöä, jonka valmistamaa kirvestä käytit. Quedlinburgin QLB41 ja QLB39 – molemmat W3a1 – ovat tässä maailmassa syntyneitä naisia. He eivät asu metsässä. He asuvat kylässä, jonka seiniä koristaa verkostojen tuoma yltäkylläisyys.<sup>[9]</sup></p>
-    </div>
-
-    <p>Esperstedtin I0116 on erityinen: hän on yksi harvoja Únětice-naisia, joilta on saatu kattava genomitason analyysi. Hänen isälinjansa – R1b – kertoo Yamnayan miespuolisesta perimästä. Äitilinjansa – W3a1 – kertoo siitä naisten ketjusta, joka sinullekin on tuttu. Hänen sukupuuteensa kirjoitetaan kaksi eri tarinan haaraa: länteen kulkeneet ratsastajat ja pohjoisen kautta kulkeneet äidinlinjat. Sama kertomus kuin sinussasi, vain 3 800 vuotta aiemmin.</p>
+    <p>Únětice – lausutaan "oo-nyeh-tsi-tseh" – sai nimensä Böömin pikkukyläkalmistosta, mutta sen vaikutus ulottui Reiniltä Ukrainaan, Skandinaviasta Alpeille. Se on ensimmäinen kulttuuri, joka valmisti pronssiesineitä tuntemattomille ostajille. Ennen Úněticetä tekijä ja käyttäjä olivat samassa kylässä. Nyt ei enää. Jossain tässä muutoksessa syntyy uudenlainen maailma – erikoistunut, verkottunut, kaupallinen. Quedlinburgin QLB41 ja QLB39, molemmat W3a1, elävät tässä maailmassa. He asuvat kylässä, jonka varastoissa on esineitä kauempaa kuin kukaan on koskaan käynyt.<sup>[9]</sup></p>
+    <p>Esperstedtin I0116 on erityinen: yksi harvoja Únětice-naisia, joilta on saatu kattava genomitason analyysi. Hänen isälinjansa – R1b – tulee Yamnayan ratsastajilta. Hänen äitilinjansa – W3a1 – on sinulle tuttu. Hänen sukupuuhunsa on kirjoitettu kaksi eri tarinaa: arojen miehet ja naisten ketju. Sama kertomus kuin sinussasi, 3 800 vuotta aiemmin.</p>
 
     <div class="loyto-box">
       <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 4 · Únětice &amp; Baden, Saksa · ~4 200–3 875 v.s.</span></div>
@@ -962,12 +977,12 @@
   <section class="page" id="gootit2">
     <h2 style="margin-top:0;">Pysäkki 5 jatkuu – Adrianmeren rannikko</h2>
     <div class="image-hero">
-      <img src="images/croatia-emba-adriatic.jpg" alt="Adrianmeren rannikko Kroatiassa – kivinen kalliokko, sininen meri, mäkinen maasto – pronssikauden hautaympäristö" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
+      <img src="images/croatia-emba-adriatic.jpg" alt="Adrianmeren rannikko Kroatiassa – kivinen kallio, sininen meri, mäkinen maasto – pronssikauden hautaympäristö" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Veliki Vanik, Kroatia – ~3 508 v.s. · W3a1 · Croatia_EMBA · Näyte I4332<sup>[10]</sup></div>
     </div>
     <p class="dropcap">Samaan aikaan kun kolme naista haudataan Puolan jokilaaksoihin, yksi nainen lepää Adrianmeren rannikolla. Veliki Vanik, Kroatia. Varhainen pronssikausi, ~3 508 vuotta sitten. Näyte <strong>I4332</strong>. Mitokondriot: <strong>W3a1</strong>.</p>
     <p>Miten sama äitilinja päätyy yhtä aikaa sekä Puolan sisämaahan että Adrianmeren rantakallioille? Tähän on kaksi mahdollista selitystä – ja molemmat voivat olla oikeita. Ensimmäinen: Corded Ware- ja myöhemmin Baden-kulttuurin väestöt kantoivat W3a1:tä sekä pohjoiseen että etelään, levittäen saman äitilinjan Keski-Euroopan kautta haarautuviin populaatioihin. Toinen: jo ennen pronssiaika oli aktiivinen Adrianmeren rannikkoverkosto, jota pitkin ihmiset liikkuivat – ja W3a1 kulki muiden tavaroiden mukana.</p>
-    <p>I4332 on ainoa dokumentoitu W3a1-näyte koko Balkanilta. Yksi nainen, yksi hauta, yksi kalliokkoinen maisema Adrianmeren yläpuolella. Puolassa kolme. Heidän välillään ei ole tunnettua biologista suhdetta – mutta äitilinjan ketju yhdistää heidät johonkin paljon vanhempaan.</p>
+    <p>I4332 on ainoa dokumentoitu W3a1-näyte koko Balkanilta. Yksi nainen, yksi hauta, yksi kallioinen maisema Adrianmeren yläpuolella. Puolassa kolme. Heidän välillään ei ole tunnettua biologista suhdetta – mutta äitilinjan ketju yhdistää heidät johonkin paljon vanhempaan.</p>
     <div class="loyto-box">
       <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 5 · Puola + Kroatia · ~3 508–3 275 v.s.</span></div>
       <div class="loyto-title">"Sama merkki, 1 200 km etäisyydellä, saman vuosisadan sisällä."</div>
@@ -999,14 +1014,9 @@
       <img src="images/bmac-bactria-margiana-pottery.jpg" alt="BMAC-kulttuurin keramiikkaa tai Baktrian arkeologinen kaivaus – Uzbekistan/Afganistan" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Sappali Tepe, Surxondaryo, Uzbekistan – ~3 750 v.s. · W3a1 näyte I7420 · Y-DNA G2a<sup>[11]</sup></div>
     </div>
-    <p class="dropcap">Kuvittele paikka, jossa kaksi maailmaa törmää. Pohjoisessa avautuvat loputtomat arot – Yamnayan ja Corded Waren perimä, hevoset ja kurganikummut. Etelässä nousevat vuoret, joiden juurelle on rakennettu tiheitä oasis-kaupunkeja: kastelukanavia, viljasiiloja, kivimuureja. Tämä on BMAC – Baktria-Margiana Archaeological Complex – pronssikauden Keski-Aasian kehittynein kaupunkikulttuuri.</p>
-    <p>Sappali Tepe sijaitsee nykyisessä Uzbekistanissa, lähellä Afganistanin rajaa. Kaupunki kukoistaa ~4 000–3 500 vuotta sitten: geometrinen kaupunkisuunnittelu, erikoistunut käsityöläisyys, kaukoiset kauppayhteydet Intiaan, Persiaan ja steppevyöhykkeeseen. Täällä elää nainen, jonka näyte on <strong>I7420</strong>. Hänen isälinjansa on G2a – sama harvinainen aristokraattinen linja kuin myöhemmin Ambracian AMV-CO_5:llä. Hänen äitilinjansa: <strong>W3a1</strong>.<sup>[11]</sup></p>
-    <p>Tämä pysäkki ei ole V1-tarinan Pakistan tai V1-tarinan Egypti. Tämä on niiden <em>silta</em> – paikka, jossa steppelinja saapuu oasis-kulttuuriin ensi kertaa.</p>
-
-    <div class="royal-box">
-      <div class="royal-title">BMAC – kaupunki ennen kaupunkeja</div>
-      <p>Baktria-Margiana Archaeological Complex on yksi arkeologian jännittävimmistä löydöistä: kehittynyt kaupunkikulttuuri, joka nousi ja hävisi ~4 000–3 500 vuotta sitten jättämättä kirjallisia lähteitä. Ei nimeä omalle kielelleen, ei hallitsijoiden listaa savitauluille. Vain rakennukset, tavarat ja DNA. Sappali Tepe erottuu BMAC-verkoston sisällä poikkeuksellisella sijainnillaan – se on eräs verkoston pohjoisimpia solmukohtia, suoraan Yamnayan ja Corded Waren eteläisimpien ulottuvuuksien kanssa kosketuksessa. I7420 elää tässä kulttuurisessa sulatuspistossa: hänen G2a-isälinjansa on tullut etelästä – varhaisista Lähi-idän maanviljelijöistä – mutta W3a1-äitilinjansa on pohjoisesta. Hänessä kohtaa kaksi maailmaa, jotka ennen häntä eivät tunteneet toisiaan.<sup>[11]</sup></p>
-    </div>
+    <p class="dropcap">Kuvittele että seisot savimuurin ulkopuolella. Sen eessä aukeaa kuiva tasanko – pensaita, hiekkaa, kaukaisia vuoria. Mutta muurin sisällä on jotain odottamatonta: järjestys. Geometria. Kaupunki, joka on suunniteltu alusta alkaen neliöksi, 82 kertaa 82 metriä, ulkoseinät aurinkokuivatuista tiilistä niin paksut, että ne kestävät sekä hyökkäyksen että vuosituhannet. Tämä on Sappali Tepe, nykyisessä Uzbekistanissa, ~3 800 vuotta sitten – ja sinun W3a1-esi-äitisi eli täällä.</p>
+    <p>Linnoituksen sisään astuminen ei tarkoittanut suoraa tietä mihinkään. Rakennukset limittyivät toisiinsa labyrinttimaisesti: pienistä ovista toisiin, käytävillä, joissa vieras eksyisi mutta asukas löytäisi kotinsa unissakin. Jokainen kotitalous oli oma maailmansa – oma liesipaikka, omat varastokomerot, kehittynyt viemäröinti, joka kertoo kaupungista jossa arki on miettimisen arvoinen asia. Ja jokaisen talon lattian alla lepäsivät kuolleet. Ei muualla. Ei kaukana. Kotona, samoissa tiloissa joissa elettiin, syötiin, nukuttiin. Sukupolvet olivat sananmukaisesti yhdessä, kerros kerrokselta.<sup>[11]</sup></p>
+    <p>Nainen koodinimeltä <strong>I7420</strong> on se, jonka DNA:sta sinun äitilinjasi löytyy täältä. Hänen isälinjansa – G2a – kertoo etelästä tulleesta vanhasta maanviljelijäsuvusta. Hänen äitilinjansa – <strong>W3a1</strong> – kertoo pohjoisesta, aroilta, liikkeestä. Hänessä yhdistyi kaksi maailmaa, jotka olivat ennen häntä eläneet erillään.</p>
 
     <footer class="footer">
       <div class="footer-inner">
@@ -1017,8 +1027,9 @@
   </section>
 
   <section class="page" id="sappali2">
-    <p class="dropcap">BMAC ei ole pelkkä kauppapaikka – se on Euraasian pronssikauden tärkein kulttuurinen sulatusuuni. Täältä levisivät ratsastus ja hevostalous etelään, täältä kulkeutuivat metallurgiatekniikat lännestä itään, täältä alkoi se pitkä ketju joka päätyi Indo-Aryan laajentumaan Intiaan. Sappali Teen I7420 on siis enemmän kuin yksi nainen yhdessä kaupungissa: hän on elävä todiste siitä, että W3a1 oli mukana juuri siellä, missä nämä kulttuuriset siirrot tapahtuivat.</p>
-    <p>G2a-isälinja yhdistää hänet mielenkiintoisella tavalla samaan aristokraattiseen ketjuun, joka myöhemmin näkyy Ambracian AMV-CO_5:ssä (~3 750 v.s. → ~2 170 v.s.). Nämä kaksi yksilöä eivät tietenkään ole suorassa sukusuhteessa – vuosituhansien ja tuhansien kilometrien päässä toisistaan. Mutta sama harvinainen isälinja + sama äitilinja eri aikakausina eri mantereilla kertoo jotain: nämä linjat kulkivat usein <em>yhdessä</em>, korkeakulttuuristen yhteyksien mukana, ei massavaelluksissa.</p>
+    <p class="dropcap">Sappali Tepe ei ollut eristyksissä. Se oli osa sitä, mitä tutkijat kutsuvat Oxus-sivilisaatioksi – kaupunkien ja kaupankäyntiasemien verkostoa, joka ulottui Amu-darjan varrelta Indus-jokilaakson suuntaan. Kun sinä kuljit Sappali Teen kujilla, kauppiaat toivat mukanaan tavaraa, jota ei syntynyt missään lähellä: sinettejä, jotka muistuttivat Harappan sinettikirjoitusta, koruja, joita käytettiin Elamissa nykyisessä Iranissa. Joku kauempaa oli käynyt täällä – tai joku täältä oli käynyt kauempana. Molemmat olivat mahdollisia. Molemmat tapahtuivat.</p>
+    <p>Rakennusten tasavertaisuus kertoo jotain siitä yhteisöstä, jossa I7420 eli. Ei suuria palatsirakennuksia, ei selvästi köyhempiä asumuksia. Talot ovat samankokoisia, samanlaisesti varustettuja – omat liedet, omat varastot, omat kuolleet lattian alla. Joku on suunnitellut tämän yhteisön – tai yhteisö on itse päättänyt, ettei kukaan nouse muiden yläpuolelle. Sinun esi-äitisi eli tasavertaisten joukossa, labyrinttimaisessa kaupungissa, jonka kadut johtivat aina jonnekin tuttuun.<sup>[11]</sup></p>
+    <p>Ja pieni sivuhuomio, joka saattaa yllättää: Suomessa esiintyy alueen suurin väestöosuus myös <strong>U2e2a1d</strong>-haploryhmästä – toinen Keski-Aasian ja Induksen alueen linja, jonka reitti Suomeen kulkee osin samoja polkuja kuin W3a1:n. Se kertoo siitä, että sinun veressäsi ei välttämättä ole vain yksi säie näiltä seuduilta. Ehkä useampikin.</p>
     <div class="loyto-box">
       <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 6 · Sappali Tepe · ~3 750 v.s.</span></div>
       <div class="loyto-title">"BMAC on paikka jossa steppelinja oppii rakentamaan kaupunkeja. Tai kaupunkilinja oppii ratsastamaan."</div>
@@ -1051,10 +1062,9 @@
       <img src="images/ptolemaic-egypt-alexandria-bust.jpg" alt="Ptolemaiolainen rintakuva tai Aleksandrian arkeologinen löytö – kreikkalais-egyptiläinen tyyli, kultaa ja marmoria" style="width:100%;height:auto;display:block;border-radius:3px;filter:sepia(30%) contrast(1.07) brightness(0.96);">
       <div class="caption">Abusir el-Meleq, Egypti &amp; Ambrakia, Kreikka – ~2 238 ja ~2 170 v.s. · JK2165 &amp; AMV-CO_5 · molemmat W3a1<sup>[12][17]</sup></div>
     </div>
-    <p class="dropcap">Noin 200 eaa. hellenistinen maailma on yksi verkosto – kuninkaiden, kauppiaiden, filosofien ja sotilaiden kosmopoliittinen tila, joka ulottuu Makedoniasta Egyptiin, Kreikasta Persiaan. Aleksanteri Suuren valloitukset avasivat sen muutama vuosikymmen aiemmin, ja nyt se on kypsä: Ptolemaiokset hallitsevat Egyptiä, Seleukidit Persiaa, Aiakidit Epirosta. Kaikki nämä dynastiat ovat toisiinsa avioliitoilla kytkeytyneitä. Kaikki liikkuvat samassa kulttuurisessa tilassa.</p>
-    <p>Ja kahdessa kohdassa tätä verkostoa – Egyptissä ja Kreikassa – löytyy sama merkki soluissa: <strong>W3a1</strong>.</p>
-    <p><strong>JK2165</strong>, Abusir el-Meleq, Niilin laakso: varakas muumio, ptolemaiolainen aikakausi, ~2 238 vuotta sitten. Hautauskankaat, kultakorut, kerroksellinen identiteetti – kreikkalainen vai egyptiläinen? Molemmat. Kumpikaan.<sup>[12]</sup></p>
-    <p><strong>AMV-CO_5</strong>, Ambrakia, Luoteis-Kreikka: mies, G-M201 isälinja, ~2 170 vuotta sitten. Pyrrhoksen entinen pääkaupunki, muutama vuosi tai vuosikymmen Deidamia II:n murhan jälkeen. Hänen äitilinjansa: sama koodi kuin egyptiläisellä muumiolla.<sup>[17]</sup></p>
+    <p class="dropcap">Kuvittele hetki, jolloin kaksi ihmistä – mies kreikkalaisessa kaupungissa ja nainen egyptiläisessä muumiokankaassa – yhdistyvät toisiinsa solujen tasolla kahdentuhansien vuosien yli. Et koskaan tapaa heitä. Mutta heidät on tavattu sinussa. He kantavat samaa äitilinjaa kuin sinä – ja heidän välillään on vain 70 vuotta, 1 500 kilometriä, ja yksi yhteinen historia.<sup>[12,17]</sup></p>
+    <p>Vuosi on noin 238 eaa. Niilin varrella, Abusir el-Meleqissä, haudataan nainen – <strong>JK2165</strong>. Hän on rikas. Hänen ympärillään on monikerroksinen liinavaate, kultakoruja, hautauskankaat jotka kertovat asemasta. Onko hän kreikkalainen vai egyptiläinen? Ptolemaiokset ovat hallinneet Egyptiä jo 80 vuotta, kreikkalaiset ovat sekoittuneet paikallisiin niin, että kysymys on menettänyt merkityksensä. Hän on kumpikin. Hänen äitilinjansa – <strong>W3a1</strong> – tulee aroilta, Kaspianmereltä, pronssikauden steppeltä. Ei Kreikasta. Ei Egyptistä. Jostakin muualta, paljon kauempaa.<sup>[12]</sup></p>
+    <p>Lähes saman aikaan, noin 1 500 kilometrin päässä luoteeseen: Ambraciassa, Pyrrhoksen entisessä pääkaupungissa Luoteis-Kreikassa, elää mies – <strong>AMV-CO_5</strong>. Hänen Y-DNA-linjansa G-M201 kertoo vanhasta maanviljelijäsuvusta, ei tyypillisestä kreikkalaisesta siirtolaisesta. Hänen äitilinjansa: <strong>W3a1</strong>. Sama. Täsmälleen sama merkki soluissa kuin tuolla egyptiläisellä naisella, jonka hän ei koskaan tiedä olemassaolostakaan.<sup>[17]</sup></p>
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
@@ -1064,15 +1074,17 @@
   </section>
 
   <section class="page" id="egyptikreikka2">
-    <h1 style="font-size:15pt; margin-bottom:0.9em;">Ptolemaiokset ja Aiakidit –<br><span style="font-size:11pt; color:var(--accent); font-style:italic;">sama dynastinen verkosto</span></h1>
-    <p>Egyptin W3a1-näyte (JK2165) on ajoitettu ptolemaiolaisen vallan alkuun. Kreikan W3a1-näyte (AMV-CO_5) on ajoitettu Epiruksen dynastian loppuun. Noin 70 vuotta toisistaan, noin 1 500 kilometrin päässä toisistaan.</p>
-    <p>Mutta ne eivät ole irrallisia pisteitä. Ne kuuluvat samaan verkostoon – ja verkoston solmukohta on historia:</p>
+    <h1 style="font-size:15pt; margin-bottom:0.9em;">Pyrrhos, Ptolemaios ja sinun linjasi –<br><span style="font-size:11pt; color:var(--accent); font-style:italic;">miten nämä kaksi pistettä yhdistyvät</span></h1>
+    <p>Näitä kahta ihmistä – JK2165 Egyptissä ja AMV-CO_5 Kreikassa – ei yhdistä sattuma. Heidän välillään on konkreettinen historiallinen silta, joka selittää miksi sama äitilinja löytyy molemmista. Se silta kulkee yhden miehen kautta.</p>
+    <p>Hänen nimensä on <strong>Pyrrhos</strong> – Epiruksen kuningas, jonka nimi on jäänyt historiaan sekä nerona että tragедiana. Vuonna 306 eaa. hänet karkotettiin Epiroksesta nuorena miehenä. Hän löysi tiensä Aleksandriaan, Ptolemaios I:n hoviin. Hän ei tullut köyhänä pakenijakaan: hän tuli liittolaisena, oppijana, tulevana kuninkaana. Hovissa hän nai Ptolemaioksen tytärpuolen <strong>Antigonen</strong>. Joku Ptolemaioksen hovissa kantoi W3a1-äitilinjaa – ja se ketju kulkee eteenpäin.</p>
+    <p>Vuonna 297 eaa. Pyrrhos palasi Epirukseen. Hän rakennutti Ambraciasta pääkaupunkinsa – patsaat, teatterit, kirjastot, hovimiehet. Osa niistä hovimiehistä tuli Aleksandriasta mukanaan. Osa heidän äideistään ja vaimoistaan kantoi äitilinjan, joka oli syntynyt kaukana aroilla.</p>
     <div class="royal-box">
-      <div class="royal-title">Dynastinen yhteys: Pyrrhos &amp; Ptolemaiokset</div>
-      <p><strong>306 eaa.:</strong> Nuori Pyrrhos pakenee Epiruksesta poliittisten levottomuuksien vuoksi. Hän päätyy Ptolemaios I:n hoviin Aleksandriaan. Hän viettää siellä vuosia, oppii sotastrategiaa, solmii suhteet – ja nai Ptolemaioksen tytärpuolen <strong>Antigonen</strong>.<br><br>
-      <strong>297 eaa.:</strong> Pyrrhos palaa Epirukseen, tekee Ambraciasta pääkaupunkinsa, rakennuttaa sen kuninkaalliseksi hoviksi. Hän tuo mukanaan aleksandrialaisia arkkitehteja, hovihenkilöitä, mahdollisesti sukulaisia.<br><br>
-      <strong>233 eaa.:</strong> Pyrrhos on kuollut. Hänen tyttärensä <strong>Deidamia II</strong> hallitsee – mutta kansa nousee kapinaan. Hän pakenee Artemiin temppeliin. Hänet murhataan alttarin äärellä. Aeacid-dynastia päättyy.<br><br>
-      <strong>~200 eaa.:</strong> Ambraciassa elää AMV-CO_5. Hän kantaa äitilinjaa, joka yhdistää hänet samaan geneettiseen piiriin kuin Ptolemaioksen hovissa eläneet naiset.</p>
+      <div class="royal-title">Ajanjana: miten äitilinja kulkeutui Aleksandriasta Ambraciaan</div>
+      <p><strong>306 eaa.:</strong> Pyrrhos pakenee Epiruksesta. Päätyy Ptolemaios I:n hoviin Aleksandriaan. Nai hovissa Antigonen – Ptolemaioksen tytärpuolen.<br><br>
+      <strong>297 eaa.:</strong> Pyrrhos palaa Epirukseen, tekee Ambraciasta pääkaupunkinsa. Tuo mukanaan aleksand­rialaisia arkkitehteja ja hovihenkilöitä. W3a1-äitilinja saapuu kaupunkiin.<br><br>
+      <strong>~238 eaa.:</strong> JK2165 haudataan Abusir el-Meleqissä, Egyptissä. W3a1 dokumentoitu Ptolemaioksen hovin piirissä.<br><br>
+      <strong>~233 eaa.:</strong> Deidamia II murhataan Artemiin temppelissä. Aiakidi-dynastia päättyy. Kaupungissa elää kuitenkin yhä ihmisiä, joiden äitilinjat ovat tulleet hovista.<br><br>
+      <strong>~200 eaa.:</strong> AMV-CO_5 elää Ambraciassa. Hänen äitilinjansa W3a1 on tullut Aleksandrian kautta.</p>
     </div>
     <footer class="footer">
       <div class="footer-inner">
@@ -1084,9 +1096,10 @@
 
   <section class="page" id="egyptikreikka3">
     <h1 style="font-size:15pt; margin-bottom:0.9em;">Kuka oli AMV-CO_5?</h1>
-    <p>Hän ei ole kuningas. Hän ei ole Aiakidi isälinjassa – G-M201 ei ole tyypillinen makedonialainen linja. Mutta hän ei myöskään ole tavallinen kauppias. Ambracian nekropoliksen muissa haudoissa näkyy J2a ja E1b – tyypilliset kreikkalaiset siirtolaislinjat. AMV-CO_5 poikkeaa molemmista. G2a on vanhempi, harvinaisempi, aristokraattisempi.</p>
-    <p>Tutkijat kutsuvat häntä "paikalliseksi aristokraatiksi" tai "korinttilaisen yläluokan edustamiseksi". Molemmat ovat todennäköisesti oikeassa. Mutta W3a1-äitilinja vie analyysin toisaalle:</p>
-    <p style="font-style:italic; color:var(--ink-mid); font-size:11pt; line-height:1.8; padding: 0.8em 1.2em; border-left:2px solid var(--accent); margin:1.2em 0;">W3a1 ei kasva Kreikasta. Se ei kasva Korintista. Se tulee idästä – Kaspianmereltä, aroilta, pronssikauden steppeltä. Se on linja, joka kulkee kuninkaallisissa piireissä Ptolemaioksen Aleksandriasta Pyrrhoksen Ambraciaan. Se on linja, jonka sinä kannat 2 200 vuotta myöhemmin.</p>
+    <p class="dropcap">Hän on mies, jonka haudan ympärillä ovat muut Ambracian asukkaat – joilla on J2a- ja E1b-isälinjat, tyypillisiä kreikkalaisia siirtolaislinjoja. AMV-CO_5 ei sovi joukkoon. Hänen G-M201-linjansa on harvinaisempi, vanhempi, ei kreikkalaisen siirtolaisuuden mukanaan tuoma. Hän on ehkä syntynyt täällä, mutta hänen sukujuurensa ovat muualta. Tutkijat arvelevat: paikallinen aristokraatti, tai kenties korinttilaisten yläluokan jälkeläinen. Mutta äitilinja kertoo jotain muuta.</p>
+    <p>W3a1 ei kasva Kreikasta. Se ei kasva Korintista eikä Makedoniasta. Se tulee idästä – Kaspianmereltä, aroilta, pronssikauden steppeltä – ja se on kulkenut kuninkaallisten hovien mukana kaikkialle mihin dynastiset avioliitot ovat kantaneet. AMV-CO_5:n äiti, tai hänen äitinsä äiti, tai joku kauempana ketjussa, on kantanut sen Ambraciaan. Ehkä Pyrrhoksen Aleksandriasta tuomien hovihenkilöiden mukana. Ehkä aiemmin. Emme tiedä.</p>
+    <p>Mutta tiedät sen, mitä ei voi kiistää: <strong>sinun äitilinjasi on sama kuin tällä miehellä, joka eli Pyrrhoksen entisessä pääkaupungissa 2 170 vuotta sitten.</strong> Sama säie, eri kädet. Sama matka, eri pysäkki.</p>
+    <p style="font-style:italic; color:var(--ink-mid); font-size:11pt; line-height:1.8; padding: 0.8em 1.2em; border-left:2px solid var(--accent); margin:1.2em 0;">Sinun W3a1-linjasi on kulkenut Ptolemaioksen hovista Pyrrhoksen kaupunkiin – ja siitä eteenpäin, pysähtymättä, 2 000 vuoden läpi, sinuun.</p>
     <div class="loyto-box">
       <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 7 · Egypti &amp; Kreikka · ~2 238–2 170 v.s.</span></div>
       <div class="loyto-title">"Kaksi näytettä. Eri maat. Eri vuosikymmenet. Sama äiti."</div>
@@ -1113,7 +1126,20 @@
     <p>Vuosi on noin 233 eaa. Murhaaja on Milon, joka tekee pian sen jälkeen itsemurhan. Aeacid-dynastia – suku, joka johti Epirosta satoja vuosia, suku johon Aleksanteri Suuren äiti Olympias kuului – päättyy yhdellä iskulla.</p>
     <p>Muutama vuosikymmen myöhemmin roomalainen konsuli Marcus Fulvius Nobilior piirittää kaupungin. Ambracialaisten puolustus on epätoivoinen: he kaivavat tunneleita, täyttävät ne savulla ja palavilla höyhenillä torjuakseen roomalaiset. Se ei riitä. Kaupunki antautuu 189 eaa. Roomalaiset vievät valtavan taidekokoelman – kaikki Pyrrhoksen rakennuttamat patsaat ja palatsit – Roomaan.</p>
     <p>AMV-CO_5 elää tässä kaupungissa juuri ennen tai juuri sen aikana. Hänellä on sama äitilinja kuin Ptolemaiolaisen Egyptin eliittihautauksissa. Onko hän Deidamian sukulainen äitinsä kautta? Hovimies, joka tuli Aleksandrian kanssa? Kauppias, jonka suku oli kytkeytynyt dynastiaan avioliitoilla?</p>
-    <p style="font-style:italic; font-size:10.5pt; color:var(--ink-soft); text-align:center; margin:1.4em 0; line-height:1.9;">Emme tiedä. Mutta tiedämme tämän:<br>Hänen äitilinjansa elää. Deidamian dynastia ei jatkunut valtaistuimella —<br>mutta äitilinja jatkui naisesta toiseen. Se elää yhä. Sinussa.</p>
+    <p>AMV-CO_5 elää tässä kaupungissa juuri ennen tai juuri sen aikana kun Rooma saapuu. Hänellä on sama äitilinja kuin ptolemaioksen hovissa. Onko hän Deidamian sukulainen äitinsä puolelta? Aleksandriasta tulleiden hovihenkilöiden jälkeläinen? Kauppias, jonka suku oli kytkeytynyt dynastiaan usealla sukupolvella? Emme tiedä. Historia ei säilyttänyt hänen nimeään. Mutta se säilytti hänen DNA:nsa.</p>
+    <p style="font-style:italic; color:var(--ink-mid); font-size:11pt; line-height:1.8; padding: 0.8em 1.2em; border-left:2px solid var(--accent); margin:1.2em 0;">Dynastia kaatuu. Kaupunki antautuu. Roomalaiset vievät taideteokset.<br>Mutta äitilinja ei katoa. Se jatkuu naisesta toiseen, nimettömänä, pysähtymättä.<br>Se jatkuu sinuun.</p>
+    <div class="loyto-box">
+      <div class="loyto-header"><span class="loyto-badge">🜂 Pysäkki 7 · Egypti &amp; Kreikka · ~2 238–2 170 v.s.</span></div>
+      <div class="loyto-title">"Sama äitilinja Ptolemaioksen Aleksandriasta Pyrrhoksen Ambraciaan — ja siitä pysähtymättä sinuun."</div>
+      <div class="loyto-fields">
+        <span class="lf-key">JK2165</span><span class="lf-val">Abusir el-Meleq · Egypti · ~2 238 v.s. · W3a1 · Ptolemaiolainen</span>
+        <span class="lf-key">AMV-CO_5</span><span class="lf-val">Ambrakia · Kreikka · ~2 170 v.s. · G-M201 + W3a1</span>
+        <span class="lf-key">Yhteys</span><span class="lf-val">Pyrrhos → Ptolemaios I:n hovi → avioliitto Antigoneen → paluu Ambraciaan</span>
+        <span class="lf-key">Ajoitus</span><span class="lf-val">Deidamian murhan (233 eaa.) ja Ambracian antautumisen (189 eaa.) välinen aika</span>
+        <span class="lf-key">Äitilinja</span><span class="lf-val">W3a1 molemmissa – sama steppe-alkuperä, kaksi hovikontekstia, yksi ketju</span>
+      </div>
+      <div class="loyto-link">Schuenemann et al. 2017 · Nature Comms 8:15694 · Lazaridis et al. 2022 · Southern Arc<sup>[12][17]</sup></div>
+    </div>
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
