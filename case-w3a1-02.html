@@ -20,6 +20,7 @@
       --line:         #c8b490;
       --line-faint:   #e0d0b8;
       --red-ink:      #7a2010;
+      --dark-bg:      #3a0c04;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -89,7 +90,7 @@
 
     /* COVER */
     .page.cover {
-      background: #0e0805;
+      background: #3a0c04;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -101,21 +102,23 @@
       position: relative;
     }
 
-    /* Karttakehys – täysi leveys, ei sivumarginaaleja */
+    /* Karttakehys – reunasta reunaan, yläosaan page-header-bandin verran tilaa */
     .cover-map-frame {
       width: 100%;
       flex-shrink: 0;
       position: relative;
       line-height: 0;
-      border-bottom: 1.5px solid rgba(176,120,64,0.50);
+      padding-top: 1.55em;  /* page-header-bandin korkeus */
+      background: #3a0c04;
+      border-bottom: 1.5px solid rgba(176,120,64,0.40);
+      box-sizing: border-box;
     }
 
     .cover-map-frame img {
       display: block;
       width: 100%;
       height: auto;
-      /* Sepia tehty Pythonilla – pelkkä pieni kirkkaussäätö CSS:ssä */
-      filter: brightness(0.95);
+      filter: brightness(0.97);
     }
 
     /* Tekstialue kuvan alla */
@@ -125,16 +128,16 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 0 2.2cm 1.4cm 2.2cm;
+      padding: 0 2.1cm 1.4cm 2.1cm;
       position: relative;
     }
 
     .cover-ornament {
       font-size: 11pt;
       letter-spacing: 0.44em;
-      color: var(--accent-light);
+      color: #a26433;
       margin-bottom: 0.9em;
-      opacity: 0.55;
+      opacity: 0.70;
     }
 
     .cover h1 {
@@ -142,23 +145,23 @@
       font-size: 30pt;
       letter-spacing: 0.05em;
       line-height: 1.10;
-      color: #f0e4cc;
+      color: #f2e4cc;
       margin: 0 0 0 0;
     }
 
     .cover-rule {
       width: 44px;
       height: 1px;
-      background: var(--accent-light);
+      background: #a26433;
       margin: 0.75em auto 0.75em auto;
-      opacity: 0.48;
+      opacity: 0.55;
     }
 
     .cover .subtitle {
       font-family: "Playfair Display", serif;
       font-style: italic;
       font-size: 14.5pt;
-      color: var(--accent-light);
+      color: #f2e4cc;
       margin: 0;
       letter-spacing: 0.025em;
     }
@@ -172,8 +175,8 @@
       font-family: "Playfair Display SC", serif;
       font-size: 7.5pt;
       letter-spacing: 0.20em;
-      color: var(--accent-light);
-      opacity: 0.28;
+      color: #a26433;
+      opacity: 0.35;
     }
 
     h1 {
