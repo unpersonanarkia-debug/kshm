@@ -90,7 +90,7 @@
 
     /* COVER */
     .page.cover {
-      background: #3a0c04;
+      background: var(--paper);
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -102,81 +102,87 @@
       position: relative;
     }
 
-    /* Karttakehys – reunasta reunaan, yläosaan page-header-bandin verran tilaa */
+    /* Yläpalkki – sama korkeus ja väri kuin page-header-band */
+    .cover-top-bar {
+      background: #2a1a0a;
+      border-bottom: 2px solid var(--accent);
+      height: 1.4cm;
+      flex-shrink: 0;
+      width: 100%;
+    }
+
+    /* Karttakuva – reunasta reunaan */
     .cover-map-frame {
       width: 100%;
       flex-shrink: 0;
       position: relative;
       line-height: 0;
-      padding-top: 1.55em;  /* page-header-bandin korkeus */
-      background: #3a0c04;
-      border-bottom: 1.5px solid rgba(176,120,64,0.40);
-      box-sizing: border-box;
     }
 
     .cover-map-frame img {
       display: block;
       width: 100%;
       height: auto;
-      filter: brightness(0.97);
     }
 
-    /* Tekstialue kuvan alla */
+    /* Alapalkki – page-header-band tyylinen, subtitle + kshm päälle */
     .cover-text-block {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 0 2.1cm 1.4cm 2.1cm;
+      justify-content: flex-end;
+      padding: 0;
+      background: var(--paper);
       position: relative;
     }
 
-    .cover-ornament {
-      font-size: 11pt;
-      letter-spacing: 0.44em;
-      color: #a26433;
-      margin-bottom: 0.9em;
-      opacity: 0.70;
-    }
-
+    /* Pääotsikko – pohjavärin päällä, ennen palkkia */
     .cover h1 {
       font-family: "Playfair Display SC", serif;
-      font-size: 30pt;
+      font-size: 36pt;
       letter-spacing: 0.05em;
       line-height: 1.10;
-      color: #f2e4cc;
-      margin: 0 0 0 0;
+      color: var(--ink);
+      margin: 0 0 0.6em 0;
+      padding: 0 2.1cm;
+      width: 100%;
+      text-align: center;
     }
 
     .cover-rule {
-      width: 44px;
-      height: 1px;
-      background: #a26433;
-      margin: 0.75em auto 0.75em auto;
-      opacity: 0.55;
+      display: none;
+    }
+
+    /* Alapalkki – tumma palkki, sama tyyli kuin page-header-band */
+    .cover-bottom-band {
+      width: 100%;
+      background: #2a1a0a;
+      border-top: 2px solid var(--accent);
+      padding: 1.0em 2.1cm 0.9em 2.1cm;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4em;
     }
 
     .cover .subtitle {
       font-family: "Playfair Display", serif;
       font-style: italic;
-      font-size: 14.5pt;
-      color: #f2e4cc;
+      font-size: 13pt;
+      color: var(--accent-light);
       margin: 0;
-      letter-spacing: 0.025em;
+      letter-spacing: 0.03em;
     }
 
     .cover-footer-rule {
-      position: absolute;
-      bottom: 0.7cm;
-      left: 0;
-      right: 0;
-      text-align: center;
       font-family: "Playfair Display SC", serif;
       font-size: 7.5pt;
-      letter-spacing: 0.20em;
-      color: #a26433;
-      opacity: 0.35;
+      letter-spacing: 0.18em;
+      color: var(--line);
+      opacity: 0.65;
+      position: static;
+      margin: 0;
     }
 
     h1 {
@@ -574,16 +580,17 @@
 
   <!-- KANSI -->
   <section class="page cover" id="kansi">
+    <div class="cover-top-bar"></div>
     <div class="cover-map-frame">
-      <img src="images/mtDNA-W-map.jpg" alt="mtDNA haploryhmä W – levinneisyyskartta Euraasiassa">
+      <img src="images/mtDNA-W-map.jpg" alt="">
     </div>
     <div class="cover-text-block">
-      <div class="cover-ornament">⚔ &nbsp; ✦ &nbsp; ⚔</div>
       <h1>Kadonneen<br>Sukuhistorian<br>Metsästäjä</h1>
-      <div class="cover-rule"></div>
-      <p class="subtitle">W3a1 – Arojen tyttäret</p>
+      <div class="cover-bottom-band">
+        <p class="subtitle">W3a1 – Arojen tyttäret</p>
+        <div class="cover-footer-rule">KSHM · Arkeogenetiikka · Populaatiohistoria</div>
+      </div>
     </div>
-    <div class="cover-footer-rule">KSHM · Arkeogenetiikka · Populaatiohistoria</div>
   </section>
 
   <!-- KOHTAAMINEN 1/2 -->
