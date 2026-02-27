@@ -1205,69 +1205,34 @@
   </section>
 
 
-  <!-- VAELLUSKARTTA – lisätty V1:stä täsmälleen samanlaisena -->
+  <!-- VAELLUSKARTTA -->
   <section class="page" id="kartta">
     <div class="page-header-band">
       <h1>Vaelluskartta</h1>
       <span class="header-sub">W3a1 – reitti läpi 20 000 vuoden</span>
     </div>
-
-    <!-- Leaflet-kartta iframena – tarvitsee w3a1_map.html samaan kansioon -->
-    <div style="width:100%; height:310px; margin: 0.6em 0 0.8em 0; border-radius:3px; overflow:hidden; border:1px solid var(--line); print-color-adjust:exact;">
-      <iframe src="https://kshm.fi/w3a1_map.html"
+    <div style="width:100%; height:480px; margin: 0.6em 0 0.8em 0; border-radius:3px; overflow:hidden; border:1px solid var(--line);">
+      <iframe src="w3a1_map.html"
               style="width:100%; height:100%; border:none; display:block;"
               title="W3a1 vaelluskartta"
               loading="lazy">
       </iframe>
     </div>
-
     <div class="map-route-list">
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">0 · ~20 000 v.s.</span> W-linjan synty, Kaspianmeri</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">1 · ~5 450 eaa.</span> Tepe Anau, Turkmenistan</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">2 · ~4 917 eaa.</span> Yamnaya, Ukraina</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">3 · ~4 370 v.s.</span> Corded Ware, Tšekki</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">4 · ~4 200 v.s.</span> Únětice &amp; Baden, Saksa</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot" style="background:#e85020;"></div>
-        <div><span class="map-route-year">5 · ~2 928 v.s.</span> Swat Valley, Pakistan – 8,4 %</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot" style="background:#e85020;"></div>
-        <div><span class="map-route-year">6 · ~2 238 v.s.</span> Abusir el-Meleq, Egypti</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">7 · ~1 650 eaa.</span> Otrar-Karatau / Berel, Kazakstan</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot"></div>
-        <div><span class="map-route-year">8 · ~975 v.s.</span> Gotlanti, Ruotsi (viikingit)</div>
-      </div>
-      <div class="map-route-item">
-        <div class="map-route-dot" style="background:#40c860;"></div>
-        <div><span class="map-route-year">9 · Nykypäivä</span> <strong>Suomi – 9,6 % väestöstä</strong></div>
-      </div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">0 · ~20 000 v.s.</span> W-linjan synty, Kaspianmeri</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">1 · ~5 450 eaa.</span> Tepe Anau, Turkmenistan</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">2 · ~4 917 eaa.</span> Yamnaya, Ukraina</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">3 · ~4 370 v.s.</span> Corded Ware, Tšekki</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">4 · ~4 200 v.s.</span> Únětice &amp; Baden, Saksa</div></div>
+      <div class="map-route-item"><div class="map-route-dot" style="background:#e85020;"></div><div><span class="map-route-year">5 · ~2 928 v.s.</span> Swat Valley, Pakistan – 8,4 %</div></div>
+      <div class="map-route-item"><div class="map-route-dot" style="background:#e85020;"></div><div><span class="map-route-year">6 · ~2 238 v.s.</span> Abusir el-Meleq, Egypti</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">7 · ~1 650 eaa.</span> Otrar-Karatau / Berel, Kazakstan</div></div>
+      <div class="map-route-item"><div class="map-route-dot"></div><div><span class="map-route-year">8 · ~975 v.s.</span> Gotlanti, Ruotsi (viikingit)</div></div>
+      <div class="map-route-item"><div class="map-route-dot" style="background:#40c860;"></div><div><span class="map-route-year">9 · Nykypäivä</span> <strong>Suomi – 9,6 % väestöstä</strong></div></div>
     </div>
-
     <p style="font-size:8.5pt; font-style:italic; color:var(--ink-soft); text-align:center; margin-top:0.5em;">
       Klikkaa pisteitä kartalla nähdäksesi näytetiedot · Jokainen piste on todellinen arkeologinen löytö
     </p>
-
     <footer class="footer">
       <div class="footer-inner">
         <span class="footer-title">Kadonneen sukuhistorian metsästäjä · W3a1</span>
