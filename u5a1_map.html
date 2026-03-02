@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KSHM – U5a1 · Aallot ja Atlantiksen tyttäret</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<style>
+  :root {
+    --bg:        #0d1a28;
+    --bg-panel:  #091320;
+    --bg-card:   #0f1e30;
+    --text:      #f0e8d8;
+    --text-dim:  #a8c0d0;
+    --text-muted:#5a7a8a;
+    --gold:      #c4a962;
+    --gold-dim:  #7a6a42;
+    --wave:      #2e86ab;
+    --line:      rgba(46,134,171,0.22);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; background:var(--bg); color:var(--text); font-family:'Cormorant Garamond',Georgia,serif; }
+
+  header {
+    background:var(--bg); border-bottom:1px solid var(--line);
+    padding:1.0rem 2rem; display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;
+  }
+  .hdr-symbol { color:var(--wave); font-size:1rem; opacity:.8; }
+  .hdr-brand  { font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.26em; color:var(--gold-dim); text-transform:uppercase; margin-bottom:.2rem; }
+  .hdr-title  { font-family:'Cinzel',serif; font-size:clamp(.9rem,2vw,1.15rem); font-weight:400; color:var(--text); letter-spacing:.05em; }
+  .hdr-title em { color:var(--gold); font-style:italic; font-family:'Cormorant Garamond',serif; font-size:1.15em; font-weight:300; }
+  .hdr-quote  { margin-left:auto; font-size:.8rem; color:var(--text-muted); font-style:italic; border-left:1px solid var(--gold-dim); padding-left:1rem; }
+
+  .era-tabs {
+    display:flex; gap:.4rem; align-items:center; flex-wrap:wrap;
+    padding:.5rem 2rem; background:var(--bg-panel); border-bottom:1px solid var(--line);
+  }
+  .era-tab {
+    font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.14em; text-transform:uppercase;
+    padding:.28rem .75rem; border:1px solid rgba(46,134,171,0.28); background:rgba(46,134,171,0.06);
+    color:var(--text-muted); cursor:pointer; transition:all .2s; border-radius:1px; line-height:1.5;
+  }
+  .era-tab:hover { border-color:var(--wave); color:var(--text-dim); }
+  .era-tab.active { border-color:var(--gold); color:var(--gold); background:rgba(196,169,98,0.08); }
+  .era-tab.special { border-color:rgba(196,169,98,0.45); color:var(--gold-dim); }
+  .era-tab.special.active { background:rgba(196,169,98,0.12); color:var(--gold); }
+
+  .layout { display:grid; grid-template-columns:1fr 310px; height:calc(100vh - 98px); min-height:500px; }
+
+  #map { width:100%; height:100%; min-height:500px; display:block; }
+  .leaflet-container { background:#060f18; font-family:'Cormorant Garamond',serif; }
+  .leaflet-tile-pane { filter:grayscale(1) sepia(.6) brightness(.32) contrast(1.18); }
+  .leaflet-control-zoom a { background:var(--bg-card) !important; color:var(--gold) !important; border-color:var(--line) !important; }
+  .leaflet-control-attribution { background:rgba(6,15,24,.88) !important; color:var(--text-muted) !important; font-size:.6rem !important; }
+  .leaflet-control-attribution a { color:var(--gold-dim) !important; }
+
+  .leaflet-popup-content-wrapper {
+    background:var(--bg-card); border:1px solid var(--gold-dim); border-radius:2px;
+    box-shadow:0 14px 44px rgba(0,0,0,.9); color:var(--text);
+    font-family:'Cormorant Garamond',serif; padding:0;
+  }
+  .leaflet-popup-content { margin:0 !important; }
+  .leaflet-popup-tip { background:var(--bg-card); }
+  .leaflet-popup-close-button { color:var(--gold) !important; }
+
+  .p-body   { padding:1rem 1.15rem .9rem; min-width:220px; max-width:265px; }
+  .p-era    { font-family:'Cinzel',serif; font-size:.54rem; letter-spacing:.2em; color:var(--wave); text-transform:uppercase; margin-bottom:.4rem; }
+  .p-site   { font-size:1.05rem; color:var(--text); margin-bottom:.2rem; }
+  .p-date   { font-size:.86rem; color:var(--gold); font-style:italic; margin-bottom:.5rem; }
+  .p-badge  { display:inline-block; font-size:.63rem; font-family:'Cinzel',serif; letter-spacing:.1em; color:var(--gold-dim); background:rgba(196,169,98,.07); border:1px solid var(--gold-dim); padding:.12rem .45rem; margin-bottom:.5rem; }
+  .p-special{ font-size:.65rem; font-family:'Cinzel',serif; letter-spacing:.1em; color:var(--gold); display:block; margin-bottom:.4rem; }
+  .p-desc   { font-size:.85rem; color:var(--text-dim); line-height:1.55; border-top:1px solid var(--line); padding-top:.5rem; }
+  .p-doi    { font-size:.68rem; color:var(--text-muted); margin-top:.4rem; font-style:italic; }
+
+  .sidebar  { background:var(--bg-panel); border-left:1px solid var(--line); display:flex; flex-direction:column; overflow:hidden; }
+  .sb-head  { padding:1.1rem 1.4rem .85rem; border-bottom:1px solid var(--line); flex-shrink:0; }
+  .sb-kicker{ font-family:'Cinzel',serif; font-size:.57rem; letter-spacing:.22em; color:var(--gold-dim); text-transform:uppercase; margin-bottom:.4rem; }
+  .sb-haplo { font-family:'Cinzel',serif; font-size:.95rem; color:var(--text); letter-spacing:.06em; margin-bottom:.25rem; }
+  .sb-meta  { font-size:.78rem; color:var(--text-muted); font-style:italic; line-height:1.5; }
+
+  .sb-tabs  { display:flex; border-bottom:1px solid var(--line); flex-shrink:0; }
+  .sb-tab   {
+    flex:1; font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.1em; text-transform:uppercase;
+    text-align:center; padding:.5rem .3rem; color:var(--text-muted); cursor:pointer; transition:all .2s;
+    border-bottom:2px solid transparent;
+  }
+  .sb-tab:hover { color:var(--text-dim); }
+  .sb-tab.active { color:var(--gold); border-bottom-color:var(--gold); }
+
+  /* Timeline panel */
+  .tl-panel { flex:1; overflow-y:auto; display:none; flex-direction:column; }
+  .tl-panel.visible { display:flex; }
+  .tl-wrap  { flex:1; overflow-y:auto; padding:.9rem 1.4rem; }
+  .tl-wrap::-webkit-scrollbar { width:3px; }
+  .tl-wrap::-webkit-scrollbar-thumb { background:var(--gold-dim); }
+  .tl-kick  { font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.2em; color:var(--gold-dim); text-transform:uppercase; margin-bottom:.85rem; }
+
+  .stop     { display:flex; gap:.8rem; margin-bottom:1.0rem; cursor:pointer; transition:opacity .2s; }
+  .stop:hover { opacity:.72; }
+  .stop.active .dot   { background:var(--gold); box-shadow:0 0 8px rgba(196,169,98,.55); }
+  .stop.active .sname { color:var(--gold); }
+  .stop.hidden { display:none; }
+
+  .spine    { display:flex; flex-direction:column; align-items:center; flex-shrink:0; width:10px; padding-top:4px; }
+  .dot      { width:9px; height:9px; border-radius:50%; background:var(--gold-dim); border:1.5px solid var(--gold); transition:all .25s; flex-shrink:0; }
+  .sline    { width:1px; flex:1; min-height:14px; margin-top:4px; background:linear-gradient(to bottom,var(--gold-dim),transparent); }
+
+  .sbody    { flex:1; }
+  .sbp      { font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.14em; color:var(--wave); margin-bottom:.06rem; }
+  .sname    { font-size:.87rem; color:var(--text); line-height:1.3; transition:color .2s; }
+  .sculture { font-size:.68rem; color:var(--text-muted); font-style:italic; margin-top:.04rem; }
+  .ssample  { font-size:.6rem; font-family:'Cinzel',serif; color:var(--gold-dim); letter-spacing:.1em; margin-top:.1rem; }
+
+  /* Story panel */
+  .story-panel { flex:1; overflow-y:auto; display:none; flex-direction:column; }
+  .story-panel.visible { display:flex; }
+  .story-wrap { flex:1; overflow-y:auto; padding:.9rem 1.4rem; }
+  .story-wrap::-webkit-scrollbar { width:3px; }
+  .story-wrap::-webkit-scrollbar-thumb { background:var(--gold-dim); }
+  .story-kick { font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.2em; color:var(--gold-dim); text-transform:uppercase; margin-bottom:.85rem; }
+
+  .sstop    { margin-bottom:1.05rem; cursor:pointer; border-left:2px solid rgba(196,169,98,0.18); padding:.4rem 0 .4rem .85rem; transition:all .2s; }
+  .sstop:hover { border-left-color:var(--gold); }
+  .sstop.active { border-left-color:var(--gold); background:rgba(196,169,98,0.04); }
+  .ss-num   { font-family:'Cinzel',serif; font-size:.5rem; letter-spacing:.2em; color:var(--wave); margin-bottom:.16rem; }
+  .ss-name  { font-size:.9rem; color:var(--text); line-height:1.3; }
+  .ss-sub   { font-size:.7rem; color:var(--text-muted); font-style:italic; margin-top:.06rem; }
+  .ss-year  { font-size:.65rem; font-family:'Cinzel',serif; color:var(--gold-dim); margin-top:.1rem; }
+
+  .legend   { padding:.7rem 1.4rem .95rem; border-top:1px solid var(--line); flex-shrink:0; }
+  .lg-kick  { font-family:'Cinzel',serif; font-size:.54rem; letter-spacing:.2em; color:var(--gold-dim); text-transform:uppercase; margin-bottom:.45rem; }
+  .lg-row   { display:flex; align-items:center; gap:.55rem; margin-bottom:.24rem; font-size:.72rem; color:var(--text-muted); }
+  .lg-dot   { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .lg-dash  { width:18px; height:0; border-top:1px dashed var(--gold-dim); flex-shrink:0; opacity:.5; }
+
+  @media (max-width:700px) {
+    .layout { grid-template-columns:1fr; grid-template-rows:52vh 1fr; }
+    .sidebar { border-left:none; border-top:1px solid var(--line); }
+    .hdr-quote { display:none; }
+    .era-tabs { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-symbol">🜁</div>
+  <div>
+    <div class="hdr-brand">KSHM · Arkeogenetiikka · Populaatiohistoria</div>
+    <div class="hdr-title">Verilinjan reitti &ensp;<em>U5a1</em></div>
+  </div>
+  <div class="hdr-quote">"Meri söi maan. Veri jatkoi matkaa."</div>
+</header>
+
+<div class="era-tabs">
+  <span style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.14em;color:var(--text-muted);text-transform:uppercase;margin-right:.3rem;flex-shrink:0;">Näytä:</span>
+  <button class="era-tab active" data-era="all">Kaikki</button>
+  <button class="era-tab" data-era="mesolithic">Mesoliitti<br><small style="font-size:.46rem;opacity:.6">&gt;6000 eaa.</small></button>
+  <button class="era-tab" data-era="neolithic">Neoliitti<br><small style="font-size:.46rem;opacity:.6">6000–3000 eaa.</small></button>
+  <button class="era-tab" data-era="bronze">Pronssikausi<br><small style="font-size:.46rem;opacity:.6">3000–1200 eaa.</small></button>
+  <button class="era-tab" data-era="iron">Rautakausi<br><small style="font-size:.46rem;opacity:.6">1200–1 eaa.</small></button>
+  <button class="era-tab" data-era="classical">Klassinen+<br><small style="font-size:.46rem;opacity:.6">jaa.</small></button>
+  <button class="era-tab special" data-era="special">★ Tarinan pysäkit</button>
+</div>
+
+<div class="layout">
+  <div id="map"></div>
+
+  <aside class="sidebar">
+    <div class="sb-head">
+      <div class="sb-kicker">Haploryhmä</div>
+      <div class="sb-haplo">U5a1 · mtDNA</div>
+      <div class="sb-meta">Euroopan vanhin äitilinja<br>Metsästäjä-keräilijöiden perintö</div>
+    </div>
+
+    <div class="sb-tabs">
+      <div class="sb-tab active" data-panel="timeline">Kaikki näytteet</div>
+      <div class="sb-tab" data-panel="story">★ Tarinan pysäkit</div>
+    </div>
+
+    <div class="tl-panel visible" id="panel-timeline">
+      <div class="tl-wrap">
+        <div class="tl-kick">Kronologinen reitti · vanhimmasta uusimpaan</div>
+        <div id="timeline"></div>
+      </div>
+    </div>
+
+    <div class="story-panel" id="panel-story">
+      <div class="story-wrap">
+        <div class="story-kick">Kirjan pysäkit järjestyksessä</div>
+        <div id="storyList"></div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="lg-kick">Selite</div>
+      <div class="lg-row"><div class="lg-dot" style="background:#2ecc71;border:1.5px solid #a9dfbf"></div>Mesoliitti</div>
+      <div class="lg-row"><div class="lg-dot" style="background:#3498db;border:1.5px solid #aed6f1"></div>Neoliitti</div>
+      <div class="lg-row"><div class="lg-dot" style="background:#e67e22;border:1.5px solid #f0b27a"></div>Kuparikausi</div>
+      <div class="lg-row"><div class="lg-dot" style="background:#e8c84a;border:1.5px solid #fef9e7"></div>Pronssikausi</div>
+      <div class="lg-row"><div class="lg-dot" style="background:#e74c3c;border:1.5px solid #f1948a"></div>Rautakausi</div>
+      <div class="lg-row"><div class="lg-dot" style="background:#c4a962;border:1.5px solid #e8d5a3"></div>Klassinen / kesk.aika</div>
+      <div class="lg-row"><div class="lg-dot" style="background:#ff6b9d;border:1.5px solid #ffb3d1"></div>★ Tarinan pysäkki</div>
+      <div class="lg-row"><div class="lg-dash"></div>Migraatioreitti (tarinan kaari)</div>
+    </div>
+  </aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+
+var ERA_STYLE = {
+  mesolithic:   { fill:'#2ecc71', border:'#a9dfbf', r:7 },
+  neolithic:    { fill:'#3498db', border:'#aed6f1', r:6 },
+  chalcolithic: { fill:'#e67e22', border:'#f0b27a', r:6 },
+  bronze:       { fill:'#e8c84a', border:'#fef9e7', r:6 },
+  iron:         { fill:'#e74c3c', border:'#f1948a', r:6 },
+  classical:    { fill:'#c4a962', border:'#e8d5a3', r:5.5 },
+};
+var SPECIAL_STYLE = { fill:'#ff6b9d', border:'#ffb3d1', r:9 };
+
+function getStyle(s){ return s.special ? SPECIAL_STYLE : (ERA_STYLE[s.era] || ERA_STYLE.classical); }
+function ybpLabel(ybp){ if(!ybp) return 'Tänään'; var yr=2026-ybp; return yr<0?Math.abs(yr)+' eaa.':yr+' jaa.'; }
+function eraFi(era){ return {mesolithic:'Mesoliitti',neolithic:'Neoliitti',chalcolithic:'Kuparikausi',bronze:'Pronssikausi',iron:'Rautakausi',classical:'Klassinen / kesk.aika'}[era]||era; }
+
+var ALL_SAMPLES = [
+  // ── TARINAN PYSÄKIT ──
+  { id:'Hum1', lat:58.1, lng:7.5, ybp:9364, era:'mesolithic',
+    site:'Hummervikholmen', region:'Norja', culture:'Nordic Middle Mesolithic', sample_id:'Hum1',
+    special:true, story_order:1,
+    story_title:'Hum1 — Doggerlandin lapsi',
+    story_sub:'Hummervikholmen, Norja',
+    desc:'Tarinan päähenkilö. Eli Doggerlandin rannoilla, meri vasta nousi. U5a1 — Euroopan vanha rouva.',
+    doi:'dnagenics.com/ancestry/sample/Hum1' },
+
+  { id:'CheddarMan', lat:51.3, lng:-2.8, ybp:9162, era:'mesolithic',
+    site:'Cheddar Gorge, Somerset', region:'Englanti', culture:'British Mesolithic', sample_id:'Cheddar Man',
+    special:true, story_order:2,
+    story_title:'Cheddar Man — Atlantiksen poika',
+    story_sub:'Cheddar Gorge, Englanti · ~7150 eaa.',
+    desc:'U5a1. Tumma iho, siniset silmät. Doggerlandin selviytyjä. Brittein saarten tunnetuin mesoliittinen ihminen.',
+    doi:'Brace et al. 2019 · Nature Ecology & Evolution' },
+
+  { id:'BOO72-8', lat:69.1, lng:33.5, ybp:3450, era:'neolithic',
+    site:"Bol'shoy Oleni Ostrov, Kuola", region:'Venäjä', culture:'Neolithic NE Europe — meren metsästäjät', sample_id:'BOO72-8',
+    special:true, story_order:3,
+    story_title:'Bolshoy Oleny — pohjoinen liitto',
+    story_sub:'Kuolan saari, Venäjä · ~1450 eaa.',
+    desc:'U5a1 + N1c1a1a — Fennoskandian vanhin N1c-löytö. Läntinen äitilinja + itäinen isälinja. Nykysuomalaisten esi-isät.',
+    doi:'Wikipedia: Bolshoy Oleny Island · bioRxiv 285437' },
+
+  { id:'Z59', lat:37.73, lng:22.75, ybp:3500, era:'bronze',
+    site:'Grave Circle B, Mykene', region:'Kreikka', culture:'Mycenaean', sample_id:'Z59',
+    special:true, story_order:4,
+    story_title:'Mykene Z59 — Välimeren kaiku',
+    story_sub:'Hautakamari B, ~1500 eaa.',
+    desc:'U5a1 / U5a1a. Mykeneläinen nainen. Ei haplotree.info:ssa — vain Bouwman 2008, Grave Circle B -tutkimuksessa.',
+    doi:'Bouwman 2008 — Grave Circle B' },
+
+  { id:'I0071', lat:35.2, lng:25.5, ybp:4000, era:'bronze',
+    site:'Lasithi, Kreeta', region:'Kreikka', culture:'Minoan Lasithi', sample_id:'I0071',
+    special:true, story_order:5,
+    story_title:'Minolaiset — Kreetan Atlantis',
+    story_sub:'Lasithi, Kreeta · ~2000 eaa.',
+    desc:'U5a1 minolaiselta ajalta. Palatsin rakentajat, Lineaari A -kirjoitus yhä purkamatta. Santorini räjähti — meri otti omansa.',
+    doi:'haplotree.info' },
+
+  { id:'OKG-10-1', lat:47.0, lng:99.5, ybp:2300, era:'iron',
+    site:'Olon-Kurin-Gol, Mongolia', region:'Mongolia', culture:'Pazyryk-kulttuuri', sample_id:'OKG-10-1',
+    special:true, story_order:6,
+    story_title:'Pazyryk — idän ääni',
+    story_sub:'Mongolia / Altai · 400–200 eaa.',
+    desc:'U5a1 — Silkkitien ratsastajat. Pazyryk-kulttuuri: jäätyneet kurganit, tatuoidut naiset. Atlantiksen jälkeläiset idässä.',
+    doi:'Pilipenko 2010 / Gonzalez-Ruiz 2012' },
+
+  { id:'Pg4-Sargat', lat:55.2, lng:78.2, ybp:1949, era:'classical',
+    site:'Baraba metsäaro', region:'Venäjä', culture:'Sargat-kulttuuri', sample_id:'Pg4 / Sg1',
+    special:true, story_order:7,
+    story_title:'Sargat — veren paluu',
+    story_sub:'Uralin metsäaro, Venäjä · ~100 jaa.',
+    desc:'N1a (N-M231) + U5a1. Sama liitto kuin Bolshoy Olenyssä — 1500 vuotta myöhemmin. Kaari jatkuu.',
+    doi:'haplotree.info — Sargat culture' },
+
+  { id:'AC16', lat:46.9, lng:19.0, ybp:1300, era:'classical',
+    site:'Kunpeszér, Unkari', region:'Unkari', culture:'Hungary Avar Elite', sample_id:'AC16',
+    special:true, story_order:8,
+    story_title:'Kunpeszér — täydellinen kaari',
+    story_sub:'Unkari · ~700 jaa.',
+    desc:'N1a (N-P89) + U5a1. Avar-eliitti. Kolmannen kerran sama yhdistelmä — Doggerlandista Karpaateille.',
+    doi:'haplotree.info' },
+
+  // ── MUUT NÄYTTEET ──
+  { id:'BOO72-10', lat:69.0, lng:33.7, ybp:3450, era:'neolithic', site:"Bol'shoy Oleni Ostrov", region:'Venäjä', culture:'Neolithic NE Europe', sample_id:'BOO72-10', special:false },
+  { id:'BOO72-14', lat:69.2, lng:33.3, ybp:3450, era:'neolithic', site:"Bol'shoy Oleni Ostrov", region:'Venäjä', culture:'Neolithic NE Europe', sample_id:'BOO72-14', special:false },
+  { id:'I9123', lat:35.3, lng:24.5, ybp:3305, era:'bronze', site:'Armenoi, Kreeta', region:'Kreikka', culture:'Post-Mycenaean Crete', sample_id:'I9123', special:false },
+  { id:'Verkh-Kaldzhin', lat:50.1, lng:87.8, ybp:2400, era:'iron', site:'Verkh-Kaldzhin II, Altai', region:'Venäjä', culture:'Pazyryk-kulttuuri', sample_id:'Verkh-Kaldzhin II', special:false },
+  { id:'BTG05', lat:48.5, lng:101.0, ybp:2350, era:'iron', site:'Baga Turgen Gol', region:'Mongolia', culture:'Pazyryk-kulttuuri', sample_id:'BTG05', special:false },
+  { id:'BTG06', lat:48.3, lng:101.2, ybp:2350, era:'iron', site:'Baga Turgen Gol', region:'Mongolia', culture:'Pazyryk-kulttuuri', sample_id:'BTG06', special:false },
+  { id:'Pg2', lat:55.1, lng:78.0, ybp:1949, era:'classical', site:'Baraba metsäaro', region:'Venäjä', culture:'Sargat culture', sample_id:'Pg2', special:false },
+  { id:'Sg1', lat:55.3, lng:78.4, ybp:1949, era:'classical', site:'Baraba metsäaro', region:'Venäjä', culture:'Sargat culture', sample_id:'Sg1', special:false },
+  { id:'Individ1', lat:57.0, lng:68.5, ybp:1949, era:'classical', site:'Cis-Tobol, Tyumen', region:'Venäjä', culture:'Sargat culture', sample_id:'Individ1', special:false },
+  { id:'I6913', lat:48.1, lng:16.3, ybp:7366, era:'neolithic', site:'Brunn am Gebirge', region:'Itävalta', culture:'Early LBK', sample_id:'I6913', special:false },
+  { id:'I5401', lat:44.6, lng:22.2, ybp:8838, era:'mesolithic', site:'Hadučka Vodenica', region:'Serbia', culture:'Iron Gates HG', sample_id:'I5401', special:false },
+  { id:'I5242', lat:44.7, lng:22.4, ybp:10530, era:'mesolithic', site:'Padina', region:'Serbia', culture:'Iron Gates HG', sample_id:'I5242', special:false },
+  { id:'I2753', lat:46.8, lng:17.7, ybp:5085, era:'chalcolithic', site:'Balatonlelle', region:'Unkari', culture:'Hungary Baden LCA', sample_id:'I2753', special:false },
+  { id:'BUD1', lat:47.5, lng:18.9, ybp:7000, era:'neolithic', site:'Budakeszi', region:'Unkari', culture:'LBKT', sample_id:'BUD1', special:false },
+  { id:'ALE13', lat:46.4, lng:18.5, ybp:4550, era:'bronze', site:'Alsónyék-elkerülő', region:'Unkari', culture:'Hungary BA', sample_id:'ALE13', special:false },
+  { id:'I0011', lat:58.5, lng:15.0, ybp:7564, era:'mesolithic', site:'Motala, Kanaljorden', region:'Ruotsi', culture:'Motala HG', sample_id:'I0011', special:false },
+  { id:'I0013', lat:58.4, lng:15.1, ybp:7722, era:'mesolithic', site:'Motala, Kanaljorden', region:'Ruotsi', culture:'Motala HG', sample_id:'I0013', special:false },
+  { id:'SF11', lat:57.3, lng:17.9, ybp:8892, era:'mesolithic', site:'Stora Förvar, Stora Karlsö', region:'Ruotsi', culture:'Sweden Mesolithic', sample_id:'SF11', special:false },
+  { id:'Motala363', lat:58.55, lng:15.05, ybp:7568, era:'mesolithic', site:'Kanaljorden, Motala', region:'Ruotsi', culture:'Sweden Mesolithic', sample_id:'Motala363', special:false },
+  { id:'hem005', lat:57.2, lng:18.5, ybp:5132, era:'neolithic', site:'Hemmor, När, Gotlanti', region:'Ruotsi', culture:'Pitted Ware Culture', sample_id:'hem005', special:false },
+  { id:'I7639', lat:52.2, lng:0.05, ybp:3797, era:'bronze', site:'Waterhall Farm, Cambridgeshire', region:'Englanti', culture:'England CA/EBA', sample_id:'I7639', special:false },
+  { id:'bomsanto14', lat:39.2, lng:-9.0, ybp:5685, era:'neolithic', site:'Bom Santo Cave', region:'Portugali', culture:'SW Iberia Middle Neolithic', sample_id:'bomsanto14', special:false },
+  { id:'MCI386', lat:37.5, lng:-8.1, ybp:4950, era:'neolithic', site:'Monte Canelas', region:'Portugali', culture:'Portugal Neolithic', sample_id:'MCI386', special:false },
+  { id:'Junc2', lat:40.4, lng:-3.7, ybp:4601, era:'chalcolithic', site:'El Juncal, Madrid', region:'Espanja', culture:'Central Iberia Early Chalcolithic', sample_id:'Junc2', special:false },
+  { id:'GLN123', lat:47.8, lng:3.5, ybp:2050, era:'iron', site:"Gurgy 'Les Noisats'", region:'Ranska', culture:'Gaul', sample_id:'GLN123', special:false },
+  { id:'MX280', lat:47.75, lng:8.8, ybp:3931, era:'bronze', site:'Singen', region:'Saksa', culture:'Baden EBA', sample_id:'MX280', special:false },
+  { id:'QUEXII7', lat:51.8, lng:11.2, ybp:3860, era:'bronze', site:'Quedlinburg', region:'Saksa', culture:'Únětice culture', sample_id:'QUEXII 7', special:false },
+  { id:'KAR48', lat:51.3, lng:11.6, ybp:3825, era:'bronze', site:'Karsdorf', region:'Saksa', culture:'Únětice culture', sample_id:'KAR 48', special:false },
+  { id:'KAR50', lat:51.28, lng:11.65, ybp:3825, era:'bronze', site:'Karsdorf', region:'Saksa', culture:'Únětice culture', sample_id:'KAR 50', special:false },
+  { id:'UZZ82', lat:38.0, lng:12.6, ybp:8505, era:'mesolithic', site:"Grotta dell'Uzzo, Sisilia", region:'Italia', culture:'Castelnovian', sample_id:'UZZ82', special:false },
+  { id:'R473', lat:42.1, lng:11.8, ybp:2600, era:'iron', site:'Civitavecchia, Etruria', region:'Italia', culture:'Etruscan', sample_id:'R473', special:false },
+  { id:'I4114', lat:49.1, lng:32.5, ybp:7351, era:'neolithic', site:'Dereivka', region:'Ukraina', culture:'Ukraine Neolithic', sample_id:'I4114', special:false },
+  { id:'LebyazhinkaIV', lat:53.3, lng:50.2, ybp:9450, era:'mesolithic', site:'Lebyazhinka IV', region:'Venäjä', culture:'Comb-Marked / Yelshanskaya', sample_id:'LebyazhinkaIV', special:false },
+  { id:'I0354', lat:53.2, lng:51.4, ybp:3791, era:'bronze', site:'Spiridonovka IV, Samara', region:'Venäjä', culture:'Steppe MLBA', sample_id:'I0354', special:false },
+  { id:'I0360', lat:53.15, lng:51.5, ybp:3800, era:'bronze', site:'Spiridonovka IV, Samara', region:'Venäjä', culture:'Western Steppe MLBA', sample_id:'I0360', special:false },
+  { id:'kzb007', lat:54.2, lng:56.0, ybp:3672, era:'bronze', site:'Kazburun 1', region:'Venäjä', culture:'Srubno-alakulskaya', sample_id:'kzb007', special:false },
+  { id:'S16', lat:53.5, lng:91.5, ybp:3550, era:'bronze', site:'Oust-Abakansty, Khakassia', region:'Venäjä', culture:'Oust_Abakansty MBA', sample_id:'S16', special:false },
+  { id:'pcw280', lat:50.7, lng:20.6, ybp:4250, era:'chalcolithic', site:'Pełczyska', region:'Puola', culture:'Bell Beaker Poland', sample_id:'pcw280', special:false },
+  { id:'AT27', lat:46.5, lng:100.7, ybp:4937, era:'chalcolithic', site:'Bayankhongor, Mongolia', region:'Mongolia', culture:'Afanasievo Bayankhongor', sample_id:'AT27', special:false },
+];
+
+// ── MAP ──────────────────────────────────────────────────────────────────────
+var map = L.map('map', { center:[52, 28], zoom:4 });
+setTimeout(function(){ map.invalidateSize(); }, 100);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  subdomains:'abc', maxZoom:19
+}).addTo(map);
+
+setTimeout(function(){
+  var pane = document.querySelector('.leaflet-tile-pane');
+  if(pane) pane.style.filter='grayscale(1) sepia(.6) brightness(.3) contrast(1.2)';
+}, 80);
+
+// Story route dashed line
+var storyRoute = ALL_SAMPLES
+  .filter(function(s){ return s.special && s.story_order; })
+  .sort(function(a,b){ return a.story_order - b.story_order; })
+  .map(function(s){ return [s.lat, s.lng]; });
+L.polyline(storyRoute, { color:'#c4a962', weight:1.3, opacity:.38, dashArray:'5 6' }).addTo(map);
+
+// ── MARKERS ──────────────────────────────────────────────────────────────────
+var markerObjs = {};
+
+function buildPopup(s){
+  var st = getStyle(s);
+  var badge = s.sample_id ? '<div class="p-badge">'+s.sample_id+'</div>' : '';
+  var special = s.special ? '<div class="p-special">★ Tarinan pysäkki '+s.story_order+'</div>' : '';
+  var desc = s.desc ? '<div class="p-desc">'+s.desc+'</div>' : '';
+  var doi = s.doi ? '<div class="p-doi">'+s.doi+'</div>' : '';
+  return '<div class="p-body">'+
+    '<div class="p-era">'+eraFi(s.era)+'</div>'+
+    '<div class="p-site">'+s.site+(s.region?' <span style="opacity:.55;font-size:.85em">— '+s.region+'</span>':'')+'</div>'+
+    '<div class="p-date">'+ybpLabel(s.ybp)+' ('+s.ybp+' BP)</div>'+
+    badge+special+desc+doi+
+  '</div>';
+}
+
+ALL_SAMPLES.forEach(function(s){
+  var st = getStyle(s);
+  var m = L.circleMarker([s.lat, s.lng], {
+    radius: st.r,
+    fillColor: st.fill,
+    color: st.border,
+    weight: s.special ? 2 : 1.5,
+    opacity: 1,
+    fillOpacity: .85
+  }).addTo(map);
+  m.bindPopup(buildPopup(s), { maxWidth:280 });
+  m.on('click', function(){ activateSample(s.id); });
+  markerObjs[s.id] = { marker:m, data:s };
+});
+
+function activateSample(id){
+  document.querySelectorAll('.stop').forEach(function(el){ el.classList.remove('active'); });
+  var tlEl = document.getElementById('tl-'+id);
+  if(tlEl){ tlEl.classList.add('active'); tlEl.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+  document.querySelectorAll('.sstop').forEach(function(el){ el.classList.remove('active'); });
+  var ssEl = document.getElementById('ss-'+id);
+  if(ssEl){ ssEl.classList.add('active'); ssEl.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+}
+
+// ── TIMELINE ─────────────────────────────────────────────────────────────────
+var sorted = ALL_SAMPLES.slice().sort(function(a,b){ return b.ybp-a.ybp; });
+var tl = document.getElementById('timeline');
+sorted.forEach(function(s, i){
+  var st = getStyle(s);
+  var hasSline = i < sorted.length-1;
+  var sline = hasSline ? '<div class="sline"></div>' : '';
+  var ssample = s.sample_id ? '<div class="ssample">'+s.sample_id+'</div>' : '';
+  var starMark = s.special ? ' <span style="color:var(--gold);font-size:.7em">★</span>' : '';
+  var div = document.createElement('div');
+  div.className = 'stop';
+  div.id = 'tl-'+s.id;
+  div.dataset.era = s.era;
+  div.dataset.special = s.special ? '1' : '0';
+  div.innerHTML =
+    '<div class="spine"><div class="dot" style="background:'+st.fill+';border-color:'+st.border+'"></div>'+sline+'</div>'+
+    '<div class="sbody">'+
+      '<div class="sbp">'+ybpLabel(s.ybp)+'</div>'+
+      '<div class="sname">'+s.site+starMark+'</div>'+
+      '<div class="sculture">'+s.culture+'</div>'+
+      ssample+
+    '</div>';
+  div.addEventListener('click', function(){
+    map.setView([s.lat, s.lng], 6, {animate:true, duration:.8});
+    markerObjs[s.id].marker.openPopup();
+    activateSample(s.id);
+  });
+  tl.appendChild(div);
+});
+
+// ── STORY LIST ────────────────────────────────────────────────────────────────
+var storyItems = ALL_SAMPLES
+  .filter(function(s){ return s.special && s.story_order; })
+  .sort(function(a,b){ return a.story_order-b.story_order; });
+var sl = document.getElementById('storyList');
+storyItems.forEach(function(s){
+  var div = document.createElement('div');
+  div.className = 'sstop';
+  div.id = 'ss-'+s.id;
+  div.innerHTML =
+    '<div class="ss-num">Pysäkki '+s.story_order+'</div>'+
+    '<div class="ss-name">'+(s.story_title||s.site)+'</div>'+
+    '<div class="ss-sub">'+(s.story_sub||s.culture)+'</div>'+
+    '<div class="ss-year">'+ybpLabel(s.ybp)+' · '+s.sample_id+'</div>';
+  div.addEventListener('click', function(){
+    map.setView([s.lat, s.lng], 6, {animate:true, duration:.8});
+    markerObjs[s.id].marker.openPopup();
+    activateSample(s.id);
+  });
+  sl.appendChild(div);
+});
+
+// ── ERA FILTER ────────────────────────────────────────────────────────────────
+document.querySelectorAll('.era-tab').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.era-tab').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var era = btn.dataset.era;
+    ALL_SAMPLES.forEach(function(s){
+      var obj = markerObjs[s.id];
+      var visible = era==='all' ? true : era==='special' ? s.special : s.era===era;
+      if(visible) map.addLayer(obj.marker); else map.removeLayer(obj.marker);
+      var tlEl = document.getElementById('tl-'+s.id);
+      if(tlEl) tlEl.classList.toggle('hidden', !visible);
+    });
+  });
+});
+
+// ── SIDEBAR TABS ──────────────────────────────────────────────────────────────
+document.querySelectorAll('.sb-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.sb-tab').forEach(function(t){ t.classList.remove('active'); });
+    tab.classList.add('active');
+    var panel = tab.dataset.panel;
+    document.getElementById('panel-timeline').classList.toggle('visible', panel==='timeline');
+    document.getElementById('panel-story').classList.toggle('visible', panel==='story');
+  });
+});
+
+</script>
+</body>
+</html>
